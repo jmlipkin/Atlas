@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Core.h"
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 namespace Atlas {
 
@@ -23,11 +24,11 @@ class Log {
 #define AT_CORE_INFO(...) ::Atlas::Log::getCoreLogger()->info(__VA_ARGS__)
 #define AT_CORE_WARN(...) ::Atlas::Log::getCoreLogger()->warn(__VA_ARGS__)
 #define AT_CORE_ERROR(...) ::Atlas::Log::getCoreLogger()->error(__VA_ARGS__)
-#define AT_CORE_FATAL(...) ::Atlas::Log::getCoreLogger()->fatal(__VA_ARGS__)
+#define AT_CORE_CRITICAL(...) ::Atlas::Log::getCoreLogger()->critical(__VA_ARGS__)
 
 // Client log macros
 #define AT_TRACE(...) ::Atlas::Log::getClientLogger()->trace(__VA_ARGS__)
 #define AT_INFO(...) ::Atlas::Log::getClientLogger()->info(__VA_ARGS__)
 #define AT_WARN(...) ::Atlas::Log::getClientLogger()->warn(__VA_ARGS__)
 #define AT_ERROR(...) ::Atlas::Log::getClientLogger()->error(__VA_ARGS__)
-#define AT_FATAL(...) ::Atlas::Log::getClientLogger()->fatal(__VA_ARGS__)
+#define AT_CRITICAL(...) ::Atlas::Log::getClientLogger()->critical(__VA_ARGS__)
