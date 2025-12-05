@@ -1,0 +1,3 @@
+[submodule "Atlas/extern/spdlog"]
+	path = Atlas/extern/spdlog
+	url = https://github.com/gabime/spdlog

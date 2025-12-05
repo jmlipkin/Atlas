@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 3.22)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
 set(TARGET_NAME "Atlas")
 
+add_subdirectory(extern/spdlog)
 add_library(${TARGET_NAME} STATIC)
+
 # ADD FILES
 file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
@@ -18,8 +21,9 @@ list(FILTER BINARY_FILES EXCLUDE REGEX "/\\.DS_Store$")
 
 target_include_directories(${TARGET_NAME} 
     PUBLIC
+    # ${CMAKE_CURRENT_SOURCE_DIR}/extern
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-)
+    )
 
 target_compile_definitions(${TARGET_NAME}
     PUBLIC
@@ -31,5 +35,6 @@ target_compile_definitions(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME}
-    PRIVATE
+    PUBLIC
+    spdlog::spdlog
 )
