@@ -9,8 +9,11 @@
 
 namespace Atlas {
 
+    #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+
     Application::Application() {
         m_window = std::unique_ptr<Window>(Window::create());
+        m_window->setEventCallback(BIND_EVENT_FN(onEvent));
     }
 
     Application::~Application() {}
@@ -24,4 +27,14 @@ namespace Atlas {
             m_window->onUpdate();
         }
     }
-}
+
+    void Application::onEvent(Event& event) {
+        EventDispatcher dispatcher(event);
+        dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+    }
+
+    bool Application::onWindowClose(WindowCloseEvent& e) {
+        m_isRunning = false;
+        return true;
+    }
+    }  // namespace Atlas
