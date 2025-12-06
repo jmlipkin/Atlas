@@ -1,9 +1,12 @@
 #pragma once
 
 #include "Core.h"
+
+#include "Window.h"
+#include "LayerStack.h"
+
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
-#include "Window.h"
 
 namespace Atlas {
 
@@ -22,6 +25,8 @@ class Application {
     private:
      std::unique_ptr<Window> m_window;
      bool m_isRunning = true;
+
+     LayerStack m_layerStack;
 };
 
 // TO BE DEFINED IN CLIENT

@@ -24,6 +24,10 @@ namespace Atlas {
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            for (Layer *l : m_layerStack) {
+                l->onUpdate();
+            }
+
             m_window->onUpdate();
         }
     }
@@ -31,6 +35,12 @@ namespace Atlas {
     void Application::onEvent(Event& event) {
         EventDispatcher dispatcher(event);
         dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+
+        for (auto it = m_layerStack.end(); it != m_layerStack.begin(); ) {
+            (*--it)->onEvent(event);
+            if(event.isHandled)
+                break;
+        }
     }
 
     bool Application::onWindowClose(WindowCloseEvent& e) {
