@@ -4,20 +4,24 @@
 #include "Events/ApplicationEvent.h"
 #include "Atlas/Log.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 namespace Atlas {
 
-    Application::Application() {}
+    Application::Application() {
+        m_window = std::unique_ptr<Window>(Window::create());
+    }
 
     Application::~Application() {}
 
     void Application::run() {
-        WindowResizeEvent e(1280, 720);
-        if (e.isInCategory(EVENT_CATEGORY_APPLICATION))
-            AT_TRACE(e.toString());
-        if(e.isInCategory(EVENT_CATEGORY_INPUT))
-            AT_TRACE(e.toString());
 
-        while (true) {
+        while (m_isRunning) {
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            m_window->onUpdate();
         }
     }
 }

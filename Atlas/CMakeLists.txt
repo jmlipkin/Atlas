@@ -6,6 +6,10 @@ set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 set(TARGET_NAME "Atlas")
 
 add_subdirectory(extern/spdlog)
+add_subdirectory(extern/glad)
+add_subdirectory(extern/glfw)
+add_subdirectory(extern/glm)
+
 add_library(${TARGET_NAME} STATIC)
 
 # ADD FILES
@@ -26,7 +30,7 @@ list(FILTER BINARY_FILES EXCLUDE REGEX "/\\.DS_Store$")
 
 target_include_directories(${TARGET_NAME} 
     PUBLIC
-    # ${CMAKE_CURRENT_SOURCE_DIR}/extern
+    ${CMAKE_CURRENT_SOURCE_DIR}/extern
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     )
 
@@ -42,4 +46,7 @@ target_compile_definitions(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME}
     PUBLIC
     spdlog::spdlog
+    glad
+    glfw
+    glm
 )
