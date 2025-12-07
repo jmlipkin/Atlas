@@ -8,6 +8,8 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 
+#include "Renderer/Shader.h"
+
 namespace Atlas {
 
 class Application {
@@ -35,6 +37,10 @@ class Application {
     LayerStack m_layerStack;
 
     static Application* s_instance;
+
+    // TEMPORARY
+    unsigned int VAO, VBO, EBO;
+    std::unique_ptr<Shader> m_shader;
 };
 
 // TO BE DEFINED IN CLIENT

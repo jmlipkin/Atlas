@@ -55,9 +55,7 @@ void MacOSWindow::init(const WindowProperties& props) {
 
     m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
 
-    AT_CORE_INFO("RendererAPI at window init = {}", (int)RendererAPI::getAPI());
     m_context = GraphicsContext::create(m_window);
-    AT_CORE_INFO("Created context type: {}", typeid(*m_context).name());
     m_context->init();
 
     glfwSetWindowUserPointer(m_window, &m_data);

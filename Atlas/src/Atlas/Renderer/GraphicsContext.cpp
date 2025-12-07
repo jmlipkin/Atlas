@@ -16,11 +16,11 @@ namespace Atlas {
                 AT_CORE_ASSERT(false, "RendererAPI::None is not currently supported.");
             }
             case RendererAPI::API::OpenGL: {
-                AT_CORE_CRITICAL("Using RendererAPI::API::OpenGL");
+                AT_CORE_TRACE("Using RendererAPI::API::OpenGL");
                 return new OpenGLContext(window);
             }
             case RendererAPI::API::Metal: {
-                AT_CORE_CRITICAL("Using RendererAPI::API::Metal");
+                AT_CORE_TRACE("Using RendererAPI::API::Metal");
                 return new MetalContext(window);
             }
         }

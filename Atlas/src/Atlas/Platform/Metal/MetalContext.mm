@@ -14,7 +14,6 @@ namespace Atlas {
     }
 
     void MetalContext::init() { 
-
         initDevice();
         initWindow();
     }

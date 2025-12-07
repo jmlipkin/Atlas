@@ -23,6 +23,7 @@ void OpenGLContext::init() {
 }
 
 void OpenGLContext::swapBuffers() {
+    glfwSwapBuffers(m_window);
 }
 
 }  // namespace Atlas
