@@ -5,11 +5,10 @@
 #include "Atlas/Log.h"
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
+// #include <GLFW/glfw3.h>
+#include "Atlas/Input.h"
 
 namespace Atlas {
-
-    #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
     Application* Application::s_instance = nullptr;
 
@@ -18,7 +17,7 @@ namespace Atlas {
         s_instance = this;
 
         m_window = std::unique_ptr<Window>(Window::create());
-        m_window->setEventCallback(BIND_EVENT_FN(onEvent));
+        m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
     }
 
     Application::~Application() {}
@@ -39,7 +38,7 @@ namespace Atlas {
 
     void Application::onEvent(Event& event) {
         EventDispatcher dispatcher(event);
-        dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+        dispatcher.dispatch<WindowCloseEvent>(AT_BIND_EVENT_FN(Application::onWindowClose));
 
         for (auto it = m_layerStack.end(); it != m_layerStack.begin(); ) {
             (*--it)->onEvent(event);

@@ -33,6 +33,18 @@ class KeyPressedEvent : public KeyEvent {
     int m_repeatCount;
 };
 
+class KeyTypedEvent : public KeyEvent {
+    public:
+    KeyTypedEvent(int keycode) : KeyEvent(keycode) {}
+    std::string toString() const override {
+        std::stringstream ss;
+        ss << "KeyTypedEvent: " << m_keyCode;
+        return ss.str();
+    }
+
+    EVENT_CLASS_TYPE(KEY_TYPED)
+};
+
 class KeyReleasedEvent : public KeyEvent {
     public:
     KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
