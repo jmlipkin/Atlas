@@ -14,8 +14,11 @@ add_library(${TARGET_NAME} STATIC)
 
 # ADD FILES
 file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.mm"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/metal-cpp/*.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/metal-cpp/*.cpp"
 )
 
 # Add ImGui .cpp and .h (non-recursive)
@@ -59,3 +62,12 @@ target_link_libraries(${TARGET_NAME}
     glfw
     glm
 )
+
+if(APPLE)
+    target_link_libraries(${TARGET_NAME}
+        PUBLIC
+            "-framework Foundation"
+            "-framework QuartzCore"
+            "-framework Metal"
+    )
+endif()

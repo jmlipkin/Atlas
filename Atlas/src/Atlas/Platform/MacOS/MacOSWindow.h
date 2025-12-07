@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <Atlas/Window.h>
+#include <Atlas/Renderer/GraphicsContext.h>
 
 namespace Atlas {
 
@@ -28,6 +29,7 @@ namespace Atlas {
       virtual void shutdown();
         private:
          GLFWwindow* m_window;
+         GraphicsContext* m_context;
 
          struct WindowData {
              std::string title;

@@ -5,6 +5,9 @@
 #include <Atlas/Events/KeyEvent.h>
 #include <Atlas/Events/MouseEvent.h>
 
+// TEMPORARY
+#include "Atlas/Renderer/RendererAPI.h"
+
 namespace Atlas {
 
 static bool s_GLFWInitialized = false;
@@ -41,23 +44,26 @@ void MacOSWindow::init(const WindowProperties& props) {
         s_GLFWInitialized = true;
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+    if(RendererAPI::getAPI() == RendererAPI::API::OpenGL) {
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    } else if (RendererAPI::getAPI() == RendererAPI::API::Metal) {
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    }
 
     m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
 
-    glfwMakeContextCurrent(m_window);
+    AT_CORE_INFO("RendererAPI at window init = {}", (int)RendererAPI::getAPI());
+    m_context = GraphicsContext::create(m_window);
+    AT_CORE_INFO("Created context type: {}", typeid(*m_context).name());
+    m_context->init();
+
     glfwSetWindowUserPointer(m_window, &m_data);
-    setVSync(true);
+    // cannot call swap interval using metal
+    // setVSync(true);
 
-    // initialize GLAD
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        AT_CORE_ERROR("Failed to initialize GLAD!");
-
-    AT_CORE_INFO("Initialized GLAD!");
     // set GLFW callbacks
 
     glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
@@ -142,7 +148,7 @@ void MacOSWindow::shutdown() {
 
 void MacOSWindow::onUpdate() {
     glfwPollEvents();
-    glfwSwapBuffers(m_window);
+    m_context->swapBuffers();
 }
 
 void MacOSWindow::setVSync(bool enabled) {

@@ -25,8 +25,8 @@ namespace Atlas {
     void Application::run() {
 
         while (m_isRunning) {
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            // glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            // glClear(GL_COLOR_BUFFER_BIT);
 
             for (Layer *l : m_layerStack) {
                 l->onUpdate();
