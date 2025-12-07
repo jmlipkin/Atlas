@@ -30,15 +30,22 @@ void MacOSWindow::init(const WindowProperties& props) {
     m_data.width = props.width;
     m_data.height = props.height;
 
-    AT_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
+    AT_CORE_TRACE("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
 
     if(!s_GLFWInitialized) {
         int success = glfwInit();
-        AT_CORE_ASSERT(success, "Could not initialized GLFW!");
+        AT_CORE_ASSERT(success, "Could not initialize GLFW!");
 
+        AT_CORE_INFO("Initialized GLFW!");
         glfwSetErrorCallback(GLFWErrorCallback);
         s_GLFWInitialized = true;
     }
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 
     m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
 
@@ -48,8 +55,9 @@ void MacOSWindow::init(const WindowProperties& props) {
 
     // initialize GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    AT_CORE_ERROR("Failed to initialize GLAD!");
+        AT_CORE_ERROR("Failed to initialize GLAD!");
 
+    AT_CORE_INFO("Initialized GLAD!");
     // set GLFW callbacks
 
     glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {

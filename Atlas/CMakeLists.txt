@@ -17,6 +17,15 @@ file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
 )
+
+# Add ImGui .cpp and .h (non-recursive)
+file(GLOB IMGUI_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/*.h"
+)
+
+list(APPEND ATLAS_SOURCES ${IMGUI_SOURCES})
+
 target_sources(${TARGET_NAME} PRIVATE ${ATLAS_SOURCES})
 
 target_precompile_headers(${TARGET_NAME}

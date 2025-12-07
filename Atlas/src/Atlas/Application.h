@@ -19,14 +19,22 @@ class Application {
 
     void onEvent(Event& event);
 
-    private:
-     bool onWindowClose(WindowCloseEvent& e);
+    void pushLayer(Layer* layer);
+    void pushOverlay(Layer* overlay);
 
-    private:
-     std::unique_ptr<Window> m_window;
-     bool m_isRunning = true;
+    inline Window& getWindow() const { return *m_window; }
+    inline static Application& get() { return *s_instance; }
 
-     LayerStack m_layerStack;
+   private:
+    bool onWindowClose(WindowCloseEvent& e);
+
+   private:
+    std::unique_ptr<Window> m_window;
+    bool m_isRunning = true;
+
+    LayerStack m_layerStack;
+
+    static Application* s_instance;
 };
 
 // TO BE DEFINED IN CLIENT
