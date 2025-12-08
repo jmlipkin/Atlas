@@ -6,7 +6,7 @@
 #include <Atlas/Events/MouseEvent.h>
 
 // TEMPORARY
-#include "Atlas/Renderer/RendererAPI.h"
+#include "Atlas/Renderer/Renderer.h"
 
 namespace Atlas {
 
@@ -44,12 +44,12 @@ void MacOSWindow::init(const WindowProperties& props) {
         s_GLFWInitialized = true;
     }
 
-    if(RendererAPI::getAPI() == RendererAPI::API::OpenGL) {
+    if(Renderer::getAPI() == RendererAPI::API::OpenGL) {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    } else if (RendererAPI::getAPI() == RendererAPI::API::Metal) {
+    } else if (Renderer::getAPI() == RendererAPI::API::Metal) {
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     }
 

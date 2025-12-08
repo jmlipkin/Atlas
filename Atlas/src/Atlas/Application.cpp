@@ -3,11 +3,8 @@
 
 #include "Events/ApplicationEvent.h"
 #include "Atlas/Log.h"
-
-#include <glad/glad.h>
-// #include <GLFW/glfw3.h>
 #include "Atlas/Input.h"
-
+#include "Atlas/Renderer/Renderer.h"
 namespace Atlas {
 
     Application* Application::s_instance = nullptr;
@@ -43,6 +40,25 @@ namespace Atlas {
         uint32_t indices[3] = {0, 1, 2};
 
         m_indexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
+        m_vertexArray->setIndexBuffer(m_indexBuffer);
+        
+        m_squareVA.reset(VertexArray::create());
+
+        float squareVertices[3 * 4] = {
+            -0.75f, -0.75f, 0.0f,
+            0.75f, -0.75f, 0.0f,
+            0.75f, 0.75f, 0.0f,
+            -0.75f, 0.75f, 0.0f};
+
+        std::shared_ptr<VertexBuffer> squareVB;
+        squareVB.reset(VertexBuffer::create(squareVertices, sizeof(squareVertices)));
+        squareVB->setLayout({{"a_Position", ShaderDataType::Float3}});
+        m_squareVA->addVertexBuffer(squareVB);
+
+        uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
+        std::shared_ptr<IndexBuffer> squareIB;
+        squareIB.reset(IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+        m_squareVA->setIndexBuffer(squareIB);
 
         std::string vertexSrc = R"(
 			#version 330 core
@@ -76,17 +92,54 @@ namespace Atlas {
 		)";
 
         m_shader.reset(new Shader(vertexSrc, fragmentSrc));
+
+        std::string blueShaderVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+
+			out vec3 v_Position;
+
+			void main()
+			{
+				v_Position = a_Position;
+				gl_Position = vec4(a_Position, 1.0);	
+			}
+		)";
+
+		std::string blueShaderFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec3 v_Position;
+
+			void main()
+			{
+				color = vec4(0.2, 0.3, 0.8, 1.0);
+			}
+		)";
+
+		m_blueShader.reset(new Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
     }
 
     void Application::run() {
 
         while (m_isRunning) {
-            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
+            RenderCommand::clear();
+
+            Renderer::beginScene();
+
+            m_blueShader->bind();
+
+            Renderer::submit(m_squareVA);
 
             m_shader->bind();
             m_vertexArray->bind();
-            glDrawElements(GL_TRIANGLES, m_indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
+            Renderer::submit(m_vertexArray);
+
+            Renderer::endScene();
 
             for (Layer* l : m_layerStack) {
                 l->onUpdate();

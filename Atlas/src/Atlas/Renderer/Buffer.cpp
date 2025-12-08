@@ -2,14 +2,14 @@
 #include "atpch.h"
 
 #include "Atlas/Platform/OpenGL/OpenGLBuffer.h"
-#include "RendererAPI.h"
+#include "Atlas/Renderer/Renderer.h"
 
 #include "spdlog/fmt/bundled/core.h" // Required for fmt::ptr
 
 namespace Atlas {
 
     VertexBuffer* VertexBuffer::create(float* vertices, uint32_t size) {
-        switch (RendererAPI::getAPI()) {
+        switch (Renderer::getAPI()) {
             case RendererAPI::API::None: {
                 AT_ASSERT(false, "RendererAPI::None is not supported");
             }
@@ -26,7 +26,7 @@ namespace Atlas {
     }
 
     IndexBuffer* IndexBuffer::create(uint32_t* indices, uint32_t size) {
-        switch (RendererAPI::getAPI()) {
+        switch (Renderer::getAPI()) {
             case RendererAPI::API::None: {
                 AT_ASSERT(false, "RendererAPI::None is not supported");
             }

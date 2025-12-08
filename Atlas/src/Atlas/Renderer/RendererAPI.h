@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include "VertexArray.h"
+
 namespace Atlas {
 
 class RendererAPI {
@@ -15,6 +17,7 @@ class RendererAPI {
    public:
     virtual void setClearColor(const glm::vec4& color) = 0;
     virtual void clear() = 0;
+    virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
 
     inline static API getAPI() { return s_API; }
 
