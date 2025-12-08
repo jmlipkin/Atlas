@@ -17,7 +17,7 @@ namespace Atlas {
 class Application {
    public:
     Application();
-    virtual ~Application();
+    virtual ~Application() = default;
 
     void run();
 

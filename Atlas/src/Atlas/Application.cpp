@@ -78,8 +78,6 @@ namespace Atlas {
         m_shader.reset(new Shader(vertexSrc, fragmentSrc));
     }
 
-    Application::~Application() {}
-
     void Application::run() {
 
         while (m_isRunning) {

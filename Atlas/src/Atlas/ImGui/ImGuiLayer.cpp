@@ -17,7 +17,7 @@ namespace Atlas {
 
     }
 
-    ImGuiLayer::~ImGuiLayer() {}
+    ImGuiLayer::~ImGuiLayer() = default;
 
     void ImGuiLayer::onAttach() {
         ImGuiContext *ctx = ImGui::CreateContext();

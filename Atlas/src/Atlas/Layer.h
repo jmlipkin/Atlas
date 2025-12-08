@@ -7,7 +7,7 @@ namespace Atlas {
 class Layer {
    public:
     Layer(const std::string& name) : m_name(name) {}
-    virtual ~Layer() {}
+    virtual ~Layer() = default;
 
     virtual void onAttach() = 0;
     virtual void onDetach() = 0;

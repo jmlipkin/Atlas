@@ -33,7 +33,7 @@ class PacMan : public Atlas::Application {
     PacMan() {
         pushLayer(new ExampleLayer);
     }
-    ~PacMan() override {}
+    ~PacMan() override = default;
 };
 
 Atlas::Application* Atlas::createApplication() {
