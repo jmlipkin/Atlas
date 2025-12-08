@@ -13,8 +13,6 @@ namespace Atlas {
          static GraphicsContext* create(GLFWwindow* window);
          virtual void init() = 0;
          virtual void swapBuffers() = 0;
-
-         virtual MTL::Device* getMTLDevice() const { return nullptr; }
     };
 
 }  // namespace Atlas

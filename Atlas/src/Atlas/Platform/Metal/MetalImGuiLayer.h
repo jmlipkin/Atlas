@@ -9,7 +9,7 @@ namespace Atlas {
 
     class MetalImGuiLayer : public ImGuiLayer {
     public:
-        MetalImGuiLayer(const GraphicsContext& context);
+        MetalImGuiLayer();
         virtual ~MetalImGuiLayer() = default;
 
         virtual void onAttach() override;

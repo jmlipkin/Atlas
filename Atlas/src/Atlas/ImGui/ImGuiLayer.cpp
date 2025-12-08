@@ -31,7 +31,7 @@ namespace Atlas {
                 return new OpenGLImGuiLayer();
             }
             case RendererAPI::API::Metal: {
-                return new MetalImGuiLayer(*m_context);
+                return new MetalImGuiLayer();
             }
         }
 

@@ -21,8 +21,8 @@
 
 namespace Atlas {
 
-    MetalImGuiLayer::MetalImGuiLayer(const GraphicsContext& context) : ImGuiLayer() {
-         m_mtlDevice = context.getMTLDevice();
+    MetalImGuiLayer::MetalImGuiLayer() : ImGuiLayer() {
+         m_mtlDevice = MetalContext::getMTLDevice();
     }
 
     void MetalImGuiLayer::onAttach() {

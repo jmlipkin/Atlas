@@ -16,7 +16,6 @@ namespace Atlas {
 
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
-        ImGuiLayer::setImGuiGraphicsContextPtr(m_window->getGraphicsContext());
 
         m_vertexArray = std::unique_ptr<VertexArray>(VertexArray::create());
         m_vertexArray->bind();

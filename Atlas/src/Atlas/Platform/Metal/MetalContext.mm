@@ -10,6 +10,9 @@
 #include <GLFW/glfw3native.h>
 
 namespace Atlas {
+
+    MTL::Device* MetalContext::s_device = nullptr;
+
     MetalContext::MetalContext(GLFWwindow* window) : m_window(window) {
         AT_CORE_ASSERT(window, "Window handle is null!");
         AT_CORE_TRACE("Created MetalContext (constructor)");
@@ -24,7 +27,7 @@ namespace Atlas {
     void MetalContext::swapBuffers() {}
 
     void MetalContext::initDevice() {
-        m_device = MTL::CreateSystemDefaultDevice();
+        s_device = MTL::CreateSystemDefaultDevice();
     }
 
     void MetalContext::initWindow() {
@@ -33,7 +36,10 @@ namespace Atlas {
 
         NSWindow* metalWindow = glfwGetCocoaWindow(m_window);
         CAMetalLayer* metalLayer = [CAMetalLayer layer];
-        metalLayer.device = (id<MTLDevice>)m_device;
+
+        // An assert here means MetalContext::initDevice() could not create system default device.
+        AT_CORE_ASSERT(s_device, "MetalContext devicce is null!");
+        metalLayer.device = (id<MTLDevice>)s_device;
         metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
         metalLayer.drawableSize = CGSizeMake(width, height);
         [metalWindow.contentView setLayer:metalLayer];
