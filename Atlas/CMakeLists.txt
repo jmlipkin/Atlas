@@ -18,7 +18,7 @@ file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.mm"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/metal-cpp/*.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/extern/metal-cpp/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/metal-cpp/*.mm"
 )
 
 # Add ImGui .cpp and .h (non-recursive)

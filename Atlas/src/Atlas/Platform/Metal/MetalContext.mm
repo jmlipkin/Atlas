@@ -2,7 +2,8 @@
 #include "MetalContext.h"
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CAMetalLayer.h>
-#import <Metal/Metal.h>
+#include <metal-cpp/Metal.hpp>
+#include <Metal/Metal.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_COCOA
@@ -11,17 +12,19 @@
 namespace Atlas {
     MetalContext::MetalContext(GLFWwindow* window) : m_window(window) {
         AT_CORE_ASSERT(window, "Window handle is null!");
+        AT_CORE_TRACE("Created MetalContext (constructor)");
     }
 
     void MetalContext::init() { 
         initDevice();
         initWindow();
+        AT_CORE_TRACE("MetalContext initialized!");
     }
 
     void MetalContext::swapBuffers() {}
 
     void MetalContext::initDevice() {
-        m_device = (__bridge void*)MTLCreateSystemDefaultDevice();
+        m_device = MTL::CreateSystemDefaultDevice();
     }
 
     void MetalContext::initWindow() {
@@ -30,7 +33,7 @@ namespace Atlas {
 
         NSWindow* metalWindow = glfwGetCocoaWindow(m_window);
         CAMetalLayer* metalLayer = [CAMetalLayer layer];
-        metalLayer.device = (__bridge id<MTLDevice>)m_device;
+        metalLayer.device = (id<MTLDevice>)m_device;
         metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
         metalLayer.drawableSize = CGSizeMake(width, height);
         [metalWindow.contentView setLayer:metalLayer];

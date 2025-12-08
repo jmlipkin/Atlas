@@ -5,6 +5,7 @@
 #include "Atlas/Log.h"
 #include "Atlas/Input.h"
 #include "Atlas/Renderer/Renderer.h"
+#include "Atlas/ImGui/ImGuiLayer.h"
 namespace Atlas {
 
     Application* Application::s_instance = nullptr;
@@ -15,6 +16,7 @@ namespace Atlas {
 
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
+        ImGuiLayer::setImGuiGraphicsContextPtr(m_window->getGraphicsContext());
 
         m_vertexArray = std::unique_ptr<VertexArray>(VertexArray::create());
         m_vertexArray->bind();

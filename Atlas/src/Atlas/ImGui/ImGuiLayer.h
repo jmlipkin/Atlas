@@ -5,31 +5,38 @@
 #include <Atlas/Events/MouseEvent.h>
 #include <Atlas/Layer.h>
 
+#include <Atlas/Renderer/GraphicsContext.h>
+
 namespace Atlas {
 
 class ImGuiLayer : public Layer {
    public:
     ImGuiLayer();
-    virtual ~ImGuiLayer();
+    virtual ~ImGuiLayer() = default;
 
-    virtual void onAttach() override;
-    virtual void onDetach() override;
-    virtual void onUpdate() override;
+    static void setImGuiGraphicsContextPtr(const void* context) { m_context = static_cast<GraphicsContext*>(const_cast<void*>(context)); }
 
-    virtual void onEvent(Event& event) override;
+        static ImGuiLayer* create();
 
-   private:
-    bool onMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-    bool onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
-    bool onMouseMovedEvent(MouseMovedEvent& e);
-    bool onMouseScrolledEvent(MouseScrolledEvent& e);
-    bool onKeyPressedEvent(KeyPressedEvent& e);
-    bool onKeyReleasedEvent(KeyReleasedEvent& e);
-    bool onKeyTypedEvent(KeyTypedEvent& e);
-    bool onWindowResizeEvent(WindowResizeEvent& e);
+        virtual void onAttach() override = 0;
+        virtual void onDetach() override = 0;
+        virtual void onUpdate() override = 0;
 
-   private:
-    float m_time = 0.0f;
+        virtual void onEvent(Event & event) override;
+
+       protected:
+        bool onMouseButtonPressedEvent(MouseButtonPressedEvent & e);
+        bool onMouseButtonReleasedEvent(MouseButtonReleasedEvent & e);
+        bool onMouseMovedEvent(MouseMovedEvent & e);
+        bool onMouseScrolledEvent(MouseScrolledEvent & e);
+        bool onKeyPressedEvent(KeyPressedEvent & e);
+        bool onKeyReleasedEvent(KeyReleasedEvent & e);
+        bool onKeyTypedEvent(KeyTypedEvent & e);
+        bool onWindowResizeEvent(WindowResizeEvent & e);
+
+       protected:
+        static GraphicsContext* m_context;
+        float m_time = 0.0f;
 };
 
 }  // namespace Atlas

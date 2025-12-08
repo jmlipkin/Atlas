@@ -7,9 +7,12 @@
 
 #include <Atlas/Core.h>
 #include <Atlas/Application.h>
+#include <Atlas/Renderer/Renderer.h>
 #include <Atlas/KeyCodes.h>
 #include <Atlas/MouseButtonCodes.h>
-#include <Atlas/Platform/OpenGL/ImGuiOpenGLRenderer.h>
+
+#include <Atlas/Platform/OpenGL/OpenGLImGuiLayer.h>
+#include <Atlas/Platform/Metal/MetalImGuiLayer.h>
 
 namespace Atlas {
 
@@ -17,43 +20,23 @@ namespace Atlas {
 
     }
 
-    ImGuiLayer::~ImGuiLayer() = default;
+    GraphicsContext* ImGuiLayer::m_context = nullptr;
 
-    void ImGuiLayer::onAttach() {
-        ImGuiContext *ctx = ImGui::CreateContext();
-        ImGui::StyleColorsDark();
+    ImGuiLayer* ImGuiLayer::create() {
+        switch (Renderer::getAPI()) {
+            case RendererAPI::API::None: {
+                AT_ASSERT(false, "RendererAPI::None is not supported");
+            }
+            case RendererAPI::API::OpenGL: {
+                return new OpenGLImGuiLayer();
+            }
+            case RendererAPI::API::Metal: {
+                return new MetalImGuiLayer(*m_context);
+            }
+        }
 
-        ImGuiIO& io = ImGui::GetIO();
-
-        io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-
-        io.IniFilename = "build/Atlas/extern/imgui.ini";
-
-        ImGui_ImplOpenGL3_Init("#version 410 core");
-    }
-
-    void ImGuiLayer::onDetach() {
-
-    }
-
-    void ImGuiLayer::onUpdate() {
-        ImGuiIO& io = ImGui::GetIO();
-		Application& app = Application::get();
-		io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
-
-		float time = (float)glfwGetTime();
-		io.DeltaTime = m_time > 0.0f ? (time - m_time) : (1.0f / 60.0f);
-		m_time = time;
-
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui::NewFrame();
-
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        AT_ASSERT(false, "Unknown RendererAPI");
+        return nullptr;
     }
 
     void ImGuiLayer::onEvent(Event& event) {

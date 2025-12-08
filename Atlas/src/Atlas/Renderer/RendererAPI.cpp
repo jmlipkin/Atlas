@@ -4,6 +4,6 @@
 
 namespace Atlas {
 
-    RendererAPI::API RendererAPI::s_API = API::OpenGL;
+    RendererAPI::API RendererAPI::s_API = API::Metal;
 
 }
