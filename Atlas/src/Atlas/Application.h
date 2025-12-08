@@ -10,6 +10,7 @@
 
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 namespace Atlas {
 
@@ -39,11 +40,10 @@ class Application {
 
     static Application* s_instance;
 
-    // TEMPORARY
-    unsigned int VAO;
-    std::unique_ptr<Shader> m_shader;
-    std::unique_ptr<VertexBuffer> m_vertexBuffer;
-    std::unique_ptr<IndexBuffer> m_indexBuffer;
+    std::shared_ptr<Shader> m_shader;
+    std::shared_ptr<VertexBuffer> m_vertexBuffer;
+    std::shared_ptr<IndexBuffer> m_indexBuffer;
+    std::shared_ptr<VertexArray> m_vertexArray;
 };
 
 // TO BE DEFINED IN CLIENT

@@ -12,28 +12,6 @@ namespace Atlas {
 
     Application* Application::s_instance = nullptr;
 
-    static GLenum shaderDataTypeToOpenGLBaseType(ShaderDataType type)
-	{
-		switch (type)
-		{
-            case Atlas::ShaderDataType::None:     return GL_NONE;
-			case Atlas::ShaderDataType::Float:    return GL_FLOAT;
-			case Atlas::ShaderDataType::Float2:   return GL_FLOAT;
-			case Atlas::ShaderDataType::Float3:   return GL_FLOAT;
-			case Atlas::ShaderDataType::Float4:   return GL_FLOAT;
-			case Atlas::ShaderDataType::Mat3:     return GL_FLOAT;
-			case Atlas::ShaderDataType::Mat4:     return GL_FLOAT;
-			case Atlas::ShaderDataType::Int:      return GL_INT;
-			case Atlas::ShaderDataType::Int2:     return GL_INT;
-			case Atlas::ShaderDataType::Int3:     return GL_INT;
-			case Atlas::ShaderDataType::Int4:     return GL_INT;
-			case Atlas::ShaderDataType::Bool:     return GL_BOOL;
-		}
-		
-		AT_CORE_ASSERT(false, "Unknown ShaderDataType!");
-		return 0;
-	}
-
     Application::Application() {
         AT_CORE_ASSERT(!s_instance, "Application already exists!");
         s_instance = this;
@@ -41,8 +19,8 @@ namespace Atlas {
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
 
-        glGenVertexArrays(1, &VAO);
-        glBindVertexArray(VAO);
+        m_vertexArray = std::unique_ptr<VertexArray>(VertexArray::create());
+        m_vertexArray->bind();
 
         float vertices[3 * 7] = {
             -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -60,20 +38,7 @@ namespace Atlas {
 
             m_vertexBuffer->setLayout(layout);
         }
-
-        uint32_t index = 0;
-		const auto& layout = m_vertexBuffer->getLayout();
-		for (const auto& element : layout)
-		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index,
-				element.GetComponentCount(),
-				shaderDataTypeToOpenGLBaseType(element.type),
-				element.normalized ? GL_TRUE : GL_FALSE,
-				layout.getStride(),
-				(const void*)element.offset);
-			index++;
-		}
+        m_vertexArray->addVertexBuffer(m_vertexBuffer);
 
         uint32_t indices[3] = {0, 1, 2};
 
@@ -122,7 +87,7 @@ namespace Atlas {
             glClear(GL_COLOR_BUFFER_BIT);
 
             m_shader->bind();
-            glBindVertexArray(VAO);
+            m_vertexArray->bind();
             glDrawElements(GL_TRIANGLES, m_indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
 
             for (Layer* l : m_layerStack) {
