@@ -9,6 +9,7 @@
 #include "Events/ApplicationEvent.h"
 
 #include "Renderer/Shader.h"
+#include "Renderer/Buffer.h"
 
 namespace Atlas {
 
@@ -39,8 +40,10 @@ class Application {
     static Application* s_instance;
 
     // TEMPORARY
-    unsigned int VAO, VBO, EBO;
+    unsigned int VAO;
     std::unique_ptr<Shader> m_shader;
+    std::unique_ptr<VertexBuffer> m_vertexBuffer;
+    std::unique_ptr<IndexBuffer> m_indexBuffer;
 };
 
 // TO BE DEFINED IN CLIENT
