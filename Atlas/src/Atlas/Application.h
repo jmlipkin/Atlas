@@ -40,10 +40,10 @@ class Application {
 
     static Application* s_instance;
 
-    std::shared_ptr<Shader> m_shader, m_blueShader;
+    std::shared_ptr<Shader> m_shader;
     std::shared_ptr<VertexBuffer> m_vertexBuffer;
     std::shared_ptr<IndexBuffer> m_indexBuffer;
-    std::shared_ptr<VertexArray> m_vertexArray, m_squareVA;
+    std::shared_ptr<VertexArray> m_vertexArray;
 };
 
 // TO BE DEFINED IN CLIENT

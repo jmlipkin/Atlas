@@ -3,6 +3,11 @@
 
 namespace Atlas {
 
+        void Renderer::init() {
+            RenderCommand::init();
+            AT_CORE_TRACE("Initialized Renderer");
+        }
+
         void Renderer::beginScene() {
 
         }

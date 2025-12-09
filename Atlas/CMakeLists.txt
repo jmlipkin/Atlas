@@ -3,6 +3,14 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
+# Enable Objective-C++ for .mm files on macOS
+if(APPLE)
+    enable_language(OBJC)
+    enable_language(OBJCXX)
+    set(CMAKE_OBJCXX_STANDARD ${CMAKE_CXX_STANDARD})
+    set(CMAKE_OBJCXX_STANDARD_REQUIRED True)
+endif()
+
 set(TARGET_NAME "Atlas")
 
 add_subdirectory(extern/spdlog)
@@ -18,6 +26,7 @@ file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.mm"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/metal-cpp/*.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/metal-cpp/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/metal-cpp/*.mm"
 )
 
@@ -66,6 +75,7 @@ target_link_libraries(${TARGET_NAME}
 if(APPLE)
     target_link_libraries(${TARGET_NAME}
         PUBLIC
+            "-framework AppKit"
             "-framework Foundation"
             "-framework QuartzCore"
             "-framework Metal"

@@ -5,6 +5,8 @@ namespace Atlas {
 
     class Renderer {
         public:
+         static void init();
+
          static void beginScene();
          static void endScene();
 

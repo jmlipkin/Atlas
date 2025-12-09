@@ -2,7 +2,6 @@
 #include "MetalContext.h"
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CAMetalLayer.h>
-#include <metal-cpp/Metal.hpp>
 #include <Metal/Metal.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>

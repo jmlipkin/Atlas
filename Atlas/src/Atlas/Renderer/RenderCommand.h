@@ -11,6 +11,8 @@ namespace Atlas {
 
          inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) { s_rendererAPI->drawIndexed(vertexArray); }
 
+         static void init();
+
         private:
          static RendererAPI* s_rendererAPI;
     };
