@@ -1,8 +1,8 @@
-#include "atpch.h"
 #include "RenderCommand.h"
 
-#include "Atlas/Platform/OpenGL/OpenGLRendererAPI.h"
 #include "Atlas/Platform/Metal/MetalRendererAPI.h"
+#include "Atlas/Platform/OpenGL/OpenGLRendererAPI.h"
+#include "atpch.h"
 
 namespace Atlas {
 
@@ -21,5 +21,5 @@ void RenderCommand::init() {
             s_rendererAPI = new MetalRendererAPI;
         }
     }
-    }
 }
+}  // namespace Atlas

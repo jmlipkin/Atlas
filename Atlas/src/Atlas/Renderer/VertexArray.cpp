@@ -3,6 +3,7 @@
 
 #include "Atlas/Renderer/Renderer.h"
 #include "Atlas/Platform/OpenGL/OpenGLVertexArray.h"
+#include "Atlas/Platform/Metal/MetalVertexArray.h"
 
 namespace Atlas {
 
@@ -15,7 +16,7 @@ namespace Atlas {
                 return new OpenGLVertexArray();
             }
             case RendererAPI::API::Metal: {
-                AT_ASSERT(false, "RendererAPI::Metal is not supported");
+                return new MetalVertexArray();
             }
         }
 

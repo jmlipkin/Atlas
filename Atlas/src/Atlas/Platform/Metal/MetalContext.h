@@ -12,6 +12,7 @@ class MetalContext : public GraphicsContext {
     virtual void swapBuffers() override;
 
     static MTL::Device* getMTLDevice() { return s_device; }
+    static CA::MetalLayer* getMTLLayer() { return s_metalLayer; }
 
    private:
     void initDevice();
@@ -20,6 +21,6 @@ class MetalContext : public GraphicsContext {
    private:
      GLFWwindow* m_window;
      static MTL::Device* s_device;
-     void* metalLayer;
+     static CA::MetalLayer* s_metalLayer;
 };
 }  // namespace Atlas

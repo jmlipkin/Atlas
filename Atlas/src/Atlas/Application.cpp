@@ -6,6 +6,8 @@
 #include "Atlas/Input.h"
 #include "Atlas/Renderer/Renderer.h"
 #include "Atlas/ImGui/ImGuiLayer.h"
+
+#include <metal-cpp/Metal.hpp>
 namespace Atlas {
 
     Application* Application::s_instance = nullptr;
@@ -19,44 +21,46 @@ namespace Atlas {
 
         Renderer::init();
 
-        m_vertexArray = std::unique_ptr<VertexArray>(VertexArray::create());
-        m_vertexArray->bind();
+        // m_vertexArray = std::unique_ptr<VertexArray>(VertexArray::create());
+        // m_vertexArray->bind();
 
-        float vertices[3 * 7] = {
-            -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-            0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-            0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
-        };
+        // float vertices[3 * 7] = {
+        //     -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+        //     0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+        //     0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+        // };
 
-        m_vertexBuffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
+        // m_vertexBuffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
 
-        {
-            BufferLayout layout = {
-                {"a_Position", ShaderDataType::Float3},
-                {"a_Color", ShaderDataType::Float4}
-            };
+        // {
+        //     BufferLayout layout = {
+        //         {"a_Position", ShaderDataType::Float3},
+        //         {"a_Color", ShaderDataType::Float4}
+        //     };
 
-            m_vertexBuffer->setLayout(layout);
-        }
-        m_vertexArray->addVertexBuffer(m_vertexBuffer);
+        //     m_vertexBuffer->setLayout(layout);
+        // }
+        // m_vertexArray->addVertexBuffer(m_vertexBuffer);
 
-        uint32_t indices[3] = {0, 1, 2};
+        // uint32_t indices[3] = {0, 1, 2};
 
-        m_indexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
-        m_vertexArray->setIndexBuffer(m_indexBuffer);
+        // m_indexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
+        // m_vertexArray->setIndexBuffer(m_indexBuffer);
     }
 
     void Application::run() {
 
         while (m_isRunning) {
+            NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
+
             RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
             RenderCommand::clear();
-        Renderer::beginScene();
+            
+            Renderer::beginScene();
 
-    
-            m_shader->bind();
-            m_vertexArray->bind();
-            Renderer::submit(m_vertexArray);
+            // m_shader->bind();
+            // m_vertexArray->bind();
+            // Renderer::submit(m_vertexArray);
 
             Renderer::endScene();
 
@@ -64,7 +68,10 @@ namespace Atlas {
                 l->onUpdate();
             }
 
+            RenderCommand::commit();
             m_window->onUpdate();
+
+            pool->release();
         }
     }
 
