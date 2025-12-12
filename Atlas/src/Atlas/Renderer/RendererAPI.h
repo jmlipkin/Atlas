@@ -2,7 +2,8 @@
 
 #include <glm/glm.hpp>
 
-#include "VertexArray.h"
+#include "Atlas/Events/ApplicationEvent.h"
+#include "Atlas/Renderer/VertexArray.h"
 
 namespace Atlas {
 
@@ -19,6 +20,8 @@ class RendererAPI {
     virtual void clear() = 0;
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
     virtual void commit() = 0;
+
+    virtual void onEvent(Event& event) = 0;
 
     inline static API getAPI() { return s_API; }
 

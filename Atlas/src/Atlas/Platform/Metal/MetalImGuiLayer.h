@@ -1,9 +1,7 @@
 #pragma once
 
 #include <Atlas/ImGui/ImGuiLayer.h>
-#include <Atlas/Renderer/GraphicsContext.h>
-
-#include <metal-cpp/Metal.hpp>
+#include "Atlas/Platform/Metal/MetalContext.h"
 
 namespace Atlas {
 
@@ -17,7 +15,7 @@ namespace Atlas {
         virtual void onUpdate() override;
 
         private:
-         MTL::Device* m_mtlDevice;
+         MetalContextData* m_MTLData;
     };
 
 }  // namespace Atlas

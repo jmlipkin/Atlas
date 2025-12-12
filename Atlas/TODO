@@ -1,2 +1,8 @@
-Figure out how Buffers work in Metal    
+Move ImGui events back to main ImGuiLayer
+Clean up includes before commit
+Clean up MTLData system
+Figure out how Buffers work in Metal
+Remove autorelease pool from application
+    renderer::prepareForDraw and renderer::resetDraw?
+Debug: window resize crashes program
 Convert raw pointers -- need to handle memory deallocation

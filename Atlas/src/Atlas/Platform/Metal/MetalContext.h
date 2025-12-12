@@ -1,26 +1,36 @@
 #pragma once
 
+#include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Renderer/GraphicsContext.h"
 #include <metal-cpp/Metal.hpp>
 
 namespace Atlas {
 
-class MetalContext : public GraphicsContext {
-   public:
-    MetalContext(GLFWwindow* window);
-    virtual void init() override;
-    virtual void swapBuffers() override;
+  struct MetalContextData {
+      MTL::Device* device = nullptr;
+      GLFWwindow* glfwWindow = nullptr;
+      CA::MetalLayer* layer = nullptr;
 
-    static MTL::Device* getMTLDevice() { return s_device; }
-    static CA::MetalLayer* getMTLLayer() { return s_metalLayer; }
+      MTL::CommandQueue* commandQueue = nullptr;
+      MTL::CommandBuffer* commandBuffer = nullptr;
+      
+      CA::MetalDrawable* currentDrawable = nullptr;
+      MTL::RenderPassDescriptor* passDesc = nullptr;
+  };
 
-   private:
-    void initDevice();
-    void initWindow();
+  class MetalContext : public GraphicsContext {
+     public:
+      MetalContext(GLFWwindow* window);
+      virtual void init() override;
+      virtual void swapBuffers() override {}
 
-   private:
-     GLFWwindow* m_window;
-     static MTL::Device* s_device;
-     static CA::MetalLayer* s_metalLayer;
-};
+      static MetalContextData* getMTLData() { return s_MTLData; }
+
+     private:
+      void initDevice();
+      void initWindow();
+
+     private:
+      static MetalContextData* s_MTLData;
+  };
 }  // namespace Atlas

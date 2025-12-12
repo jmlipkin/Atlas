@@ -13,12 +13,15 @@ void RenderCommand::init() {
         case RendererAPI::API::None: {
             s_rendererAPI = nullptr;
             AT_ASSERT(false, "RendererAPI::None is not supported");
+            return;
         }
         case RendererAPI::API::OpenGL: {
             s_rendererAPI = new OpenGLRendererAPI;
+            return;
         }
         case RendererAPI::API::Metal: {
             s_rendererAPI = new MetalRendererAPI;
+            return;
         }
     }
 }

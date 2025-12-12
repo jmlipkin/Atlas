@@ -4,7 +4,7 @@
 #include "MetalContext.h"
 
 namespace Atlas {
-    MetalVertexArray::MetalVertexArray() : pDevice(MetalContext::getMTLDevice()) {
+    MetalVertexArray::MetalVertexArray() : pDevice(MetalContext::getMTLData()->device) {
         pVertexDescriptor = MTL::VertexDescriptor::alloc()->init();
     }
 

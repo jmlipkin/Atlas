@@ -1,6 +1,6 @@
 #pragma once
-#include "Atlas/Renderer/RendererAPI.h"
 
+#include "Atlas/Renderer/RendererAPI.h"
 #include "MetalContext.h"
 
 namespace Atlas {
@@ -14,12 +14,15 @@ namespace Atlas {
      virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
      virtual void commit() override;
 
-    private:
-     MTL::Device& m_pDevice;
-     MTL::RenderPassDescriptor* m_renderPDescriptor;
-     MTL::CommandBuffer* m_commandBuffer;
-     MTL::CommandQueue* m_commandQueue;
-     CA::MetalDrawable* m_drawable;
+     virtual void onEvent(Event& event) override;
+
+     private:
+      bool onWindowResize(WindowResizeEvent& e);
+
+     private:
+      MetalContextData* m_MTLData;
+      // MTL::RenderPassDescriptor* m_renderPDescriptor;
+      // MTL::CommandBuffer* m_commandBuffer;
     };
 
 }  // namespace Atlas

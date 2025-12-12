@@ -113,7 +113,6 @@ namespace Atlas {
         ImGuiIO& io = ImGui::GetIO();
 		io.DisplaySize = ImVec2(e.getWidth(), e.getHeight());
 		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
-		glViewport(0, 0, e.getWidth(), e.getHeight());
 
         return false;
     }

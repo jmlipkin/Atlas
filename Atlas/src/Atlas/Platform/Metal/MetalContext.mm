@@ -8,14 +8,17 @@
 #define GLFW_EXPOSE_NATIVE_COCOA
 #include <GLFW/glfw3native.h>
 
+#include "Atlas/Events/ApplicationEvent.h"
+
 namespace Atlas {
 
-    MTL::Device* MetalContext::s_device = nullptr;
-    CA::MetalLayer* MetalContext::s_metalLayer = nullptr;
+    MetalContextData* MetalContext::s_MTLData = nullptr;
 
-    MetalContext::MetalContext(GLFWwindow* window) : m_window(window) {
+    MetalContext::MetalContext(GLFWwindow* window) {
         AT_CORE_ASSERT(window, "Window handle is null!");
         AT_CORE_TRACE("Created MetalContext (constructor)");
+        s_MTLData = new MetalContextData();
+        s_MTLData->glfwWindow = window;
     }
 
     void MetalContext::init() { 
@@ -24,21 +27,19 @@ namespace Atlas {
         AT_CORE_TRACE("MetalContext initialized!");
     }
 
-    void MetalContext::swapBuffers() {
-    }
-
     void MetalContext::initDevice() {
-        s_device = MTL::CreateSystemDefaultDevice();
+        s_MTLData->device = MTL::CreateSystemDefaultDevice();
+        s_MTLData->commandQueue = s_MTLData->device->newCommandQueue();
 
         // An assert here means MetalContext::initDevice() could not create system default device.
-        AT_CORE_ASSERT(s_device, "MetalContext device is null!");
+        AT_CORE_ASSERT(s_MTLData->device, "MetalContext device is null!");
     }
 
     void MetalContext::initWindow() {
         int width, height;
-        glfwGetFramebufferSize(m_window, &width, &height);
+        glfwGetFramebufferSize(s_MTLData->glfwWindow, &width, &height);
 
-        NSWindow* nsWindow = (NSWindow*)glfwGetCocoaWindow(m_window);
+        NSWindow* nsWindow = (NSWindow*)glfwGetCocoaWindow(s_MTLData->glfwWindow);
         NSView* contentView = nsWindow.contentView;
 
         // Make the view layer-backed
@@ -49,21 +50,11 @@ namespace Atlas {
         contentView.layer = nativeLayer;
 
         // Wrap in metal-cpp
-        s_metalLayer = (CA::MetalLayer*)nativeLayer;
-
-        // CAMetalLayer* nativeLayer = (CAMetalLayer*)contentView.layer;
-        // s_metalLayer = (CA::MetalLayer*)nativeLayer;
-
-        // metalLayer = (CA::MetalLayer*)glfwGetCocoaWindow(m_window).contentView.layer;
-        // CAMetalLayer* metalLayer = [CAMetalLayer layer];
+        s_MTLData->layer = (CA::MetalLayer*)nativeLayer;
         
-        s_metalLayer->setDevice(s_device);
-        s_metalLayer->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
-        s_metalLayer->setDrawableSize(CGSizeMake(width, height));
-        s_metalLayer->setFramebufferOnly(true);
-        // metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
-        // metalLayer.drawableSize = CGSizeMake(width, height);
-        // [metalWindow.contentView setLayer:metalLayer];
-        // [metalWindow.contentView setWantsLayer:YES];
+        s_MTLData->layer->setDevice(s_MTLData->device);
+        s_MTLData->layer->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
+        s_MTLData->layer->setDrawableSize(CGSizeMake(width, height));
+        s_MTLData->layer->setFramebufferOnly(true);
     }
 } // namespace Atlas

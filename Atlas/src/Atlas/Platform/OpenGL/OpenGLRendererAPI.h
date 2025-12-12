@@ -10,7 +10,13 @@ namespace Atlas {
         virtual void setClearColor(const glm::vec4& color) override;
         virtual void clear() override;
         virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
+        
+        // TODO: Implement
         virtual void commit() override {}
+        virtual void onEvent(Event& event) override;
+
+        private:
+         bool onWindowResize(WindowResizeEvent& e);
     };
 
 }  // namespace Atlas

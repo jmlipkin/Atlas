@@ -79,6 +79,9 @@ namespace Atlas {
         EventDispatcher dispatcher(event);
         dispatcher.dispatch<WindowCloseEvent>(AT_BIND_EVENT_FN(Application::onWindowClose));
 
+        // Temporary
+        RenderCommand::onEvent(event);
+
         for (auto it = m_layerStack.end(); it != m_layerStack.begin(); ) {
             (*--it)->onEvent(event);
             if(event.isHandled)
