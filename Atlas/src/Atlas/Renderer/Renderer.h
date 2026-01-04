@@ -5,7 +5,7 @@ namespace Atlas {
 
     class Renderer {
         public:
-         static void init();
+         static void init(std::shared_ptr<Window> window);
 
          static void beginScene();
          static void endScene();

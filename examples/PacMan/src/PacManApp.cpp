@@ -34,7 +34,7 @@ class PacMan : public Atlas::Application {
     public:
     PacMan() {
         pushLayer(new ExampleLayer);
-        pushOverlay(Atlas::ImGuiLayer::create());
+        // pushOverlay(Atlas::ImGuiLayer::create());
     }
     ~PacMan() override = default;
 };

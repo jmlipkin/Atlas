@@ -21,6 +21,8 @@ class RendererAPI {
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
     virtual void commit() = 0;
 
+    virtual void beginScene() = 0;
+
     virtual void onEvent(Event& event) = 0;
 
     inline static API getAPI() { return s_API; }

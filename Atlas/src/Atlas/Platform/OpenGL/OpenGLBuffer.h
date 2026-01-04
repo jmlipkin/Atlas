@@ -9,6 +9,7 @@ namespace Atlas {
         OpenGLVertexBuffer(float* vertices, uint32_t size);
         virtual ~OpenGLVertexBuffer();
         virtual void bind() const override;
+        virtual void bind(int) const override {}
         virtual void unbind() const override;
 
         virtual void setLayout(const BufferLayout& layout) override { m_layout = layout; }

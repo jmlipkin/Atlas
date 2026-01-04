@@ -20,8 +20,8 @@ namespace Atlas {
          virtual const std::shared_ptr<IndexBuffer>& getIndexBuffer() const override { return m_indexBuffer; }
 
         private:
-         const MTL::Device* pDevice;
-         MTL::VertexDescriptor* pVertexDescriptor;
+         MTL::Device* m_device;
+         MTL::VertexDescriptor* m_vertexDescriptor;
          std::vector<std::shared_ptr<VertexBuffer>> m_vertexBuffers;
          std::shared_ptr<IndexBuffer> m_indexBuffer;
     };

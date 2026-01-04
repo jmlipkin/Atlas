@@ -15,7 +15,7 @@ namespace Atlas {
         virtual void onUpdate() override;
 
         private:
-         MetalContextData* m_MTLData;
+         MetalContext* m_MTLData;
     };
 
 }  // namespace Atlas

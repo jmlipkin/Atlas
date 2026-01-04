@@ -10,18 +10,18 @@
 
 namespace Atlas {
 
-    GraphicsContext* GraphicsContext::create(GLFWwindow* window) {
+    std::shared_ptr<GraphicsContext> GraphicsContext::create(GLFWwindow* window) {
         switch(Renderer::getAPI()) {
             case RendererAPI::API::None: {
                 AT_CORE_ASSERT(false, "RendererAPI::None is not currently supported.");
             }
             case RendererAPI::API::OpenGL: {
                 AT_CORE_TRACE("Using RendererAPI::API::OpenGL");
-                return new OpenGLContext(window);
+                return std::make_shared<OpenGLContext>(window);
             }
             case RendererAPI::API::Metal: {
                 AT_CORE_TRACE("Using RendererAPI::API::Metal");
-                return new MetalContext(window);
+                return std::make_shared<MetalContext>(window);
             }
         }
     }

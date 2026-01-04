@@ -33,7 +33,8 @@ class Application {
     bool onWindowClose(WindowCloseEvent& e);
 
    private:
-    std::unique_ptr<Window> m_window;
+    std::shared_ptr<Window> m_window;
+    std::shared_ptr<GraphicsContext> m_context;
     bool m_isRunning = true;
 
     LayerStack m_layerStack;

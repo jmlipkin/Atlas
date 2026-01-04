@@ -11,6 +11,9 @@ class OpenGLContext : public GraphicsContext {
     virtual void init() override;
     virtual void swapBuffers() override;
 
+    virtual void beginFrame() override {}
+    virtual void endFrame() override {}
+
    private:
     GLFWwindow* m_window;
 };

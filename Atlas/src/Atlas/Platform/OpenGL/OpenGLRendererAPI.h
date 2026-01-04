@@ -12,6 +12,7 @@ namespace Atlas {
         virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
         
         // TODO: Implement
+        virtual void beginScene() override {}
         virtual void commit() override {}
         virtual void onEvent(Event& event) override;
 

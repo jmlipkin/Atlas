@@ -8,7 +8,7 @@ namespace Atlas {
 
 RendererAPI* RenderCommand::s_rendererAPI = nullptr;
 
-void RenderCommand::init() {
+void RenderCommand::init(std::shared_ptr<Window> window) {
     switch (RendererAPI::getAPI()) {
         case RendererAPI::API::None: {
             s_rendererAPI = nullptr;
@@ -20,7 +20,7 @@ void RenderCommand::init() {
             return;
         }
         case RendererAPI::API::Metal: {
-            s_rendererAPI = new MetalRendererAPI;
+            s_rendererAPI = new MetalRendererAPI(window);
             return;
         }
     }

@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "Events/Event.h"
 #include "atpch.h"
+#include "Atlas/Renderer/GraphicsContext.h"
 
 namespace Atlas {
 
@@ -26,7 +27,7 @@ class Window {
     virtual unsigned int getHeight() const = 0;
 
     virtual void* getNativeWindow() const = 0;
-    virtual void* getGraphicsContext() const = 0;
+    virtual std::shared_ptr<GraphicsContext> getGraphicsContext() const = 0;
 
     // Window attributes
     virtual void setEventCallback(const EventCallbackFn& callback) = 0;
