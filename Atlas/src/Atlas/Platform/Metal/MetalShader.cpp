@@ -3,6 +3,7 @@
 #include "atpch.h"
 
 #include "MetalContext.h"
+#include "MetalRendererAPI.h"
 
 namespace Atlas {
 
@@ -71,13 +72,15 @@ MetalShader::~MetalShader() {
     m_pipelineState->release();
 }
 
-void MetalShader::bind() const {
-    MTL::RenderCommandEncoder* encoder = MetalContext::getEncoder();
-    encoder->setRenderPipelineState(m_pipelineState);
-}
+// void MetalShader::bind() const {
+//     // MTL::RenderCommandEncoder* encoder = MetalRendererAPI::getEncoder();
+//     // encoder->setRenderPipelineState(m_pipelineState);
 
-void MetalShader::unbind() const {
-    AT_CORE_WARN("MetalShader unbind not yet implemented");
-}
+//     AT_CORE_WARN("MetalShader bind not yet implemented");
+// }
+
+// void MetalShader::unbind() const {
+//     AT_CORE_WARN("MetalShader unbind not yet implemented");
+// }
 
 }  // namespace Atlas

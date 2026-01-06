@@ -3,20 +3,19 @@
 
 namespace Atlas {
 
-        void Renderer::init(std::shared_ptr<Window> window) {
-            RenderCommand::init(window);
+        void Renderer::init(GraphicsContext& context) {
+            RenderCommand::init(context);
             AT_CORE_TRACE("Initialized Renderer");
         }
 
         void Renderer::beginScene() {
-            RenderCommand::beginScene();
         }
 
         void Renderer::endScene() {
         }
 
         void Renderer::submit(const std::shared_ptr<VertexArray>& vertexArray) {
-            vertexArray->bind();
+            RenderCommand::bindVertexArray(*vertexArray);
             RenderCommand::drawIndexed(vertexArray);
         }
 }

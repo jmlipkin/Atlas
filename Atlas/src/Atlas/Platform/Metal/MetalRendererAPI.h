@@ -1,31 +1,43 @@
 #pragma once
 
 #include "Atlas/Renderer/RendererAPI.h"
-#include "Atlas/Window.h"
-#include "MetalContext.h"
+
+#include "Atlas/Platform/Metal/MetalContext.h"
+#include <metal-cpp/Metal.hpp>
 
 namespace Atlas {
 
 class MetalRendererAPI : public RendererAPI {
    public:
-    MetalRendererAPI(std::shared_ptr<Window> window);
+    MetalRendererAPI(MetalContext& context);
     virtual ~MetalRendererAPI();
 
     virtual void setClearColor(const glm::vec4& color) override;
     virtual void clear() override;
 
-    virtual void beginScene() override;
+    virtual void beginFrame() override;
+    virtual void endFrame() override;
+
+    void bindShader(const Shader& shader) override;
+    void bindVertexArray(const VertexArray& array) override;
+    void bindVertexBuffer(const VertexBuffer& buffer, int index) override;
 
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
     virtual void commit() override;
 
-    virtual void onEvent(Event& event) override;
+    // static MTL::RenderCommandEncoder* getEncoder() { return s_encoder; }
 
    private:
-    bool onWindowResize(WindowResizeEvent& e);
-
-   private:
+    MetalContext& m_context;
     MTL::ClearColor m_color;
+
+    NS::AutoreleasePool* m_pool;
+    CA::MetalDrawable* m_drawable;
+    MTL::RenderPassDescriptor* m_passDesc;
+    MTL::CommandBuffer* m_buffer;
+
+    MTL::CommandQueue* m_commandQueue;
+    MTL::RenderCommandEncoder* m_encoder;
 };
 
 }  // namespace Atlas

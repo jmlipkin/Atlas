@@ -10,8 +10,8 @@ namespace Atlas {
          MetalVertexArray();
          virtual ~MetalVertexArray();
 
-         virtual void bind() const override;
-         virtual void unbind() const override;
+        //  virtual void bind() const override;
+        //  virtual void unbind() const override;
 
          virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& buffer) override;
          virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& buffer) override;

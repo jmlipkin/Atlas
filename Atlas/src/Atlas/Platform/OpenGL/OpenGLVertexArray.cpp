@@ -36,40 +36,43 @@ namespace Atlas {
         glDeleteVertexArrays(1, &m_rendererID);
     }
 
-    void OpenGLVertexArray::bind() const {
-        glBindVertexArray(m_rendererID);
-    }
+    // void OpenGLVertexArray::bind() const {
+    //     glBindVertexArray(m_rendererID);
+    // }
 
-    void OpenGLVertexArray::unbind() const {
-        glBindVertexArray(0);
-    }
+    // void OpenGLVertexArray::unbind() const {
+    //     glBindVertexArray(0);
+    // }
 
     void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) {
 
         AT_CORE_ASSERT(vertexBuffer->getLayout().getElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(m_rendererID);
-		vertexBuffer->bind();
+		// vertexBuffer->bind();
+        AT_CORE_WARN("VertexBuffer not binding properly OpenGLVertexArray");
 
-        uint32_t index = 0;
-        const auto& layout = vertexBuffer->getLayout();
-        for (const auto& element : layout) {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index,
-                                element.GetComponentCount(),
-                                shaderDataTypeToOpenGLBaseType(element.type),
-                                element.normalized ? GL_TRUE : GL_FALSE,
-                                layout.getStride(),
-                                (const void*)element.offset);
-            index++;
-        }
+                uint32_t index = 0;
+                const auto& layout = vertexBuffer->getLayout();
+                for (const auto& element : layout) {
+                    glEnableVertexAttribArray(index);
+                    glVertexAttribPointer(index,
+                                          element.GetComponentCount(),
+                                          shaderDataTypeToOpenGLBaseType(element.type),
+                                          element.normalized ? GL_TRUE : GL_FALSE,
+                                          layout.getStride(),
+                                          (const void*)element.offset);
+                    index++;
+                }
 
         m_vertexBuffers.push_back(vertexBuffer);
     }
 
     void OpenGLVertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& buffer) {
         glBindVertexArray(m_rendererID);
-        buffer->bind();
+        // buffer->bind();
+        AT_CORE_WARN("IndexBuffer not binding properly OpenGLVertexArray");
+
         m_indexBuffer = buffer;
     }
 

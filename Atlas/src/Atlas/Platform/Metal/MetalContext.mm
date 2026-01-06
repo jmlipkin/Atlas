@@ -14,11 +14,11 @@ namespace Atlas {
 
     MTL::Device* MetalContext::s_device = nullptr;
     MTL::Library* MetalContext::s_library = nullptr;
-    MTL::CommandQueue* MetalContext::s_commandQueue = nullptr;
-    MTL::RenderPassDescriptor* MetalContext::s_passDesc = nullptr;
-    MTL::RenderCommandEncoder* MetalContext::s_encoder = nullptr;
-    MTL::CommandBuffer* MetalContext::s_commandBuffer = nullptr;
-    CA::MetalDrawable* MetalContext::s_drawable = nullptr;
+    // MTL::CommandQueue* MetalContext::s_commandQueue = nullptr;
+    // MTL::RenderPassDescriptor* MetalContext::s_passDesc = nullptr;
+    // MTL::RenderCommandEncoder* MetalContext::s_encoder = nullptr;
+    // MTL::CommandBuffer* MetalContext::s_commandBuffer = nullptr;
+    // CA::MetalDrawable* MetalContext::s_drawable = nullptr;
 
     MetalContext::MetalContext(GLFWwindow* window) : m_window(window) {
         AT_CORE_ASSERT(window, "Window handle is null!");
@@ -38,7 +38,7 @@ namespace Atlas {
         AT_CORE_ASSERT(s_device, "MetalContext device is null!");
 
         s_library = s_device->newDefaultLibrary();
-        s_commandQueue = s_device->newCommandQueue();
+        // s_commandQueue = s_device->newCommandQueue();
     }
 
     void MetalContext::initWindow() {
@@ -76,20 +76,24 @@ namespace Atlas {
     }
 
     void MetalContext::beginFrame() {
-        m_pool = NS::AutoreleasePool::alloc()->init();
-        s_drawable = m_layer->nextDrawable();
-        if (!s_drawable) {
-            AT_WARN("CA::MetalDrawable* not drawable (MetalContext)");
-            return;
-        }
-        s_passDesc = MTL::RenderPassDescriptor::alloc()->init();
+        // m_pool = NS::AutoreleasePool::alloc()->init();
+        // s_drawable = m_layer->nextDrawable();
+        // if (!s_drawable) {
+        //     AT_WARN("CA::MetalDrawable* not drawable (MetalContext)");
+        //     return;
+        // }
+        // s_passDesc = MTL::RenderPassDescriptor::alloc()->init();
 
-        s_commandBuffer = s_commandQueue->commandBuffer();
+        // s_commandBuffer = s_commandQueue->commandBuffer();
 
     }
 
     void MetalContext::endFrame() {
-        s_passDesc->release();
-        m_pool->release();
+        // s_passDesc->release();
+        // m_pool->release();
+    }
+
+    void MetalContext::onResize(const WindowResizeEvent& e) {
+        m_layer->setDrawableSize(CGSizeMake(e.getWidth(), e.getHeight()));
     }
 } // namespace Atlas

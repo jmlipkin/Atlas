@@ -11,13 +11,17 @@ namespace Atlas {
          inline static void clear() { s_rendererAPI->clear(); }
          inline static void commit() { s_rendererAPI->commit(); }
 
-         inline static void beginScene() { s_rendererAPI->beginScene(); }
+         inline static void bindShader(const Shader& shader) { s_rendererAPI->bindShader(shader); }
 
-         inline static void onEvent(Event& event) { s_rendererAPI->onEvent(event); }
+         inline static void bindVertexArray(const VertexArray& array) { s_rendererAPI->bindVertexArray(array); }
+         inline static void bindVertexBuffer(const VertexBuffer& vBuffer, int index = 0) { s_rendererAPI->bindVertexBuffer(vBuffer, index); }
+
+         inline static void beginFrame() { s_rendererAPI->beginFrame(); }
+         inline static void endFrame() { s_rendererAPI->endFrame(); }
 
          inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) { s_rendererAPI->drawIndexed(vertexArray); }
 
-         static void init(std::shared_ptr<Window> window);
+         static void init(GraphicsContext& context);
 
         private:
          static RendererAPI* s_rendererAPI;

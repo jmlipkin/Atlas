@@ -9,6 +9,7 @@
 
 // TEMPORARY
 #include "Atlas/Renderer/Renderer.h"
+#include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Platform/Metal/MetalContext.h"
 
 namespace Atlas {
@@ -71,12 +72,6 @@ void MacOSWindow::init(const WindowProperties& props) {
         WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
         data.width = width;
         data.height = height;
-
-        if(RendererAPI::getAPI() == RendererAPI::API::Metal){
-            MetalContext* context = std::static_pointer_cast<MetalContext>(data.context).get();
-            CA::MetalLayer* layer = context->getMTLLayer();
-            layer->setDrawableSize(CGSizeMake(width, height));
-        }
 
         WindowResizeEvent event(width, height);
         data.eventCallback(event);

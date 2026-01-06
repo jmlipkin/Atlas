@@ -11,8 +11,8 @@ class OpenGLShader : public Shader {
     OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc);
     virtual ~OpenGLShader();
 
-    virtual void bind() const override;
-    virtual void unbind() const override;
+    // virtual void bind() const override;
+    // virtual void unbind() const override;
 
     virtual const std::string& getName() const override { return m_name; }
 

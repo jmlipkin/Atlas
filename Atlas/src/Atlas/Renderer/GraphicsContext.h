@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Atlas/Events/ApplicationEvent.h"
+
 struct GLFWwindow;
 
 namespace MTL {
@@ -16,6 +18,8 @@ namespace Atlas {
 
          virtual void beginFrame() = 0;
          virtual void endFrame() = 0;
+
+         virtual void onResize(const WindowResizeEvent& e) = 0;
     };
 
 }  // namespace Atlas

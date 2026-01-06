@@ -2,7 +2,9 @@
 
 #include <glm/glm.hpp>
 
+#include "Atlas/Window.h"
 #include "Atlas/Events/ApplicationEvent.h"
+#include "Atlas/Renderer/Shader.h"
 #include "Atlas/Renderer/VertexArray.h"
 
 namespace Atlas {
@@ -21,9 +23,12 @@ class RendererAPI {
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
     virtual void commit() = 0;
 
-    virtual void beginScene() = 0;
+    virtual void beginFrame() = 0;
+    virtual void endFrame() = 0;
 
-    virtual void onEvent(Event& event) = 0;
+    virtual void bindShader(const Shader& shader) = 0;
+    virtual void bindVertexArray(const VertexArray& array) = 0;
+    virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
 
     inline static API getAPI() { return s_API; }
 

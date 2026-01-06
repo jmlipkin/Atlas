@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Atlas/Renderer/RendererAPI.h"
+#include "Atlas/Platform/OpenGL/OpenGLBuffer.h"
 
 namespace Atlas {
 
@@ -12,12 +13,12 @@ namespace Atlas {
         virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
         
         // TODO: Implement
-        virtual void beginScene() override {}
+        void bindShader(const Shader& shader) override {}
+        void bindVertexArray(const VertexArray& array) override {}
+        void bindVertexBuffer(const VertexBuffer& buffer, int index) override {}
+        virtual void beginFrame() override;
+        virtual void endFrame() override {}
         virtual void commit() override {}
-        virtual void onEvent(Event& event) override;
-
-        private:
-         bool onWindowResize(WindowResizeEvent& e);
     };
 
 }  // namespace Atlas
