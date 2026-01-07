@@ -19,9 +19,6 @@ namespace Atlas {
       static MTL::Device* getMTLDevice() { return s_device; }
       static MTL::Library* getMTLLibrary() { return s_library; }
 
-      virtual void beginFrame() override;
-      virtual void endFrame() override;
-
       CA::MetalDrawable* getNextDrawable() { return m_layer->nextDrawable(); }
 
       virtual void onResize(const WindowResizeEvent& e) override;

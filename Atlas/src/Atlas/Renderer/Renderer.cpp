@@ -14,7 +14,8 @@ namespace Atlas {
         void Renderer::endScene() {
         }
 
-        void Renderer::submit(const std::shared_ptr<VertexArray>& vertexArray) {
+        void Renderer::submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray) {
+            RenderCommand::bindPipeline(pipeline);
             RenderCommand::bindVertexArray(*vertexArray);
             RenderCommand::drawIndexed(vertexArray);
         }

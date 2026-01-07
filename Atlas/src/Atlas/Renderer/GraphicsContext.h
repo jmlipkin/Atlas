@@ -16,9 +16,6 @@ namespace Atlas {
          virtual void init() = 0;
          virtual void swapBuffers() = 0;
 
-         virtual void beginFrame() = 0;
-         virtual void endFrame() = 0;
-
          virtual void onResize(const WindowResizeEvent& e) = 0;
     };
 

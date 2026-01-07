@@ -3,7 +3,7 @@
 
 #include <metal-cpp/Metal.hpp>
 #include "MetalBuffer.h"
-#include "MetalShader.h"
+#include "MetalPipeline.h"
 
 namespace Atlas {
 
@@ -48,9 +48,9 @@ void MetalRendererAPI::beginFrame() {
     clear();
 }
 
-void MetalRendererAPI::bindShader(const Shader& shader) {
-    const MetalShader& s = static_cast<const MetalShader&>(shader);
-    m_encoder->setRenderPipelineState(s.getMTLPSO());
+void MetalRendererAPI::bindPipeline(const Pipeline& pipeline) {
+    const MetalPipeline& p = static_cast<const MetalPipeline&>(pipeline);
+    m_encoder->setRenderPipelineState(p.getMTLPSO());
 }
 
 void MetalRendererAPI::bindVertexArray(const VertexArray& array) {

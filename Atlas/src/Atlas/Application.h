@@ -11,6 +11,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
+#include "Renderer/Pipeline.h"
 
 namespace Atlas {
 
@@ -45,6 +46,8 @@ class Application {
     std::shared_ptr<VertexBuffer> m_vertexBuffer;
     std::shared_ptr<IndexBuffer> m_indexBuffer;
     std::shared_ptr<VertexArray> m_vertexArray;
+
+    std::shared_ptr<Pipeline> m_pipeline;
 };
 
 // TO BE DEFINED IN CLIENT

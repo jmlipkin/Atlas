@@ -11,7 +11,7 @@ namespace Atlas {
          inline static void clear() { s_rendererAPI->clear(); }
          inline static void commit() { s_rendererAPI->commit(); }
 
-         inline static void bindShader(const Shader& shader) { s_rendererAPI->bindShader(shader); }
+         inline static void bindPipeline(const Pipeline& pipeline) { s_rendererAPI->bindPipeline(pipeline); }
 
          inline static void bindVertexArray(const VertexArray& array) { s_rendererAPI->bindVertexArray(array); }
          inline static void bindVertexBuffer(const VertexBuffer& vBuffer, int index = 0) { s_rendererAPI->bindVertexBuffer(vBuffer, index); }

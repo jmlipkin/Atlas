@@ -12,9 +12,6 @@ class OpenGLContext : public GraphicsContext {
     virtual void init() override;
     virtual void swapBuffers() override;
 
-    virtual void beginFrame() override {}
-    virtual void endFrame() override {}
-
     virtual void onResize(const WindowResizeEvent& e) override;
 
    private:

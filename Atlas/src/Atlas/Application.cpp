@@ -29,14 +29,6 @@ Application::Application() {
         0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f};
 
     m_vertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
-
-    {
-        BufferLayout layout = {
-            {"a_Position", ShaderDataType::Float3},
-            {"a_Color", ShaderDataType::Float4}};
-
-        m_vertexBuffer->setLayout(layout);
-    }
     m_vertexArray->addVertexBuffer(m_vertexBuffer);
 
     uint32_t indices[3] = {0, 1, 2};
@@ -48,6 +40,21 @@ Application::Application() {
 
     std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/triangle.metallib";
     m_shader = Shader::create(filepath);
+
+    PipelineSpecification specs;
+    specs.name = "Test Pipeline";
+    specs.shader = m_shader;
+
+    {
+        BufferLayout layout = {
+            {"a_Position", ShaderDataType::Float3},
+            {"a_Color", ShaderDataType::Float4}
+        };
+        specs.layout = layout;
+        // m_vertexBuffer->setLayout(layout);
+    }
+
+    m_pipeline = Pipeline::create(specs);
 }
 
 void Application::run() {
@@ -58,17 +65,13 @@ void Application::run() {
 
         RenderCommand::beginFrame();
 
-        // TODO: Move out of main run loop
-        // {
-            RenderCommand::bindShader(*m_shader);
-            Renderer::submit(m_vertexArray);
-        // }
+        Renderer::submit(*m_pipeline, m_vertexArray);
 
         for (Layer* l : m_layerStack) {
             l->onUpdate();
         }
 
-        m_context->endFrame();
+        RenderCommand::endFrame();
     }
 }
 

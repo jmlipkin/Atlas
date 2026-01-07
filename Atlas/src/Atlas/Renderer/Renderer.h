@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RenderCommand.h"
+#include "Pipeline.h"
 namespace Atlas {
 
     class Renderer {
@@ -10,7 +11,7 @@ namespace Atlas {
          static void beginScene();
          static void endScene();
 
-         static void submit(const std::shared_ptr<VertexArray>& vertexArray);
+         static void submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray);
 
          inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
     };

@@ -12,16 +12,16 @@ class MetalShader : public Shader {
     MetalShader(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc);
     virtual ~MetalShader();
 
-    // virtual void bind() const override;
-    // virtual void unbind() const override;
-
-    MTL::RenderPipelineState* getMTLPSO() const { return m_pipelineState; }
+    virtual void* getVertexShader() const override { return m_vertexShader; }
+    virtual void* getFragmentShader() const override { return m_fragmentShader; }
 
     virtual const std::string& getName() const override { return m_name; }
 
    private:
-    MTL::RenderPipelineState* m_pipelineState;
     std::string m_name;
+
+    MTL::Function* m_vertexShader;
+    MTL::Function* m_fragmentShader;
 };
 
 }  // namespace Atlas

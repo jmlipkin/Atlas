@@ -4,7 +4,7 @@ Clean up MTLData system
 Where is metal resizing happening?
 Convert raw pointers -- need to handle memory deallocation
 
-
+Clean up vertex array platforms -- is platformed approach necessary? Should internal buffers be converted?
 
 
 xcrun -sdk macosx metal -o triangle.ir -c triangle.metal

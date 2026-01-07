@@ -18,7 +18,7 @@ class MetalRendererAPI : public RendererAPI {
     virtual void beginFrame() override;
     virtual void endFrame() override;
 
-    void bindShader(const Shader& shader) override;
+    void bindPipeline(const Pipeline& shader) override;
     void bindVertexArray(const VertexArray& array) override;
     void bindVertexBuffer(const VertexBuffer& buffer, int index) override;
 
