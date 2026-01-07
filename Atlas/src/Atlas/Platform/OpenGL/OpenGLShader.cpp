@@ -6,7 +6,7 @@
 
 namespace Atlas {
 
-OpenGLShader::OpenGLShader(const std::string& filepath) {
+OpenGLShader::OpenGLShader(const std::string& name, const std::string& filepath) {
     AT_CORE_ERROR("Cannot read shaders from file using OpenGL");
 }
 

@@ -8,7 +8,7 @@ namespace Atlas {
 
 class MetalShader : public Shader {
    public:
-    MetalShader(const std::string& filepath);
+    MetalShader(const std::string& name, const std::string& filepath);
     MetalShader(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc);
     virtual ~MetalShader() = default;
 

@@ -7,17 +7,17 @@
 
 namespace Atlas {
 
-std::shared_ptr<Shader> Shader::create(const std::string& filepath) {
+std::shared_ptr<Shader> Shader::create(const std::string& name, const std::string& filepath) {
     switch (RendererAPI::getAPI()) {
         case RendererAPI::API::None: {
             AT_ASSERT(false, "RendererAPI::None is not supported");
         }
         case RendererAPI::API::OpenGL: {
-            return std::make_shared<OpenGLShader>(filepath);
+            return std::make_shared<OpenGLShader>(name, filepath);
             break;
         }
         case RendererAPI::API::Metal: {
-            return std::make_shared<MetalShader>(filepath);
+            return std::make_shared<MetalShader>(name, filepath);
             break;
         }
     }
@@ -55,14 +55,8 @@ void ShaderLibrary::add(const std::shared_ptr<Shader>& shader) {
     add(name, shader);
 }
 
-std::shared_ptr<Shader> ShaderLibrary::load(const std::string& filepath) {
-    std::shared_ptr<Shader> shader = Shader::create(filepath);
-    add(shader);
-    return shader;
-}
-
 std::shared_ptr<Shader> ShaderLibrary::load(const std::string& name, const std::string& filepath) {
-    std::shared_ptr<Shader> shader = Shader::create(filepath);
+    std::shared_ptr<Shader> shader = Shader::create(name, filepath);
     add(name, shader);
     return shader;
 }

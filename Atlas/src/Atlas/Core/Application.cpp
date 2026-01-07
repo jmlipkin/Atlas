@@ -37,18 +37,18 @@ Application::Application() {
     m_vertexArray->setIndexBuffer(m_indexBuffer);
 
     std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/triangle.metallib";
-    m_shader = Shader::create(filepath);
+    m_shaderLib.load("Triangle Shader", filepath);
 
     BufferLayout layout = {
         {"a_Position", ShaderDataType::Float3},
         {"a_Color", ShaderDataType::Float4}};
 
-    PipelineSpecification specs;
-    specs.name = "Test Pipeline";
-    specs.shader = m_shader;
-    specs.layout = layout;
+    PipelineSpecification test_triangle;
+    test_triangle.name = "Test Pipeline";
+    test_triangle.shader = m_shaderLib.get("Triangle Shader");
+    test_triangle.layout = layout;
 
-    m_pipeline = Pipeline::create(specs);
+    m_pipeline = Pipeline::create(test_triangle);
 }
 
 void Application::run() {

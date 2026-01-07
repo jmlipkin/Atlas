@@ -12,7 +12,7 @@ class Shader {
 
     virtual const std::string& getName() const = 0;
 
-    static std::shared_ptr<Shader> create(const std::string& filepath);
+    static std::shared_ptr<Shader> create(const std::string& name, const std::string& filepath);
     static std::shared_ptr<Shader> create(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc);
 };
 
@@ -21,9 +21,7 @@ class ShaderLibrary {
      void add(std::string name, const std::shared_ptr<Shader>& shader);
      void add(const std::shared_ptr<Shader>& shader);
 
-     std::shared_ptr<Shader> load(const std::string& filepath);
      std::shared_ptr<Shader> load(const std::string& name, const std::string& filepath);
-
      std::shared_ptr<Shader> get(const std::string& name) const;
 
      bool exists(const std::string& name) const;
