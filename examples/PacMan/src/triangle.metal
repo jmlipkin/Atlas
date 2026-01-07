@@ -11,13 +11,17 @@ struct VertexOut {
     float4 color;
 };
 
-vertex VertexOut vertexShader(VertexIn in [[stage_in]]) {
+struct Uniforms {
+    float4 color;
+};
+
+vertex VertexOut vertexShader(VertexIn in [[stage_in]], constant Uniforms& u [[buffer(1)]]) {
     VertexOut out;
     out.position = float4(in.position, 1.0);
     out.color = in.color;
     return out;
 }
 
-fragment float4 fragmentShader(VertexOut in [[stage_in]]) {
-    return in.color;
+fragment float4 fragmentShader(VertexOut in [[stage_in]], constant Uniforms& u [[buffer(1)]]) {
+    return u.color;
 }

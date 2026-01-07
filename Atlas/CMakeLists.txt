@@ -20,6 +20,23 @@ add_subdirectory(extern/glm)
 
 add_library(${TARGET_NAME} STATIC)
 
+# Generates .metallib file
+# TODO: Reconsider .metallib location
+# add_custom_command(TARGET ${TARGET_NAME}
+#     PRE_BUILD
+#     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src
+#     COMMAND xcrun -sdk macosx metal -o triangle.ir -c triangle.metal
+#     COMMAND xcrun -sdk macosx metal -o triangle.metallib triangle.ir
+#     COMMENT "Metal shaderlibrary (triangle.metallib) built"
+# )
+add_custom_target(triangle_shader
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src
+    COMMAND xcrun -sdk macosx metal -o triangle.ir -c triangle.metal
+    COMMAND xcrun -sdk macosx metal -o triangle.metallib triangle.ir
+    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/triangle.metal
+)
+add_dependencies(${TARGET_NAME} triangle_shader)
+
 # ADD FILES
 file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
@@ -44,24 +61,23 @@ target_sources(${TARGET_NAME} PRIVATE ${ATLAS_SOURCES})
 set_source_files_properties(
     src/Atlas/Platform/Metal/ImGuiMetalRenderer.mm
     PROPERTIES
-        COMPILE_OPTIONS "-Wno-arc-bridge-casts-disallowed-in-nonarc"
+    COMPILE_OPTIONS "-Wno-arc-bridge-casts-disallowed-in-nonarc"
 )
-
 
 target_precompile_headers(${TARGET_NAME}
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/atpch.h
-    )
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/atpch.h
+)
 
 # BINARY DATA
 file(GLOB_RECURSE BINARY_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/*")
 list(FILTER BINARY_FILES EXCLUDE REGEX "/\\.DS_Store$")
 
-target_include_directories(${TARGET_NAME} 
+target_include_directories(${TARGET_NAME}
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/extern
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-    )
+)
 
 target_compile_definitions(${TARGET_NAME}
     PUBLIC
@@ -83,9 +99,9 @@ target_link_libraries(${TARGET_NAME}
 if(APPLE)
     target_link_libraries(${TARGET_NAME}
         PUBLIC
-            "-framework AppKit"
-            "-framework Foundation"
-            "-framework QuartzCore"
-            "-framework Metal"
+        "-framework AppKit"
+        "-framework Foundation"
+        "-framework QuartzCore"
+        "-framework Metal"
     )
 endif()

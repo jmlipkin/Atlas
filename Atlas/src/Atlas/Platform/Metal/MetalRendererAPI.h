@@ -29,6 +29,16 @@ class MetalRendererAPI : public RendererAPI {
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
     virtual void commit() override;
 
+    // TEMPORARY?
+    virtual void setBool(const std::string& name, const bool value) override;
+    virtual void setInt(const std::string& name, const int value) override;
+    virtual void setFloat(const std::string& name, const float value) override;
+    virtual void setFloat2(const std::string& name, const glm::vec2& value) override;
+    virtual void setFloat3(const std::string& name, const glm::vec3& value) override;
+    virtual void setFloat4(const std::string& name, const glm::vec4& value) override;
+    virtual void setMat3(const std::string& name, const glm::mat3& value) override;
+    virtual void setMat4(const std::string& name, const glm::mat4& value) override;
+
    private:
     MetalContext& m_context;
     MTL::ClearColor m_color;
