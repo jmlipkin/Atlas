@@ -8,6 +8,9 @@
 #include "Atlas/Renderer/Renderer.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "atpch.h"
+
+// TEMPORARY
+#include "Atlas/Platform/Metal/MetalImGuiLayer.h"
 namespace Atlas {
 
 Application* Application::s_instance = nullptr;
@@ -59,6 +62,7 @@ void Application::run() {
 
         RenderCommand::beginFrame();
 
+        m_pipeline->setFloat4("u_color", MetalImGuiLayer::getImGuiColor());
         Renderer::submit(*m_pipeline, m_vertexArray);
 
         for (Layer* l : m_layerStack) {

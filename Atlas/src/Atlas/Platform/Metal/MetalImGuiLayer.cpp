@@ -22,26 +22,29 @@
 
 namespace Atlas {
 
-    MetalImGuiLayer::MetalImGuiLayer() : ImGuiLayer() {}
+// TEMP
+glm::vec4 MetalImGuiLayer::triangleColor = glm::vec4(1.0f);
 
-    void MetalImGuiLayer::onAttach() {
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO();
+MetalImGuiLayer::MetalImGuiLayer() : ImGuiLayer() {}
 
-        io.IniFilename = "build/Atlas/extern/imgui.ini";
-        if(std::filesystem::exists(io.IniFilename)){
-            ImGui::LoadIniSettingsFromDisk(io.IniFilename);
-        }
+void MetalImGuiLayer::onAttach() {
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
 
-		Application& app = Application::get();
-		io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
-
-        io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-        ImGui::StyleColorsDark();
-
-        ImGui_ImplMetal_Init(MetalContext::getMTLDevice());
+    io.IniFilename = "build/Atlas/extern/imgui.ini";
+    if (std::filesystem::exists(io.IniFilename)) {
+        ImGui::LoadIniSettingsFromDisk(io.IniFilename);
     }
+
+    Application& app = Application::get();
+    io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
+
+    io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+    io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+    ImGui::StyleColorsDark();
+
+    ImGui_ImplMetal_Init(MetalContext::getMTLDevice());
+}
 
     void MetalImGuiLayer::onDetach() {}
 
@@ -67,10 +70,14 @@ namespace Atlas {
 
         Renderer::beginImGui();
         ImGui::NewFrame();
-
+ 
         // --- EXAMPLE UI ---
         static bool showDemo = true;
         ImGui::ShowDemoWindow(&showDemo);
+
+        ImGui::Begin("Triangle Color");
+        ImGui::ColorEdit4("Color", &triangleColor[0]);
+        ImGui::End();
 
         ImGui::Render();
         Renderer::submitImGui();
