@@ -14,6 +14,14 @@ namespace Atlas {
         void Renderer::endScene() {
         }
 
+        void Renderer::beginImGui() {
+            RenderCommand::beginImGui();
+        }
+
+        void Renderer::submitImGui() {
+            RenderCommand::drawImGui();
+        }
+
         void Renderer::submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray) {
             RenderCommand::bindPipeline(pipeline);
             RenderCommand::bindVertexArray(*vertexArray);

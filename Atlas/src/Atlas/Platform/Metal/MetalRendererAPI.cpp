@@ -12,7 +12,6 @@ MetalRendererAPI::MetalRendererAPI(MetalContext& context) : m_context(context) {
 }
 
 MetalRendererAPI::~MetalRendererAPI() {
-    // m_passDesc->release();
 }
 
 void MetalRendererAPI::setClearColor(const glm::vec4& color) {
@@ -43,7 +42,6 @@ void MetalRendererAPI::beginFrame() {
     descriptor->release();
 
     m_encoder = m_buffer->renderCommandEncoder(m_passDesc);
-    // MetalContext::setEncoder(encoder);
 
     clear();
 }
@@ -61,7 +59,8 @@ void MetalRendererAPI::bindVertexArray(const VertexArray& array) {
 }
 
 void MetalRendererAPI::bindVertexBuffer(const VertexBuffer& buffer, int index) {
-    m_encoder->setVertexBuffer(static_cast<const MetalVertexBuffer&>(buffer).getNativeBuffer(), 0, index);
+    const MetalVertexBuffer& mBuf = static_cast<const MetalVertexBuffer&>(buffer);
+    m_encoder->setVertexBuffer((MTL::Buffer*)mBuf.getNativeBuffer(), 0, index);
 }
 
 // TODO: switch to batch system

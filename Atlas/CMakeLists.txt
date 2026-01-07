@@ -37,10 +37,6 @@ file(GLOB IMGUI_SOURCES CONFIGURE_DEPENDS
 )
 
 list(APPEND ATLAS_SOURCES ${IMGUI_SOURCES})
-list(REMOVE_ITEM ATLAS_SOURCES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas/Platform/Metal/MetalImGuiLayer.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas/Platform/Metal/MetalImGuiLayer.mm"
-)
 
 target_sources(${TARGET_NAME} PRIVATE ${ATLAS_SOURCES})
 

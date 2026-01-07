@@ -8,7 +8,7 @@ namespace Atlas {
     class MetalVertexArray : public VertexArray {
         public:
          MetalVertexArray();
-         virtual ~MetalVertexArray();
+         virtual ~MetalVertexArray() = default;
 
          virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& buffer) override;
          virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& buffer) override;
@@ -17,8 +17,6 @@ namespace Atlas {
          virtual const std::shared_ptr<IndexBuffer>& getIndexBuffer() const override { return m_indexBuffer; }
 
         private:
-        //  MTL::Device* m_device;
-        //  MTL::VertexDescriptor* m_vertexDescriptor;
          std::vector<std::shared_ptr<VertexBuffer>> m_vertexBuffers;
          std::shared_ptr<IndexBuffer> m_indexBuffer;
     };

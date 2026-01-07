@@ -50,22 +50,22 @@ namespace Atlas {
 
 		glBindVertexArray(m_rendererID);
 		// vertexBuffer->bind();
-        AT_CORE_WARN("VertexBuffer not binding properly OpenGLVertexArray");
+        AT_CORE_WARN("[from {} : {}] THIS CODE MUST MOVE TO PIPELINE", __FILE__, __LINE__);
 
-                uint32_t index = 0;
-                const auto& layout = vertexBuffer->getLayout();
-                for (const auto& element : layout) {
-                    glEnableVertexAttribArray(index);
-                    glVertexAttribPointer(index,
-                                          element.GetComponentCount(),
-                                          shaderDataTypeToOpenGLBaseType(element.type),
-                                          element.normalized ? GL_TRUE : GL_FALSE,
-                                          layout.getStride(),
-                                          (const void*)element.offset);
-                    index++;
-                }
+        //         uint32_t index = 0;
+        //         const auto& layout = vertexBuffer->getLayout();
+        //         for (const auto& element : layout) {
+        //             glEnableVertexAttribArray(index);
+        //             glVertexAttribPointer(index,
+        //                                   element.GetComponentCount(),
+        //                                   shaderDataTypeToOpenGLBaseType(element.type),
+        //                                   element.normalized ? GL_TRUE : GL_FALSE,
+        //                                   layout.getStride(),
+        //                                   (const void*)element.offset);
+        //             index++;
+        //         }
 
-        m_vertexBuffers.push_back(vertexBuffer);
+        // m_vertexBuffers.push_back(vertexBuffer);
     }
 
     void OpenGLVertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& buffer) {

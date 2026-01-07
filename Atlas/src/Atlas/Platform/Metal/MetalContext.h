@@ -9,17 +9,18 @@ namespace Atlas {
   class MetalContext : public GraphicsContext {
      public:
       MetalContext(GLFWwindow* window);
+      
       virtual void init() override;
       virtual void swapBuffers() override {}
 
-      CA::MetalLayer* getMTLLayer() const { return m_layer; }
+      CA::MetalDrawable* getNextDrawable() { return m_layer->nextDrawable(); }
       
-      static MTL::Library* setNewMTLLibrary(const std::string& filepath);
+      CA::MetalLayer* getMTLLayer() const { return m_layer; }
 
+      static MTL::Library* setNewMTLLibrary(const std::string& filepath);
+      
       static MTL::Device* getMTLDevice() { return s_device; }
       static MTL::Library* getMTLLibrary() { return s_library; }
-
-      CA::MetalDrawable* getNextDrawable() { return m_layer->nextDrawable(); }
 
       virtual void onResize(const WindowResizeEvent& e) override;
 

@@ -18,14 +18,16 @@ class MetalRendererAPI : public RendererAPI {
     virtual void beginFrame() override;
     virtual void endFrame() override;
 
+    // ImGui functions implemented in MetalRendererAPI.mm
+    virtual void beginImGui() override;
+    virtual void drawImGui() override;
+
     void bindPipeline(const Pipeline& shader) override;
     void bindVertexArray(const VertexArray& array) override;
     void bindVertexBuffer(const VertexBuffer& buffer, int index) override;
 
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
     virtual void commit() override;
-
-    // static MTL::RenderCommandEncoder* getEncoder() { return s_encoder; }
 
    private:
     MetalContext& m_context;

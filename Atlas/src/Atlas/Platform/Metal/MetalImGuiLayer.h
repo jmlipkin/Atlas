@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Atlas/ImGui/ImGuiLayer.h>
-#include "Atlas/Platform/Metal/MetalContext.h"
 
 namespace Atlas {
 
@@ -13,9 +12,8 @@ namespace Atlas {
         virtual void onAttach() override;
         virtual void onDetach() override;
         virtual void onUpdate() override;
-
-        private:
-         MetalContext* m_MTLData;
+    private:
+     float m_time;
     };
 
 }  // namespace Atlas

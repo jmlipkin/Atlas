@@ -19,9 +19,9 @@ Application::Application() {
     m_window = std::shared_ptr<Window>(Window::create());
     m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
     m_context = m_window->getGraphicsContext();
+    Renderer::init(*m_context);
 
     m_vertexArray = std::unique_ptr<VertexArray>(VertexArray::create());
-    // m_vertexArray->bind();
 
     float vertices[3 * 7] = {
         -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -36,23 +36,17 @@ Application::Application() {
     m_indexBuffer = IndexBuffer::create(indices, sizeof(indices));
     m_vertexArray->setIndexBuffer(m_indexBuffer);
 
-    Renderer::init(*m_context);
-
     std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/triangle.metallib";
     m_shader = Shader::create(filepath);
+
+    BufferLayout layout = {
+        {"a_Position", ShaderDataType::Float3},
+        {"a_Color", ShaderDataType::Float4}};
 
     PipelineSpecification specs;
     specs.name = "Test Pipeline";
     specs.shader = m_shader;
-
-    {
-        BufferLayout layout = {
-            {"a_Position", ShaderDataType::Float3},
-            {"a_Color", ShaderDataType::Float4}
-        };
-        specs.layout = layout;
-        // m_vertexBuffer->setLayout(layout);
-    }
+    specs.layout = layout;
 
     m_pipeline = Pipeline::create(specs);
 }

@@ -26,6 +26,9 @@ class RendererAPI {
     virtual void beginFrame() = 0;
     virtual void endFrame() = 0;
 
+    virtual void beginImGui() = 0;
+    virtual void drawImGui() = 0;
+
     virtual void bindPipeline(const Pipeline& pipeline) = 0;
     virtual void bindVertexArray(const VertexArray& array) = 0;
     virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
