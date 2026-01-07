@@ -2,7 +2,6 @@
 #include "MetalImGuiLayer.h"
 
 #include "MetalContext.h"
-#include "ImGuiMetalRenderer.h"
 
 #include "Atlas/Core/Application.h"
 #include "Atlas/Core/KeyCodes.h"
@@ -13,12 +12,12 @@
 #include <filesystem>
 
 #include <imgui/imgui.h>
-#import <Metal/Metal.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_COCOA
 #include <GLFW/glfw3native.h>
 
+#include "ImGuiMetalRenderer.h"
 
 
 namespace Atlas {
@@ -41,7 +40,7 @@ namespace Atlas {
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
         ImGui::StyleColorsDark();
 
-        ImGui_ImplMetal_Init((id<MTLDevice>)MetalContext::getMTLDevice());
+        ImGui_ImplMetal_Init(MetalContext::getMTLDevice());
     }
 
     void MetalImGuiLayer::onDetach() {}

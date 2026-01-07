@@ -40,6 +40,14 @@ list(APPEND ATLAS_SOURCES ${IMGUI_SOURCES})
 
 target_sources(${TARGET_NAME} PRIVATE ${ATLAS_SOURCES})
 
+# Silence ImGui + Metal-cpp bridging warning
+set_source_files_properties(
+    src/Atlas/Platform/Metal/ImGuiMetalRenderer.mm
+    PROPERTIES
+        COMPILE_OPTIONS "-Wno-arc-bridge-casts-disallowed-in-nonarc"
+)
+
+
 target_precompile_headers(${TARGET_NAME}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atpch.h

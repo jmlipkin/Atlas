@@ -1,9 +1,12 @@
-#include "atpch.h"
 #include "MetalRendererAPI.h"
+#include "atpch.h"
 
-#include <metal-cpp/Metal.hpp>
 #include "MetalBuffer.h"
 #include "MetalPipeline.h"
+
+#include <imgui/imgui.h>
+#include "ImGuiMetalRenderer.h"
+#include <metal-cpp/Metal.hpp>
 
 namespace Atlas {
 
@@ -69,6 +72,17 @@ void MetalRendererAPI::endFrame() {
 
     m_passDesc->release();
     m_pool->release();
+}
+
+void MetalRendererAPI::beginImGui() {
+    ImGui_ImplMetal_NewFrame(m_passDesc);
+}
+
+void MetalRendererAPI::drawImGui() {
+    ImGui_ImplMetal_RenderDrawData(
+        ImGui::GetDrawData(),
+        m_buffer,
+        m_encoder);
 }
 
 void MetalRendererAPI::commit() {
