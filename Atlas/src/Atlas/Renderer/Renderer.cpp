@@ -5,7 +5,7 @@ namespace Atlas {
 
         void Renderer::init(GraphicsContext& context) {
             RenderCommand::init(context);
-            AT_CORE_TRACE("Initialized Renderer");
+            AT_CORE_TRACE("Renderer initialized");
         }
 
         void Renderer::beginScene() {

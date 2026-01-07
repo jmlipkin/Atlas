@@ -17,13 +17,12 @@ namespace Atlas {
 
     MetalContext::MetalContext(GLFWwindow* window) : m_window(window) {
         AT_CORE_ASSERT(window, "Window handle is null!");
-        AT_CORE_TRACE("Created MetalContext (constructor)");
     }
 
     void MetalContext::init() { 
         initDevice();
         initWindow();
-        AT_CORE_TRACE("MetalContext initialized!");
+        AT_CORE_TRACE("MetalContext initialized");
     }
 
     void MetalContext::initDevice() {

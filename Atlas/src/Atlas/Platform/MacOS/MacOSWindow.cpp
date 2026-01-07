@@ -37,13 +37,13 @@ void MacOSWindow::init(const WindowProperties& props) {
     m_data.width = props.width;
     m_data.height = props.height;
 
-    AT_CORE_TRACE("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
+    AT_CORE_TRACE("Creating window \"{0}\" ({1}x{2})", props.title, props.width, props.height);
 
     if(!s_GLFWInitialized) {
         int success = glfwInit();
         AT_CORE_ASSERT(success, "Could not initialize GLFW!");
 
-        AT_CORE_INFO("Initialized GLFW!");
+        AT_CORE_TRACE("GLFW initialized");
         glfwSetErrorCallback(GLFWErrorCallback);
         s_GLFWInitialized = true;
     }

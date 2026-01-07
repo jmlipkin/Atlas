@@ -9,8 +9,6 @@
 #include "Atlas/Events/ApplicationEvent.h"
 #include "atpch.h"
 
-// TEMPORARY
-#include "Atlas/Platform/Metal/MetalImGuiLayer.h"
 namespace Atlas {
 
 Application* Application::s_instance = nullptr;
@@ -52,6 +50,8 @@ Application::Application() {
     test_triangle.layout = layout;
 
     m_pipeline = Pipeline::create(test_triangle);
+
+    AT_CORE_INFO("Engine initialization complete!");
 }
 
 void Application::run() {
@@ -62,7 +62,6 @@ void Application::run() {
 
         RenderCommand::beginFrame();
 
-        m_pipeline->setFloat4("u_color", MetalImGuiLayer::getImGuiColor());
         Renderer::submit(*m_pipeline, m_vertexArray);
 
         for (Layer* l : m_layerStack) {
