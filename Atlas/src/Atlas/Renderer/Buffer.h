@@ -134,22 +134,17 @@ class BufferLayout {
 class VertexBuffer {
    public:
     virtual ~VertexBuffer() = default;
-    virtual void bind() const = 0;
-    virtual void unbind() const = 0;
 
-    virtual void setLayout(const BufferLayout& layout) = 0;
-    virtual const BufferLayout& getLayout() const = 0;
+    virtual void* getNativeBuffer() const = 0;
 
-    static VertexBuffer* create(float* vertices, uint32_t size);
+    static std::shared_ptr<VertexBuffer> create(float* vertices, uint32_t size);
 };
 
 class IndexBuffer {
    public:
     virtual ~IndexBuffer() = default;
-    virtual void bind() const = 0;
-    virtual void unbind() const = 0;
 
     virtual uint32_t getCount() const = 0;
-    static IndexBuffer* create(uint32_t* indices, uint32_t size);
+    static std::shared_ptr<IndexBuffer> create(uint32_t* indices, uint32_t size);
 };
 }  // namespace Atlas

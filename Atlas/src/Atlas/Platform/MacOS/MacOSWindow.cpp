@@ -1,12 +1,16 @@
 #include "atpch.h"
 #include "MacOSWindow.h"
 
+#include <metal-cpp/Metal.hpp>
+
 #include <Atlas/Events/ApplicationEvent.h>
 #include <Atlas/Events/KeyEvent.h>
 #include <Atlas/Events/MouseEvent.h>
 
 // TEMPORARY
-#include "Atlas/Renderer/RendererAPI.h"
+#include "Atlas/Renderer/Renderer.h"
+#include "Atlas/Renderer/RenderCommand.h"
+#include "Atlas/Platform/Metal/MetalContext.h"
 
 namespace Atlas {
 
@@ -44,19 +48,19 @@ void MacOSWindow::init(const WindowProperties& props) {
         s_GLFWInitialized = true;
     }
 
-    if(RendererAPI::getAPI() == RendererAPI::API::OpenGL) {
+    if(Renderer::getAPI() == RendererAPI::API::OpenGL) {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    } else if (RendererAPI::getAPI() == RendererAPI::API::Metal) {
+    } else if (Renderer::getAPI() == RendererAPI::API::Metal) {
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     }
 
     m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
 
-    m_context = GraphicsContext::create(m_window);
-    m_context->init();
+    m_data.context = GraphicsContext::create(m_window);
+    m_data.context->init();
 
     glfwSetWindowUserPointer(m_window, &m_data);
     // cannot call swap interval using metal
@@ -68,7 +72,7 @@ void MacOSWindow::init(const WindowProperties& props) {
         WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
         data.width = width;
         data.height = height;
-        
+
         WindowResizeEvent event(width, height);
         data.eventCallback(event);
     });
@@ -146,7 +150,7 @@ void MacOSWindow::shutdown() {
 
 void MacOSWindow::onUpdate() {
     glfwPollEvents();
-    m_context->swapBuffers();
+    m_data.context->swapBuffers();
 }
 
 void MacOSWindow::setVSync(bool enabled) {

@@ -1,16 +1,14 @@
 #pragma once
 
 #include "Atlas/Renderer/VertexArray.h"
+#include <metal-cpp/Metal.hpp>
 
 namespace Atlas {
 
-    class OpenGLVertexArray : public VertexArray {
+    class MetalVertexArray : public VertexArray {
         public:
-         OpenGLVertexArray();
-         virtual ~OpenGLVertexArray();
-
-        //  virtual void bind() const override;
-        //  virtual void unbind() const override;
+         MetalVertexArray();
+         virtual ~MetalVertexArray() = default;
 
          virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& buffer) override;
          virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& buffer) override;
@@ -19,9 +17,8 @@ namespace Atlas {
          virtual const std::shared_ptr<IndexBuffer>& getIndexBuffer() const override { return m_indexBuffer; }
 
         private:
-         uint32_t m_rendererID;
          std::vector<std::shared_ptr<VertexBuffer>> m_vertexBuffers;
          std::shared_ptr<IndexBuffer> m_indexBuffer;
     };
 
-} // namespace Atlas
+}  // namespace Atlas

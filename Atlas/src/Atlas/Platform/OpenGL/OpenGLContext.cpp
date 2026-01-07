@@ -26,4 +26,8 @@ void OpenGLContext::swapBuffers() {
     glfwSwapBuffers(m_window);
 }
 
+void OpenGLContext::onResize(const WindowResizeEvent& e) {
+    glViewport(0, 0, e.getWidth(), e.getHeight());
+}
+
 }  // namespace Atlas

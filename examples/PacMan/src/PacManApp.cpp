@@ -1,5 +1,7 @@
 #include <Atlas.h>
 
+#include <Atlas/ImGui/ImGuiLayer.h>
+
 class ExampleLayer : public Atlas::Layer {
     public:
     ExampleLayer() : Layer("Example") {}
@@ -32,6 +34,7 @@ class PacMan : public Atlas::Application {
     public:
     PacMan() {
         pushLayer(new ExampleLayer);
+        pushOverlay(Atlas::ImGuiLayer::create());
     }
     ~PacMan() override = default;
 };

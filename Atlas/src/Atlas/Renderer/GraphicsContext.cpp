@@ -1,7 +1,7 @@
 #include "atpch.h"
 #include "GraphicsContext.h"
 
-#include "RendererAPI.h"
+#include "Atlas/Renderer/Renderer.h"
 
 #include "Atlas/Platform/Metal/MetalContext.h"
 #include "Atlas/Platform/OpenGL/OpenGLContext.h"
@@ -10,18 +10,18 @@
 
 namespace Atlas {
 
-    GraphicsContext* GraphicsContext::create(GLFWwindow* window) {
-        switch(RendererAPI::getAPI()) {
+    std::shared_ptr<GraphicsContext> GraphicsContext::create(GLFWwindow* window) {
+        switch(Renderer::getAPI()) {
             case RendererAPI::API::None: {
                 AT_CORE_ASSERT(false, "RendererAPI::None is not currently supported.");
             }
             case RendererAPI::API::OpenGL: {
                 AT_CORE_TRACE("Using RendererAPI::API::OpenGL");
-                return new OpenGLContext(window);
+                return std::make_shared<OpenGLContext>(window);
             }
             case RendererAPI::API::Metal: {
                 AT_CORE_TRACE("Using RendererAPI::API::Metal");
-                return new MetalContext(window);
+                return std::make_shared<MetalContext>(window);
             }
         }
     }

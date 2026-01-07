@@ -2,22 +2,25 @@
 #include "atpch.h"
 
 #include "Atlas/Platform/OpenGL/OpenGLBuffer.h"
-#include "RendererAPI.h"
+#include "Atlas/Platform/Metal/MetalBuffer.h"
+#include "Atlas/Renderer/Renderer.h"
 
 #include "spdlog/fmt/bundled/core.h" // Required for fmt::ptr
 
 namespace Atlas {
 
-    VertexBuffer* VertexBuffer::create(float* vertices, uint32_t size) {
-        switch (RendererAPI::getAPI()) {
+    std::shared_ptr<VertexBuffer> VertexBuffer::create(float* vertices, uint32_t size) {
+        switch (Renderer::getAPI()) {
             case RendererAPI::API::None: {
                 AT_ASSERT(false, "RendererAPI::None is not supported");
             }
             case RendererAPI::API::OpenGL: {
-                return new OpenGLVertexBuffer(vertices, size);
+                return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+                break;
             }
             case RendererAPI::API::Metal: {
-                AT_ASSERT(false, "RendererAPI::Metal is not supported");
+                return std::make_shared<MetalVertexBuffer>(vertices, size);
+                break;
             }
         }
 
@@ -25,16 +28,18 @@ namespace Atlas {
         return nullptr;
     }
 
-    IndexBuffer* IndexBuffer::create(uint32_t* indices, uint32_t size) {
-        switch (RendererAPI::getAPI()) {
+    std::shared_ptr<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t size) {
+        switch (Renderer::getAPI()) {
             case RendererAPI::API::None: {
                 AT_ASSERT(false, "RendererAPI::None is not supported");
             }
             case RendererAPI::API::OpenGL: {
-                return new OpenGLIndexBuffer(indices, size);
+                return std::make_shared<OpenGLIndexBuffer>(indices, size);
+                break;
             }
             case RendererAPI::API::Metal: {
-                AT_ASSERT(false, "RendererAPI::Metal is not supported");
+                return std::make_shared<MetalIndexBuffer>(indices, size);
+                break;
             }
         }
 

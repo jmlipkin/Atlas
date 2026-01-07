@@ -1,52 +1,38 @@
-// #pragma once
-
-// #include "Atlas/Renderer/GraphicsContext.h"
-
-// namespace MTL {
-// class Device;
-// }
-// namespace Atlas {
-
-// class MetalContext : public GraphicsContext {
-//    public:
-//     MetalContext(GLFWwindow* window);
-//     virtual void init() override;
-//     virtual void swapBuffers() override;
-
-//     private:
-//      void initDevice();
-//      void initWindow();
-
-//     private:
-//     GLFWwindow* m_window;
-//      MTL::Device* m_device;
-//      void* metalLayer;
-// };
-// }  // namespace Atlas
-
-
-
-
 #pragma once
 
+#include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Renderer/GraphicsContext.h"
+#include <metal-cpp/Metal.hpp>
 
-class MTLDevice;
 namespace Atlas {
 
-class MetalContext : public GraphicsContext {
-   public:
-    MetalContext(GLFWwindow* window);
-    virtual void init() override;
-    virtual void swapBuffers() override;
+  class MetalContext : public GraphicsContext {
+     public:
+      MetalContext(GLFWwindow* window);
+      
+      virtual void init() override;
+      virtual void swapBuffers() override {}
 
-    private:
-     void initDevice();
-     void initWindow();
+      CA::MetalDrawable* getNextDrawable() { return m_layer->nextDrawable(); }
+      
+      CA::MetalLayer* getMTLLayer() const { return m_layer; }
 
-    private:
-    GLFWwindow* m_window;
-     void* m_device;
-     void* metalLayer;
-};
+      static MTL::Library* setNewMTLLibrary(const std::string& filepath);
+      
+      static MTL::Device* getMTLDevice() { return s_device; }
+      static MTL::Library* getMTLLibrary() { return s_library; }
+
+      virtual void onResize(const WindowResizeEvent& e) override;
+
+     private:
+      void initDevice();
+      void initWindow();
+
+     private:
+      static MTL::Device* s_device;
+      static MTL::Library* s_library;
+      
+      CA::MetalLayer* m_layer;
+      GLFWwindow* m_window;
+  };
 }  // namespace Atlas

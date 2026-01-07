@@ -6,7 +6,7 @@ set(PROJECT_NAME "Atlas")
 set(TARGET_NAME "PacMan")
 set(VERSION_NUMBER 0.0.1)
 
-project(${PROJECT_NAME} VERSION ${VERSION_NUMBER} LANGUAGES CXX OBJCXX)
+project(${PROJECT_NAME} VERSION ${VERSION_NUMBER} LANGUAGES CXX OBJC OBJCXX)
 
 # Set global output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -15,29 +15,4 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 add_subdirectory(Atlas)
 add_subdirectory(examples/PacMan)
-
-
-# # ADD FILES
-# file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
-#     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-#     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
-# )
-# target_sources(${TARGET_NAME} PRIVATE ${SOURCE_FILES})
-
-# # BINARY DATA
-# file(GLOB_RECURSE BINARY_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/*")
-# list(FILTER BINARY_FILES EXCLUDE REGEX "/\\.DS_Store$")
-
-# target_compile_definitions(${TARGET_NAME}
-#     PUBLIC
-
-#     CMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
-#     VERSION="${CURRENT_VERSION}"
-
-#     PRODUCT_NAME_WITHOUT_VERSION="${TARGET_NAME}"
-# )
-
-# target_link_libraries(${TARGET_NAME}
-#     PRIVATE
-#     Atlas
-# )
+add_subdirectory(testing)

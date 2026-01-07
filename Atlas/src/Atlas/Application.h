@@ -11,6 +11,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
+#include "Renderer/Pipeline.h"
 
 namespace Atlas {
 
@@ -33,7 +34,8 @@ class Application {
     bool onWindowClose(WindowCloseEvent& e);
 
    private:
-    std::unique_ptr<Window> m_window;
+    std::shared_ptr<Window> m_window;
+    std::shared_ptr<GraphicsContext> m_context;
     bool m_isRunning = true;
 
     LayerStack m_layerStack;
@@ -44,6 +46,8 @@ class Application {
     std::shared_ptr<VertexBuffer> m_vertexBuffer;
     std::shared_ptr<IndexBuffer> m_indexBuffer;
     std::shared_ptr<VertexArray> m_vertexArray;
+
+    std::shared_ptr<Pipeline> m_pipeline;
 };
 
 // TO BE DEFINED IN CLIENT

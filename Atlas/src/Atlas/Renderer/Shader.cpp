@@ -1,108 +1,79 @@
-#include "atpch.h"
 #include "Shader.h"
 
-#include <glad/glad.h>
+#include "Atlas/Platform/Metal/MetalShader.h"
+#include "Atlas/Platform/OpenGL/OpenGLShader.h"
+#include "RendererAPI.h"
+#include "atpch.h"
 
 namespace Atlas {
 
-    Shader::Shader(const std::string& vertexSrc, const std::string& fragSrc) {
-        GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-
-        const GLchar* source = vertexSrc.c_str();
-        glShaderSource(vShader, 1, &source, 0);
-
-        glCompileShader(vShader);
-
-        GLint isCompiled = 0;
-
-		glGetShaderiv(vShader, GL_COMPILE_STATUS, &isCompiled);
-		if (isCompiled == GL_FALSE)
-		{
-			GLint maxLength = 0;
-			glGetShaderiv(vShader, GL_INFO_LOG_LENGTH, &maxLength);
-
-			// The maxLength includes the NULL character
-			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(vShader, maxLength, &maxLength, &infoLog[0]);
-
-			// We don't need the shader anymore.
-			glDeleteShader(vShader);
-
-			AT_CORE_ERROR("{0}", infoLog.data());
-			AT_CORE_ASSERT(false, "Vertex shader compilation failure!");
-			return;
-		}
-
-        GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-        source = fragSrc.c_str();
-        glShaderSource(fShader, 1, &source, 0);
-
-        glCompileShader(fShader);
-
-        isCompiled = 0;
-
-		glGetShaderiv(fShader, GL_COMPILE_STATUS, &isCompiled);
-		if (isCompiled == GL_FALSE)
-		{
-			GLint maxLength = 0;
-			glGetShaderiv(fShader, GL_INFO_LOG_LENGTH, &maxLength);
-
-			// The maxLength includes the NULL character
-			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(fShader, maxLength, &maxLength, &infoLog[0]);
-
-			// We don't need the shader anymore.
-			glDeleteShader(fShader);
-
-			AT_CORE_ERROR("{0}", infoLog.data());
-			AT_CORE_ASSERT(false, "Fragment shader compilation failure!");
-			return;
-		}
-
-        m_rendererID = glCreateProgram();
-        GLuint program = m_rendererID;
-
-        glAttachShader(program, vShader);
-        glAttachShader(program, fShader);
-
-        glLinkProgram(program);
-
-        GLint isLinked = 0;
-		glGetProgramiv(program, GL_LINK_STATUS, (int*)&isLinked);
-		if (isLinked == GL_FALSE)
-		{
-			GLint maxLength = 0;
-			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
-
-			// The maxLength includes the NULL character
-			std::vector<GLchar> infoLog(maxLength);
-			glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
-
-			// We don't need the program anymore.
-			glDeleteProgram(program);
-			// Don't leak shaders either.
-			glDeleteShader(vShader);
-			glDeleteShader(fShader);
-
-			AT_CORE_ERROR("{0}", infoLog.data());
-			AT_CORE_ASSERT(false, "Shader link failure!");
-			return;
-		}
-
-        glDetachShader(program, vShader);
-        glDetachShader(program, fShader);
-
+std::shared_ptr<Shader> Shader::create(const std::string& filepath) {
+    switch (RendererAPI::getAPI()) {
+        case RendererAPI::API::None: {
+            AT_ASSERT(false, "RendererAPI::None is not supported");
+        }
+        case RendererAPI::API::OpenGL: {
+            return std::make_shared<OpenGLShader>(filepath);
+            break;
+        }
+        case RendererAPI::API::Metal: {
+            return std::make_shared<MetalShader>(filepath);
+            break;
+        }
     }
 
-    Shader::~Shader() {
-        glDeleteProgram(m_rendererID);
-    }
-
-    void Shader::bind() const { 
-        glUseProgram(m_rendererID);
-    }
-    void Shader::unbind() const {
-        glUseProgram(0);
-    }
+    AT_CORE_ASSERT(false, "Unknown RendererAPI");
+    return nullptr;
 }
+
+std::shared_ptr<Shader> Shader::create(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc) {
+    switch (RendererAPI::getAPI()) {
+        case RendererAPI::API::None: {
+            AT_ASSERT(false, "RendererAPI::None is not supported");
+        }
+        case RendererAPI::API::OpenGL: {
+            return std::make_shared<OpenGLShader>(name, vertexSrc, fragSrc);
+            break;
+        }
+        case RendererAPI::API::Metal: {
+            return std::make_shared<MetalShader>(name, vertexSrc, fragSrc);
+            break;
+        }
+    }
+
+    AT_CORE_ASSERT(false, "Unknown RendererAPI");
+    return nullptr;
+}
+
+void ShaderLibrary::add(std::string name, const std::shared_ptr<Shader>& shader) {
+    AT_CORE_ASSERT(!exists(name), "Shader already exists!");
+    m_shaders[name] = shader;
+}
+
+void ShaderLibrary::add(const std::shared_ptr<Shader>& shader) {
+    const std::string& name = shader->getName();
+    add(name, shader);
+}
+
+std::shared_ptr<Shader> ShaderLibrary::load(const std::string& filepath) {
+    std::shared_ptr<Shader> shader = Shader::create(filepath);
+    add(shader);
+    return shader;
+}
+
+std::shared_ptr<Shader> ShaderLibrary::load(const std::string& name, const std::string& filepath) {
+    std::shared_ptr<Shader> shader = Shader::create(filepath);
+    add(name, shader);
+    return shader;
+}
+
+std::shared_ptr<Shader> ShaderLibrary::get(const std::string& name) const {
+    AT_CORE_ASSERT(exists(name), "Shader does not exist!");
+    return m_shaders.at(name);
+}
+
+bool ShaderLibrary::exists(const std::string& name) const {
+    return m_shaders.find(name) != m_shaders.end();
+}
+
+}  // namespace Atlas
