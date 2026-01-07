@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.h"
-#include "Events/Event.h"
+#include "Base.h"
+#include "Atlas/Events/Event.h"
 #include "atpch.h"
 #include "Atlas/Renderer/GraphicsContext.h"
 

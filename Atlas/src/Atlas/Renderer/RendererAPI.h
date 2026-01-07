@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Atlas/Window.h"
+#include "Atlas/Core/Window.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Renderer/Pipeline.h"
 #include "Atlas/Renderer/VertexArray.h"

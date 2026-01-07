@@ -5,11 +5,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <Atlas/Core.h>
-#include <Atlas/Application.h>
+#include <Atlas/Core/Base.h>
+#include <Atlas/Core/Application.h>
 #include <Atlas/Renderer/Renderer.h>
-#include <Atlas/KeyCodes.h>
-#include <Atlas/MouseButtonCodes.h>
+#include <Atlas/Core/KeyCodes.h>
+#include <Atlas/Core/MouseButtonCodes.h>
 
 #include <Atlas/Platform/OpenGL/OpenGLImGuiLayer.h>
 #include <Atlas/Platform/Metal/MetalImGuiLayer.h>

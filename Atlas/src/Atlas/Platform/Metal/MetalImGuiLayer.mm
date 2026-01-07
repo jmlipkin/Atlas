@@ -4,9 +4,9 @@
 #include "MetalContext.h"
 #include "ImGuiMetalRenderer.h"
 
-#include "Atlas/Application.h"
-#include "Atlas/KeyCodes.h"
-#include "Atlas/MouseButtonCodes.h"
+#include "Atlas/Core/Application.h"
+#include "Atlas/Core/KeyCodes.h"
+#include "Atlas/Core/MouseButtonCodes.h"
 
 #include "Atlas/Renderer/Renderer.h"
 

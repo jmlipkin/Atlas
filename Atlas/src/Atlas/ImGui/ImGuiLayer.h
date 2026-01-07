@@ -3,7 +3,7 @@
 #include <Atlas/Events/ApplicationEvent.h>
 #include <Atlas/Events/KeyEvent.h>
 #include <Atlas/Events/MouseEvent.h>
-#include <Atlas/Layer.h>
+#include <Atlas/Core/Layer.h>
 
 #include <Atlas/Renderer/GraphicsContext.h>
 

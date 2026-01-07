@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Atlas/Application.h"
+#include "Atlas/Core/Application.h"
 #include "atpch.h"
 
 namespace Atlas {

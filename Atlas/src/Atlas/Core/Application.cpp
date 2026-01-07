@@ -3,10 +3,10 @@
 #include <metal-cpp/Metal.hpp>
 
 #include "Atlas/ImGui/ImGuiLayer.h"
-#include "Atlas/Input.h"
-#include "Atlas/Log.h"
+#include "Atlas/Core/Input.h"
+#include "Atlas/Core/Log.h"
 #include "Atlas/Renderer/Renderer.h"
-#include "Events/ApplicationEvent.h"
+#include "Atlas/Events/ApplicationEvent.h"
 #include "atpch.h"
 namespace Atlas {
 

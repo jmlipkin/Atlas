@@ -1,7 +1,7 @@
 #pragma once
 
 #include "atpch.h"
-#include "../Core.h"
+#include "Atlas/Core/Base.h"
 
 #include <spdlog/fmt/ostr.h>
 

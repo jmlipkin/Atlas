@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Events/Event.h"
+#include "Atlas/Events/Event.h"
 
 namespace Atlas {
 

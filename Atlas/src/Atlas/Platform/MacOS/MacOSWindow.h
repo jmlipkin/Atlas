@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Atlas/Renderer/GraphicsContext.h>
-#include <Atlas/Window.h>
+#include <Atlas/Core/Window.h>
 #include <GLFW/glfw3.h>
 
 #include <metal-cpp/Metal.hpp>

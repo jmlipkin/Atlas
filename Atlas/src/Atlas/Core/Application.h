@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Core.h"
+#include "Base.h"
 
 #include "Window.h"
 #include "LayerStack.h"
 
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
+#include "Atlas/Events/Event.h"
+#include "Atlas/Events/ApplicationEvent.h"
 
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/Pipeline.h"
+#include "Atlas/Renderer/Shader.h"
+#include "Atlas/Renderer/Buffer.h"
+#include "Atlas/Renderer/VertexArray.h"
+#include "Atlas/Renderer/Pipeline.h"
 
 namespace Atlas {
 
