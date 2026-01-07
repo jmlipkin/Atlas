@@ -23,5 +23,5 @@ vertex VertexOut vertexShader(VertexIn in [[stage_in]], constant Uniforms& u [[b
 }
 
 fragment float4 fragmentShader(VertexOut in [[stage_in]], constant Uniforms& u [[buffer(1)]]) {
-    return u.color;
+    return in.color;
 }

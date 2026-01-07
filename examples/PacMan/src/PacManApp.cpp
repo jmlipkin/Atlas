@@ -29,12 +29,25 @@ class ExampleLayer : public Atlas::Layer {
     void onDetach() override {}
 };
 
+class PacManImGui : public Atlas::ImGuiLayer {
+    public:
+    PacManImGui() {}
+
+    virtual void onImGuiRender() override {
+        glm::vec4 triangleColor = glm::vec4{1.0f};
+        ImGui::Begin("Triangle Color");
+        ImGui::ColorEdit4("Color", &triangleColor[0]);
+        ImGui::End();
+
+    }
+};
+
 class PacMan : public Atlas::Application {
 
     public:
     PacMan() {
         pushLayer(new ExampleLayer);
-        pushOverlay(Atlas::ImGuiLayer::create());
+        pushOverlay(new PacManImGui);
     }
     ~PacMan() override = default;
 };

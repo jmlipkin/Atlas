@@ -6,6 +6,7 @@
 #include <Atlas/Core/Layer.h>
 
 #include <Atlas/Renderer/GraphicsContext.h>
+#include "Atlas/ImGui/ImGuiSystem.h"
 
 namespace Atlas {
 
@@ -14,13 +15,14 @@ class ImGuiLayer : public Layer {
     ImGuiLayer();
     virtual ~ImGuiLayer() = default;
 
-    static void setImGuiGraphicsContextPtr(const void* context) { m_context = static_cast<GraphicsContext*>(const_cast<void*>(context)); }
+    // static void setImGuiGraphicsContextPtr(const void* context) { m_context = static_cast<GraphicsContext*>(const_cast<void*>(context)); }
 
-        static ImGuiLayer* create();
+        virtual void onImGuiRender() = 0;
 
-        virtual void onAttach() override = 0;
-        virtual void onDetach() override = 0;
-        virtual void onUpdate() override = 0;
+        void onUpdate() final;
+
+        void onAttach() final { m_system->initImGuiLayer(); }
+        void onDetach() final { m_system->cleanImGuiLayer(); }
 
         virtual void onEvent(Event & event) override;
 
@@ -37,6 +39,9 @@ class ImGuiLayer : public Layer {
        protected:
         static GraphicsContext* m_context;
         float m_time = 0.0f;
+
+        private:
+         std::unique_ptr<ImGuiSystem> m_system;
 };
 
 }  // namespace Atlas

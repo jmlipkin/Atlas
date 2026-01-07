@@ -11,32 +11,58 @@
 #include <Atlas/Core/KeyCodes.h>
 #include <Atlas/Core/MouseButtonCodes.h>
 
-#include <Atlas/Platform/OpenGL/OpenGLImGuiLayer.h>
-#include <Atlas/Platform/Metal/MetalImGuiLayer.h>
-
 namespace Atlas {
 
     ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer") {
-
+        m_system = ImGuiSystem::create();
     }
 
-    GraphicsContext* ImGuiLayer::m_context = nullptr;
+    // GraphicsContext* ImGuiLayer::m_context = nullptr;
 
-    ImGuiLayer* ImGuiLayer::create() {
-        switch (Renderer::getAPI()) {
-            case RendererAPI::API::None: {
-                AT_ASSERT(false, "RendererAPI::None is not supported");
-            }
-            case RendererAPI::API::OpenGL: {
-                return new OpenGLImGuiLayer();
-            }
-            case RendererAPI::API::Metal: {
-                return new MetalImGuiLayer();
-            }
-        }
+    // ImGuiLayer* ImGuiLayer::create() {
+    //     switch (Renderer::getAPI()) {
+    //         case RendererAPI::API::None: {
+    //             AT_ASSERT(false, "RendererAPI::None is not supported");
+    //         }
+    //         case RendererAPI::API::OpenGL: {
+    //             return new OpenGLImGuiLayer();
+    //         }
+    //         case RendererAPI::API::Metal: {
+    //             return new MetalImGuiLayer();
+    //         }
+    //     }
 
-        AT_ASSERT(false, "Unknown RendererAPI");
-        return nullptr;
+    //     AT_ASSERT(false, "Unknown RendererAPI");
+    //     return nullptr;
+    // }
+
+    void ImGuiLayer::onUpdate() {
+        GLFWwindow* window = (GLFWwindow*)Application::get().getWindow().getNativeWindow();
+
+        int winWidth, winHeight;
+        int fbWidth, fbHeight;
+
+        glfwGetWindowSize(window, &winWidth, &winHeight);
+        glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+
+        ImGuiIO& io = ImGui::GetIO();
+        io.DisplaySize = ImVec2((float)winWidth, (float)winHeight);
+        io.DisplayFramebufferScale = ImVec2(
+            (float)fbWidth / (float)winWidth,
+            (float)fbHeight / (float)winHeight
+        );
+
+		float time = (float)glfwGetTime();
+		io.DeltaTime = m_time > 0.0f ? (time - m_time) : (1.0f / 60.0f);
+		m_time = time;
+
+        Renderer::beginImGui();
+        ImGui::NewFrame();
+
+        onImGuiRender();
+        
+        ImGui::Render();
+        Renderer::submitImGui();
     }
 
     void ImGuiLayer::onEvent(Event& event) {
