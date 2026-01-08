@@ -46,7 +46,7 @@ namespace Atlas {
 
     void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) {
 
-        AT_CORE_ASSERT(vertexBuffer->getLayout().getElements().size(), "Vertex Buffer has no layout!");
+        // AT_CORE_ASSERT(vertexBuffer->getLayout().getElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(m_rendererID);
 		// vertexBuffer->bind();

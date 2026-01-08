@@ -9,7 +9,6 @@ class OpenGLPipeline : public Pipeline {
     OpenGLPipeline(const PipelineSpecification& specs) {}
 
     virtual void setLayout(const BufferLayout& layout) override {}
-    virtual std::shared_ptr<PipelineReflection> getReflection() const override { return m_reflection; }
 
     // virtual void setBool(const std::string& name, const bool value) override {}
     // virtual void setInt(const std::string& name, const int value) override {}
@@ -22,8 +21,5 @@ class OpenGLPipeline : public Pipeline {
 
    private:
     void attachLayout() {}
-
-    private:
-     std::shared_ptr<PipelineReflection> m_reflection;
 };
 }  // namespace Atlas

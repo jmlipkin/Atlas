@@ -23,6 +23,5 @@ class MetalPipeline : public Pipeline {
     MTL::RenderPipelineState* m_pipelineState;
     MTL::RenderPipelineDescriptor* m_pipelineDescriptor;
     MTL::VertexDescriptor* m_vertexDescriptor;
-    std::shared_ptr<PipelineReflection> m_reflection;
 };
 }  // namespace Atlas

@@ -21,6 +21,7 @@ class Log {
 
 // Core log macros
 #define AT_CORE_TRACE(...) ::Atlas::Log::getCoreLogger()->trace(__VA_ARGS__)
+#define AT_CORE_DEBUG(...) ::Atlas::Log::getCoreLogger()->debug(__VA_ARGS__)
 #define AT_CORE_INFO(...) ::Atlas::Log::getCoreLogger()->info(__VA_ARGS__)
 #define AT_CORE_WARN(...) ::Atlas::Log::getCoreLogger()->warn(__VA_ARGS__)
 #define AT_CORE_ERROR(...) ::Atlas::Log::getCoreLogger()->error(__VA_ARGS__)
@@ -28,6 +29,7 @@ class Log {
 
 // Client log macros
 #define AT_TRACE(...) ::Atlas::Log::getClientLogger()->trace(__VA_ARGS__)
+#define AT_DEBUG(...) ::Atlas::Log::getClientLogger()->debug(__VA_ARGS__)
 #define AT_INFO(...) ::Atlas::Log::getClientLogger()->info(__VA_ARGS__)
 #define AT_WARN(...) ::Atlas::Log::getClientLogger()->warn(__VA_ARGS__)
 #define AT_ERROR(...) ::Atlas::Log::getClientLogger()->error(__VA_ARGS__)

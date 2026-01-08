@@ -27,15 +27,17 @@ Application::Application() {
 
     m_vertexArray = std::unique_ptr<VertexArray>(VertexArray::create());
 
-    float vertices[3 * 7] = {
+    float vertices[4 * 7] = {
         -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
         0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-        0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f};
+        0.5f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
+        -0.5f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+    };
 
     m_vertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
     m_vertexArray->addVertexBuffer(m_vertexBuffer);
 
-    uint32_t indices[3] = {0, 1, 2};
+    uint32_t indices[6] = {0, 1, 2, 0, 2, 3};
 
     m_indexBuffer = IndexBuffer::create(indices, sizeof(indices));
     m_vertexArray->setIndexBuffer(m_indexBuffer);
@@ -84,7 +86,8 @@ void Application::run() {
         RenderCommand::beginFrame();
 
         float a = (sin(2 * time) + 1.0f) / 2.0f;
-        uBuf->setFloat4("color", glm::vec4{ 1.0f, 1.0f, 1.0f, a });
+        // float a = 0.8f;
+        uBuf->setFloat4("color", glm::vec4{1.0f, 1.0f, 1.0f, a});
 
         Renderer::submit(*m_pipeline, m_vertexArray, *uBuf);
 
