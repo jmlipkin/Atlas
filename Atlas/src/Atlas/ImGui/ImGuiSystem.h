@@ -6,6 +6,8 @@ namespace Atlas {
 
 class ImGuiSystem {
    public:
+    virtual ~ImGuiSystem() = default;
+    
     virtual void initImGuiLayer() = 0;
     virtual void cleanImGuiLayer() = 0;
 

@@ -6,6 +6,7 @@
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Renderer/Pipeline.h"
 #include "Atlas/Renderer/VertexArray.h"
+#include "Atlas/Renderer/UniformBuffer.h"
 
 namespace Atlas {
 
@@ -29,18 +30,9 @@ class RendererAPI {
     virtual void beginImGui() = 0;
     virtual void drawImGui() = 0;
 
-    virtual void bindPipeline(const Pipeline& pipeline) = 0;
+    virtual void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) = 0;
     virtual void bindVertexArray(const VertexArray& array) = 0;
     virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
-
-    virtual void setBool(const std::string& name, const bool value) = 0;
-    virtual void setInt(const std::string& name, const int value) = 0;
-    virtual void setFloat(const std::string& name, const float value) = 0;
-    virtual void setFloat2(const std::string& name, const glm::vec2& value) = 0;
-    virtual void setFloat3(const std::string& name, const glm::vec3& value) = 0;
-    virtual void setFloat4(const std::string& name, const glm::vec4& value) = 0;
-    virtual void setMat3(const std::string& name, const glm::mat3& value) = 0;
-    virtual void setMat4(const std::string& name, const glm::mat4& value) = 0;
 
     inline static API getAPI() { return s_API; }
 

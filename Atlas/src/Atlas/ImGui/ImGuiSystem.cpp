@@ -19,6 +19,9 @@ std::unique_ptr<ImGuiSystem> ImGuiSystem::create() {
             return std::make_unique<MetalImGuiSystem>();
         }
     }
+
+    AT_ASSERT(false, "Unknown RendererAPI");
+    return nullptr;
 }
 
 }  // namespace Atlas

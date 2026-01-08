@@ -14,7 +14,7 @@ namespace Atlas {
          static void beginImGui();
          static void submitImGui();
 
-         static void submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray);
+         static void submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray, const UniformBuffer& uBuffer);
 
          inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
     };

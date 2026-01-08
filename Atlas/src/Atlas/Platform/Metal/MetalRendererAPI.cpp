@@ -57,9 +57,11 @@ void MetalRendererAPI::beginFrame() {
     clear();
 }
 
-void MetalRendererAPI::bindPipeline(const Pipeline& pipeline) {
+void MetalRendererAPI::bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) {
     const MetalPipeline& p = static_cast<const MetalPipeline&>(pipeline);
     m_encoder->setRenderPipelineState(p.getMTLPSO());
+    m_encoder->setVertexBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
+    m_encoder->setFragmentBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
 }
 
 void MetalRendererAPI::bindVertexArray(const VertexArray& array) {
@@ -100,46 +102,5 @@ void MetalRendererAPI::commit() {
     m_buffer->presentDrawable((MTL::Drawable*)m_drawable);
     m_buffer->commit();
 }
-
-void MetalRendererAPI::setBool(const std::string& name, const bool value) {
-}
-
-void MetalRendererAPI::setInt(const std::string& name, const int value) {
-
-}
-
-void MetalRendererAPI::setFloat(const std::string& name, const float value) {
-
-}
-
-void MetalRendererAPI::setFloat2(const std::string& name, const glm::vec2& value) {
-
-}
-
-void MetalRendererAPI::setFloat3(const std::string& name, const glm::vec3& value) {
-
-}
-
-// TEMPORARY
-void MetalRendererAPI::setFloat4(const std::string& name, const glm::vec4& value) {
-    struct Uniforms {
-        glm::vec4 color;
-    };
-    MTL::Buffer* uniformBuffer = MetalContext::getMTLDevice()->newBuffer(sizeof(Uniforms), MTL::ResourceStorageModeManaged);
-    Uniforms* u = reinterpret_cast<Uniforms*>(uniformBuffer->contents());
-    u->color = value;
-
-    m_encoder->setVertexBuffer(uniformBuffer, 0, 1);
-    m_encoder->setFragmentBuffer(uniformBuffer, 0, 1);
-}
-
-void MetalRendererAPI::setMat3(const std::string& name, const glm::mat3& value) {
-
-}
-
-void MetalRendererAPI::setMat4(const std::string& name, const glm::mat4& value) {
-
-}
-
 
 }  // namespace Atlas

@@ -22,8 +22,8 @@ namespace Atlas {
             RenderCommand::drawImGui();
         }
 
-        void Renderer::submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray) {
-            RenderCommand::bindPipeline(pipeline);
+        void Renderer::submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray, const UniformBuffer& uBuffer) {
+            RenderCommand::bindPipeline(pipeline, uBuffer);
             RenderCommand::bindVertexArray(*vertexArray);
             RenderCommand::drawIndexed(vertexArray);
         }

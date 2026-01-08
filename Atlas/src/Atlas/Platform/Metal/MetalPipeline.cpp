@@ -3,9 +3,6 @@
 
 #include "MetalContext.h"
 
-// TEMP
-#include "Atlas/Renderer/RenderCommand.h"
-
 namespace Atlas {
 
 static MTL::VertexFormat shaderDataTypeToMTLFormat(ShaderDataType type) {
@@ -93,38 +90,6 @@ void MetalPipeline::setLayout(const BufferLayout& layout) {
     bufferLayout->setStride(layout.getStride());
     bufferLayout->setStepFunction(MTL::VertexStepFunctionPerVertex);
 }
-
-void MetalPipeline::setBool(const std::string& name, const bool value) {
-}
-
-void MetalPipeline::setInt(const std::string& name, const int value) {
-    
-}
-
-void MetalPipeline::setFloat(const std::string& name, const float value) {
-    
-}
-
-void MetalPipeline::setFloat2(const std::string& name, const glm::vec2& value) {
-    
-}
-
-void MetalPipeline::setFloat3(const std::string& name, const glm::vec3& value) {
-    
-}
-
-void MetalPipeline::setFloat4(const std::string& name, const glm::vec4& value) {
-    RenderCommand::setFloat4(name, value);
-}
-
-void MetalPipeline::setMat3(const std::string& name, const glm::mat3& value) {
-    
-}
-
-void MetalPipeline::setMat4(const std::string& name, const glm::mat4& value) {
-    
-}
-
 
 void MetalPipeline::attachLayout() {
     m_pipelineDescriptor->setVertexDescriptor(m_vertexDescriptor);

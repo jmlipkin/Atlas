@@ -13,6 +13,9 @@
 #include "Atlas/Renderer/VertexArray.h"
 #include "Atlas/Renderer/Pipeline.h"
 
+// TEMP
+#include "Atlas/Renderer/UniformBuffer.h"
+
 namespace Atlas {
 
 class Application {
@@ -48,6 +51,10 @@ class Application {
     std::shared_ptr<VertexArray> m_vertexArray;
 
     std::shared_ptr<Pipeline> m_pipeline;
+
+    // temporary
+    protected:
+        std::shared_ptr<UniformBuffer> uBuf;
 };
 
 // TO BE DEFINED IN CLIENT

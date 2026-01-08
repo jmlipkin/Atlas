@@ -2,12 +2,15 @@
 
 #include <metal-cpp/Metal.hpp>
 
-#include "Atlas/ImGui/ImGuiLayer.h"
 #include "Atlas/Core/Input.h"
 #include "Atlas/Core/Log.h"
-#include "Atlas/Renderer/Renderer.h"
 #include "Atlas/Events/ApplicationEvent.h"
+#include "Atlas/ImGui/ImGuiLayer.h"
+#include "Atlas/Renderer/Renderer.h"
 #include "atpch.h"
+
+// TEMP
+#include "glm/glm.hpp"
 
 namespace Atlas {
 
@@ -49,6 +52,12 @@ Application::Application() {
     test_triangle.shader = m_shaderLib.get("Triangle Shader");
     test_triangle.layout = layout;
 
+    UniformBufferLayout uniform = {
+        {"position", 0, glm::ivec3{0, 0, 0}},
+        {"bigData", 1, glm::mat4{0.2f}},
+        {"color", 2, glm::vec4{0.2f, 0.1f, 0.8f, 1.0f}}};
+
+    uBuf = UniformBuffer::create(test_triangle, uniform, 1);
     m_pipeline = Pipeline::create(test_triangle);
 
     AT_CORE_INFO("Engine initialization complete!");
@@ -57,12 +66,27 @@ Application::Application() {
 void Application::run() {
     RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
 
+    using Clock = std::chrono::high_resolution_clock;  // or system_clock
+    using Duration = std::chrono::duration<float>;     // float seconds
+
+    Clock::time_point last_loop = Clock::now();
+    Duration delta_time(0.0f);
+    float time = 0.0f;
+
     while (m_isRunning) {
         m_window->onUpdate();
 
+        auto now = Clock::now();
+        delta_time = now - last_loop;
+        last_loop = now;
+        time += delta_time.count();
+
         RenderCommand::beginFrame();
 
-        Renderer::submit(*m_pipeline, m_vertexArray);
+        float a = (sin(2 * time) + 1.0f) / 2.0f;
+        uBuf->setFloat4("color", glm::vec4{ 1.0f, 1.0f, 1.0f, a });
+
+        Renderer::submit(*m_pipeline, m_vertexArray, *uBuf);
 
         for (Layer* l : m_layerStack) {
             l->onUpdate();
