@@ -7,18 +7,40 @@
 
 namespace Atlas {
 
-MetalShader::MetalShader(const std::string& name, const std::string& filepath) {
+MetalShader::MetalShader(const std::string& name, const std::string& vertexFunction, const std::string& fragmentFunction) {
     m_name = name;
-    MTL::Library* library = MetalContext::setNewMTLLibrary(filepath);
-
-    m_vertexShader = MetalContext::getMTLLibrary()->newFunction(NS::String::string("vertexShader", NS::ASCIIStringEncoding));
-    m_fragmentShader = MetalContext::getMTLLibrary()->newFunction(NS::String::string("fragmentShader", NS::ASCIIStringEncoding));
+    m_vertexShader = MetalContext::getMTLLibrary()->newFunction(NS::String::string(vertexFunction.c_str(), NS::UTF8StringEncoding));
+    m_fragmentShader = MetalContext::getMTLLibrary()->newFunction(NS::String::string(fragmentFunction.c_str(), NS::UTF8StringEncoding));
 }
 
-MetalShader::MetalShader(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc) {
-    m_name = name;
-    m_vertexShader = MetalContext::getMTLLibrary()->newFunction(NS::String::string(vertexSrc.c_str(), NS::UTF8StringEncoding));
-    m_fragmentShader = MetalContext::getMTLLibrary()->newFunction(NS::String::string(fragSrc.c_str(), NS::UTF8StringEncoding));
+MetalShaderLibrary::MetalShaderLibrary(const std::string& filepath) {
+    m_library = MetalContext::setNewMTLLibrary(filepath);
+}
+
+void MetalShaderLibrary::add(std::string name, const std::shared_ptr<Shader>& shader) {
+    AT_CORE_ASSERT(!exists(name), "Shader already exists!");
+    m_shaders[name] = shader;
+}
+
+void MetalShaderLibrary::add(const std::shared_ptr<Shader>& shader) {
+    const std::string& name = shader->getName();
+    AT_ASSERT(!name.empty(), "Shader must have a name");
+    add(name, shader);
+}
+
+std::shared_ptr<Shader> MetalShaderLibrary::load(const std::string& name, const std::string& vertexFunction, const std::string& fragmentFunction) {
+    std::shared_ptr<Shader> shader = Shader::create(name, vertexFunction, fragmentFunction);
+    add(name, shader);
+    return shader;
+}
+
+std::shared_ptr<Shader> MetalShaderLibrary::get(const std::string& name) const {
+    AT_CORE_ASSERT(exists(name), "Shader does not exist!");
+    return m_shaders.at(name);
+}
+
+bool MetalShaderLibrary::exists(const std::string& name) const {
+    return m_shaders.find(name) != m_shaders.end();
 }
 
 }  // namespace Atlas

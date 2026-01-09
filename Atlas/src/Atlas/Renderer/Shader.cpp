@@ -7,17 +7,17 @@
 
 namespace Atlas {
 
-std::shared_ptr<Shader> Shader::create(const std::string& name, const std::string& filepath) {
+std::shared_ptr<Shader> Shader::create(const std::string& name, const std::string& vertexFunction, const std::string& fragmentFunction) {
     switch (RendererAPI::getAPI()) {
         case RendererAPI::API::None: {
             AT_ASSERT(false, "RendererAPI::None is not supported");
         }
         case RendererAPI::API::OpenGL: {
-            return std::make_shared<OpenGLShader>(name, filepath);
+            return std::make_shared<OpenGLShader>(name, vertexFunction, fragmentFunction);
             break;
         }
         case RendererAPI::API::Metal: {
-            return std::make_shared<MetalShader>(name, filepath);
+            return std::make_shared<MetalShader>(name, vertexFunction, fragmentFunction);
             break;
         }
     }
@@ -26,48 +26,23 @@ std::shared_ptr<Shader> Shader::create(const std::string& name, const std::strin
     return nullptr;
 }
 
-std::shared_ptr<Shader> Shader::create(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc) {
+std::shared_ptr<ShaderLibrary> ShaderLibrary::create(const std::string& filepath) {
     switch (RendererAPI::getAPI()) {
         case RendererAPI::API::None: {
             AT_ASSERT(false, "RendererAPI::None is not supported");
+            break;
         }
         case RendererAPI::API::OpenGL: {
-            return std::make_shared<OpenGLShader>(name, vertexSrc, fragSrc);
+            AT_ASSERT("OpenGL ShaderLibrary is not supported");
             break;
         }
         case RendererAPI::API::Metal: {
-            return std::make_shared<MetalShader>(name, vertexSrc, fragSrc);
-            break;
+            return std::make_shared<MetalShaderLibrary>(filepath);
         }
     }
 
     AT_CORE_ASSERT(false, "Unknown RendererAPI");
     return nullptr;
-}
-
-void ShaderLibrary::add(std::string name, const std::shared_ptr<Shader>& shader) {
-    AT_CORE_ASSERT(!exists(name), "Shader already exists!");
-    m_shaders[name] = shader;
-}
-
-void ShaderLibrary::add(const std::shared_ptr<Shader>& shader) {
-    const std::string& name = shader->getName();
-    add(name, shader);
-}
-
-std::shared_ptr<Shader> ShaderLibrary::load(const std::string& name, const std::string& filepath) {
-    std::shared_ptr<Shader> shader = Shader::create(name, filepath);
-    add(name, shader);
-    return shader;
-}
-
-std::shared_ptr<Shader> ShaderLibrary::get(const std::string& name) const {
-    AT_CORE_ASSERT(exists(name), "Shader does not exist!");
-    return m_shaders.at(name);
-}
-
-bool ShaderLibrary::exists(const std::string& name) const {
-    return m_shaders.find(name) != m_shaders.end();
 }
 
 }  // namespace Atlas

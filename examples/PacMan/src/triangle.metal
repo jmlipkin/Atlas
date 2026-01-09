@@ -17,13 +17,13 @@ struct Uniforms {
     float4 color [[id(2)]];
 };
 
-vertex VertexOut vertexShader(VertexIn in [[stage_in]], constant Uniforms* u [[buffer(1)]]) {
+vertex VertexOut triangleVertexFunction(VertexIn in [[stage_in]], constant Uniforms* u [[buffer(1)]]) {
     VertexOut out;
     out.position = float4(in.position, 1.0);
     out.color = in.color;
     return out;
 }
 
-fragment float4 fragmentShader(VertexOut in [[stage_in]], constant Uniforms* u [[buffer(1)]]) {
+fragment float4 triangleFragmentFunction(VertexOut in [[stage_in]], constant Uniforms* u [[buffer(1)]]) {
     return u->color;
 }

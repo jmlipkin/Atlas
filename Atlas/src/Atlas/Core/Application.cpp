@@ -42,8 +42,9 @@ Application::Application() {
     m_indexBuffer = IndexBuffer::create(indices, sizeof(indices));
     m_vertexArray->setIndexBuffer(m_indexBuffer);
 
-    std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/triangle.metallib";
-    m_shaderLib.load("Triangle Shader", filepath);
+    std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/shaders.metallib";
+    m_shaderLib = ShaderLibrary::create(filepath);
+    m_shaderLib->load("Triangle Shader", "triangleVertexFunction", "triangleFragmentFunction");
 
     BufferLayout layout = {
         {"a_Position", ShaderDataType::Float3},
@@ -51,7 +52,7 @@ Application::Application() {
 
     PipelineSpecification test_triangle;
     test_triangle.name = "Test Pipeline";
-    test_triangle.shader = m_shaderLib.get("Triangle Shader");
+    test_triangle.shader = m_shaderLib->get("Triangle Shader");
     test_triangle.layout = layout;
 
     UniformBufferLayout uniform = {

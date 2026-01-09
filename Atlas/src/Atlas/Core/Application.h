@@ -42,7 +42,7 @@ class Application {
     bool m_isRunning = true;
 
     LayerStack m_layerStack;
-    ShaderLibrary m_shaderLib;
+    std::shared_ptr<ShaderLibrary> m_shaderLib;
 
     static Application* s_instance;
 
