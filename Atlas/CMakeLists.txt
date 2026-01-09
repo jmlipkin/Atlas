@@ -32,8 +32,11 @@ add_library(${TARGET_NAME} STATIC)
 add_custom_target(triangle_shader
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src
     COMMAND xcrun -sdk macosx metal -o triangle.ir -c triangle.metal
-    COMMAND xcrun -sdk macosx metal -o triangle.metallib triangle.ir
-    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/triangle.metal
+    COMMAND xcrun -sdk macosx metal -o quad.ir -c quad.metal
+    COMMAND xcrun -sdk macosx metal -o shaders.metallib triangle.ir quad.ir
+    SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/triangle.metal
+    ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/quad.metal
 )
 add_dependencies(${TARGET_NAME} triangle_shader)
 

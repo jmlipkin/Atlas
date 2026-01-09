@@ -9,6 +9,23 @@
 
 namespace Atlas {
 
+    std::shared_ptr<VertexBuffer> VertexBuffer::create(uint32_t size) {
+        switch (Renderer::getAPI()) {
+            case RendererAPI::API::None: {
+                AT_ASSERT(false, "RendererAPI::None is not supported");
+            }
+            case RendererAPI::API::OpenGL: {
+                return std::make_shared<OpenGLVertexBuffer>(size);
+            }
+            case RendererAPI::API::Metal: {
+                return std::make_shared<MetalVertexBuffer>(size);
+            }
+        }
+
+        AT_ASSERT(false, "Unknown RendererAPI");
+        return nullptr;
+    }
+
     std::shared_ptr<VertexBuffer> VertexBuffer::create(float* vertices, uint32_t size) {
         switch (Renderer::getAPI()) {
             case RendererAPI::API::None: {
@@ -16,11 +33,9 @@ namespace Atlas {
             }
             case RendererAPI::API::OpenGL: {
                 return std::make_shared<OpenGLVertexBuffer>(vertices, size);
-                break;
             }
             case RendererAPI::API::Metal: {
                 return std::make_shared<MetalVertexBuffer>(vertices, size);
-                break;
             }
         }
 

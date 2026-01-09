@@ -7,6 +7,7 @@ namespace Atlas {
     class Renderer {
         public:
          static void init(GraphicsContext& context);
+         static void shutdown();
 
          static void beginScene();
          static void endScene();
@@ -15,6 +16,9 @@ namespace Atlas {
          static void submitImGui();
 
          static void submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray, const UniformBuffer& uBuffer);
+
+         static void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+         static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
 
          inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
     };

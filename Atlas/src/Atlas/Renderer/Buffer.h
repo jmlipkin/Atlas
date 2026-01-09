@@ -137,6 +137,7 @@ class VertexBuffer {
 
     virtual void* getNativeBuffer() const = 0;
 
+    static std::shared_ptr<VertexBuffer> create(uint32_t size);
     static std::shared_ptr<VertexBuffer> create(float* vertices, uint32_t size);
 };
 

@@ -8,12 +8,13 @@ namespace Atlas {
 
     class MetalVertexBuffer : public VertexBuffer {
     public:
-        MetalVertexBuffer(float* vertices, uint32_t size);
-        virtual ~MetalVertexBuffer() = default;
-        void* getNativeBuffer() const override { return m_buffer; }
+     MetalVertexBuffer(uint32_t size);
+     MetalVertexBuffer(float* vertices, uint32_t size);
+     virtual ~MetalVertexBuffer() = default;
+     void* getNativeBuffer() const override { return m_buffer; }
 
-       private:
-        MTL::Buffer* m_buffer;
+    private:
+     MTL::Buffer* m_buffer;
     };
 
     class MetalIndexBuffer : public IndexBuffer {
