@@ -13,7 +13,7 @@ class ExampleLayer : public Atlas::Layer {
             AT_TRACE("Tab Key Pressed! (poll)");
         }
 
-        Atlas::Renderer::drawQuad(glm::vec3(0.0f), glm::vec2(0.0f), quadColor);
+        Atlas::Renderer::drawQuad(glm::vec3(-0.2f, -0.5f, 0.0f), glm::vec2(1.0f), quadColor);
     }
 
     void onEvent(Atlas::Event& event) override {

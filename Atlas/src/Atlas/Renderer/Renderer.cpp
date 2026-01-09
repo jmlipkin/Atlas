@@ -2,6 +2,7 @@
 #include "atpch.h"
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Atlas {
 
@@ -74,8 +75,10 @@ void Renderer::init(GraphicsContext& context) {
     quadPipelineSpecs.layout = BufferLayout({{"a_Position", ShaderDataType::Float3}});
 
     s_data.quadUniforms = UniformBuffer::create(
-        quadPipelineSpecs,
-        {{"u_color", 0, glm::vec4(1.0f)}},
+        quadPipelineSpecs, {
+            {"u_transform", 0, glm::mat4(0.0f)},
+            {"u_color", 1, glm::vec4(1.0f)}
+        },
         1
     );
     s_data.quadPipeline = Pipeline::create(quadPipelineSpecs);
@@ -111,6 +114,9 @@ void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const 
     RenderCommand::bindPipeline(*s_data.quadPipeline, *s_data.quadUniforms);
     RenderCommand::bindVertexArray(*s_data.quadVertexArray);
 
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
+
+    s_data.quadUniforms->setMat4("u_transform", transform);
     s_data.quadUniforms->setFloat4("u_color", color);
     RenderCommand::drawIndexed(s_data.quadVertexArray);
 
