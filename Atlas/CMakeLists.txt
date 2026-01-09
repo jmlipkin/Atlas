@@ -33,7 +33,8 @@ add_custom_target(triangle_shader
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src
     COMMAND xcrun -sdk macosx metal -o triangle.ir -c triangle.metal
     COMMAND xcrun -sdk macosx metal -o quad.ir -c quad.metal
-    COMMAND xcrun -sdk macosx metal -o shaders.metallib triangle.ir quad.ir
+    COMMAND xcrun -sdk macosx metal -o point.ir -c point.metal
+    COMMAND xcrun -sdk macosx metal -o shaders.metallib triangle.ir quad.ir point.ir
     SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/triangle.metal
     ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/quad.metal

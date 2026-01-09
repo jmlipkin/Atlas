@@ -22,6 +22,7 @@ class RendererAPI {
     virtual void setClearColor(const glm::vec4& color) = 0;
     virtual void clear() = 0;
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
+    virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) = 0;
     virtual void commit() = 0;
 
     virtual void beginFrame() = 0;

@@ -36,6 +36,11 @@ bool MetalUniformBuffer::sizesMatch() {
 
     uint32_t index = 0;
     for (auto& element : m_layout) {
+        // Must have sequential indices starting from 0
+        if(element.id != index) {
+            return false;
+        }
+
         size_t offsetCPU = element.offset;
         size_t offsetGPU = static_cast<size_t>(reinterpret_cast<uint8_t*>(m_argEncoder->constantData(index)) - reinterpret_cast<uint8_t*>(m_buffer->contents()));
 

@@ -27,6 +27,7 @@ class MetalRendererAPI : public RendererAPI {
     void bindVertexBuffer(const VertexBuffer& buffer, int index) override;
 
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
+    virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) override;
     virtual void commit() override;
 
    private:

@@ -23,6 +23,7 @@ class RenderCommand {
     inline static void drawImGui() { s_rendererAPI->drawImGui(); }
 
     inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) { s_rendererAPI->drawIndexed(vertexArray); }
+    inline static void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) { s_rendererAPI->drawPoint(vertexArray); }
 
     static void init(GraphicsContext& context);
 

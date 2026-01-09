@@ -30,6 +30,12 @@ void MetalRendererAPI::drawIndexed(const std::shared_ptr<VertexArray>& vertexArr
     m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, vertexArray->getIndexBuffer()->getCount(), MTL::IndexTypeUInt32, indexBuffer, 0);
 }
 
+void MetalRendererAPI::drawPoint(const std::shared_ptr<VertexArray>& vertexArray) {
+    std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(vertexArray->getIndexBuffer());
+    MTL::Buffer* indexBuffer = MIB->getBuffer();
+    m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypePoint, vertexArray->getIndexBuffer()->getCount(), MTL::IndexTypeUInt32, indexBuffer, 0);
+}
+
 void MetalRendererAPI::beginFrame() {
     m_pool = NS::AutoreleasePool::alloc()->init();
     m_drawable = m_context.getNextDrawable();

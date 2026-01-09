@@ -13,6 +13,7 @@ namespace Atlas {
         virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
         
         // TODO: Implement
+        virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) override {}
         virtual void beginImGui() override {}
         virtual void drawImGui() override {}
         void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) override {}

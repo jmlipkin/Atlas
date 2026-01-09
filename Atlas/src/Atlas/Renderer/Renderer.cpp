@@ -7,6 +7,10 @@ namespace Atlas {
 
 struct RendererData {
 
+    std::shared_ptr<VertexArray> pointVertexArray;
+    std::shared_ptr<Pipeline> pointPipeline;
+    std::shared_ptr<UniformBuffer> pointUniforms;
+
     std::shared_ptr<VertexArray> quadVertexArray;
     std::shared_ptr<Pipeline> quadPipeline;
     std::shared_ptr<UniformBuffer> quadUniforms;
@@ -18,14 +22,44 @@ static RendererData s_data;
 
 void Renderer::init(GraphicsContext& context) {
     RenderCommand::init(context);
+
+    std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/shaders.metallib";
+    s_data.shaderLib = ShaderLibrary::create(filepath);
+    s_data.shaderLib->load("Quad Shader", "quadVertexShader", "quadFragmentShader");
+    s_data.shaderLib->load("Point Shader", "pointVertexShader", "pointFragmentShader");
+
+    float pointVertices[1 * 1] = {
+        // 0.0f, 0.0f, 0.0f, // position
+        20.0f // size
+    };
+    s_data.pointVertexArray.reset(VertexArray::create());
+    std::shared_ptr<VertexBuffer> pointVB = VertexBuffer::create(pointVertices, sizeof(pointVertices));
+    s_data.pointVertexArray->addVertexBuffer(pointVB);
     
+    uint32_t pointIndices[1] = {0};
+    std::shared_ptr<IndexBuffer> pointIB = IndexBuffer::create(pointIndices, sizeof(pointIndices));
+    s_data.pointVertexArray->setIndexBuffer(pointIB);
+
+    PipelineSpecification pointPipelineSpecs;
+    pointPipelineSpecs.name = "Point Pipeline";
+    pointPipelineSpecs.shader = s_data.shaderLib->get("Point Shader");
+    pointPipelineSpecs.layout = BufferLayout({ /*{"a_Position", ShaderDataType::Float3}, */{"a_Size", ShaderDataType::Float}});
+
+    s_data.pointUniforms = UniformBuffer::create(
+        pointPipelineSpecs, {
+            {"u_position", 0, glm::vec3(0.0f)},
+            {"u_color", 1, glm::vec4(1.0f)}
+        },
+        1
+    );
+    s_data.pointPipeline = Pipeline::create(pointPipelineSpecs);
+
     float quadVertices[4 * 3] = {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
         0.5f, 0.5f, 0.0f,
-        -0.5f, 0.5f, 0.0f
-    };
-    
+        -0.5f, 0.5f, 0.0f};
+
     s_data.quadVertexArray.reset(VertexArray::create());
     std::shared_ptr<VertexBuffer> quadVB = VertexBuffer::create(quadVertices, sizeof(quadVertices));
     s_data.quadVertexArray->addVertexBuffer(quadVB);
@@ -34,21 +68,17 @@ void Renderer::init(GraphicsContext& context) {
     std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::create(quadIndices, sizeof(quadIndices) / sizeof(uint32_t));
     s_data.quadVertexArray->setIndexBuffer(quadIB);
 
-    std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/shaders.metallib";
-    s_data.shaderLib = ShaderLibrary::create(filepath);
-    s_data.shaderLib->load("Quad Shader", "quadVertexShader", "quadFragmentShader");
-
-    PipelineSpecification testPipeSpecs;
-    testPipeSpecs.name = "Test Pipeline";
-    testPipeSpecs.shader = s_data.shaderLib->get("Quad Shader");
-    testPipeSpecs.layout = BufferLayout({{"a_Position", ShaderDataType::Float3}});
+    PipelineSpecification quadPipelineSpecs;
+    quadPipelineSpecs.name = "Quad Pipeline";
+    quadPipelineSpecs.shader = s_data.shaderLib->get("Quad Shader");
+    quadPipelineSpecs.layout = BufferLayout({{"a_Position", ShaderDataType::Float3}});
 
     s_data.quadUniforms = UniformBuffer::create(
-        testPipeSpecs,
-        {{"u_color", 0, glm::vec4{1.0f, 1.0f, 1.0f, 1.0f}}},
+        quadPipelineSpecs,
+        {{"u_color", 0, glm::vec4(1.0f)}},
         1
     );
-    s_data.quadPipeline = Pipeline::create(testPipeSpecs);
+    s_data.quadPipeline = Pipeline::create(quadPipelineSpecs);
 
     AT_CORE_TRACE("Renderer initialized");
 }
@@ -83,5 +113,13 @@ void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const 
 
     s_data.quadUniforms->setFloat4("u_color", color);
     RenderCommand::drawIndexed(s_data.quadVertexArray);
+
+    RenderCommand::bindPipeline(*s_data.pointPipeline, *s_data.pointUniforms);
+    RenderCommand::bindVertexArray(*s_data.pointVertexArray);
+
+    glm::vec4 inverse_color = glm::vec4(1.0f - color.r, 1.0f - color.g, 1.0f - color.b, 1.0f);
+    s_data.pointUniforms->setFloat3("u_position", position);
+    s_data.pointUniforms->setFloat4("u_color", inverse_color);
+    RenderCommand::drawPoint(s_data.pointVertexArray);
 }
 }  // namespace Atlas
