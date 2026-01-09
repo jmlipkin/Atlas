@@ -2,6 +2,8 @@
 
 #include <Atlas/ImGui/ImGuiLayer.h>
 
+glm::vec4 quadColor(1.0f);
+
 class ExampleLayer : public Atlas::Layer {
     public:
     ExampleLayer() : Layer("Example") {}
@@ -10,6 +12,8 @@ class ExampleLayer : public Atlas::Layer {
         if(Atlas::Input::isKeyPressed(AT_KEY_TAB)) {
             AT_TRACE("Tab Key Pressed! (poll)");
         }
+
+        Atlas::Renderer::drawQuad(glm::vec3(0.0f), glm::vec2(0.0f), quadColor);
     }
 
     void onEvent(Atlas::Event& event) override {
@@ -34,9 +38,8 @@ class PacManImGui : public Atlas::ImGuiLayer {
     PacManImGui() {}
 
     virtual void onImGuiRender() override {
-        glm::vec4 triangleColor = glm::vec4{1.0f};
-        ImGui::Begin("Triangle Color");
-        ImGui::ColorEdit4("Color", &triangleColor[0]);
+        ImGui::Begin("Quad Color");
+        ImGui::ColorPicker4("Color", &quadColor[0]);
         ImGui::End();
 
     }

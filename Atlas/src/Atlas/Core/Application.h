@@ -8,14 +8,6 @@
 #include "Atlas/Events/Event.h"
 #include "Atlas/Events/ApplicationEvent.h"
 
-#include "Atlas/Renderer/Shader.h"
-#include "Atlas/Renderer/Buffer.h"
-#include "Atlas/Renderer/VertexArray.h"
-#include "Atlas/Renderer/Pipeline.h"
-
-// TEMP
-#include "Atlas/Renderer/UniformBuffer.h"
-
 namespace Atlas {
 
 class Application {
@@ -42,19 +34,8 @@ class Application {
     bool m_isRunning = true;
 
     LayerStack m_layerStack;
-    std::shared_ptr<ShaderLibrary> m_shaderLib;
 
     static Application* s_instance;
-
-    std::shared_ptr<VertexBuffer> m_vertexBuffer;
-    std::shared_ptr<IndexBuffer> m_indexBuffer;
-    std::shared_ptr<VertexArray> m_vertexArray;
-
-    std::shared_ptr<Pipeline> m_pipeline;
-
-    // temporary
-    protected:
-        std::shared_ptr<UniformBuffer> uBuf;
 };
 
 // TO BE DEFINED IN CLIENT

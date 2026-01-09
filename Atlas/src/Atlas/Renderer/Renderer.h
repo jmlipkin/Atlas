@@ -7,7 +7,6 @@ namespace Atlas {
     class Renderer {
         public:
          static void init(GraphicsContext& context);
-         static void shutdown();
 
          static void beginScene();
          static void endScene();
