@@ -17,25 +17,6 @@ namespace Atlas {
         m_system = ImGuiSystem::create();
     }
 
-    // GraphicsContext* ImGuiLayer::m_context = nullptr;
-
-    // ImGuiLayer* ImGuiLayer::create() {
-    //     switch (Renderer::getAPI()) {
-    //         case RendererAPI::API::None: {
-    //             AT_ASSERT(false, "RendererAPI::None is not supported");
-    //         }
-    //         case RendererAPI::API::OpenGL: {
-    //             return new OpenGLImGuiLayer();
-    //         }
-    //         case RendererAPI::API::Metal: {
-    //             return new MetalImGuiLayer();
-    //         }
-    //     }
-
-    //     AT_ASSERT(false, "Unknown RendererAPI");
-    //     return nullptr;
-    // }
-
     void ImGuiLayer::onUpdate() {
         GLFWwindow* window = (GLFWwindow*)Application::get().getWindow().getNativeWindow();
 

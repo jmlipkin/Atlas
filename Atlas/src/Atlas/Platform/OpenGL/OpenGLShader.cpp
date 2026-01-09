@@ -21,13 +21,6 @@ OpenGLShader::~OpenGLShader() {
     glDeleteProgram(m_rendererID);
 }
 
-// void OpenGLShader::bind() const {
-//     glUseProgram(m_rendererID);
-// }
-// void OpenGLShader::unbind() const {
-//     glUseProgram(0);
-// }
-
 void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shaderSources) {
     GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
 

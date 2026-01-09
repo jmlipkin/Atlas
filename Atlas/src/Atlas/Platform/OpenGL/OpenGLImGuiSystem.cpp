@@ -1,15 +1,10 @@
 #include "OpenGLImGuiSystem.h"
 
-// #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include <imgui/imgui.h>
 
 #include "atpch.h"
 
-// #include <Atlas/Core/Base.h>
-// #include <Atlas/Core/Application.h>
-// #include <Atlas/Core/KeyCodes.h>
-// #include <Atlas/Core/MouseButtonCodes.h>
 #include "ImGuiOpenGLRenderer.h"
 
 namespace Atlas {

@@ -12,34 +12,24 @@ MetalUniformBuffer::MetalUniformBuffer(const PipelineSpecification& specs, Unifo
 
     setAlignedOffsetsAndStride();
 
-    if (!sizesMatch()) {
-        AT_CORE_ERROR("Error: Shader [{}] uniform layout doesn't match!", specs.shader->getName());
-        exit(-1);
-    }
+    AT_CORE_ASSERT(sizesMatch(), "Error: Shader [{0}] uniform layout doesn't match!", specs.shader->getName());
 }
 
 void MetalUniformBuffer::setAlignedOffsetsAndStride() {
     uint32_t offset = 0;
     uint32_t stride = 0;
-    // test only
-    uint32_t iter = 0;
 
     for (auto& element : m_layout) {
         element.offset = offset;
         offset = offset + element.size + ((m_argEncoder->alignment() - (offset + element.size)) % m_argEncoder->alignment());
         stride = offset;
-
-        // AT_INFO("Element {0}: Size = {1}, Offset = {2}", iter, element.size, element.offset);
-        iter++;
     }
-    // AT_INFO("\tSize = {0}, Offset = {1}", stride, offset);
     m_layout.setStride(stride);
 }
 
 bool MetalUniformBuffer::sizesMatch() {
     NS::UInteger GPUStructSize = m_argEncoder->encodedLength();
 
-    // AT_CORE_TRACE("CPU Size: {0}.\tGPU Size: {1}", m_layout.getStride(), std::to_string(GPUStructSize));
     if (m_layout.getStride() != GPUStructSize) {
         return false;
     }
@@ -49,14 +39,12 @@ bool MetalUniformBuffer::sizesMatch() {
         size_t offsetCPU = element.offset;
         size_t offsetGPU = static_cast<size_t>(reinterpret_cast<uint8_t*>(m_argEncoder->constantData(index)) - reinterpret_cast<uint8_t*>(m_buffer->contents()));
 
-        // AT_CORE_TRACE("Element {0}: CPU = {1}, GPU = {2}", index, offsetCPU, offsetGPU);
         if (offsetCPU != offsetGPU) {
             return false;
         }
         index++;
     }
 
-    // AT_CORE_TRACE("They match");
     return true;
 }
 

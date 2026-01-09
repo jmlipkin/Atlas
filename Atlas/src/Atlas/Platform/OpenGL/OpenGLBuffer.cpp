@@ -22,14 +22,6 @@ namespace Atlas {
         glDeleteBuffers(1, &m_rendererID);
     }
 
-    // void OpenGLVertexBuffer::bind() const {
-    //     glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-    // }
-
-    // void OpenGLVertexBuffer::unbind() const {
-    //     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    // }
-
     OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count) : m_indexCount(count) {
         glGenBuffers(1, &m_rendererID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
@@ -39,13 +31,5 @@ namespace Atlas {
     OpenGLIndexBuffer::~OpenGLIndexBuffer() {
         glDeleteBuffers(1, &m_rendererID);
     }
-
-    // void OpenGLIndexBuffer::bind() const {
-    //     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
-    // }
-
-    // void OpenGLIndexBuffer::unbind() const {
-    //     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    // }
 
 };  // namespace Atlas

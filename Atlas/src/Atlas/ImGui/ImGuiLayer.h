@@ -15,8 +15,6 @@ class ImGuiLayer : public Layer {
     ImGuiLayer();
     virtual ~ImGuiLayer() = default;
 
-    // static void setImGuiGraphicsContextPtr(const void* context) { m_context = static_cast<GraphicsContext*>(const_cast<void*>(context)); }
-
         virtual void onImGuiRender() = 0;
 
         void onUpdate() final;

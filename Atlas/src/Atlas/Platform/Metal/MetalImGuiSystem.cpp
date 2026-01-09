@@ -6,10 +6,6 @@
 #include <filesystem>
 
 #include <imgui/imgui.h>
-// #define GLFW_INCLUDE_NONE
-// #include <GLFW/glfw3.h>
-// #define GLFW_EXPOSE_NATIVE_COCOA
-// #include <GLFW/glfw3native.h>
 
 #include "Atlas/Core/Application.h"
 #include "ImGuiMetalRenderer.h"

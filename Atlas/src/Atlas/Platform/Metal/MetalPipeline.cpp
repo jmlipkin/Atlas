@@ -66,7 +66,7 @@ MetalPipeline::MetalPipeline(const PipelineSpecification& specs) {
 
     m_pipelineState = MetalContext::getMTLDevice()->newRenderPipelineState(m_pipelineDescriptor, &error);
 
-    AT_CORE_ASSERT(m_pipelineState, error->localizedDescription()->utf8String());
+    AT_CORE_ASSERT(m_pipelineState, "Pipeline Error: {}", error->localizedDescription()->utf8String());
 }
 
 MetalPipeline::~MetalPipeline() {

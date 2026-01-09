@@ -56,27 +56,24 @@
 #endif
 
 #ifdef AT_ENABLE_ASSERTS
-	// Alteratively we could use the same "default" message for both "WITH_MSG" and "NO_MSG" and
-	// provide support for custom formatting by concatenating the formatting string instead of having the format inside the default message
-	#define AT_INTERNAL_ASSERT_IMPL(type, check, msg, ...) \
-		{                                                  \
-			if (!(check)) {                                \
-				AT##type##ERROR(msg, __VA_ARGS__);         \
-				AT_DEBUG_BREAK();                          \
-			}                                              \
-		}
-	#define AT_INTERNAL_ASSERT_WITH_MSG(type, check, ...) AT_INTERNAL_ASSERT_IMPL(type, check, "Assertion failed: {0}", __VA_ARGS__)
-	#define AT_INTERNAL_ASSERT_NO_MSG(type, check) AT_INTERNAL_ASSERT_IMPL(type, check, "Assertion '{0}' failed at {1}:{2}", AT_STRINGIFY_MACRO(check), std::filesystem::path(__FILE__).filename().string(), __LINE__)
+	#define AT_INTERNAL_ASSERT_IMPL(logger, check, ...)							\
+			if (!(check)) {                           				            \
+				logger(                                      				    \
+					__VA_OPT__(__VA_ARGS__ )									\
+					__VA_OPT__(,)												\
+					"Assertion '{}' failed at {}:{}",					   	    \
+					#check,                           				            \
+					std::filesystem::path(__FILE__).filename().string(), 		\
+					__LINE__                                      				\
+				);                                                				\
+				AT_DEBUG_BREAK();                                  				\
+			}                                                     
 
-	#define AT_INTERNAL_ASSERT_GET_MACRO_NAME(arg1, arg2, macro, ...) macro
-	#define AT_INTERNAL_ASSERT_GET_MACRO(...) AT_EXPAND_MACRO(AT_INTERNAL_ASSERT_GET_MACRO_NAME(__VA_ARGS__, AT_INTERNAL_ASSERT_WITH_MSG, AT_INTERNAL_ASSERT_NO_MSG))
-
-	// Currently accepts at least the condition and one additional parameter (the message) being optional
-	#define AT_ASSERT(...) AT_EXPAND_MACRO(AT_INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(_, __VA_ARGS__))
-	#define AT_CORE_ASSERT(...) AT_EXPAND_MACRO(AT_INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(_CORE_, __VA_ARGS__))
+	#define AT_ASSERT(check, ...) AT_EXPAND_MACRO(AT_INTERNAL_ASSERT_IMPL(AT_ERROR, check, ##__VA_ARGS__))
+	#define AT_CORE_ASSERT(check, ...) AT_EXPAND_MACRO(AT_INTERNAL_ASSERT_IMPL(AT_CORE_ERROR, check, ##__VA_ARGS__))
 #else
-	#define AT_ASSERT(...)
-	#define AT_CORE_ASSERT(...)
+	#define AT_ASSERT(check, ...)
+	#define AT_CORE_ASSERT(check, ...)
 #endif
 
 #define AT_EXPAND_MACRO(x) x
