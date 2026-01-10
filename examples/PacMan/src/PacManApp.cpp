@@ -1,18 +1,24 @@
 #include <Atlas.h>
 
 #include <Atlas/ImGui/ImGuiLayer.h>
+#include <Atlas/Renderer/Texture.h>
 
 glm::vec4 quadColor(1.0f);
 
 class ExampleLayer : public Atlas::Layer {
     public:
-    ExampleLayer() : Layer("Example"), m_cameraController(1280.0f/720.0f, true) {}
+    ExampleLayer() : Layer("Example"), m_cameraController(1280.0f/720.0f, true) {
+        std::string tempDirectory = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/";
+        std::string texturefile = "mc_grass.jpeg";
+        m_texture = Atlas::Texture::create(tempDirectory + texturefile);
+    }
 
     void onUpdate(Atlas::DeltaTime dt) override {
         m_cameraController.onUpdate(dt);
         Atlas::Renderer::beginScene(m_cameraController.getCamera());
 
-        Atlas::Renderer::drawQuad(glm::vec3(0.0f), glm::vec2(1.0f), quadColor);
+        // Atlas::Renderer::drawQuad(glm::vec2(-1.0f, -0.2f), glm::vec2(0.7f, 0.3f), quadColor);
+        Atlas::Renderer::drawQuad(glm::vec3(0.0f), glm::vec2(1.0f), *m_texture);
 
         Atlas::Renderer::endScene();
     }
@@ -25,6 +31,7 @@ class ExampleLayer : public Atlas::Layer {
     void onDetach() override {}
 
     private:
+     std::shared_ptr<Atlas::Texture> m_texture;
      Atlas::OrthographicCameraController m_cameraController;
 };
 

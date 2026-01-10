@@ -17,6 +17,7 @@ namespace Atlas {
         virtual void beginImGui() override {}
         virtual void drawImGui() override {}
         void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) override {}
+        void bindTexture(const Pipeline& pipeline, const Texture& texture, int index) override {}
         void bindVertexArray(const VertexArray& array) override {}
         void bindVertexBuffer(const VertexBuffer& buffer, int index) override {}
         virtual void beginFrame() override;

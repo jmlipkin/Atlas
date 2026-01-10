@@ -5,6 +5,7 @@
 #include "Atlas/Core/Window.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Renderer/Pipeline.h"
+#include "Atlas/Renderer/Texture.h"
 #include "Atlas/Renderer/VertexArray.h"
 #include "Atlas/Renderer/UniformBuffer.h"
 
@@ -32,6 +33,7 @@ class RendererAPI {
     virtual void drawImGui() = 0;
 
     virtual void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) = 0;
+    virtual void bindTexture(const Pipeline& pipeline, const Texture& texture, int index) = 0;
     virtual void bindVertexArray(const VertexArray& array) = 0;
     virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
 

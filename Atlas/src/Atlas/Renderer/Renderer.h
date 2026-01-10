@@ -2,6 +2,7 @@
 
 #include "RenderCommand.h"
 #include "Pipeline.h"
+#include "Texture.h"
 #include "OrthographicCamera.h"
 namespace Atlas {
 
@@ -19,6 +20,8 @@ namespace Atlas {
 
          static void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
          static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+         static void drawQuad(const glm::vec2& position, const glm::vec2& size, const Texture& texture);
+         static void drawQuad(const glm::vec3& position, const glm::vec2& size, const Texture& texture);
 
          inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
     };

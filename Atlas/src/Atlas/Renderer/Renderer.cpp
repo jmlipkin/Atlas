@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Texture.h"
+
 namespace Atlas {
 
 struct RendererData {
@@ -17,6 +19,7 @@ struct RendererData {
     std::shared_ptr<UniformBuffer> quadUniforms;
 
     std::shared_ptr<ShaderLibrary> shaderLib;
+    std::shared_ptr<Texture> whiteTexture;
 };
 
 static RendererData s_data;
@@ -56,11 +59,12 @@ void Renderer::init(GraphicsContext& context) {
     );
     s_data.pointPipeline = Pipeline::create(pointPipelineSpecs);
 
-    float quadVertices[4 * 3] = {
-        0.0, 1.0f, 0.0f,
-        1.0f, 1.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 0.0f};
+    float quadVertices[4 * 5] = {
+        0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+        1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 0.0f, 0.0f
+    };
 
     s_data.quadVertexArray.reset(VertexArray::create());
     std::shared_ptr<VertexBuffer> quadVB = VertexBuffer::create(quadVertices, sizeof(quadVertices));
@@ -73,7 +77,10 @@ void Renderer::init(GraphicsContext& context) {
     PipelineSpecification quadPipelineSpecs;
     quadPipelineSpecs.name = "Quad Pipeline";
     quadPipelineSpecs.shader = s_data.shaderLib->get("Quad Shader");
-    quadPipelineSpecs.layout = BufferLayout({{"a_Position", ShaderDataType::Float3}});
+    quadPipelineSpecs.layout = BufferLayout({
+        {"a_position", ShaderDataType::Float3},
+        {"a_texCoord", ShaderDataType::Float2}
+    });
 
     s_data.quadUniforms = UniformBuffer::create(
         quadPipelineSpecs, {
@@ -84,6 +91,10 @@ void Renderer::init(GraphicsContext& context) {
         1
     );
     s_data.quadPipeline = Pipeline::create(quadPipelineSpecs);
+
+    s_data.whiteTexture = Texture::create(1, 1);
+    uint32_t whiteTextureData = 0xFFFFFFFF;
+    s_data.whiteTexture->setData(&whiteTextureData, sizeof(whiteTextureData));
 
     AT_CORE_TRACE("Renderer initialized");
 }
@@ -117,6 +128,7 @@ void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const 
 void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
     RenderCommand::bindPipeline(*s_data.quadPipeline, *s_data.quadUniforms);
     RenderCommand::bindVertexArray(*s_data.quadVertexArray);
+    RenderCommand::bindTexture(*s_data.quadPipeline, *s_data.whiteTexture, 0);
 
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
@@ -132,4 +144,21 @@ void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const 
     s_data.pointUniforms->setFloat4("u_color", inverse_color);
     RenderCommand::drawPoint(s_data.pointVertexArray);
 }
+
+void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const Texture& texture) {
+    drawQuad(glm::vec3(position, 0.0f), size, texture);
+}
+
+void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const Texture& texture) {
+    RenderCommand::bindPipeline(*s_data.quadPipeline, *s_data.quadUniforms);
+    RenderCommand::bindVertexArray(*s_data.quadVertexArray);
+    RenderCommand::bindTexture(*s_data.quadPipeline, texture, 0); 
+
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
+
+    s_data.quadUniforms->setMat4("u_transform", transform);
+    s_data.quadUniforms->setFloat4("u_color", glm::vec4(1.0f));
+    RenderCommand::drawIndexed(s_data.quadVertexArray);
+}
+
 }  // namespace Atlas

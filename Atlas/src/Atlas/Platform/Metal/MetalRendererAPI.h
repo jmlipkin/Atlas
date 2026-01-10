@@ -23,6 +23,7 @@ class MetalRendererAPI : public RendererAPI {
     virtual void drawImGui() override;
 
     void bindPipeline(const Pipeline& shader, const UniformBuffer& uBuffer) override;
+    void bindTexture(const Pipeline& shader, const Texture& texture, int index) override;
     void bindVertexArray(const VertexArray& array) override;
     void bindVertexBuffer(const VertexBuffer& buffer, int index) override;
 

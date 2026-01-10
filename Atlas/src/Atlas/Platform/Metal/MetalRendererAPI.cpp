@@ -3,6 +3,7 @@
 
 #include "MetalBuffer.h"
 #include "MetalPipeline.h"
+#include "MetalTexture.h"
 
 #include <imgui/imgui.h>
 #include "ImGuiMetalRenderer.h"
@@ -68,6 +69,11 @@ void MetalRendererAPI::bindPipeline(const Pipeline& pipeline, const UniformBuffe
     m_encoder->setRenderPipelineState(p.getMTLPSO());
     m_encoder->setVertexBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
     m_encoder->setFragmentBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
+}
+
+void MetalRendererAPI::bindTexture(const Pipeline& pipeline, const Texture& texture, int index) {
+    const MetalTexture& t = static_cast<const MetalTexture&>(texture);
+    m_encoder->setFragmentTexture(t.getMTLTexture(), index);
 }
 
 void MetalRendererAPI::bindVertexArray(const VertexArray& array) {
