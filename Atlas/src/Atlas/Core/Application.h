@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "LayerStack.h"
 
+#include "Atlas/Core/Time.h"
 #include "Atlas/Events/Event.h"
 #include "Atlas/Events/ApplicationEvent.h"
 
@@ -27,11 +28,14 @@ class Application {
 
    private:
     bool onWindowClose(WindowCloseEvent& e);
+    bool onWindowResize(WindowResizeEvent& e);
 
    private:
     std::shared_ptr<Window> m_window;
     std::shared_ptr<GraphicsContext> m_context;
     bool m_isRunning = true;
+    bool m_isMinimized = false;
+    DeltaTime m_dt;
 
     LayerStack m_layerStack;
 

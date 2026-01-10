@@ -27,12 +27,15 @@ void Application::run() {
     RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
 
     while (m_isRunning) {
+        m_dt.updateDelta();
         m_window->onUpdate();
 
         RenderCommand::beginFrame();
 
-        for (Layer* l : m_layerStack) {
-            l->onUpdate();
+        if(!m_isMinimized) {
+            for (Layer* l : m_layerStack) {
+                l->onUpdate(m_dt);
+            }
         }
 
         RenderCommand::endFrame();
@@ -42,6 +45,7 @@ void Application::run() {
 void Application::onEvent(Event& event) {
     EventDispatcher dispatcher(event);
     dispatcher.dispatch<WindowCloseEvent>(AT_BIND_EVENT_FN(Application::onWindowClose));
+    dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(Application::onWindowResize));
 
     for (auto it = m_layerStack.end(); it != m_layerStack.begin();) {
         (*--it)->onEvent(event);
@@ -61,5 +65,15 @@ void Application::pushOverlay(Layer* overlay) {
 bool Application::onWindowClose(WindowCloseEvent& e) {
     m_isRunning = false;
     return true;
+}
+
+bool Application::onWindowResize(WindowResizeEvent& e) {
+    if(e.getHeight() == 0 || e.getWidth() == 0) {
+        m_isMinimized = true;
+        return false;
+    }
+
+    m_isMinimized = false;
+    return false;
 }
 }  // namespace Atlas

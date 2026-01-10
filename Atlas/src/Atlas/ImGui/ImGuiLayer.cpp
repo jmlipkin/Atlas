@@ -17,7 +17,7 @@ namespace Atlas {
         m_system = ImGuiSystem::create();
     }
 
-    void ImGuiLayer::onUpdate() {
+    void ImGuiLayer::onUpdate(DeltaTime dt) {
         GLFWwindow* window = (GLFWwindow*)Application::get().getWindow().getNativeWindow();
 
         int winWidth, winHeight;

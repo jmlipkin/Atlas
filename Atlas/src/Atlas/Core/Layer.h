@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Atlas/Core/Time.h"
 #include "Atlas/Events/Event.h"
 
 namespace Atlas {
@@ -11,7 +12,7 @@ class Layer {
 
     virtual void onAttach() = 0;
     virtual void onDetach() = 0;
-    virtual void onUpdate() = 0;
+    virtual void onUpdate(DeltaTime dt) = 0;
 
     virtual void onEvent(Event& event) = 0;
 

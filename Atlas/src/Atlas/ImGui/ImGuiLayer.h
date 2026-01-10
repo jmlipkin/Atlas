@@ -17,7 +17,7 @@ class ImGuiLayer : public Layer {
 
         virtual void onImGuiRender() = 0;
 
-        void onUpdate() final;
+        void onUpdate(DeltaTime dt) final;
 
         void onAttach() final { m_system->initImGuiLayer(); }
         void onDetach() final { m_system->cleanImGuiLayer(); }
