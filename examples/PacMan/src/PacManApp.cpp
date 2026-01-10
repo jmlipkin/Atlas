@@ -2,7 +2,6 @@
 
 #include <Atlas/ImGui/ImGuiLayer.h>
 
-glm::vec3 squarePosition;
 glm::vec4 quadColor(1.0f);
 
 class ExampleLayer : public Atlas::Layer {
@@ -13,7 +12,7 @@ class ExampleLayer : public Atlas::Layer {
         m_cameraController.onUpdate(dt);
         Atlas::Renderer::beginScene(m_cameraController.getCamera());
 
-        Atlas::Renderer::drawQuad(squarePosition, glm::vec2(1.0f), quadColor);
+        Atlas::Renderer::drawQuad(glm::vec3(0.0f), glm::vec2(1.0f), quadColor);
 
         Atlas::Renderer::endScene();
     }
@@ -35,7 +34,6 @@ class PacManImGui : public Atlas::ImGuiLayer {
 
     virtual void onImGuiRender() override {
         ImGui::Begin("Quad Data");
-        ImGui::SliderFloat3("Position", &squarePosition[0], 0.0f, 1.0f, "%.001f");
         ImGui::ColorPicker4("Color", &quadColor[0]);
         ImGui::End();
 

@@ -57,10 +57,10 @@ void Renderer::init(GraphicsContext& context) {
     s_data.pointPipeline = Pipeline::create(pointPipelineSpecs);
 
     float quadVertices[4 * 3] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.5f, 0.5f, 0.0f,
-        -0.5f, 0.5f, 0.0f};
+        0.0, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 0.0f};
 
     s_data.quadVertexArray.reset(VertexArray::create());
     std::shared_ptr<VertexBuffer> quadVB = VertexBuffer::create(quadVertices, sizeof(quadVertices));

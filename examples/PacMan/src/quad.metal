@@ -20,6 +20,8 @@ vertex VertexOut quadVertexShader(VertexIn in [[stage_in]], constant Uniforms* u
     VertexOut out;
     out.position = u->u_viewProjection * u->u_transform * float4(in.position, 1.0);
     out.color = u->u_color;
+    // out.color.rg = in.position.xy;
+    // out.color.ba = float2(0, 1);
     return out;
 }
 
