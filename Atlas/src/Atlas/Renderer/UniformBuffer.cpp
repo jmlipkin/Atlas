@@ -28,6 +28,7 @@ namespace Atlas {
     }
 
     UniformElement& UniformBufferLayout::getElement(const std::string& name) {
+        AT_CORE_ASSERT(m_map.find(name) != m_map.end(), "UniformBuffer element [{}] does not exist", name);
         return getElement(m_map.at(name));
     }
 

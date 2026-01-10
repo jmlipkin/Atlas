@@ -12,20 +12,20 @@ namespace Atlas {
 
     void OrthographicCameraController::onUpdate(DeltaTime dt) {
         if(Input::isKeyPressed(AT_KEY_A)) {
-            m_cameraPosition.x += cos(glm::radians(m_rotation)) * m_translateSpeed * dt;
-            m_cameraPosition.y += sin(glm::radians(m_rotation)) * m_translateSpeed * dt;
-        }
-        if(Input::isKeyPressed(AT_KEY_D)) {
             m_cameraPosition.x -= cos(glm::radians(m_rotation)) * m_translateSpeed * dt;
             m_cameraPosition.y -= sin(glm::radians(m_rotation)) * m_translateSpeed * dt;
         }
-        if(Input::isKeyPressed(AT_KEY_W)) {
-            m_cameraPosition.x += -sin(glm::radians(m_rotation)) * m_translateSpeed * dt;
-            m_cameraPosition.y += cos(glm::radians(m_rotation)) * m_translateSpeed * dt;
+        if(Input::isKeyPressed(AT_KEY_D)) {
+            m_cameraPosition.x += cos(glm::radians(m_rotation)) * m_translateSpeed * dt;
+            m_cameraPosition.y += sin(glm::radians(m_rotation)) * m_translateSpeed * dt;
         }
-        if(Input::isKeyPressed(AT_KEY_S)) {
+        if(Input::isKeyPressed(AT_KEY_W)) {
             m_cameraPosition.x -= -sin(glm::radians(m_rotation)) * m_translateSpeed * dt;
             m_cameraPosition.y -= cos(glm::radians(m_rotation)) * m_translateSpeed * dt;
+        }
+        if(Input::isKeyPressed(AT_KEY_S)) {
+            m_cameraPosition.x += -sin(glm::radians(m_rotation)) * m_translateSpeed * dt;
+            m_cameraPosition.y += cos(glm::radians(m_rotation)) * m_translateSpeed * dt;
         }
 
         if(m_rotationEnabled) {
