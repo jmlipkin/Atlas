@@ -49,7 +49,8 @@ void Renderer::init(GraphicsContext& context) {
     s_data.pointUniforms = UniformBuffer::create(
         pointPipelineSpecs, {
             {"u_position", 0, glm::vec3(0.0f)},
-            {"u_color", 1, glm::vec4(1.0f)}
+            {"u_viewProjection", 1, glm::mat4(1.0f)},
+            {"u_color", 2, glm::vec4(1.0f)}
         },
         1
     );
@@ -77,7 +78,8 @@ void Renderer::init(GraphicsContext& context) {
     s_data.quadUniforms = UniformBuffer::create(
         quadPipelineSpecs, {
             {"u_transform", 0, glm::mat4(0.0f)},
-            {"u_color", 1, glm::vec4(1.0f)}
+            {"u_viewProjection", 1, glm::mat4(1.0f)},
+            {"u_color", 2, glm::vec4(1.0f)}
         },
         1
     );
@@ -86,7 +88,9 @@ void Renderer::init(GraphicsContext& context) {
     AT_CORE_TRACE("Renderer initialized");
 }
 
-void Renderer::beginScene() {
+void Renderer::beginScene(const OrthographicCamera& camera) {
+    s_data.quadUniforms->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
+    s_data.pointUniforms->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
 }
 
 void Renderer::endScene() {

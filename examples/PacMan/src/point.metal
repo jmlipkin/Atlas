@@ -12,12 +12,13 @@ struct PointOut {
 
 struct PointUniforms {
     float3 u_position [[id(0)]];
-    float4 u_color [[id(1)]];
+    float4x4 u_viewProjection [[id(1)]];
+    float4 u_color [[id(2)]];
 };
 
 vertex PointOut pointVertexShader(PointIn in [[stage_in]], constant PointUniforms* u [[buffer(1)]]) {
     PointOut out;
-    out.position = float4(u->u_position, 1.0f);
+    out.position = u->u_viewProjection * float4(u->u_position, 1.0f);
     out.size = in.a_size;
     return out;
 }

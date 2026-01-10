@@ -2,13 +2,14 @@
 
 #include "RenderCommand.h"
 #include "Pipeline.h"
+#include "OrthographicCamera.h"
 namespace Atlas {
 
     class Renderer {
         public:
          static void init(GraphicsContext& context);
 
-         static void beginScene();
+         static void beginScene(const OrthographicCamera& camere);
          static void endScene();
 
          static void beginImGui();

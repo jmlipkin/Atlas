@@ -2,35 +2,31 @@
 
 #include <Atlas/ImGui/ImGuiLayer.h>
 
+glm::vec3 squarePosition;
 glm::vec4 quadColor(1.0f);
 
 class ExampleLayer : public Atlas::Layer {
     public:
-    ExampleLayer() : Layer("Example") {}
+    ExampleLayer() : Layer("Example"), m_cameraController(1280.0f/720.0f, true) {}
 
-    void onUpdate() override {
-        if(Atlas::Input::isKeyPressed(AT_KEY_TAB)) {
-            AT_TRACE("Tab Key Pressed! (poll)");
-        }
+    void onUpdate(Atlas::DeltaTime dt) override {
+        m_cameraController.onUpdate(dt);
+        Atlas::Renderer::beginScene(m_cameraController.getCamera());
 
-        Atlas::Renderer::drawQuad(glm::vec3(-0.2f, -0.5f, 0.0f), glm::vec2(1.0f), quadColor);
+        Atlas::Renderer::drawQuad(squarePosition, glm::vec2(1.0f), quadColor);
+
+        Atlas::Renderer::endScene();
     }
 
     void onEvent(Atlas::Event& event) override {
-        if (event.getEventType() == Atlas::EventType::KEY_PRESSED) {
-            Atlas::KeyPressedEvent& e = (Atlas::KeyPressedEvent&)event;
-
-            if(e.getKeyCode() == AT_KEY_TAB){
-                AT_TRACE("Tab key pressed (event)");
-            }
-            else{
-                AT_TRACE("Keycode: {0} ({1})", e.getKeyCode(), (char)e.getKeyCode());
-            }
-        }
+        m_cameraController.onEvent(event);
     }
 
     void onAttach() override {}
     void onDetach() override {}
+
+    private:
+     Atlas::OrthographicCameraController m_cameraController;
 };
 
 class PacManImGui : public Atlas::ImGuiLayer {
@@ -38,7 +34,8 @@ class PacManImGui : public Atlas::ImGuiLayer {
     PacManImGui() {}
 
     virtual void onImGuiRender() override {
-        ImGui::Begin("Quad Color");
+        ImGui::Begin("Quad Data");
+        ImGui::SliderFloat3("Position", &squarePosition[0], 0.0f, 1.0f, "%.001f");
         ImGui::ColorPicker4("Color", &quadColor[0]);
         ImGui::End();
 

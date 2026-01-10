@@ -12,12 +12,13 @@ struct VertexOut {
 
 struct Uniforms {
     float4x4 u_transform [[id(0)]];
-    float4 u_color [[id(1)]];
+    float4x4 u_viewProjection [[id(1)]];
+    float4 u_color [[id(2)]];
 };
 
 vertex VertexOut quadVertexShader(VertexIn in [[stage_in]], constant Uniforms* u [[buffer(1)]]) {
     VertexOut out;
-    out.position = u->u_transform * float4(in.position, 1.0);
+    out.position = u->u_viewProjection * u->u_transform * float4(in.position, 1.0);
     out.color = u->u_color;
     return out;
 }
