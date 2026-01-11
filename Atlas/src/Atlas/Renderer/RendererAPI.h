@@ -6,7 +6,6 @@
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Renderer/Pipeline.h"
 #include "Atlas/Renderer/Texture.h"
-#include "Atlas/Renderer/VertexArray.h"
 #include "Atlas/Renderer/UniformBuffer.h"
 
 namespace Atlas {
@@ -22,9 +21,9 @@ class RendererAPI {
    public:
     virtual void setClearColor(const glm::vec4& color) = 0;
     virtual void clear() = 0;
-    virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
-    virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count) = 0;
-    virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) = 0;
+    virtual void drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer) = 0;
+    virtual void drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer, uint32_t count) = 0;
+    // virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) = 0;
     virtual void commit() = 0;
 
     virtual void beginFrame() = 0;
@@ -35,7 +34,6 @@ class RendererAPI {
 
     virtual void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) = 0;
     virtual void bindTexture(const Pipeline& pipeline, const Texture& texture, uint32_t index) = 0;
-    virtual void bindVertexArray(const VertexArray& array) = 0;
     virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
 
     inline static API getAPI() { return s_API; }

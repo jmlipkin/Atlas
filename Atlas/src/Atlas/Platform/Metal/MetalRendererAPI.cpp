@@ -27,29 +27,29 @@ void MetalRendererAPI::setClearColor(const glm::vec4& color) {
 void MetalRendererAPI::clear() {
 }
 
-void MetalRendererAPI::drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) {
+void MetalRendererAPI::drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer) {
     AT_PROFILE_FUNCTION();
 
-    std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(vertexArray->getIndexBuffer());
-    MTL::Buffer* indexBuffer = MIB->getBuffer();
-    m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, vertexArray->getIndexBuffer()->getCount(), MTL::IndexTypeUInt32, indexBuffer, 0);
+    std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(indexBuffer);
+    MTL::Buffer* buffer = MIB->getBuffer();
+    m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, indexBuffer->getCount(), MTL::IndexTypeUInt32, buffer, 0);
 }
 
-void MetalRendererAPI::drawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count) {
+void MetalRendererAPI::drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer, uint32_t count) {
     AT_PROFILE_FUNCTION();
 
-    std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(vertexArray->getIndexBuffer());
-    MTL::Buffer* indexBuffer = MIB->getBuffer();
-    m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, count, MTL::IndexTypeUInt32, indexBuffer, 0);
+    std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(indexBuffer);
+    MTL::Buffer* buffer = MIB->getBuffer();
+    m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, count, MTL::IndexTypeUInt32, buffer, 0);
 }
 
-void MetalRendererAPI::drawPoint(const std::shared_ptr<VertexArray>& vertexArray) {
-    AT_PROFILE_FUNCTION();
+// void MetalRendererAPI::drawPoint(const std::shared_ptr<VertexArray>& vertexArray) {
+//     AT_PROFILE_FUNCTION();
 
-    std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(vertexArray->getIndexBuffer());
-    MTL::Buffer* indexBuffer = MIB->getBuffer();
-    m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypePoint, vertexArray->getIndexBuffer()->getCount(), MTL::IndexTypeUInt32, indexBuffer, 0);
-}
+//     std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(vertexArray->getIndexBuffer());
+//     MTL::Buffer* indexBuffer = MIB->getBuffer();
+//     m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypePoint, vertexArray->getIndexBuffer()->getCount(), MTL::IndexTypeUInt32, indexBuffer, 0);
+// }
 
 void MetalRendererAPI::beginFrame() {
     AT_PROFILE_FUNCTION();
@@ -110,15 +110,6 @@ void MetalRendererAPI::bindTexture(const Pipeline& pipeline, const Texture& text
 
     const MetalTexture& t = static_cast<const MetalTexture&>(texture);
     m_encoder->setFragmentTexture(t.getMTLTexture(), index);
-}
-
-void MetalRendererAPI::bindVertexArray(const VertexArray& array) {
-    AT_PROFILE_FUNCTION();
-
-    int index = 0;
-    for (auto buffer : array.getVertexBuffers()) {
-        bindVertexBuffer(*buffer, index++);
-    }
 }
 
 void MetalRendererAPI::bindVertexBuffer(const VertexBuffer& buffer, int index) {

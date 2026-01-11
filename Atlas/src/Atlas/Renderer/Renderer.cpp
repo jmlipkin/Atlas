@@ -22,12 +22,11 @@ struct RendererData {
     const uint32_t maxIndexCount = maxQuadCount * 6;
     static const uint32_t maxTextureSlots = 32;
 
-    std::shared_ptr<VertexArray> pointVertexArray;
     std::shared_ptr<Pipeline> pointPipeline;
     std::shared_ptr<UniformBuffer> pointUniforms;
 
-    std::shared_ptr<VertexArray> quadVertexArray;
     std::shared_ptr<VertexBuffer> quadVertexBuffer;
+    std::shared_ptr<IndexBuffer> quadIndexBuffer;
     std::shared_ptr<Pipeline> quadPipeline;
     std::shared_ptr<UniformBuffer> quadUniforms;
 
@@ -84,9 +83,7 @@ void Renderer::init(GraphicsContext& context) {
         s_data.quadVertexBufferBase = new QuadVertex[s_data.maxVertexCount];
     }
     
-    s_data.quadVertexArray.reset(VertexArray::create());
     s_data.quadVertexBuffer = VertexBuffer::create(s_data.maxVertexCount * sizeof(QuadVertex));
-    s_data.quadVertexArray->addVertexBuffer(s_data.quadVertexBuffer);
 
     uint32_t* quadIndices = new uint32_t[s_data.maxIndexCount];
     uint32_t offset = 0;
@@ -107,8 +104,7 @@ void Renderer::init(GraphicsContext& context) {
         }
     }
 
-    std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::create(quadIndices, s_data.maxIndexCount);
-    s_data.quadVertexArray->setIndexBuffer(quadIB);
+    s_data.quadIndexBuffer = IndexBuffer::create(quadIndices, s_data.maxIndexCount);
 
     PipelineSpecification quadPipelineSpecs;
     quadPipelineSpecs.name = "Quad Pipeline";
@@ -142,7 +138,6 @@ void Renderer::beginScene(const OrthographicCamera& camera) {
     AT_PROFILE_FUNCTION();
 
     s_data.quadUniforms->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
-    // s_data.pointUniforms->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
     startNewBatch();
 }
 
@@ -176,8 +171,8 @@ void Renderer::flush() {
     }
 
     RenderCommand::bindPipeline(*s_data.quadPipeline, *s_data.quadUniforms);
-    RenderCommand::bindVertexArray(*s_data.quadVertexArray);
-    RenderCommand::drawIndexed(s_data.quadVertexArray, s_data.quadIndexCount);
+    RenderCommand::bindVertexBuffer(*s_data.quadVertexBuffer);
+    RenderCommand::drawIndexed(s_data.quadIndexBuffer, s_data.quadIndexCount);
 
     startNewBatch();
 }
@@ -192,12 +187,6 @@ void Renderer::submitImGui() {
     AT_PROFILE_FUNCTION();
 
     RenderCommand::drawImGui();
-}
-
-void Renderer::submit(const Pipeline& pipeline, const std::shared_ptr<VertexArray>& vertexArray, const UniformBuffer& uBuffer) {
-    RenderCommand::bindPipeline(pipeline, uBuffer);
-    RenderCommand::bindVertexArray(*vertexArray);
-    RenderCommand::drawIndexed(vertexArray);
 }
 
 void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color) {
