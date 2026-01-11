@@ -23,6 +23,8 @@ class Renderer {
     static void drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture);
     static void drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture);
 
+    static void drawQuad(const glm::vec2& position, const std::shared_ptr<SubTexture>& texture);
+    static void drawQuad(const glm::vec3& position, const std::shared_ptr<SubTexture>& texture);
     static void drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<SubTexture>& texture);
     static void drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<SubTexture>& texture);
 

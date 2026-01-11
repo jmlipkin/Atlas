@@ -277,6 +277,14 @@ void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const 
     s_data.quadIndexCount += 6;
 }
 
+void Renderer::drawQuad(const glm::vec2& position, const std::shared_ptr<SubTexture>& texture) {
+    drawQuad(glm::vec3(position, 0.0f), texture->getSizeInTiles(), texture);
+}
+
+void Renderer::drawQuad(const glm::vec3& position, const std::shared_ptr<SubTexture>& texture) {
+    drawQuad(position, texture->getSizeInTiles(), texture);
+}
+
 void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<SubTexture>& texture) {
     drawQuad(glm::vec3(position, 0.0f), size, texture);
 }

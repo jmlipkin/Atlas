@@ -22,7 +22,7 @@ class ExampleLayer : public Atlas::Layer {
         Atlas::Renderer::beginScene(m_cameraController.getCamera());
 
         // Atlas::Renderer::drawQuad(glm::vec3(0.0f), m_textureSheet->getSizeInTiles(), m_textureSheet->getTexture());
-        Atlas::Renderer::drawQuad(glm::vec2(-6.0f), m_sprite->getSizeInTiles(), m_sprite);
+        Atlas::Renderer::drawQuad(glm::vec2(-6.0f), m_sprite);
 
         Atlas::Renderer::endScene();
     }
