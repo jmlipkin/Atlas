@@ -31,6 +31,8 @@ TextureSheet::TextureSheet(std::shared_ptr<Texture> texture, const TextureSheetS
 TextureSheet::TextureSheet(const TextureSheet& textureSheet, glm::ivec2 start_index, glm::ivec2 end_index) : m_sheet(textureSheet.getTexture()), m_sheetSpecs(textureSheet.getSheetSpecs()) {
     AT_PROFILE_FUNCTION();
 
+    AT_CORE_ASSERT(end_index.x <= textureSheet.getNumTilesHorizontal() && end_index.y <= textureSheet.getNumTilesVertical(), "TextureSheet exceeds texture dimensions!");
+
     m_tileDims = end_index - start_index;
     m_sheetSize = m_tileDims * m_sheetSpecs.tileSize;
 
@@ -54,6 +56,9 @@ std::shared_ptr<SubTexture> TextureSheet::addSubTexture(const std::string& name,
     if (m_atlas.contains(name)) {  // subtexture has been cached
         return m_atlas[name];
     }
+
+    if(index.x + size_in_tiles.x > m_tileDims.x || index.y + size_in_tiles.y > m_tileDims.y)
+        AT_CORE_WARN("SubTexture \"{}\" exceeds texture dimensions!", name);
 
     std::shared_ptr<SubTexture> newTexture = createSubTexture(index, size_in_tiles);
     m_atlas[name] = newTexture;
