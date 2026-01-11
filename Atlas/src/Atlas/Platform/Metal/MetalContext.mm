@@ -70,7 +70,7 @@ namespace Atlas {
         NS::Error* error = nullptr;
         MTL::Library* library = getMTLDevice()->newLibrary(NS::String::string(filepath.c_str(), NS::UTF8StringEncoding), &error);
         if (!library) {
-            AT_CORE_ERROR("Failed to create library");
+            AT_CORE_ERROR("Failed to create library at {}", filepath);
             exit(-1);
         }
         s_library = library;

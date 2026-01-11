@@ -10,6 +10,8 @@
 
 #include "Atlas/Renderer/Renderer.h"
 #include "Atlas/Renderer/OrthographicCameraController.h"
+#include "Atlas/Renderer/Texture.h"
+#include "Atlas/Renderer/TextureSheet.h"
 
 #include "Atlas/ImGui/ImGuiLayer.h"
 
