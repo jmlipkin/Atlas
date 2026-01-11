@@ -338,4 +338,65 @@ void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const 
     s_data.quadIndexCount += 6;
 }
 
+void Renderer::drawQuad(const glm::vec2& position, const std::shared_ptr<TextureSheet>& sheet) {
+    drawQuad(glm::vec3(position, 0.0f), sheet->getSizeInTiles(), sheet);
+}
+
+void Renderer::drawQuad(const glm::vec3& position, const std::shared_ptr<TextureSheet>& sheet) {
+    drawQuad(position, sheet->getSizeInTiles(), sheet);
+}
+
+void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& sheet) {
+    drawQuad(glm::vec3(position, 0.0f), size, sheet);
+}
+
+void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& sheet) {
+    AT_PROFILE_FUNCTION();
+    
+    glm::vec4 color = glm::vec4(1.0f);
+    uint32_t texIndex = 0;
+
+    for (uint32_t i = 1; i < s_data.textureSlotIndex; i++) {
+        if(*sheet->getTexture() == *s_data.textureSlots[i].get()) {
+            texIndex = i;
+            break;
+        }
+    }
+    if(texIndex == 0) {
+        if(s_data.textureSlotIndex >= s_data.maxTextureSlots) {
+            flush();
+        }
+        
+        texIndex = s_data.textureSlotIndex;
+        s_data.textureSlots[texIndex] = sheet->getTexture();
+        s_data.textureSlotIndex++;
+    }
+
+    s_data.quadVertexPtr->position = {position.x, position.y + size.y, position.z};
+    s_data.quadVertexPtr->color = color;
+    s_data.quadVertexPtr->texIndex = texIndex;
+    s_data.quadVertexPtr->texCoord = sheet->getTexCoords().bottom_left;
+    s_data.quadVertexPtr++;
+
+    s_data.quadVertexPtr->position = {position.x + size.x, position.y + size.y, position.z};
+    s_data.quadVertexPtr->color = color;
+    s_data.quadVertexPtr->texIndex = texIndex;
+    s_data.quadVertexPtr->texCoord = sheet->getTexCoords().bottom_right;
+    s_data.quadVertexPtr++;
+
+    s_data.quadVertexPtr->position = {position.x + size.x, position.y, position.z};
+    s_data.quadVertexPtr->color = color;
+    s_data.quadVertexPtr->texIndex = texIndex;
+    s_data.quadVertexPtr->texCoord = sheet->getTexCoords().top_right;
+    s_data.quadVertexPtr++;
+
+    s_data.quadVertexPtr->position = {position.x, position.y, position.z};
+    s_data.quadVertexPtr->color = color;
+    s_data.quadVertexPtr->texIndex = texIndex;
+    s_data.quadVertexPtr->texCoord = sheet->getTexCoords().top_left;
+    s_data.quadVertexPtr++;
+
+    s_data.quadIndexCount += 6;
+}
+
 }  // namespace Atlas

@@ -11,18 +11,20 @@ class ExampleLayer : public Atlas::Layer {
         std::string texturefile = "pacman_all.png";
 
         Atlas::TextureSheetSpecification specs{glm::vec2(8.0f)};
-        m_textureSheet = std::make_unique<Atlas::TextureSheet>(tempDirectory + texturefile, specs);
-        m_sprite = m_textureSheet->addSubTexture("board", glm::ivec2(0, 0), glm::ivec2(28, 31));
+        m_textureSheet = std::make_shared<Atlas::TextureSheet>(tempDirectory + texturefile, specs);
+        m_characterSheet = std::make_shared<Atlas::TextureSheet>(*m_textureSheet, glm::ivec2(57, 0), glm::ivec2(85, 31));
+        m_sprite = m_characterSheet->addSubTexture("board", glm::ivec2(0, 0), glm::ivec2(28, 31));
 
-        AT_DEBUG("{} x {}", m_sprite->getNumTilesHorizontal(), m_sprite->getNumTilesVertical());
+        m_cameraController.setZoomLevel(20.0f);
         }
 
     void onUpdate(Atlas::DeltaTime dt) override {
         m_cameraController.onUpdate(dt);
         Atlas::Renderer::beginScene(m_cameraController.getCamera());
 
-        // Atlas::Renderer::drawQuad(glm::vec3(0.0f), m_textureSheet->getSizeInTiles(), m_textureSheet->getTexture());
-        Atlas::Renderer::drawQuad(glm::vec2(-6.0f), m_sprite);
+        Atlas::Renderer::drawQuad(glm::vec3(0.0f), m_textureSheet);
+        Atlas::Renderer::drawQuad(glm::vec2(0.0f, 32.0f), m_characterSheet);
+        // Atlas::Renderer::drawQuad(glm::vec2(-6.0f), m_sprite);
 
         Atlas::Renderer::endScene();
     }
@@ -35,7 +37,8 @@ class ExampleLayer : public Atlas::Layer {
     void onDetach() override {}
 
     private:
-     std::unique_ptr<Atlas::TextureSheet> m_textureSheet;
+     std::shared_ptr<Atlas::TextureSheet> m_textureSheet;
+     std::shared_ptr<Atlas::TextureSheet> m_characterSheet;
      std::shared_ptr<Atlas::Texture> m_food;
      Atlas::OrthographicCameraController m_cameraController;
      std::shared_ptr<Atlas::SubTexture> m_sprite;

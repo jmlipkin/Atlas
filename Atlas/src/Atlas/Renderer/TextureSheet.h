@@ -57,7 +57,8 @@ struct TextureSheetSpecification {
 class TextureSheet {
    public:
     TextureSheet(const std::string& filepath, const TextureSheetSpecification& specs);
-    TextureSheet(std::shared_ptr<Texture> textureSheet, const TextureSheetSpecification& specs);
+    TextureSheet(std::shared_ptr<Texture> texture, const TextureSheetSpecification& specs);
+    TextureSheet(const TextureSheet& textureSheet, glm::ivec2 start_index, glm::ivec2 end_index);
 
     std::shared_ptr<SubTexture> getSubTexture(const std::string& name);
     std::shared_ptr<SubTexture> addSubTexture(const std::string& name, glm::ivec2 index, glm::ivec2 size_in_tiles = glm::ivec2(1));
@@ -68,6 +69,9 @@ class TextureSheet {
     glm::vec2 getSizeInTiles() const { return m_tileDims; }
     glm::vec2 getSizeInPixels() const { return m_sheetSize; }
 
+    const TextureSheetSpecification& getSheetSpecs() const { return m_sheetSpecs; }
+    
+    const TextureCoordinates& getTexCoords() const { return m_coordinates; }
     std::shared_ptr<Texture> getTexture() const { return m_sheet; }
 
    private:
@@ -80,6 +84,7 @@ class TextureSheet {
     glm::vec2 m_sheetSize;
     glm::vec2 m_tileDims;
     const TextureSheetSpecification& m_sheetSpecs;
+    TextureCoordinates m_coordinates;
 };
 
 }  // namespace Atlas
