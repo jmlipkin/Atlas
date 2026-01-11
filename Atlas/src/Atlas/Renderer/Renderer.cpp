@@ -44,6 +44,8 @@ struct RendererData {
 static RendererData s_data;
 
 void Renderer::init(GraphicsContext& context) {
+    AT_PROFILE_FUNCTION();
+
     RenderCommand::init(context);
 
     std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/shaders.metallib";
@@ -76,7 +78,12 @@ void Renderer::init(GraphicsContext& context) {
     
 #endif
 
-    s_data.quadVertexBufferBase = new QuadVertex[s_data.maxVertexCount];
+    {
+        AT_PROFILE_SCOPE("Allocate QuadVertex data");
+
+        s_data.quadVertexBufferBase = new QuadVertex[s_data.maxVertexCount];
+    }
+    
     s_data.quadVertexArray.reset(VertexArray::create());
     s_data.quadVertexBuffer = VertexBuffer::create(s_data.maxVertexCount * sizeof(QuadVertex));
     s_data.quadVertexArray->addVertexBuffer(s_data.quadVertexBuffer);
@@ -84,16 +91,20 @@ void Renderer::init(GraphicsContext& context) {
     uint32_t* quadIndices = new uint32_t[s_data.maxIndexCount];
     uint32_t offset = 0;
 
-    for (uint32_t i = 0; i < s_data.maxIndexCount; i += 6) {
-        quadIndices[i + 0] = offset + 0;
-        quadIndices[i + 1] = offset + 1;
-        quadIndices[i + 2] = offset + 2;
+    {
+        AT_PROFILE_SCOPE("Create QuadIndex Data");
 
-        quadIndices[i + 3] = offset + 2;
-        quadIndices[i + 4] = offset + 3;
-        quadIndices[i + 5] = offset + 0;
+        for (uint32_t i = 0; i < s_data.maxIndexCount; i += 6) {
+            quadIndices[i + 0] = offset + 0;
+            quadIndices[i + 1] = offset + 1;
+            quadIndices[i + 2] = offset + 2;
 
-        offset += 4;
+            quadIndices[i + 3] = offset + 2;
+            quadIndices[i + 4] = offset + 3;
+            quadIndices[i + 5] = offset + 0;
+
+            offset += 4;
+        }
     }
 
     std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::create(quadIndices, s_data.maxIndexCount);
@@ -122,20 +133,28 @@ void Renderer::init(GraphicsContext& context) {
 }
 
 void Renderer::shutdown() {
+    AT_PROFILE_FUNCTION();
+
     delete s_data.quadVertexBufferBase;
 }
 
 void Renderer::beginScene(const OrthographicCamera& camera) {
+    AT_PROFILE_FUNCTION();
+
     s_data.quadUniforms->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
     // s_data.pointUniforms->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
     startNewBatch();
 }
 
 void Renderer::endScene() {
+    AT_PROFILE_FUNCTION();
+
     flush();
 }
 
 void Renderer::startNewBatch() {
+    AT_PROFILE_FUNCTION();  
+
     s_data.quadIndexCount = 0;
     s_data.quadVertexPtr = s_data.quadVertexBufferBase;
 
@@ -143,6 +162,8 @@ void Renderer::startNewBatch() {
 }
 
 void Renderer::flush() {
+    AT_PROFILE_FUNCTION();
+
     if(s_data.quadIndexCount == 0) {
         return;
     }
@@ -162,10 +183,14 @@ void Renderer::flush() {
 }
 
 void Renderer::beginImGui() {
+    AT_PROFILE_FUNCTION();  
+
     RenderCommand::beginImGui();
 }
 
 void Renderer::submitImGui() {
+    AT_PROFILE_FUNCTION();
+
     RenderCommand::drawImGui();
 }
 
@@ -180,6 +205,8 @@ void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const 
 }
 
 void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
+    AT_PROFILE_FUNCTION();
+
     uint32_t texIndex = 0;
     s_data.quadVertexPtr->position = {position.x, position.y + size.y, position.z};
     s_data.quadVertexPtr->color = color;
@@ -213,6 +240,8 @@ void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const 
 }
 
 void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture) {
+    AT_PROFILE_FUNCTION();
+    
     glm::vec4 color = glm::vec4(1.0f);
     uint32_t texIndex = 0;
 

@@ -1,35 +1,55 @@
 #include "MetalTexture.h"
-#include "atpch.h"
-
-#include "MetalContext.h"
 
 #include <stb_image/stb_image.h>
 
+#include "MetalContext.h"
+#include "atpch.h"
 
 namespace Atlas {
 
 MetalTexture::MetalTexture(const std::string& filepath) {
-    MTL::Device* device = MetalContext::getMTLDevice();
+    AT_PROFILE_FUNCTION();
 
-    int width, height, channels;
-    unsigned char* image = stbi_load(filepath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
-    AT_CORE_ASSERT(image, "Image at [{}] could not be loaded.", filepath);
+    MTL::Device* device;
+    {
+        AT_PROFILE_SCOPE("Get Metal Device");
 
-    m_width = (uint32_t)width;
-    m_height = (uint32_t)height;
-    m_channels = (uint32_t)channels;
+        device = MetalContext::getMTLDevice();
+    }
 
-    MTL::TextureDescriptor* textureDescriptor = MTL::TextureDescriptor::alloc()->init();
-    textureDescriptor->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
-    textureDescriptor->setWidth(m_width);
-    textureDescriptor->setHeight(m_height);
+    unsigned char* image;
+    {
+        AT_PROFILE_SCOPE("stbi_load");
 
-    m_texture = device->newTexture(textureDescriptor);
+        int width, height, channels;
+        image = stbi_load(filepath.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+        AT_CORE_ASSERT(image, "Image at [{}] could not be loaded.", filepath);
 
-    MTL::Region region = MTL::Region(0, 0, 0, m_width, m_height, 1);
-    NS::UInteger bytesPerRow = 4 * m_width;
+        m_width = (uint32_t)width;
+        m_height = (uint32_t)height;
+        m_channels = (uint32_t)channels;
+    }
 
-    m_texture->replaceRegion(region, 0, image, bytesPerRow);
+    MTL::TextureDescriptor* textureDescriptor;
+    {
+        AT_PROFILE_SCOPE("Create new MTL texture");
+
+        textureDescriptor = MTL::TextureDescriptor::alloc()->init();
+        textureDescriptor->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
+        textureDescriptor->setWidth(m_width);
+        textureDescriptor->setHeight(m_height);
+
+        m_texture = device->newTexture(textureDescriptor);
+    }
+
+    {
+        AT_PROFILE_SCOPE("Bind image to GPU");
+
+        MTL::Region region = MTL::Region(0, 0, 0, m_width, m_height, 1);
+        NS::UInteger bytesPerRow = 4 * m_width;
+
+        m_texture->replaceRegion(region, 0, image, bytesPerRow);
+    }
 
     textureDescriptor->release();
     stbi_image_free(image);
@@ -38,6 +58,8 @@ MetalTexture::MetalTexture(const std::string& filepath) {
 MetalTexture::MetalTexture(uint32_t width, uint32_t height) : m_width(width), m_height(height), m_texture(nullptr) {}
 
 void MetalTexture::setData(void* data, uint32_t size) {
+    AT_PROFILE_FUNCTION();
+
     MTL::Device* device = MetalContext::getMTLDevice();
 
     MTL::TextureDescriptor* textureDescriptor = MTL::TextureDescriptor::alloc()->init();

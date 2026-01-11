@@ -11,6 +11,8 @@ namespace Atlas {
     }
 
     void OrthographicCameraController::onUpdate(DeltaTime dt) {
+        AT_PROFILE_FUNCTION();
+        
         if(Input::isKeyPressed(AT_KEY_A)) {
             m_cameraPosition.x -= cos(glm::radians(m_rotation)) * m_translateSpeed * dt;
             m_cameraPosition.y -= sin(glm::radians(m_rotation)) * m_translateSpeed * dt;

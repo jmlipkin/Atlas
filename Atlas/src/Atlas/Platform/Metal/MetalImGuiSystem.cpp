@@ -14,6 +14,8 @@
 namespace Atlas {
 
 void MetalImGuiSystem::initImGuiLayer() {
+    AT_PROFILE_FUNCTION();
+    
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
 
@@ -29,7 +31,11 @@ void MetalImGuiSystem::initImGuiLayer() {
     io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
     ImGui::StyleColorsDark();
 
-    ImGui_ImplMetal_Init(MetalContext::getMTLDevice());
+    {
+        AT_PROFILE_SCOPE("ImGui Metal init backend");
+        
+        ImGui_ImplMetal_Init(MetalContext::getMTLDevice());
+    }
 }
 
 void MetalImGuiSystem::cleanImGuiLayer() {}

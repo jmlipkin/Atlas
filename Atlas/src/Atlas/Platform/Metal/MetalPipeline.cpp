@@ -40,6 +40,8 @@ static MTL::VertexFormat shaderDataTypeToMTLFormat(ShaderDataType type) {
 }
 
 MetalPipeline::MetalPipeline(const PipelineSpecification& specs) {
+    AT_PROFILE_FUNCTION();
+
     NS::Error* error = nullptr;
     m_pipelineDescriptor = MTL::RenderPipelineDescriptor::alloc()->init();
     m_pipelineDescriptor->setLabel(NS::String::string(specs.name.c_str(), NS::ASCIIStringEncoding));
@@ -77,6 +79,8 @@ MetalPipeline::~MetalPipeline() {
 }
 
 void MetalPipeline::setLayout(const BufferLayout& layout) {
+    AT_PROFILE_FUNCTION();
+        
     AT_CORE_ASSERT(layout.getElements().size(), "Layout is empty!");
 
     uint32_t index = 0;
@@ -94,6 +98,8 @@ void MetalPipeline::setLayout(const BufferLayout& layout) {
 }
 
 void MetalPipeline::attachLayout() {
+    AT_PROFILE_FUNCTION();
+    
     m_pipelineDescriptor->setVertexDescriptor(m_vertexDescriptor);
 }
 

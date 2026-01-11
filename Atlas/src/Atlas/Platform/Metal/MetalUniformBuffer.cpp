@@ -5,6 +5,8 @@
 
 namespace Atlas {
 MetalUniformBuffer::MetalUniformBuffer(const PipelineSpecification& specs, UniformBufferLayout layout, uint32_t index) : m_layout(layout), m_index(index) {
+    AT_PROFILE_FUNCTION();
+
     MTL::Function* fs = static_cast<MTL::Function*>(specs.shader->getFragmentShader());
     m_argEncoder = fs->newArgumentEncoder(index);
     m_buffer = MetalContext::getMTLDevice()->newBuffer(m_argEncoder->encodedLength(), MTL::ResourceStorageModeShared);
@@ -16,6 +18,8 @@ MetalUniformBuffer::MetalUniformBuffer(const PipelineSpecification& specs, Unifo
 }
 
 void MetalUniformBuffer::setAlignedOffsetsAndStride() {
+    AT_PROFILE_FUNCTION();
+
     uint32_t offset = 0;
     uint32_t stride = 0;
 
@@ -28,6 +32,8 @@ void MetalUniformBuffer::setAlignedOffsetsAndStride() {
 }
 
 bool MetalUniformBuffer::sizesMatch() {
+    AT_PROFILE_FUNCTION();
+
     NS::UInteger GPUStructSize = m_argEncoder->encodedLength();
 
     if (m_layout.getStride() != GPUStructSize) {
@@ -55,6 +61,8 @@ bool MetalUniformBuffer::sizesMatch() {
 
 template <typename T>
 void MetalUniformBuffer::updateValue(UniformElement& e, T& value) {
+    AT_PROFILE_FUNCTION();
+    
     e.value = value;
     memcpy(m_argEncoder->constantData(e.id), &e.value, e.size);
 }

@@ -12,6 +12,8 @@ namespace Atlas {
 Application* Application::s_instance = nullptr;
 
 Application::Application() {
+    AT_PROFILE_FUNCTION();
+
     AT_CORE_ASSERT(!s_instance, "Application already exists!");
     s_instance = this;
 
@@ -28,6 +30,7 @@ Application::~Application() {
 }
 
 void Application::run() {
+    AT_PROFILE_FUNCTION();
     RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
 
     while (m_isRunning) {

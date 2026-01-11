@@ -13,3 +13,4 @@
 #include <unordered_set>
 
 #include "Atlas/Core/Log.h"
+#include "Atlas/Debug/Instrumentor.h"

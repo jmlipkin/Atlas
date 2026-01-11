@@ -5,8 +5,11 @@
 namespace Atlas {
 
 typedef std::chrono::steady_clock Clock;
+// TimePoint is defined in seconds
 typedef std::chrono::time_point<std::chrono::steady_clock, std::chrono::duration<double>> TimePoint;
+// Duration is defined in seconds
 typedef std::chrono::duration<double> Duration;
+typedef std::chrono::duration<double, std::micro> DurationMicro;
 
 class DeltaTime {
    public:

@@ -1,16 +1,17 @@
-#include "atpch.h"
 #include "MacOSWindow.h"
-
-#include <metal-cpp/Metal.hpp>
 
 #include <Atlas/Events/ApplicationEvent.h>
 #include <Atlas/Events/KeyEvent.h>
 #include <Atlas/Events/MouseEvent.h>
 
+#include <metal-cpp/Metal.hpp>
+
+#include "atpch.h"
+
 // TEMPORARY
-#include "Atlas/Renderer/Renderer.h"
-#include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Platform/Metal/MetalContext.h"
+#include "Atlas/Renderer/RenderCommand.h"
+#include "Atlas/Renderer/Renderer.h"
 
 namespace Atlas {
 
@@ -21,6 +22,7 @@ static void GLFWErrorCallback(int error, const char* description) {
 }
 
 Window* Window::create(const WindowProperties& props) {
+    AT_PROFILE_FUNCTION();
     return new MacOSWindow(props);
 }
 
@@ -33,13 +35,17 @@ MacOSWindow::~MacOSWindow() {
 }
 
 void MacOSWindow::init(const WindowProperties& props) {
+    AT_PROFILE_FUNCTION();
+
     m_data.title = props.title;
     m_data.width = props.width;
     m_data.height = props.height;
 
     AT_CORE_TRACE("Creating window \"{0}\" ({1}x{2})", props.title, props.width, props.height);
 
-    if(!s_GLFWInitialized) {
+    if (!s_GLFWInitialized) {
+        AT_PROFILE_SCOPE("Initialize GLFW");
+
         int success = glfwInit();
         AT_CORE_ASSERT(success, "Could not initialize GLFW!");
 
@@ -48,16 +54,24 @@ void MacOSWindow::init(const WindowProperties& props) {
         s_GLFWInitialized = true;
     }
 
-    if(Renderer::getAPI() == RendererAPI::API::OpenGL) {
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    } else if (Renderer::getAPI() == RendererAPI::API::Metal) {
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    {
+        AT_PROFILE_SCOPE("GLFW Window Hints");
+
+        if (Renderer::getAPI() == RendererAPI::API::OpenGL) {
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        } else if (Renderer::getAPI() == RendererAPI::API::Metal) {
+            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        }
     }
 
-    m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
+    {
+        AT_PROFILE_SCOPE("GLFW create window");
+
+        m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
+    }
 
     m_data.context = GraphicsContext::create(m_window);
     m_data.context->init();
@@ -68,84 +82,93 @@ void MacOSWindow::init(const WindowProperties& props) {
 
     // set GLFW callbacks
 
-    glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
-        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-        data.width = width;
-        data.height = height;
+    {
+        AT_PROFILE_SCOPE("Set GLFW Callbacks");
 
-        WindowResizeEvent event(width, height);
-        data.eventCallback(event);
-    });
+        glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            data.width = width;
+            data.height = height;
 
-    glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window) {
-        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-        WindowCloseEvent event;
-        data.eventCallback(event);
-    });
+            WindowResizeEvent event(width, height);
+            data.eventCallback(event);
+        });
 
-    glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+        glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            WindowCloseEvent event;
+            data.eventCallback(event);
+        });
 
-        switch(action) {
-            case GLFW_PRESS: {
-                KeyPressedEvent event(key, 0);
-                data.eventCallback(event);
-                break;
+        glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            switch (action) {
+                case GLFW_PRESS: {
+                    KeyPressedEvent event(key, 0);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE: {
+                    KeyReleasedEvent event(key);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_REPEAT: {
+                    KeyPressedEvent event(key, 1);
+                    data.eventCallback(event);
+                    break;
+                }
             }
-            case GLFW_RELEASE: {
-                KeyReleasedEvent event(key);
-                data.eventCallback(event);
-                break;
+        });
+
+        glfwSetCharCallback(m_window, [](GLFWwindow* window, unsigned int keycode) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            KeyTypedEvent event(keycode);
+            data.eventCallback(event);
+        });
+
+        glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            switch (action) {
+                case GLFW_PRESS: {
+                    MouseButtonPressedEvent event(button);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE: {
+                    MouseButtonReleasedEvent event(button);
+                    data.eventCallback(event);
+                    break;
+                }
             }
-            case GLFW_REPEAT: {
-                KeyPressedEvent event(key, 1);
-                data.eventCallback(event);
-                break;
-            }
-        }
-    });
+        });
 
-    glfwSetCharCallback(m_window, [](GLFWwindow* window, unsigned int keycode) {
-        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+        glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xOffset, double yOffset) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-        KeyTypedEvent event(keycode);
-        data.eventCallback(event);
-    });
+            MouseScrolledEvent event(xOffset, yOffset);
+            data.eventCallback(event);
+        });
 
-    glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods) {
-        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-        
-        switch(action) {
-            case GLFW_PRESS: {
-                MouseButtonPressedEvent event(button);
-                data.eventCallback(event);
-                break;
-            }
-            case GLFW_RELEASE: {
-                MouseButtonReleasedEvent event(button);
-                data.eventCallback(event);
-                break;
-            }
-        }
-    });
+        glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double x, double y) {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-    glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xOffset, double yOffset) {
-        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-        MouseScrolledEvent event(xOffset, yOffset);
-        data.eventCallback(event);
-    });
-
-    glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double x, double y) {
-        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-        MouseMovedEvent event((float)x, (float)y);
-        data.eventCallback(event);
-    });
+            MouseMovedEvent event((float)x, (float)y);
+            data.eventCallback(event);
+        });
+    }
 }
 
 void MacOSWindow::shutdown() {
-    glfwDestroyWindow(m_window);
+    AT_PROFILE_FUNCTION();
+
+    {
+        AT_PROFILE_SCOPE("GLFW Destroy window");
+        glfwDestroyWindow(m_window);
+    }
 }
 
 void MacOSWindow::onUpdate() {
@@ -165,4 +188,4 @@ void MacOSWindow::setVSync(bool enabled) {
 bool MacOSWindow::isVSync() const {
     return m_data.VSync;
 }
-}
+}  // namespace Atlas

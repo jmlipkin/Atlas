@@ -9,14 +9,20 @@
 namespace Atlas {
 
     MetalVertexBuffer::MetalVertexBuffer(uint32_t size) {
+        AT_PROFILE_FUNCTION();
+        
         m_buffer = MetalContext::getMTLDevice()->newBuffer(size * sizeof(uint32_t), MTL::ResourceStorageModeShared);
     }
 
     MetalVertexBuffer::MetalVertexBuffer(float* vertices, uint32_t size) {
+        AT_PROFILE_FUNCTION();
+
         m_buffer = MetalContext::getMTLDevice()->newBuffer(vertices, size * sizeof(uint32_t), MTL::ResourceStorageModeShared);
     }
 
     void MetalVertexBuffer::setData(const void* data, uint32_t size) {
+        AT_PROFILE_FUNCTION();
+
         NS::UInteger existingSize = m_buffer->allocatedSize();
         AT_CORE_ASSERT(size <= existingSize, "VertexBuffer data could not be set: submitted size exceeds allocated space");
 
@@ -25,6 +31,8 @@ namespace Atlas {
     }
 
     MetalIndexBuffer::MetalIndexBuffer(uint32_t* indices, uint32_t count) : m_indexCount(count) {
+        AT_PROFILE_FUNCTION();
+        
         m_buffer = MetalContext::getMTLDevice()->newBuffer(indices, count * sizeof(uint32_t), MTL::ResourceStorageModeShared);
     }
 

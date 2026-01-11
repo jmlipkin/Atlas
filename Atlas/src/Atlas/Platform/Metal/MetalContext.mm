@@ -20,12 +20,15 @@ namespace Atlas {
     }
 
     void MetalContext::init() { 
+        AT_PROFILE_FUNCTION();
+        
         initDevice();
         initWindow();
         AT_CORE_TRACE("MetalContext initialized");
     }
 
     void MetalContext::initDevice() {
+        AT_PROFILE_FUNCTION();
 
         s_device = MTL::CreateSystemDefaultDevice();
         // An assert here means MetalContext::initDevice() could not create system default device.
@@ -35,6 +38,8 @@ namespace Atlas {
     }
 
     void MetalContext::initWindow() {
+        AT_PROFILE_FUNCTION();
+
         int width, height;
         glfwGetFramebufferSize(m_window, &width, &height);
 
@@ -60,6 +65,8 @@ namespace Atlas {
     }
 
     MTL::Library* MetalContext::setNewMTLLibrary(const std::string& filepath) {
+        AT_PROFILE_FUNCTION();
+
         NS::Error* error = nullptr;
         MTL::Library* library = getMTLDevice()->newLibrary(NS::String::string(filepath.c_str(), NS::UTF8StringEncoding), &error);
         if (!library) {
@@ -71,6 +78,8 @@ namespace Atlas {
     }
 
     void MetalContext::createDepthAndMSAATextures() {
+        AT_PROFILE_FUNCTION();
+        
         MTL::TextureDescriptor* msaaTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
         msaaTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
         msaaTextureDescriptor->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
@@ -96,6 +105,8 @@ namespace Atlas {
     }
 
     void MetalContext::onResize(const WindowResizeEvent& e) {
+        AT_PROFILE_FUNCTION();
+        
         m_layer->setDrawableSize(CGSizeMake(e.getWidth(), e.getHeight()));
         createDepthAndMSAATextures();
     }
