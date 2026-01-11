@@ -16,6 +16,8 @@ class MetalTexture : public Texture {
 
     virtual void setData(void* data, uint32_t size) override;
 
+    virtual bool operator==(const Texture& other) const override { return m_texture == ((MetalTexture&)other).m_texture; }
+
     virtual uint32_t getWidth() const override { return m_width; }
     virtual uint32_t getHeight() const override { return m_height; }
 

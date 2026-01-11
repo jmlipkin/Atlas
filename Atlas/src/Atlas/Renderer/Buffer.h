@@ -10,6 +10,7 @@ enum class ShaderDataType {
     Float4,
     Mat3,
     Mat4,
+    Uint,
     Int,
     Int2,
     Int3,
@@ -35,6 +36,8 @@ static uint32_t ShaderDataTypeSize(ShaderDataType type) {
             return 4 * 3 * 3;
         case ShaderDataType::Mat4:
             return 4 * 4 * 4;
+        case ShaderDataType::Uint:
+            return 4;
         case ShaderDataType::Int:
             return 4;
         case ShaderDataType::Int2:
@@ -82,6 +85,8 @@ struct BufferElement {
                 return 3 * 3;
             case ShaderDataType::Mat4:
                 return 4 * 4;
+            case ShaderDataType::Uint:
+                return 1;
             case ShaderDataType::Int:
                 return 1;
             case ShaderDataType::Int2:
@@ -136,6 +141,8 @@ class VertexBuffer {
     virtual ~VertexBuffer() = default;
 
     virtual void* getNativeBuffer() const = 0;
+
+    virtual void setData(const void* data, uint32_t size) = 0;
 
     static std::shared_ptr<VertexBuffer> create(uint32_t size);
     static std::shared_ptr<VertexBuffer> create(float* vertices, uint32_t size);

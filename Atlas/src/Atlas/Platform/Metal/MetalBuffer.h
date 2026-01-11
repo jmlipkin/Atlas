@@ -11,6 +11,9 @@ namespace Atlas {
      MetalVertexBuffer(uint32_t size);
      MetalVertexBuffer(float* vertices, uint32_t size);
      virtual ~MetalVertexBuffer() = default;
+
+     virtual void setData(const void* data, uint32_t size) override;
+
      void* getNativeBuffer() const override { return m_buffer; }
 
     private:

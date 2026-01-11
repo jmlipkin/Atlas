@@ -17,6 +17,7 @@ namespace Atlas {
 			case Atlas::ShaderDataType::Float4:   return GL_FLOAT;
 			case Atlas::ShaderDataType::Mat3:     return GL_FLOAT;
 			case Atlas::ShaderDataType::Mat4:     return GL_FLOAT;
+			case Atlas::ShaderDataType::Uint:     return GL_UNSIGNED_INT;
 			case Atlas::ShaderDataType::Int:      return GL_INT;
 			case Atlas::ShaderDataType::Int2:     return GL_INT;
 			case Atlas::ShaderDataType::Int3:     return GL_INT;

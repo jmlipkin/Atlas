@@ -23,6 +23,10 @@ Application::Application() {
     AT_CORE_INFO("Engine initialization complete!");
 }
 
+Application::~Application() {
+    Renderer::shutdown();
+}
+
 void Application::run() {
     RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
 

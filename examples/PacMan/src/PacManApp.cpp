@@ -11,14 +11,16 @@ class ExampleLayer : public Atlas::Layer {
         std::string tempDirectory = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/";
         std::string texturefile = "mc_grass.jpeg";
         m_texture = Atlas::Texture::create(tempDirectory + texturefile);
+        m_food = Atlas::Texture::create("/Users/jared/Documents/GameDev/PacMan/assets/food.png");
     }
 
     void onUpdate(Atlas::DeltaTime dt) override {
         m_cameraController.onUpdate(dt);
         Atlas::Renderer::beginScene(m_cameraController.getCamera());
 
-        // Atlas::Renderer::drawQuad(glm::vec2(-1.0f, -0.2f), glm::vec2(0.7f, 0.3f), quadColor);
-        Atlas::Renderer::drawQuad(glm::vec3(0.0f), glm::vec2(1.0f), *m_texture);
+        Atlas::Renderer::drawQuad(glm::vec2(0.0f, 0.0f), glm::vec2(2.0, 1.0f), quadColor);
+        Atlas::Renderer::drawQuad(glm::vec3(0.0f), glm::vec2(1.0f), m_texture);
+        Atlas::Renderer::drawQuad(glm::vec2(-4.0f, 1.0f), glm::vec2(3.0, 1.0f), m_food);
 
         Atlas::Renderer::endScene();
     }
@@ -32,6 +34,7 @@ class ExampleLayer : public Atlas::Layer {
 
     private:
      std::shared_ptr<Atlas::Texture> m_texture;
+     std::shared_ptr<Atlas::Texture> m_food;
      Atlas::OrthographicCameraController m_cameraController;
 };
 

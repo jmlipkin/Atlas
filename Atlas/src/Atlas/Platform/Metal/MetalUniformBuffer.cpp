@@ -68,6 +68,15 @@ void MetalUniformBuffer::setBool(const std::string& name, const bool value) {
     updateValue(e, value);
 }
 
+void MetalUniformBuffer::setUint(const std::string& name, const int value) {
+    UniformElement e = m_layout.getElement(name);
+    if (e.type != ShaderDataType::Uint) {
+        AT_CORE_WARN("Could not update uniform value {0}: Type mismatch", name);
+        return;
+    }
+    updateValue(e, value);
+}
+
 void MetalUniformBuffer::setInt(const std::string& name, const int value) {
     UniformElement e = m_layout.getElement(name);
     if (e.type != ShaderDataType::Int) {
@@ -76,6 +85,7 @@ void MetalUniformBuffer::setInt(const std::string& name, const int value) {
     }
     updateValue(e, value);
 }
+
 void MetalUniformBuffer::setInt2(const std::string& name, const glm::ivec2& value) {
     UniformElement e = m_layout.getElement(name);
     if (e.type != ShaderDataType::Int2) {
@@ -84,6 +94,7 @@ void MetalUniformBuffer::setInt2(const std::string& name, const glm::ivec2& valu
     }
     updateValue(e, value);
 }
+
 void MetalUniformBuffer::setInt3(const std::string& name, const glm::ivec3& value) {
     UniformElement e = m_layout.getElement(name);
     if (e.type != ShaderDataType::Int3) {
@@ -92,6 +103,7 @@ void MetalUniformBuffer::setInt3(const std::string& name, const glm::ivec3& valu
     }
     updateValue(e, value);
 }
+
 void MetalUniformBuffer::setInt4(const std::string& name, const glm::ivec4& value) {
     UniformElement e = m_layout.getElement(name);
     if (e.type != ShaderDataType::Float) {
@@ -109,6 +121,7 @@ void MetalUniformBuffer::setFloat(const std::string& name, const float value) {
     }
     updateValue(e, value);
 }
+
 void MetalUniformBuffer::setFloat2(const std::string& name, const glm::vec2& value) {
     UniformElement e = m_layout.getElement(name);
     if (e.type != ShaderDataType::Float2) {
@@ -117,6 +130,7 @@ void MetalUniformBuffer::setFloat2(const std::string& name, const glm::vec2& val
     }
     updateValue(e, value);
 }
+
 void MetalUniformBuffer::setFloat3(const std::string& name, const glm::vec3& value) {
     UniformElement e = m_layout.getElement(name);
     if (e.type != ShaderDataType::Float3) {
@@ -143,6 +157,7 @@ void MetalUniformBuffer::setMat3(const std::string& name, const glm::mat3& value
     }
     updateValue(e, value);
 }
+
 void MetalUniformBuffer::setMat4(const std::string& name, const glm::mat4& value) {
     UniformElement e = m_layout.getElement(name);
     if (e.type != ShaderDataType::Mat4) {

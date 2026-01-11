@@ -31,6 +31,12 @@ void MetalRendererAPI::drawIndexed(const std::shared_ptr<VertexArray>& vertexArr
     m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, vertexArray->getIndexBuffer()->getCount(), MTL::IndexTypeUInt32, indexBuffer, 0);
 }
 
+void MetalRendererAPI::drawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count) {
+    std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(vertexArray->getIndexBuffer());
+    MTL::Buffer* indexBuffer = MIB->getBuffer();
+    m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, count, MTL::IndexTypeUInt32, indexBuffer, 0);
+}
+
 void MetalRendererAPI::drawPoint(const std::shared_ptr<VertexArray>& vertexArray) {
     std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(vertexArray->getIndexBuffer());
     MTL::Buffer* indexBuffer = MIB->getBuffer();
@@ -71,7 +77,7 @@ void MetalRendererAPI::bindPipeline(const Pipeline& pipeline, const UniformBuffe
     m_encoder->setFragmentBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
 }
 
-void MetalRendererAPI::bindTexture(const Pipeline& pipeline, const Texture& texture, int index) {
+void MetalRendererAPI::bindTexture(const Pipeline& pipeline, const Texture& texture, uint32_t index) {
     const MetalTexture& t = static_cast<const MetalTexture&>(texture);
     m_encoder->setFragmentTexture(t.getMTLTexture(), index);
 }

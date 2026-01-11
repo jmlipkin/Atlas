@@ -35,6 +35,9 @@ struct UniformElement {
         } else if (std::is_same_v<T, glm::mat4>) {
             type = ShaderDataType::Mat4;
             size = sizeof(glm::mat4);
+        } else if (std::is_same_v<T, uint32_t>) {
+            type = ShaderDataType::Uint;
+            size = sizeof(uint32_t);
         } else if (std::is_same_v<T, int>) {
             type = ShaderDataType::Int;
             size = sizeof(int);
@@ -111,6 +114,7 @@ class UniformBuffer {
     virtual void* getNativeBuffer() const = 0;
 
     virtual void setBool(const std::string& name, const bool value) = 0;
+    virtual void setUint(const std::string& name, const int value) = 0;
     virtual void setInt(const std::string& name, const int value) = 0;
     virtual void setInt2(const std::string& name, const glm::ivec2& value) = 0;
     virtual void setInt3(const std::string& name, const glm::ivec3& value) = 0;

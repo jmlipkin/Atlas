@@ -23,6 +23,7 @@ class RendererAPI {
     virtual void setClearColor(const glm::vec4& color) = 0;
     virtual void clear() = 0;
     virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
+    virtual void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count) = 0;
     virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) = 0;
     virtual void commit() = 0;
 
@@ -33,7 +34,7 @@ class RendererAPI {
     virtual void drawImGui() = 0;
 
     virtual void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) = 0;
-    virtual void bindTexture(const Pipeline& pipeline, const Texture& texture, int index) = 0;
+    virtual void bindTexture(const Pipeline& pipeline, const Texture& texture, uint32_t index) = 0;
     virtual void bindVertexArray(const VertexArray& array) = 0;
     virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
 

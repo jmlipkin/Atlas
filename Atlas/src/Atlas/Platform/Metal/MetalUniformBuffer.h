@@ -15,6 +15,7 @@ class MetalUniformBuffer : public UniformBuffer {
     virtual void* getNativeBuffer() const override { return m_buffer; }
 
     virtual void setBool(const std::string& name, const bool value) override;
+    virtual void setUint(const std::string& name, const int value) override;
     virtual void setInt(const std::string& name, const int value) override;
     virtual void setInt2(const std::string& name, const glm::ivec2& value) override;
     virtual void setInt3(const std::string& name, const glm::ivec3& value) override;

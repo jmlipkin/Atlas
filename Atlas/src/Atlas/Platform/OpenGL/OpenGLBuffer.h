@@ -10,6 +10,9 @@ namespace Atlas {
         OpenGLVertexBuffer(float* vertices, uint32_t size);
         virtual ~OpenGLVertexBuffer();
 
+        // TODO: Implement
+        virtual void setData(const void* data, uint32_t size) override {}
+
         void* getNativeBuffer() const override { return (void*)&m_rendererID; }
 
        private:

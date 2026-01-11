@@ -21,6 +21,8 @@ static MTL::VertexFormat shaderDataTypeToMTLFormat(ShaderDataType type) {
             return MTL::VertexFormat::VertexFormatInvalid;
         case Atlas::ShaderDataType::Mat4:
             return MTL::VertexFormat::VertexFormatInvalid;
+        case Atlas::ShaderDataType::Uint:
+            return MTL::VertexFormat::VertexFormatUInt;
         case Atlas::ShaderDataType::Int:
             return MTL::VertexFormat::VertexFormatInt;
         case Atlas::ShaderDataType::Int2:
