@@ -19,7 +19,9 @@ class OrthographicCameraController {
     const OrthographicCamera& getCamera() const { return m_camera; }
 
     float getZoomLevel() const { return m_zoom; }
-    void setZoomLevel(float zoom) { m_zoom = zoom; }
+    void setZoomLevel(float zoom) { m_zoom = zoom;
+        m_camera.setProjection(-m_aspectRatio * m_zoom, m_aspectRatio * m_zoom, -m_zoom, m_zoom);
+    }
 
    private:
     bool onMouseScrolled(MouseScrolledEvent& e);
