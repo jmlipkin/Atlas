@@ -4,4 +4,8 @@ build
 Atlas/extern
 testing
 newrenderer.h
-AtlasProfile*
+
+playground.cpp
+Atlas/TODO
+
+AtlasProfile.*.json

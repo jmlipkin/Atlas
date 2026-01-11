@@ -1,11 +1,17 @@
-Move ImGui events back to main ImGuiLayer
+Expand SubTexture Rendering API (draw with no provided size)
+Add ECS architecture (UUID)
+
+
+<!-- ---------------------------------------------------------------------- -->
+
 Clean up includes before commit
-Clean up MTLData system
-Where is metal resizing happening?
 Convert raw pointers -- need to handle memory deallocation
 
-Clean up vertex array platforms -- is platformed approach necessary? Should internal buffers be converted?
+UniformBufferLayout must be in order... can that be reworked?
+Add Atlas-based logging window
 
 
 xcrun -sdk macosx metal -o triangle.ir -c triangle.metal
 xcrun -sdk macosx metal -o triangle.metallib triangle.ir
+
+git ls-files | xargs wc -l
