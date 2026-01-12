@@ -57,6 +57,7 @@ file(GLOB IMGUI_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/stb_image/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/stb_image/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/entt/entt.hpp"
 )
 
 list(APPEND ATLAS_SOURCES ${IMGUI_SOURCES})
