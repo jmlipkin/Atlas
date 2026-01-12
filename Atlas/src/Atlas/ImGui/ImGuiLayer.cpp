@@ -4,6 +4,7 @@
 #include <imgui/imgui.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include <Atlas/Core/Base.h>
 #include <Atlas/Core/Application.h>
@@ -15,6 +16,7 @@ namespace Atlas {
 
     ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer") {
         m_system = ImGuiSystem::create();
+        m_sink = Atlas::Log::getImGuiLogger();
     }
 
     void ImGuiLayer::onUpdate(DeltaTime dt) {
@@ -41,7 +43,8 @@ namespace Atlas {
         ImGui::NewFrame();
 
         onImGuiRender();
-        
+        drawImGuiLogWindow();
+
         ImGui::Render();
         Renderer::submitImGui();
     }
@@ -123,5 +126,39 @@ namespace Atlas {
 
         return false;
     }
+
+    void ImGuiLayer::drawImGuiLogWindow()
+{
+    ImGui::Begin("Log");
+
+    if (ImGui::Button("Clear"))
+        m_sink->clear();
+
+    ImGui::Separator();
+
+    ImGui::BeginChild("Scrolling");
+
+    for (const auto& message : m_sink->getMessages())
+    {
+        ImVec4 color;
+        color.x = message.color.x;
+        color.y = message.color.y;
+        color.z = message.color.z;
+        color.w = message.color.w;
+        ImGui::PushStyleColor(ImGuiCol_Text, color);
+        ImGui::TextUnformatted(message.text.c_str());
+        ImGui::PopStyleColor();
+    }
+
+    if (m_sink->scrollsToBottom())
+    {
+        ImGui::SetScrollHereY(1.0f);
+        m_sink->clearScrollFlag();
+    }
+
+    ImGui::EndChild();
+    ImGui::End();
+}
+
 
 }  // namespace Atlas

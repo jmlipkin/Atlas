@@ -40,6 +40,11 @@ class ImGuiLayer : public Layer {
 
         private:
          std::unique_ptr<ImGuiSystem> m_system;
+
+
+         // TEMPORARY?
+         std::shared_ptr<ImGuiSink> m_sink;
+         void drawImGuiLogWindow();
 };
 
 }  // namespace Atlas

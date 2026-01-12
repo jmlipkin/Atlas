@@ -4,6 +4,8 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 
+#include "Atlas/ImGui/ImGuiSink.h"
+
 namespace Atlas {
 
 class Log {
@@ -13,9 +15,12 @@ class Log {
     inline static std::shared_ptr<spdlog::logger>& getCoreLogger() { return s_coreLogger; }
     inline static std::shared_ptr<spdlog::logger>& getClientLogger() { return s_clientLogger; }
 
+    inline static std::shared_ptr<ImGuiSink>& getImGuiLogger() { return s_ImGuiSink; }
+
    private:
     static std::shared_ptr<spdlog::logger> s_coreLogger;
     static std::shared_ptr<spdlog::logger> s_clientLogger;
+    static std::shared_ptr<ImGuiSink> s_ImGuiSink;
 };
 }  // namespace Atlas
 
