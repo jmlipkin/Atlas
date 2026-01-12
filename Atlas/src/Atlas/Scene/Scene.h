@@ -1,11 +1,22 @@
 #pragma once
 
+#include "Atlas/Core/Time.h"
 #include "Atlas/Scene/Registry.h"
 
 namespace Atlas {
 
+class Entity;   // forward declaration
+
 class Scene {
-   private:
+   public:
+    Scene() = default;
+    virtual ~Scene() = default;
+
+    Entity createEntity(const std::string& name);
+
+    virtual void onUpdate(DeltaTime dt) = 0;
+
+   protected:
     Registry m_registry;
     friend class Entity;
 };

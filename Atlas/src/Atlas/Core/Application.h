@@ -26,16 +26,18 @@ class Application {
     inline Window& getWindow() const { return *m_window; }
     inline static Application& get() { return *s_instance; }
 
+   protected:
+    DeltaTime m_dt;
+
    private:
     bool onWindowClose(WindowCloseEvent& e);
     bool onWindowResize(WindowResizeEvent& e);
 
-   private:
+    private:
     std::shared_ptr<Window> m_window;
     std::shared_ptr<GraphicsContext> m_context;
     bool m_isRunning = true;
     bool m_isMinimized = false;
-    DeltaTime m_dt;
 
     LayerStack m_layerStack;
 

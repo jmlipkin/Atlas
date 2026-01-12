@@ -4,6 +4,6 @@
 
 namespace Atlas {
 
-using Registry = entt::registry;
+typedef entt::registry Registry;
 
 }  // namespace Atlas
