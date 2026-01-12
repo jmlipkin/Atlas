@@ -33,6 +33,9 @@ class Renderer {
     static void drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& texture);
     static void drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& texture);
 
+    static void drawQuad(const glm::mat4& transform, const glm::vec4& color);
+    static void drawQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& color);
+    static void drawQuad(const glm::mat4& transform, const std::shared_ptr<SubTexture>& color);
 
     inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 

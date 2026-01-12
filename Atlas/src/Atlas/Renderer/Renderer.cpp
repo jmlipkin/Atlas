@@ -38,6 +38,8 @@ struct RendererData {
     uint32_t quadIndexCount = 0;
     QuadVertex* quadVertexBufferBase = nullptr;
     QuadVertex* quadVertexPtr = nullptr;
+
+    glm::vec4 quadVertexPositions[4];
 };
 
 static RendererData s_data;
@@ -50,7 +52,7 @@ void Renderer::init(GraphicsContext& context) {
     std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/shaders.metallib";
     s_data.shaderLib = ShaderLibrary::create(filepath);
     s_data.shaderLib->load("Quad Shader", "quadVertexShader", "quadFragmentShader");
-    
+
 #ifdef POINT_BATCHING_NOT_IMPLEMENTED_YET
     s_data.shaderLib->load("Point Shader", "pointVertexShader", "pointFragmentShader");
     float pointVertices[1 * 1] = {
@@ -74,7 +76,7 @@ void Renderer::init(GraphicsContext& context) {
         pointPipelineSpecs, {{"u_position", 0, glm::vec3(0.0f)}, {"u_viewProjection", 1, glm::mat4(1.0f)}, {"u_color", 2, glm::vec4(1.0f)}},
         1);
     s_data.pointPipeline = Pipeline::create(pointPipelineSpecs);
-    
+
 #endif
 
     {
@@ -82,7 +84,7 @@ void Renderer::init(GraphicsContext& context) {
 
         s_data.quadVertexBufferBase = new QuadVertex[s_data.maxVertexCount];
     }
-    
+
     s_data.quadVertexBuffer = VertexBuffer::create(s_data.maxVertexCount * sizeof(QuadVertex));
 
     uint32_t* quadIndices = new uint32_t[s_data.maxIndexCount];
@@ -125,6 +127,11 @@ void Renderer::init(GraphicsContext& context) {
 
     s_data.textureSlots[0] = whiteTexture;
 
+    s_data.quadVertexPositions[0] = {0.0f, 1.0f, 0.0f, 1.0f};
+    s_data.quadVertexPositions[1] = {1.0f, 1.0f, 0.0f, 1.0f};
+    s_data.quadVertexPositions[2] = {1.0f, 0.0f, 0.0f, 1.0f};
+    s_data.quadVertexPositions[3] = {0.0f, 0.0f, 0.0f, 1.0f};
+
     AT_CORE_TRACE("Renderer initialized");
 }
 
@@ -148,7 +155,7 @@ void Renderer::endScene() {
 }
 
 void Renderer::startNewBatch() {
-    AT_PROFILE_FUNCTION();  
+    AT_PROFILE_FUNCTION();
 
     s_data.quadIndexCount = 0;
     s_data.quadVertexPtr = s_data.quadVertexBufferBase;
@@ -159,7 +166,7 @@ void Renderer::startNewBatch() {
 void Renderer::flush() {
     AT_PROFILE_FUNCTION();
 
-    if(s_data.quadIndexCount == 0) {
+    if (s_data.quadIndexCount == 0) {
         return;
     }
 
@@ -178,7 +185,7 @@ void Renderer::flush() {
 }
 
 void Renderer::beginImGui() {
-    AT_PROFILE_FUNCTION();  
+    AT_PROFILE_FUNCTION();
 
     RenderCommand::beginImGui();
 }
@@ -196,30 +203,25 @@ void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const 
 void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
     AT_PROFILE_FUNCTION();
 
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(size, 1.0f));
+    drawQuad(transform, color);
+}
+
+void Renderer::drawQuad(const glm::mat4& transform, const glm::vec4& color) {
+    if (s_data.quadIndexCount >= s_data.maxIndexCount)
+        flush();
+
     uint32_t texIndex = 0;
-    s_data.quadVertexPtr->position = {position.x, position.y + size.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = glm::vec2{0, 1};
-    s_data.quadVertexPtr++;
-    
-    s_data.quadVertexPtr->position = {position.x + size.x, position.y + size.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = glm::vec2{1, 1};
-    s_data.quadVertexPtr++;
-    
-    s_data.quadVertexPtr->position = {position.x + size.x, position.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = glm::vec2{1, 0};
-    s_data.quadVertexPtr++;
-    
-    s_data.quadVertexPtr->position = {position.x, position.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = glm::vec2{0, 0};
-    s_data.quadVertexPtr++;
+    glm::vec2 texCoordinates[4] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+    constexpr size_t quadVertexCount = 4;
+
+    for (size_t i = 0; i < quadVertexCount; i++) {
+        s_data.quadVertexPtr->position = transform * s_data.quadVertexPositions[i];
+        s_data.quadVertexPtr->color = color;
+        s_data.quadVertexPtr->texIndex = texIndex;
+        s_data.quadVertexPtr->texCoord = texCoordinates[i];
+        s_data.quadVertexPtr++;
+    }
 
     s_data.quadIndexCount += 6;
 }
@@ -230,49 +232,45 @@ void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const 
 
 void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture) {
     AT_PROFILE_FUNCTION();
-    
+
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(size, 1.0f));
+    drawQuad(transform, texture);
+}
+
+void Renderer::drawQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture) {
+    AT_PROFILE_FUNCTION();
+
     glm::vec4 color = glm::vec4(1.0f);
     uint32_t texIndex = 0;
 
     for (uint32_t i = 1; i < s_data.textureSlotIndex; i++) {
-        if(*texture.get() == *s_data.textureSlots[i].get()) {
+        if (*texture.get() == *s_data.textureSlots[i].get()) {
             texIndex = i;
             break;
         }
     }
-    if(texIndex == 0) {
-        if(s_data.textureSlotIndex >= s_data.maxTextureSlots) {
+    if (texIndex == 0) {
+        if (s_data.textureSlotIndex >= s_data.maxTextureSlots) {
             flush();
         }
-        
+
         texIndex = s_data.textureSlotIndex;
         s_data.textureSlots[texIndex] = texture;
         s_data.textureSlotIndex++;
     }
+    if (s_data.quadIndexCount >= s_data.maxIndexCount)
+        flush();
 
-    s_data.quadVertexPtr->position = {position.x, position.y + size.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = glm::vec2{0, 1};
-    s_data.quadVertexPtr++;
-    
-    s_data.quadVertexPtr->position = {position.x + size.x, position.y + size.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = glm::vec2{1, 1};
-    s_data.quadVertexPtr++;
-    
-    s_data.quadVertexPtr->position = {position.x + size.x, position.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = glm::vec2{1, 0};
-    s_data.quadVertexPtr++;
-    
-    s_data.quadVertexPtr->position = {position.x, position.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = glm::vec2{0, 0};
-    s_data.quadVertexPtr++;
+    glm::vec2 texCoordinates[4] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+    constexpr size_t quadVertexCount = 4;
+
+    for (size_t i = 0; i < quadVertexCount; i++) {
+        s_data.quadVertexPtr->position = transform * s_data.quadVertexPositions[i];
+        s_data.quadVertexPtr->color = color;
+        s_data.quadVertexPtr->texIndex = texIndex;
+        s_data.quadVertexPtr->texCoord = texCoordinates[i];
+        s_data.quadVertexPtr++;
+    }
 
     s_data.quadIndexCount += 6;
 }
@@ -291,49 +289,46 @@ void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const 
 
 void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<SubTexture>& texture) {
     AT_PROFILE_FUNCTION();
-    
+
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(size, 1.0f));
+    drawQuad(transform, texture);
+}
+
+void Renderer::drawQuad(const glm::mat4& transform, const std::shared_ptr<SubTexture>& texture) {
+    AT_PROFILE_FUNCTION();
+
     glm::vec4 color = glm::vec4(1.0f);
     uint32_t texIndex = 0;
 
     for (uint32_t i = 1; i < s_data.textureSlotIndex; i++) {
-        if(*texture->getTexture() == *s_data.textureSlots[i].get()) {
+        if (*texture->getTexture() == *s_data.textureSlots[i].get()) {
             texIndex = i;
             break;
         }
     }
-    if(texIndex == 0) {
-        if(s_data.textureSlotIndex >= s_data.maxTextureSlots) {
+    if (texIndex == 0) {
+        if (s_data.textureSlotIndex >= s_data.maxTextureSlots) {
             flush();
         }
-        
+
         texIndex = s_data.textureSlotIndex;
         s_data.textureSlots[texIndex] = texture->getTexture();
         s_data.textureSlotIndex++;
     }
+    if (s_data.quadIndexCount >= s_data.maxIndexCount)
+        flush();
 
-    s_data.quadVertexPtr->position = {position.x, position.y + size.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = texture->getTexCoords().bottom_left;
-    s_data.quadVertexPtr++;
+    TextureCoordinates tc = texture->getTexCoords();
+    glm::vec2 texCoordinates[4] = {tc.bottom_left, tc.bottom_right, tc.top_right, tc.top_left};
+    constexpr size_t quadVertexCount = 4;
 
-    s_data.quadVertexPtr->position = {position.x + size.x, position.y + size.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = texture->getTexCoords().bottom_right;
-    s_data.quadVertexPtr++;
-
-    s_data.quadVertexPtr->position = {position.x + size.x, position.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = texture->getTexCoords().top_right;
-    s_data.quadVertexPtr++;
-
-    s_data.quadVertexPtr->position = {position.x, position.y, position.z};
-    s_data.quadVertexPtr->color = color;
-    s_data.quadVertexPtr->texIndex = texIndex;
-    s_data.quadVertexPtr->texCoord = texture->getTexCoords().top_left;
-    s_data.quadVertexPtr++;
+    for (size_t i = 0; i < quadVertexCount; i++) {
+        s_data.quadVertexPtr->position = transform * s_data.quadVertexPositions[i];
+        s_data.quadVertexPtr->color = color;
+        s_data.quadVertexPtr->texIndex = texIndex;
+        s_data.quadVertexPtr->texCoord = texCoordinates[i];
+        s_data.quadVertexPtr++;
+    }
 
     s_data.quadIndexCount += 6;
 }
@@ -352,21 +347,21 @@ void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const 
 
 void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& sheet) {
     AT_PROFILE_FUNCTION();
-    
+
     glm::vec4 color = glm::vec4(1.0f);
     uint32_t texIndex = 0;
 
     for (uint32_t i = 1; i < s_data.textureSlotIndex; i++) {
-        if(*sheet->getTexture() == *s_data.textureSlots[i].get()) {
+        if (*sheet->getTexture() == *s_data.textureSlots[i].get()) {
             texIndex = i;
             break;
         }
     }
-    if(texIndex == 0) {
-        if(s_data.textureSlotIndex >= s_data.maxTextureSlots) {
+    if (texIndex == 0) {
+        if (s_data.textureSlotIndex >= s_data.maxTextureSlots) {
             flush();
         }
-        
+
         texIndex = s_data.textureSlotIndex;
         s_data.textureSlots[texIndex] = sheet->getTexture();
         s_data.textureSlotIndex++;
