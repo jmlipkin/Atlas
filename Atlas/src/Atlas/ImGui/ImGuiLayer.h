@@ -15,7 +15,7 @@ class ImGuiLayer : public Layer {
     ImGuiLayer();
     virtual ~ImGuiLayer() = default;
 
-        virtual void onImGuiRender() = 0;
+        virtual void onImGuiRender(DeltaTime dt) = 0;
 
         void onUpdate(DeltaTime dt) final;
 
@@ -41,7 +41,7 @@ class ImGuiLayer : public Layer {
         private:
          std::unique_ptr<ImGuiSystem> m_system;
 
-
+        protected:
          // TEMPORARY?
          std::shared_ptr<ImGuiSink> m_sink;
          void drawImGuiLogWindow();

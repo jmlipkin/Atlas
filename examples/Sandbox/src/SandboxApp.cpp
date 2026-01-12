@@ -21,10 +21,18 @@ class SandboxLayer : public Atlas::Layer {
     std::shared_ptr<SandboxScene> m_scene;
 };
 
+class SandboxImGuiLayer : public Atlas::ImGuiLayer {
+   public:
+    ~SandboxImGuiLayer() = default;
+    virtual void onImGuiRender(Atlas::DeltaTime dt) override {
+    }
+};
+
 class SandboxApp : public Atlas::Application {
-    public:
+   public:
     SandboxApp() {
         pushLayer(new SandboxLayer());
+        pushOverlay(new SandboxImGuiLayer());
     }
 };
 

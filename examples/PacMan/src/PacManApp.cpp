@@ -48,7 +48,7 @@ class PacManImGui : public Atlas::ImGuiLayer {
     public:
     PacManImGui() {}
 
-    virtual void onImGuiRender() override {
+    virtual void onImGuiRender(Atlas::DeltaTime dt) override {
         ImGui::Begin("Quad Data");
         ImGui::ColorPicker4("Color", &quadColor[0]);
         ImGui::End();

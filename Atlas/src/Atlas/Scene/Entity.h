@@ -10,6 +10,7 @@ class Entity {
    public:
     Entity() = default;
     Entity(entt::entity entityID, Scene* scene) : m_entityID(entityID), m_scene(scene) {}
+
     Entity(const Entity& other) = default;
 
     template<typename T, typename... Args>

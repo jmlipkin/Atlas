@@ -42,7 +42,7 @@ namespace Atlas {
         Renderer::beginImGui();
         ImGui::NewFrame();
 
-        onImGuiRender();
+        onImGuiRender(dt);
         drawImGuiLogWindow();
 
         ImGui::Render();
