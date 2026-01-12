@@ -18,6 +18,7 @@ void MetalImGuiSystem::initImGuiLayer() {
     
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     io.IniFilename = "build/Atlas/extern/imgui.ini";
     if (std::filesystem::exists(io.IniFilename)) {
