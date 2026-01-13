@@ -11,13 +11,13 @@ namespace Atlas {
 
 Application* Application::s_instance = nullptr;
 
-Application::Application() {
+Application::Application(const WindowProperties& winProps) {
     AT_PROFILE_FUNCTION();
 
     AT_CORE_ASSERT(!s_instance, "Application already exists!");
     s_instance = this;
 
-    m_window = std::shared_ptr<Window>(Window::create());
+    m_window = std::shared_ptr<Window>(Window::create(winProps));
     m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
     m_context = m_window->getGraphicsContext();
     Renderer::init(*m_context);

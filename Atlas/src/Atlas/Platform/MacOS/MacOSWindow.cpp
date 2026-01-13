@@ -65,6 +65,8 @@ void MacOSWindow::init(const WindowProperties& props) {
         } else if (Renderer::getAPI() == RendererAPI::API::Metal) {
             glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         }
+
+        glfwWindowHint(GLFW_MAXIMIZED, props.openMaximized);
     }
 
     {

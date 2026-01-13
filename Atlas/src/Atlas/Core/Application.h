@@ -13,7 +13,7 @@ namespace Atlas {
 
 class Application {
    public:
-    Application();
+    Application(const WindowProperties& winProps = WindowProperties());
     virtual ~Application();
 
     void run();

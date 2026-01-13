@@ -11,8 +11,9 @@ struct WindowProperties {
     std::string title;
     unsigned int width;
     unsigned int height;
+    bool openMaximized;
 
-    WindowProperties(const std::string& Title = "Atlas Engine", unsigned int Width = 1280, unsigned int Height = 720) : title(Title), width(Width), height(Height) {}
+    WindowProperties(const std::string& Title = "Atlas Engine", bool Maximize = true, unsigned int Width = 1280, unsigned int Height = 720) : title(Title), width(Width), height(Height), openMaximized(Maximize) {}
 };
 
 class Window {

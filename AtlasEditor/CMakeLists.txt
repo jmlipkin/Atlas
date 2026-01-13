@@ -1,0 +1,38 @@
+cmake_minimum_required(VERSION 3.22)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(TARGET_NAME "AtlasEditor")
+
+add_executable(${TARGET_NAME} ${ATLAS_EDITOR_SOURCES})
+
+set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "Atlas Editor")
+
+# ADD FILES
+file(GLOB_RECURSE ATLAS_EDITOR_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
+)
+target_sources(${TARGET_NAME} PRIVATE ${ATLAS_EDITOR_SOURCES})
+
+# BINARY DATA
+file(GLOB_RECURSE BINARY_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/*")
+list(FILTER BINARY_FILES EXCLUDE REGEX "/\\.DS_Store$")
+
+target_include_directories(${TARGET_NAME} 
+    PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/extern
+)
+
+target_compile_definitions(${TARGET_NAME}
+    PUBLIC
+
+    CMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
+    VERSION="${CURRENT_VERSION}"
+)
+
+target_link_libraries(${TARGET_NAME}
+    PRIVATE
+    Atlas
+)
