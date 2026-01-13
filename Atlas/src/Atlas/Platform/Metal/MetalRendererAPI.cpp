@@ -55,7 +55,7 @@ void MetalRendererAPI::beginFrame() {
     AT_PROFILE_FUNCTION();
 
     m_pool = NS::AutoreleasePool::alloc()->init();
-    
+
     {
         AT_PROFILE_SCOPE("Get new drawable and command buffer");
 
@@ -105,7 +105,7 @@ void MetalRendererAPI::bindPipeline(const Pipeline& pipeline, const UniformBuffe
     m_encoder->setFragmentBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
 }
 
-void MetalRendererAPI::bindTexture(const Pipeline& pipeline, const Texture& texture, uint32_t index) {
+void MetalRendererAPI::bindTexture(const Texture& texture, uint32_t index) {
     AT_PROFILE_FUNCTION();
 
     const MetalTexture& t = static_cast<const MetalTexture&>(texture);
@@ -146,7 +146,7 @@ void MetalRendererAPI::drawImGui() {
 
 void MetalRendererAPI::commit() {
     AT_PROFILE_FUNCTION();
-    
+
     // Present the drawable
     m_encoder->endEncoding();
 

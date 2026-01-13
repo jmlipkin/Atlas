@@ -174,7 +174,7 @@ void Renderer::flush() {
     s_data.quadVertexBuffer->setData(s_data.quadVertexBufferBase, dataSize);
 
     for (uint32_t i = 0; i < s_data.textureSlotIndex; i++) {
-        RenderCommand::bindTexture(*s_data.quadPipeline, *s_data.textureSlots[i], i);
+        RenderCommand::bindTexture(*s_data.textureSlots[i], i);
     }
 
     RenderCommand::bindPipeline(*s_data.quadPipeline, *s_data.quadUniforms);

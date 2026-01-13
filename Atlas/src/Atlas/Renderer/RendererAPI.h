@@ -33,7 +33,7 @@ class RendererAPI {
     virtual void drawImGui() = 0;
 
     virtual void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) = 0;
-    virtual void bindTexture(const Pipeline& pipeline, const Texture& texture, uint32_t index) = 0;
+    virtual void bindTexture(const Texture& texture, uint32_t index) = 0;
     virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
 
     inline static API getAPI() { return s_API; }

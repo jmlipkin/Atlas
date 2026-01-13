@@ -12,7 +12,7 @@ class RenderCommand {
     inline static void commit() { s_rendererAPI->commit(); }
 
     inline static void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) { s_rendererAPI->bindPipeline(pipeline, uBuffer); }
-    inline static void bindTexture(const Pipeline& pipeline, const Texture& texture, uint32_t index) { s_rendererAPI->bindTexture(pipeline, texture, index); }
+    inline static void bindTexture(const Texture& texture, uint32_t index) { s_rendererAPI->bindTexture(texture, index); }
 
     inline static void bindVertexBuffer(const VertexBuffer& vBuffer, int index = 0) { s_rendererAPI->bindVertexBuffer(vBuffer, index); }
 
