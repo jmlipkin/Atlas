@@ -68,6 +68,9 @@ MetalPipeline::MetalPipeline(const PipelineSpecification& specs) {
     colorAttach->setDestinationAlphaBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
     colorAttach->setAlphaBlendOperation(MTL::BlendOperationAdd);
 
+    MTL::TextureDescriptor* depthTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
+    depthTextureDescriptor->set
+
     m_pipelineState = MetalContext::getMTLDevice()->newRenderPipelineState(m_pipelineDescriptor, &error);
 
     AT_CORE_ASSERT(m_pipelineState, "Pipeline Error: {}", error->localizedDescription()->utf8String());
