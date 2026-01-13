@@ -16,8 +16,10 @@
 #include "Atlas/ImGui/ImGuiLayer.h"
 
 #include "Atlas/Scene/Scene.h"
-#include "Atlas/Scene/Entity.h"
-#include "Atlas/Scene/Components.h"
+#include "Atlas/ECS/Registry.h"
+#include "Atlas/ECS/Entities/Entity.h"
+#include "Atlas/ECS/Components/Components.h"
+#include "Atlas/ECS/Systems/Systems.h"
 
 // ---- Entry Point ----------------------
 #include "Atlas/Core/EntryPoint.h"

@@ -49,7 +49,7 @@ void Renderer::init(GraphicsContext& context) {
 
     RenderCommand::init(context);
 
-    std::string filepath = "/Users/jared/Documents/GameDev/Atlas/examples/PacMan/src/shaders.metallib";
+    std::string filepath = "examples/PacMan/src/shaders.metallib";
     s_data.shaderLib = ShaderLibrary::create(filepath);
     s_data.shaderLib->load("Quad Shader", "quadVertexShader", "quadFragmentShader");
 

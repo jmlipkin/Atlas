@@ -2,8 +2,9 @@
 
 #include <glm/glm.hpp>
 
-namespace Atlas {
-namespace Component {
+#include "Atlas/Renderer/TextureSheet.h"
+
+namespace Atlas::Component {
 
 struct Tag {
     std::string tag;
@@ -21,5 +22,9 @@ struct Transform {
     Transform(glm::vec3 pos, float rotate, glm::vec2 scale) : position(pos), rotation(rotate), size(scale) {}
 };
 
-}  // namespace Component
-}  // namespace Atlas
+struct Sprite {
+    std::shared_ptr<SubTexture> subtexture;
+    Sprite(std::shared_ptr<SubTexture> sprite) : subtexture(sprite) {}
+};
+
+}  // namespace Atlas::Component
