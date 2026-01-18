@@ -13,7 +13,10 @@ class MacOSWindow : public Window {
     MacOSWindow(const WindowProperties& props);
     virtual ~MacOSWindow();
 
-    void onUpdate() override;
+	void onUpdate() override;
+	
+    void onMinimize() override;
+    void onRestore() override;
 
     inline unsigned int getWidth() const override { return m_data.width; }
     inline unsigned int getHeight() const override { return m_data.height; }

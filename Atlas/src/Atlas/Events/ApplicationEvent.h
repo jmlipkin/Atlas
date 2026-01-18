@@ -33,6 +33,22 @@ namespace Atlas {
 		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
 	};
 
+	class WindowFocusEvent : public Event {
+	  public:
+		WindowFocusEvent() {}
+
+		EVENT_CLASS_TYPE(WINDOW_FOCUS)
+		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+	};
+
+	class WindowLostFocusEvent : public Event {
+	  public:
+		WindowLostFocusEvent() {}
+
+		EVENT_CLASS_TYPE(WINDOW_LOST_FOCUS)
+		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+	};
+
 	class AppTickEvent : public Event
 	{
 	public:

@@ -22,7 +22,10 @@ class Window {
 
     virtual ~Window() = default;
 
-    virtual void onUpdate() = 0;
+	virtual void onUpdate() = 0;
+	
+    virtual void onMinimize() = 0;
+    virtual void onRestore() = 0;
 
     virtual unsigned int getWidth() const = 0;
     virtual unsigned int getHeight() const = 0;
