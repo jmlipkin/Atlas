@@ -6,12 +6,11 @@
 
 #include <metal-cpp/Metal.hpp>
 
+#include "Atlas/Core/Input.h"
+#include "Atlas/Core/KeyCodes.h"
+#include "GLFW/glfw3.h"
 #include "atpch.h"
-
-// TEMPORARY
-#include "Atlas/Platform/Metal/MetalContext.h"
-#include "Atlas/Renderer/RenderCommand.h"
-#include "Atlas/Renderer/Renderer.h"
+#include "Atlas/Renderer/RendererAPI.h"
 
 namespace Atlas {
 
@@ -57,12 +56,12 @@ void MacOSWindow::init(const WindowProperties& props) {
     {
         AT_PROFILE_SCOPE("GLFW Window Hints");
 
-        if (Renderer::getAPI() == RendererAPI::API::OpenGL) {
+        if (RendererAPI::getAPI() == RendererAPI::API::OpenGL) {
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        } else if (Renderer::getAPI() == RendererAPI::API::Metal) {
+        } else if (RendererAPI::getAPI() == RendererAPI::API::Metal) {
             glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         }
 
@@ -73,7 +72,7 @@ void MacOSWindow::init(const WindowProperties& props) {
         AT_PROFILE_SCOPE("GLFW create window");
 
         m_window = glfwCreateWindow((int)props.width, (int)props.height, m_data.title.c_str(), nullptr, nullptr);
-    }
+}
 
     m_data.context = GraphicsContext::create(m_window);
     m_data.context->init();
@@ -96,10 +95,22 @@ void MacOSWindow::init(const WindowProperties& props) {
             data.eventCallback(event);
         });
 
-        glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window) {
+		glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window) {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             WindowCloseEvent event;
             data.eventCallback(event);
+		});
+
+		glfwSetWindowFocusCallback(m_window, [](GLFWwindow* window, int focused) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			if (focused) {
+				WindowFocusEvent event;
+				data.eventCallback(event);
+			} else {
+				WindowLostFocusEvent event;
+				data.eventCallback(event);
+            }
         });
 
         glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -175,7 +186,15 @@ void MacOSWindow::shutdown() {
 
 void MacOSWindow::onUpdate() {
     glfwPollEvents();
-    m_data.context->swapBuffers();
+	m_data.context->swapBuffers();
+}
+
+void MacOSWindow::onMinimize() {
+	glfwIconifyWindow(m_window);
+}
+
+void MacOSWindow::onRestore() {
+	glfwRestoreWindow(m_window);
 }
 
 void MacOSWindow::setVSync(bool enabled) {

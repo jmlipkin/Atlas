@@ -1,6 +1,5 @@
 #include "Application.h"
 
-#include "Atlas/Core/Input.h"
 #include "Atlas/Core/Log.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/ImGui/ImGuiLayer.h"
@@ -35,7 +34,7 @@ void Application::run() {
 
     while (m_isRunning) {
         m_dt.updateDelta();
-        m_window->onUpdate();
+		m_window->onUpdate();
 
         RenderCommand::beginFrame();
 
@@ -53,6 +52,8 @@ void Application::onEvent(Event& event) {
     EventDispatcher dispatcher(event);
     dispatcher.dispatch<WindowCloseEvent>(AT_BIND_EVENT_FN(Application::onWindowClose));
     dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(Application::onWindowResize));
+    dispatcher.dispatch<WindowFocusEvent>(AT_BIND_EVENT_FN(Application::onWindowFocus));
+    dispatcher.dispatch<WindowLostFocusEvent>(AT_BIND_EVENT_FN(Application::onWindowLostFocus));
 
     for (auto it = m_layerStack.end(); it != m_layerStack.begin();) {
         (*--it)->onEvent(event);
@@ -83,4 +84,13 @@ bool Application::onWindowResize(WindowResizeEvent& e) {
     m_isMinimized = false;
     return false;
 }
+
+bool Application::onWindowFocus(WindowFocusEvent& e) {
+	return false;
+}
+
+bool Application::onWindowLostFocus(WindowLostFocusEvent& e) {
+	return false;
+}
+
 }  // namespace Atlas
