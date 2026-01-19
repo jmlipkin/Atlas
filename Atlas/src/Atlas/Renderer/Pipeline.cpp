@@ -1,9 +1,9 @@
 #include "Pipeline.h"
+#include "atpch.h"
 
 #include "Atlas/Platform/Metal/MetalPipeline.h"
 #include "Atlas/Platform/OpenGL/OpenGLPipeline.h"
 #include "RendererAPI.h"
-#include "atpch.h"
 
 namespace Atlas {
 

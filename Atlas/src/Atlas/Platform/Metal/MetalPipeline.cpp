@@ -1,7 +1,9 @@
 #include "MetalPipeline.h"
+#include <memory>
 #include "atpch.h"
 
 #include "MetalContext.h"
+#include "metal-cpp/Metal.hpp"
 
 namespace Atlas {
 
@@ -50,27 +52,12 @@ MetalPipeline::MetalPipeline(const PipelineSpecification& specs) {
     MTL::Function* fs = (MTL::Function*)specs.shader->getFragmentShader();
 
     m_pipelineDescriptor->setVertexFunction(vs);
-    m_pipelineDescriptor->setFragmentFunction(fs);
+	m_pipelineDescriptor->setFragmentFunction(fs);
 
     m_vertexDescriptor = MTL::VertexDescriptor::alloc()->init();
     setLayout(specs.layout);
-    attachLayout();
-
-    MTL::RenderPipelineColorAttachmentDescriptor* colorAttach = m_pipelineDescriptor->colorAttachments()->object(0);
-
-    // TEMPORARY
-    colorAttach->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
-    colorAttach->setBlendingEnabled(true);
-    colorAttach->setSourceRGBBlendFactor(MTL::BlendFactorSourceAlpha);
-    colorAttach->setDestinationRGBBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
-    colorAttach->setRgbBlendOperation(MTL::BlendOperationAdd);
-    colorAttach->setSourceAlphaBlendFactor(MTL::BlendFactorOne);
-    colorAttach->setDestinationAlphaBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
-    colorAttach->setAlphaBlendOperation(MTL::BlendOperationAdd);
-
-    MTL::TextureDescriptor* depthTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
-    depthTextureDescriptor->set
-
+	attachLayout();
+	
     m_pipelineState = MetalContext::getMTLDevice()->newRenderPipelineState(m_pipelineDescriptor, &error);
 
     AT_CORE_ASSERT(m_pipelineState, "Pipeline Error: {}", error->localizedDescription()->utf8String());
@@ -79,6 +66,29 @@ MetalPipeline::MetalPipeline(const PipelineSpecification& specs) {
 MetalPipeline::~MetalPipeline() {
     m_vertexDescriptor->release();
     m_pipelineDescriptor->release();
+}
+
+void MetalPipeline::attachFramebuffer(std::shared_ptr<Framebuffer> fb) {
+	std::shared_ptr<MetalFramebuffer> framebuffer = std::static_pointer_cast<MetalFramebuffer>(fb);
+    m_pipelineDescriptor->setDepthAttachmentPixelFormat(framebuffer->getDepthTextureDescriptor()->pixelFormat());
+	m_pipelineDescriptor->setSampleCount(framebuffer->getRasterSampleCount());
+
+	for (size_t i = 0; i < framebuffer->getColorTextures().size(); i++) {
+        MTL::RenderPipelineColorAttachmentDescriptor* colorAttach = m_pipelineDescriptor->colorAttachments()->object(i);
+		colorAttach->setPixelFormat(framebuffer->getColorTextureDescriptor(i)->pixelFormat());
+        colorAttach->setBlendingEnabled(true);
+        colorAttach->setSourceRGBBlendFactor(MTL::BlendFactorSourceAlpha);
+        colorAttach->setDestinationRGBBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
+        colorAttach->setRgbBlendOperation(MTL::BlendOperationAdd);
+        colorAttach->setSourceAlphaBlendFactor(MTL::BlendFactorOne);
+        colorAttach->setDestinationAlphaBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
+		colorAttach->setAlphaBlendOperation(MTL::BlendOperationAdd);
+	}
+
+	NS::Error* error = nullptr;
+    m_pipelineState = MetalContext::getMTLDevice()->newRenderPipelineState(m_pipelineDescriptor, &error);
+
+    AT_CORE_ASSERT(m_pipelineState, "Pipeline Error: {}", error->localizedDescription()->utf8String());
 }
 
 void MetalPipeline::setLayout(const BufferLayout& layout) {

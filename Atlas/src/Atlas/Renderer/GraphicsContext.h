@@ -16,7 +16,10 @@ namespace Atlas {
          virtual void init() = 0;
          virtual void swapBuffers() = 0;
 
-         virtual void onResize(const WindowResizeEvent& e) = 0;
+		 virtual void onResize(const WindowResizeEvent& e) = 0;
+
+		 virtual uint32_t getWidth() const = 0;
+		 virtual uint32_t getHeight() const = 0;
     };
 
 }  // namespace Atlas

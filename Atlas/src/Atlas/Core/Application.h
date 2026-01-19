@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Base.h"
-
 #include "Window.h"
 #include "LayerStack.h"
 
 #include "Atlas/Core/Time.h"
 #include "Atlas/Events/Event.h"
 #include "Atlas/Events/ApplicationEvent.h"
+#include "Atlas/Renderer/Framebuffer.h"
 
 namespace Atlas {
 
@@ -37,11 +36,12 @@ class Application {
 
     private:
     std::shared_ptr<Window> m_window;
-    std::shared_ptr<GraphicsContext> m_context;
+	std::shared_ptr<GraphicsContext> m_context;
+	std::shared_ptr<Framebuffer> m_framebuf;
     bool m_isRunning = true;
     bool m_isMinimized = false;
 
-    LayerStack m_layerStack;
+	LayerStack m_layerStack;
 
     static Application* s_instance;
 };

@@ -26,13 +26,13 @@ class RendererAPI {
     // virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) = 0;
     virtual void commit() = 0;
 
-    virtual void beginFrame() = 0;
-    virtual void endFrame() = 0;
-
+    virtual void beginFrame(std::shared_ptr<Framebuffer> framebuffer) = 0;
+	virtual void endFrame() = 0;
+	
     virtual void beginImGui() = 0;
     virtual void drawImGui() = 0;
 
-    virtual void bindPipeline(const Pipeline& pipeline, const UniformBuffer& uBuffer) = 0;
+    virtual void bindPipeline(std::shared_ptr<Pipeline> pipeline, const UniformBuffer& uBuffer) = 0;
     virtual void bindTexture(const Texture& texture, uint32_t index) = 0;
     virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
 

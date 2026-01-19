@@ -12,7 +12,7 @@ class Renderer {
     static void init(GraphicsContext& context);
     static void shutdown();
 
-    static void beginScene(const OrthographicCamera& camere);
+    static void beginScene(const OrthographicCamera& camera);
     static void endScene();
 
     static void beginImGui();

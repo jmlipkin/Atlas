@@ -9,7 +9,8 @@ class OpenGLPipeline : public Pipeline {
     OpenGLPipeline(const PipelineSpecification& specs) {}
 
     virtual void setLayout(const BufferLayout& layout) override {}
-
+    virtual void attachFramebuffer(std::shared_ptr<Framebuffer> framebuffer) override {}
+	
    private:
     void attachLayout() {}
 };

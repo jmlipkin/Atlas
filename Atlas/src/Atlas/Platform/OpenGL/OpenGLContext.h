@@ -12,7 +12,10 @@ class OpenGLContext : public GraphicsContext {
     virtual void init() override;
     virtual void swapBuffers() override;
 
-    virtual void onResize(const WindowResizeEvent& e) override;
+	virtual void onResize(const WindowResizeEvent& e) override;
+
+	virtual uint32_t getWidth() const override { return 0; }
+	virtual uint32_t getHeight() const override {return 0; }
 
    private:
     GLFWwindow* m_window;

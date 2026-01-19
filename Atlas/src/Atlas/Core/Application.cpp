@@ -11,78 +11,83 @@ namespace Atlas {
 Application* Application::s_instance = nullptr;
 
 Application::Application(const WindowProperties& winProps) {
-    AT_PROFILE_FUNCTION();
+	AT_PROFILE_FUNCTION();
 
-    AT_CORE_ASSERT(!s_instance, "Application already exists!");
-    s_instance = this;
+	AT_CORE_ASSERT(!s_instance, "Application already exists!");
+	s_instance = this;
 
-    m_window = std::shared_ptr<Window>(Window::create(winProps));
-    m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
-    m_context = m_window->getGraphicsContext();
-    Renderer::init(*m_context);
+	m_window = std::shared_ptr<Window>(Window::create(winProps));
+	m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
+	m_context = m_window->getGraphicsContext();
+	Renderer::init(*m_context);
 
-    AT_CORE_INFO("Engine initialization complete!");
+	AT_CORE_INFO("Engine initialization complete!");
+
+	m_framebuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.15f, 0.15f, 0.15f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
 }
 
 Application::~Application() {
-    Renderer::shutdown();
+	Renderer::shutdown();
 }
 
 void Application::run() {
-    AT_PROFILE_FUNCTION();
-    RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
+	AT_PROFILE_FUNCTION();
+	RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
 
-    while (m_isRunning) {
-        m_dt.updateDelta();
+	while (m_isRunning) {
+		m_dt.updateDelta();
 		m_window->onUpdate();
 
-        RenderCommand::beginFrame();
+		RenderCommand::beginFrame(m_framebuf);
 
-        if(!m_isMinimized) {
-            for (Layer* l : m_layerStack) {
-                l->onUpdate(m_dt);
-            }
-        }
+		if (!m_isMinimized) {
+			for (Layer* l : m_layerStack) {
+				l->onUpdate(m_dt);
+			}
+		}
 
-        RenderCommand::endFrame();
-    }
+		RenderCommand::endFrame();
+	}
 }
 
 void Application::onEvent(Event& event) {
-    EventDispatcher dispatcher(event);
-    dispatcher.dispatch<WindowCloseEvent>(AT_BIND_EVENT_FN(Application::onWindowClose));
-    dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(Application::onWindowResize));
-    dispatcher.dispatch<WindowFocusEvent>(AT_BIND_EVENT_FN(Application::onWindowFocus));
-    dispatcher.dispatch<WindowLostFocusEvent>(AT_BIND_EVENT_FN(Application::onWindowLostFocus));
+	EventDispatcher dispatcher(event);
+	dispatcher.dispatch<WindowCloseEvent>(AT_BIND_EVENT_FN(Application::onWindowClose));
+	dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(Application::onWindowResize));
+	dispatcher.dispatch<WindowFocusEvent>(AT_BIND_EVENT_FN(Application::onWindowFocus));
+	dispatcher.dispatch<WindowLostFocusEvent>(AT_BIND_EVENT_FN(Application::onWindowLostFocus));
 
-    for (auto it = m_layerStack.end(); it != m_layerStack.begin();) {
-        (*--it)->onEvent(event);
-        if (event.isHandled)
-            break;
-    }
+	for (auto it = m_layerStack.end(); it != m_layerStack.begin();) {
+		(*--it)->onEvent(event);
+		if (event.isHandled)
+			break;
+	}
 }
 
 void Application::pushLayer(Layer* layer) {
-    m_layerStack.pushLayer(layer);
+	m_layerStack.pushLayer(layer);
 }
 
 void Application::pushOverlay(Layer* overlay) {
-    m_layerStack.pushOverlay(overlay);
+	m_layerStack.pushOverlay(overlay);
 }
 
 bool Application::onWindowClose(WindowCloseEvent& e) {
-    m_isRunning = false;
-    return true;
+	m_isRunning = false;
+	return true;
 }
 
 bool Application::onWindowResize(WindowResizeEvent& e) {
-    if(e.getHeight() == 0 || e.getWidth() == 0) {
-        m_isMinimized = true;
-        return false;
-    }
+	m_context->onResize(e);
+	m_framebuf->onResize(e.getWidth(), e.getHeight());
 
-    m_isMinimized = false;
-    return false;
+	if (e.getHeight() == 0 || e.getWidth() == 0) {
+		m_isMinimized = true;
+		return false;
+	}
+
+	m_isMinimized = false;
+	return false;
 }
 
 bool Application::onWindowFocus(WindowFocusEvent& e) {

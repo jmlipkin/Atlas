@@ -14,8 +14,6 @@ namespace Atlas {
       virtual void swapBuffers() override {}
 
       CA::MetalDrawable* getNextDrawable() { return m_layer->nextDrawable(); }
-      MTL::Texture* getMSAATexture() const { return msaaRenderTargetTexture; }
-      MTL::Texture* getDepthTexture() const { return depthTexture; }
 
       CA::MetalLayer* getMTLLayer() const { return m_layer; }
 
@@ -24,13 +22,14 @@ namespace Atlas {
       static MTL::Device* getMTLDevice() { return s_device; }
       static MTL::Library* getMTLLibrary() { return s_library; }
 
-      virtual void onResize(const WindowResizeEvent& e) override;
+	  virtual void onResize(const WindowResizeEvent& e) override;
+
+	  virtual uint32_t getWidth() const override { return m_layer->drawableSize().width; }
+	  virtual uint32_t getHeight() const override { return m_layer->drawableSize().height; }
 
      private:
       void initDevice();
       void initWindow();
-
-      void createDepthAndMSAATextures();
 
      private:
       static MTL::Device* s_device;
@@ -39,8 +38,5 @@ namespace Atlas {
       CA::MetalLayer* m_layer;
       GLFWwindow* m_window;
 
-      MTL::Texture* msaaRenderTargetTexture = nullptr;
-      MTL::Texture* depthTexture;
-      int sampleCount = 4;
   };
 }  // namespace Atlas

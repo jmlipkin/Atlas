@@ -6,16 +6,26 @@
 
 namespace Atlas {
 
-OrthographicCamera::OrthographicCamera(float left, float right, float top, float bottom) : m_projectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), m_viewMatrix(1.0f) {
+static glm::mat4 glToMetal = glm::mat4(
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 0.5f, 0.0f,
+	0.0f, 0.0f, 0.5f, 1.0f);
+
+constexpr float nearPlane = -100.0f;
+constexpr float farPlane  = 0.0f;
+
+OrthographicCamera::OrthographicCamera(float left, float right, float top, float bottom) : m_projectionMatrix(glm::ortho(left, right, bottom, top, nearPlane, farPlane)), m_viewMatrix(1.0f) {
     AT_PROFILE_FUNCTION();
 
+	m_projectionMatrix = glToMetal * m_projectionMatrix;
     m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
 }
 
 void OrthographicCamera::setProjection(float left, float right, float top, float bottom) {
     AT_PROFILE_FUNCTION();
 
-    m_projectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+    m_projectionMatrix = glToMetal * glm::ortho(left, right, bottom, top, nearPlane, farPlane);
     m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
 }
 

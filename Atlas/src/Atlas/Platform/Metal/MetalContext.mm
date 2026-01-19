@@ -51,17 +51,15 @@ namespace Atlas {
 
         // Create and attach a CAMetalLayer
         CAMetalLayer* nativeLayer = [CAMetalLayer layer];
-        contentView.layer = nativeLayer;
-
+		contentView.layer = nativeLayer;
         // Wrap in metal-cpp
         m_layer = (CA::MetalLayer*)nativeLayer;
         
         m_layer->setDevice(s_device);
-        m_layer->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
+        m_layer->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
         m_layer->setDrawableSize(CGSizeMake(width, height));
-        m_layer->setFramebufferOnly(true);
+		m_layer->setFramebufferOnly(false);
 
-        createDepthAndMSAATextures();
     }
 
     MTL::Library* MetalContext::setNewMTLLibrary(const std::string& filepath) {
@@ -77,37 +75,9 @@ namespace Atlas {
         return library;
     }
 
-    void MetalContext::createDepthAndMSAATextures() {
-        AT_PROFILE_FUNCTION();
-        
-        MTL::TextureDescriptor* msaaTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
-        msaaTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
-        msaaTextureDescriptor->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
-        msaaTextureDescriptor->setWidth(m_layer->drawableSize().width);
-        msaaTextureDescriptor->setHeight(m_layer->drawableSize().height);
-        msaaTextureDescriptor->setSampleCount(sampleCount);
-        msaaTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
-
-        msaaRenderTargetTexture = s_device->newTexture(msaaTextureDescriptor);
-
-        MTL::TextureDescriptor* depthTextureDescriptor = MTL::TextureDescriptor::alloc()->init();
-        depthTextureDescriptor->setTextureType(MTL::TextureType2DMultisample);
-        depthTextureDescriptor->setPixelFormat(MTL::PixelFormatDepth32Float);
-        depthTextureDescriptor->setWidth(m_layer->drawableSize().width);
-        depthTextureDescriptor->setHeight(m_layer->drawableSize().height);
-        depthTextureDescriptor->setUsage(MTL::TextureUsageRenderTarget);
-        depthTextureDescriptor->setSampleCount(sampleCount);
-
-        depthTexture = s_device->newTexture(depthTextureDescriptor);
-
-        msaaTextureDescriptor->release();
-        depthTextureDescriptor->release();
-    }
-
     void MetalContext::onResize(const WindowResizeEvent& e) {
         AT_PROFILE_FUNCTION();
         
         m_layer->setDrawableSize(CGSizeMake(e.getWidth(), e.getHeight()));
-        createDepthAndMSAATextures();
     }
 } // namespace Atlas
