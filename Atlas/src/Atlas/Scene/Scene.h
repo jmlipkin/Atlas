@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Atlas/Core/Time.h"
+#include "Atlas/Events/Event.h"
 #include "Atlas/ECS/Registry.h"
 
 namespace Atlas {
@@ -15,7 +16,8 @@ class Scene {
     Entity createEntity(const std::string& name);
 
     virtual void setRegistryCallbacks() {}
-    virtual void onUpdate(DeltaTime dt) = 0;
+	virtual void onUpdate(DeltaTime dt) = 0;
+	virtual void onEvent(Event& event) = 0;
 
    protected:
     Registry m_registry;

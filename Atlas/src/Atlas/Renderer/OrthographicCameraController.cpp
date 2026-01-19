@@ -59,7 +59,7 @@ namespace Atlas {
     bool OrthographicCameraController::onMouseScrolled(MouseScrolledEvent& e) {
         m_zoom -= e.getYOffset() * 0.25f;
         m_zoom = std::max(m_zoom, 0.25f);
-        m_camera.setProjection(-m_aspectRatio * m_zoom, m_aspectRatio * m_zoom, -m_zoom, m_zoom);
+        // m_camera.setProjection(-m_aspectRatio * m_zoom, m_aspectRatio * m_zoom, -m_zoom, m_zoom);
     
         return false;
     }

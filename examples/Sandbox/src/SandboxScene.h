@@ -3,6 +3,9 @@
 #include <Atlas.h>
 
 #include <glm/glm.hpp>
+#include "Atlas/Core/Base.h"
+#include "Atlas/Events/ApplicationEvent.h"
+#include "Atlas/Events/Event.h"
 
 #define BOARD_DEPTH 0.1f
 #define PLAYER_DEPTH 100
@@ -60,6 +63,10 @@ class SandboxScene : public Atlas::Scene {
 		}
 		
 		Atlas::Renderer::endScene();
+	}
+
+	virtual void onEvent(Atlas::Event& event) override {
+		m_cameraController.onEvent(event);
 	}
 
 	virtual void setRegistryCallbacks() override {

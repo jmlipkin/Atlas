@@ -32,7 +32,6 @@ Application::~Application() {
 
 void Application::run() {
 	AT_PROFILE_FUNCTION();
-	RenderCommand::setClearColor({0.15f, 0.15f, 0.15f, 1.0f});
 
 	while (m_isRunning) {
 		m_dt.updateDelta();

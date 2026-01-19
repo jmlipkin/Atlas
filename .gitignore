@@ -8,4 +8,5 @@ newrenderer.h
 playground.cpp
 Atlas/TODO
 
+*.aseprite
 AtlasProfile.*.json
