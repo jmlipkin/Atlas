@@ -1,6 +1,7 @@
 #include <Atlas.h>
 
 #include "SandboxScene.h"
+#include "imgui/imgui.h"
 
 class SandboxLayer : public Atlas::Layer {
    public:
@@ -24,7 +25,12 @@ class SandboxLayer : public Atlas::Layer {
 class SandboxImGuiLayer : public Atlas::ImGuiLayer {
    public:
     ~SandboxImGuiLayer() = default;
-    virtual void onImGuiRender(Atlas::DeltaTime dt) override {
+	virtual void onImGuiRender(Atlas::DeltaTime dt) override {
+		void* data = Atlas::Application::get().getFramebuffer()->getColorTexture(0);
+		ImGui::Begin("Viewport");
+
+		ImGui::Image(data, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::End();
     }
 };
 

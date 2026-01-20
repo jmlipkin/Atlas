@@ -3,6 +3,7 @@
 #include <Atlas.h>
 
 #include <glm/glm.hpp>
+#include "Atlas/Core/Application.h"
 #include "Atlas/Core/Base.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Events/Event.h"

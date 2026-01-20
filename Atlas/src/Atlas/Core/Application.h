@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Window.h"
 #include "LayerStack.h"
 
@@ -22,7 +23,8 @@ class Application {
     void pushLayer(Layer* layer);
     void pushOverlay(Layer* overlay);
 
-    inline Window& getWindow() const { return *m_window; }
+	inline Window& getWindow() const { return *m_window; }
+	inline std::shared_ptr<Framebuffer> getFramebuffer() { return m_framebuf; }
     inline static Application& get() { return *s_instance; }
 
    protected:

@@ -4,6 +4,7 @@
 #include <imgui/imgui.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <filesystem>
 #include <glm/glm.hpp>
 
 #include <Atlas/Core/Base.h>
@@ -16,7 +17,7 @@ namespace Atlas {
 
     ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer") {
         m_system = ImGuiSystem::create();
-        m_sink = Atlas::Log::getImGuiLogger();
+		m_sink = Atlas::Log::getImGuiLogger();
     }
 
     void ImGuiLayer::onUpdate(DeltaTime dt) {
@@ -28,7 +29,9 @@ namespace Atlas {
         glfwGetWindowSize(window, &winWidth, &winHeight);
         glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
 
-        ImGuiIO& io = ImGui::GetIO();
+		ImGuiIO& io = ImGui::GetIO();
+        ImFont* helvetica = io.Fonts->AddFontFromFileTTF("Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf", 14);
+		io.FontDefault = helvetica;
         io.DisplaySize = ImVec2((float)winWidth, (float)winHeight);
         io.DisplayFramebufferScale = ImVec2(
             (float)fbWidth / (float)winWidth,

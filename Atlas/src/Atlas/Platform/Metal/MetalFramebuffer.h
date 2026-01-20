@@ -31,9 +31,10 @@ class MetalFramebuffer : public Framebuffer {
 
 	std::vector<MTL::Texture*> getColorTextures() { return m_colorTextures; }
 	std::vector<MTL::Texture*> getMSAATextures() { return m_msaaTextures; }
-	MTL::Texture* getColorTexture(int index) { return m_colorTextures[index]; }
-	MTL::Texture* getMSAATexture(int index) { return m_msaaTextures[index]; }
-	MTL::Texture* getDepthTexture() { return m_depthTexture; }
+
+	virtual void* getColorTexture(int index) override { return m_colorTextures[index]; }
+	virtual void* getMSAATexture(int index) override { return m_msaaTextures[index]; }
+	virtual void* getDepthTexture() override { return m_depthTexture; }
 
 	std::vector<MTL::TextureDescriptor*> getColorTextureDescriptors() { return m_colorDescriptors; }
 	std::vector<MTL::TextureDescriptor*> getMSAATextureDescriptors() { return m_msaaDescriptors; }

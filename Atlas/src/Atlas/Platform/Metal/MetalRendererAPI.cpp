@@ -114,11 +114,10 @@ void MetalRendererAPI::beginImGui() {
 void MetalRendererAPI::drawImGui() {
 	AT_PROFILE_FUNCTION();
 
-	// TODO: Bring back ImGui
-	// ImGui_ImplMetal_RenderDrawData(
-	//     ImGui::GetDrawData(),
-	//     m_buffer,
-	//     m_encoder);
+	ImGui_ImplMetal_RenderDrawData(
+	    ImGui::GetDrawData(),
+	    m_buffer,
+	    m_encoder);
 }
 
 void MetalRendererAPI::commit() {
