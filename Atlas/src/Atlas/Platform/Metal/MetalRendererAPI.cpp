@@ -53,15 +53,17 @@ void MetalRendererAPI::drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuff
 //     m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypePoint, vertexArray->getIndexBuffer()->getCount(), MTL::IndexTypeUInt32, indexBuffer, 0);
 // }
 
-void MetalRendererAPI::beginFrame(std::shared_ptr<Framebuffer> framebuffer) {
+void MetalRendererAPI::beginFrame() {
 	AT_PROFILE_FUNCTION();
 
 	m_pool = NS::AutoreleasePool::alloc()->init();
 
 	m_drawable = m_context.getNextDrawable();
 	m_buffer = m_commandQueue->commandBuffer();
+}
 
-    m_framebuffer = std::static_pointer_cast<MetalFramebuffer>(framebuffer);
+void MetalRendererAPI::beginPass(std::shared_ptr<Framebuffer> framebuffer) {
+	m_framebuffer = std::static_pointer_cast<MetalFramebuffer>(framebuffer);
 	m_passDesc = (MTL::RenderPassDescriptor*)m_framebuffer->getPassDescriptor(m_drawable);
 	m_passDesc->setRenderTargetWidth(m_framebuffer->getWidth());
 	m_passDesc->setRenderTargetHeight(m_framebuffer->getHeight());
@@ -98,36 +100,36 @@ void MetalRendererAPI::bindVertexBuffer(const VertexBuffer& buffer, int index) {
 	m_encoder->setVertexBuffer((MTL::Buffer*)mBuf.getNativeBuffer(), 0, index);
 }
 
+void MetalRendererAPI::endPass() {
+	m_encoder->endEncoding();
+}
+
 void MetalRendererAPI::endFrame() {
 	AT_PROFILE_FUNCTION();
 
-	commit();
+	m_buffer->presentDrawable((MTL::Drawable*)m_drawable);
+	m_buffer->commit();
 	m_pool->release();
 }
 
 void MetalRendererAPI::beginImGui() {
 	AT_PROFILE_FUNCTION();
 
+	ImGuiIO& io = ImGui::GetIO();
+	io.DisplaySize = ImVec2((float)m_framebuffer->getWidth(), (float)m_framebuffer->getHeight());
+
 	ImGui_ImplMetal_NewFrame(m_passDesc);
+	ImGui::NewFrame();
 }
 
 void MetalRendererAPI::drawImGui() {
 	AT_PROFILE_FUNCTION();
 
+	ImGui::Render();
 	ImGui_ImplMetal_RenderDrawData(
 	    ImGui::GetDrawData(),
 	    m_buffer,
 	    m_encoder);
-}
-
-void MetalRendererAPI::commit() {
-	AT_PROFILE_FUNCTION();
-
-	// Present the drawable
-	m_encoder->endEncoding();
-
-	m_buffer->presentDrawable((MTL::Drawable*)m_drawable);
-	m_buffer->commit();
 }
 
 }  // namespace Atlas

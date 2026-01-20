@@ -19,11 +19,11 @@ MetalFramebuffer::~MetalFramebuffer() {
 
 void* MetalFramebuffer::getPassDescriptor(void* drawable) {
 	CA::MetalDrawable* mtlDrawable = (CA::MetalDrawable*)drawable;
-	
+
 	for (size_t i = 0; i < m_colorDescriptors.size(); i++) {
 		glm::vec4 color = m_specs.colorAttachments[i].clearColor;
 		MTL::ClearColor clear = MTL::ClearColor::Make(color.r, color.g, color.b, color.a);
-		MTL::Texture* colorTexture = (mtlDrawable) ? mtlDrawable->texture() : m_colorTextures[i];
+		MTL::Texture* colorTexture = (m_specs.isSwapChainTarget) ? mtlDrawable->texture() : m_colorTextures[i];
 
 		MTL::RenderPassColorAttachmentDescriptor* colorDesc = m_passDesc->colorAttachments()->object(i);
 
@@ -32,8 +32,7 @@ void* MetalFramebuffer::getPassDescriptor(void* drawable) {
 			colorDesc->setTexture(m_msaaTextures[i]);
 			colorDesc->setResolveTexture(colorTexture);
 			colorDesc->setStoreAction(MTL::StoreActionMultisampleResolve);
-		}
-		else {
+		} else {
 			AT_CORE_ASSERT(colorTexture, "Swap chain target must have a drawable texture!");
 			colorDesc->setTexture(colorTexture);
 			colorDesc->setStoreAction(MTL::StoreActionStore);
@@ -109,10 +108,10 @@ void MetalFramebuffer::createMSAATexture(int index) {
 void MetalFramebuffer::createDepthTexture() {
 	FramebufferPixelFormat format = m_specs.depthAttachment.format;
 	m_depthDescriptor = MTL::TextureDescriptor::alloc()->init();
-	if(m_specs.samples > 1)
+	if (m_specs.samples > 1)
 		m_depthDescriptor->setTextureType(MTL::TextureType2DMultisample);
 	else
-	 	m_depthDescriptor->setTextureType(MTL::TextureType2D);
+		m_depthDescriptor->setTextureType(MTL::TextureType2D);
 	m_depthDescriptor->setSampleCount(m_specs.samples);
 	m_depthDescriptor->setUsage(MTL::TextureUsageRenderTarget);
 	m_depthDescriptor->setWidth(m_specs.width);

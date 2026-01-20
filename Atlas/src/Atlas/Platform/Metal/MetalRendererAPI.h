@@ -17,8 +17,10 @@ class MetalRendererAPI : public RendererAPI {
     virtual void setClearColor(const glm::vec4& color) override;
     virtual void clear() override;
 
-    virtual void beginFrame(std::shared_ptr<Framebuffer> framebuffer) override;
+    virtual void beginFrame() override;
 	virtual void endFrame() override;
+    virtual void beginPass(std::shared_ptr<Framebuffer> framebuffer) override;
+	virtual void endPass() override;
 
     // ImGui functions implemented in MetalRendererAPI.mm
     virtual void beginImGui() override;
@@ -31,7 +33,6 @@ class MetalRendererAPI : public RendererAPI {
     virtual void drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer) override;
     virtual void drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer, uint32_t count) override;
     // virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) override;
-    virtual void commit() override;
 
    private:
     MetalContext& m_context;

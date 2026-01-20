@@ -4,7 +4,6 @@
 #include <imgui/imgui.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <filesystem>
 #include <glm/glm.hpp>
 
 #include <Atlas/Core/Base.h>
@@ -21,35 +20,7 @@ namespace Atlas {
     }
 
     void ImGuiLayer::onUpdate(DeltaTime dt) {
-        GLFWwindow* window = (GLFWwindow*)Application::get().getWindow().getNativeWindow();
-
-        int winWidth, winHeight;
-        int fbWidth, fbHeight;
-
-        glfwGetWindowSize(window, &winWidth, &winHeight);
-        glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
-
-		ImGuiIO& io = ImGui::GetIO();
-        ImFont* helvetica = io.Fonts->AddFontFromFileTTF("Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf", 14);
-		io.FontDefault = helvetica;
-        io.DisplaySize = ImVec2((float)winWidth, (float)winHeight);
-        io.DisplayFramebufferScale = ImVec2(
-            (float)fbWidth / (float)winWidth,
-            (float)fbHeight / (float)winHeight
-        );
-
-		float time = (float)glfwGetTime();
-		io.DeltaTime = m_time > 0.0f ? (time - m_time) : (1.0f / 60.0f);
-		m_time = time;
-
-        Renderer::beginImGui();
-        ImGui::NewFrame();
-
-        onImGuiRender(dt);
-        drawImGuiLogWindow();
-
-        ImGui::Render();
-        Renderer::submitImGui();
+        // drawImGuiLogWindow();
     }
 
     void ImGuiLayer::onEvent(Event& event) {
@@ -63,8 +34,7 @@ namespace Atlas {
         dispatcher.dispatch<KeyReleasedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyReleasedEvent));
         dispatcher.dispatch<KeyTypedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyTypedEvent));
         dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onWindowResizeEvent));
-
-    }
+	}
 
     bool ImGuiLayer::onMouseButtonPressedEvent(MouseButtonPressedEvent& e) {
         ImGuiIO& io = ImGui::GetIO();

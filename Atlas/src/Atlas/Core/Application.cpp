@@ -24,7 +24,11 @@ Application::Application(const WindowProperties& winProps) {
 
 	AT_CORE_INFO("Engine initialization complete!");
 
-	m_framebuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.15f, 0.15f, 0.15f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
+	m_ImGuiLayer = new ImGuiLayer;
+	m_layerStack.pushOverlay(m_ImGuiLayer);
+
+	m_sceneFrameBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), false, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.15f, 0.15f, 0.15f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
+	m_swapchainBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
 }
 
 Application::~Application() {
@@ -38,7 +42,8 @@ void Application::run() {
 		m_dt.updateDelta();
 		m_window->onUpdate();
 
-		RenderCommand::beginFrame(m_framebuf);
+		RenderCommand::beginFrame();
+		RenderCommand::beginPass(m_sceneFrameBuf);
 
 		if (!m_isMinimized) {
 			for (Layer* l : m_layerStack) {
@@ -46,6 +51,18 @@ void Application::run() {
 			}
 		}
 
+		RenderCommand::endPass();
+
+		RenderCommand::beginPass(m_swapchainBuf);
+		m_ImGuiLayer->begin();
+		if (!m_isMinimized) {
+			for (Layer* l : m_layerStack) {
+				l->onImGuiRender();
+			}
+		}
+		m_ImGuiLayer->end();
+
+		RenderCommand::endPass();
 		RenderCommand::endFrame();
 	}
 }
@@ -79,7 +96,8 @@ bool Application::onWindowClose(WindowCloseEvent& e) {
 
 bool Application::onWindowResize(WindowResizeEvent& e) {
 	m_context->onResize(e);
-	m_framebuf->onResize(e.getWidth(), e.getHeight());
+	m_sceneFrameBuf->onResize(e.getWidth(), e.getHeight());
+	m_swapchainBuf->onResize(e.getWidth(), e.getHeight());
 
 	if (e.getHeight() == 0 || e.getWidth() == 0) {
 		m_isMinimized = true;

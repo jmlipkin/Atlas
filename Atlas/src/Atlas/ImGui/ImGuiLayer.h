@@ -7,6 +7,7 @@
 
 #include <Atlas/Renderer/GraphicsContext.h>
 #include "Atlas/ImGui/ImGuiSystem.h"
+#include "Atlas/Renderer/Renderer.h"
 
 namespace Atlas {
 
@@ -15,14 +16,15 @@ class ImGuiLayer : public Layer {
     ImGuiLayer();
     virtual ~ImGuiLayer() = default;
 
-        virtual void onImGuiRender(DeltaTime dt) = 0;
-
         void onUpdate(DeltaTime dt) final;
 
         void onAttach() final { m_system->initImGuiLayer(); }
         void onDetach() final { m_system->cleanImGuiLayer(); }
 
-        virtual void onEvent(Event & event) override;
+		virtual void onEvent(Event& event) override;
+		
+        virtual void begin() { Renderer::beginImGui(); }
+		virtual void end() { Renderer::submitImGui(); }
 
        protected:
         bool onMouseButtonPressedEvent(MouseButtonPressedEvent & e);

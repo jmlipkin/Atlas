@@ -3,6 +3,7 @@
 #include <memory>
 #include "Window.h"
 #include "LayerStack.h"
+#include "Atlas/ImGui/ImGuiLayer.h"
 
 #include "Atlas/Core/Time.h"
 #include "Atlas/Events/Event.h"
@@ -24,7 +25,7 @@ class Application {
     void pushOverlay(Layer* overlay);
 
 	inline Window& getWindow() const { return *m_window; }
-	inline std::shared_ptr<Framebuffer> getFramebuffer() { return m_framebuf; }
+	inline std::shared_ptr<Framebuffer> getFramebuffer() { return m_sceneFrameBuf; }
     inline static Application& get() { return *s_instance; }
 
    protected:
@@ -39,12 +40,14 @@ class Application {
     private:
     std::shared_ptr<Window> m_window;
 	std::shared_ptr<GraphicsContext> m_context;
-	std::shared_ptr<Framebuffer> m_framebuf;
+	std::shared_ptr<Framebuffer> m_sceneFrameBuf;
+	std::shared_ptr<Framebuffer> m_swapchainBuf;
     bool m_isRunning = true;
     bool m_isMinimized = false;
 
 	LayerStack m_layerStack;
-
+	ImGuiLayer* m_ImGuiLayer;
+	
     static Application* s_instance;
 };
 

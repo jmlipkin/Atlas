@@ -18,7 +18,7 @@ void MetalImGuiSystem::initImGuiLayer() {
     
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
 
     io.IniFilename = "build/Atlas/extern/imgui.ini";
     if (std::filesystem::exists(io.IniFilename)) {
@@ -26,7 +26,10 @@ void MetalImGuiSystem::initImGuiLayer() {
     }
 
     Application& app = Application::get();
-    io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
+	io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
+
+	ImFont* HelveticaLight = io.Fonts->AddFontFromFileTTF("Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf", 14);
+	io.FontDefault = HelveticaLight;
 
     io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
     io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;

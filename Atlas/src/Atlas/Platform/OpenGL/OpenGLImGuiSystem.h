@@ -7,7 +7,7 @@ namespace Atlas {
 class OpenGLImGuiSystem : public ImGuiSystem {
    public:
     virtual void initImGuiLayer() override;
-    virtual void cleanImGuiLayer() override;
+	virtual void cleanImGuiLayer() override;
 };
 
 }  // namespace Atlas

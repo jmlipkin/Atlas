@@ -19,9 +19,10 @@ class OpenGLRendererAPI : public RendererAPI {
 	void bindPipeline(std::shared_ptr<Pipeline> pipeline, const UniformBuffer& uBuffer) override {}
 	void bindTexture(const Texture& texture, uint32_t index) override {}
 	void bindVertexBuffer(const VertexBuffer& buffer, int index) override {}
-	virtual void beginFrame(std::shared_ptr<Framebuffer> framebuffer) override;
+	virtual void beginFrame() override;
 	virtual void endFrame() override {}
-	virtual void commit() override {}
+	virtual void beginPass(std::shared_ptr<Framebuffer> framebuffer) override {}
+	virtual void endPass() override {}
 };
 
 }  // namespace Atlas

@@ -9,7 +9,7 @@ class ImGuiSystem {
     virtual ~ImGuiSystem() = default;
     
     virtual void initImGuiLayer() = 0;
-    virtual void cleanImGuiLayer() = 0;
+	virtual void cleanImGuiLayer() = 0;
 
     static std::unique_ptr<ImGuiSystem> create();
 };

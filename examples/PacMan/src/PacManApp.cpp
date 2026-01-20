@@ -36,6 +36,12 @@ class ExampleLayer : public Atlas::Layer {
     void onAttach() override {}
     void onDetach() override {}
 
+    virtual void onImGuiRender() override {
+        ImGui::Begin("Quad Data");
+        ImGui::ColorPicker4("Color", &quadColor[0]);
+        ImGui::End();
+	}
+	
     private:
      std::shared_ptr<Atlas::TextureSheet> m_textureSheet;
      std::shared_ptr<Atlas::TextureSheet> m_characterSheet;
@@ -44,24 +50,11 @@ class ExampleLayer : public Atlas::Layer {
      std::shared_ptr<Atlas::SubTexture> m_sprite;
 };
 
-class PacManImGui : public Atlas::ImGuiLayer {
-    public:
-    PacManImGui() {}
-
-    virtual void onImGuiRender(Atlas::DeltaTime dt) override {
-        ImGui::Begin("Quad Data");
-        ImGui::ColorPicker4("Color", &quadColor[0]);
-        ImGui::End();
-
-    }
-};
-
 class PacMan : public Atlas::Application {
 
     public:
     PacMan() {
         pushLayer(new ExampleLayer);
-        pushOverlay(new PacManImGui);
     }
     ~PacMan() override = default;
 };

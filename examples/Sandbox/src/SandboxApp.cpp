@@ -16,29 +16,25 @@ class SandboxLayer : public Atlas::Layer {
     }
     virtual void onEvent(Atlas::Event& event) override {
         m_scene->onEvent(event);
+	}
+
+    virtual void onImGuiRender() override {
+		auto fbuf = Atlas::Application::get().getFramebuffer();
+		void* data = fbuf->getColorTexture(0);
+		ImGui::Begin("Viewport");
+
+		ImGui::Image(data, ImVec2(fbuf->getWidth() * 3.0/4.0, fbuf->getHeight() * 3.0/4.0), ImVec2(0, 0), ImVec2(1, 1));
+		ImGui::End();
     }
 
    private:
     std::shared_ptr<SandboxScene> m_scene;
 };
 
-class SandboxImGuiLayer : public Atlas::ImGuiLayer {
-   public:
-    ~SandboxImGuiLayer() = default;
-	virtual void onImGuiRender(Atlas::DeltaTime dt) override {
-		void* data = Atlas::Application::get().getFramebuffer()->getColorTexture(0);
-		ImGui::Begin("Viewport");
-
-		ImGui::Image(data, ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
-		ImGui::End();
-    }
-};
-
 class SandboxApp : public Atlas::Application {
    public:
     SandboxApp() {
         pushLayer(new SandboxLayer());
-        pushOverlay(new SandboxImGuiLayer());
     }
 };
 

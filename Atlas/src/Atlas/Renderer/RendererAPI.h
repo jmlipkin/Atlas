@@ -24,10 +24,11 @@ class RendererAPI {
     virtual void drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer) = 0;
     virtual void drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer, uint32_t count) = 0;
     // virtual void drawPoint(const std::shared_ptr<VertexArray>& vertexArray) = 0;
-    virtual void commit() = 0;
 
-    virtual void beginFrame(std::shared_ptr<Framebuffer> framebuffer) = 0;
+    virtual void beginFrame() = 0;
 	virtual void endFrame() = 0;
+    virtual void beginPass(std::shared_ptr<Framebuffer> framebuffer) = 0;
+	virtual void endPass() = 0;
 	
     virtual void beginImGui() = 0;
     virtual void drawImGui() = 0;
