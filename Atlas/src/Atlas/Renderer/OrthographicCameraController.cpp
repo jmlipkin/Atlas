@@ -7,7 +7,7 @@
 namespace Atlas {
     OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool enableRotation) : m_aspectRatio(aspectRatio), m_camera(-m_aspectRatio * m_zoom, m_aspectRatio * m_zoom, -m_zoom, m_zoom), m_rotationEnabled(enableRotation) {
         m_cameraPosition = glm::vec3(0.0f);
-        m_rotation = 0.0f;
+		m_rotation = 0.0f;
     }
 
     void OrthographicCameraController::onUpdate(DeltaTime dt) {
@@ -65,7 +65,7 @@ namespace Atlas {
     }
 
     bool OrthographicCameraController::onWindowResize(WindowResizeEvent& e) {
-        m_aspectRatio = (float)e.getWidth() / (float)e.getHeight();
+		m_aspectRatio = (float)e.getWidth() / (float)e.getHeight();
         m_camera.setProjection(-m_aspectRatio * m_zoom, m_aspectRatio * m_zoom, -m_zoom, m_zoom);
 
         return false;

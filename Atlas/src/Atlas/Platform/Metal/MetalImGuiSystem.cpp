@@ -1,3 +1,4 @@
+#include "GLFW/glfw3.h"
 #include "atpch.h"
 #include "MetalImGuiSystem.h"
 
@@ -25,10 +26,14 @@ void MetalImGuiSystem::initImGuiLayer() {
         ImGui::LoadIniSettingsFromDisk(io.IniFilename);
     }
 
-    Application& app = Application::get();
-	io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
+	GLFWwindow* window = (GLFWwindow*)Application::get().getWindow().getNativeWindow();
+	int width, height;
+	glfwGetFramebufferSize(window, &width, &height);
+	io.DisplaySize = ImVec2((float)width, (float)height);
 
-	ImFont* HelveticaLight = io.Fonts->AddFontFromFileTTF("Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf", 14);
+	float font_scale;
+	glfwGetWindowContentScale(window, &font_scale, nullptr);
+	ImFont* HelveticaLight = io.Fonts->AddFontFromFileTTF("Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf", 14 * font_scale);
 	io.FontDefault = HelveticaLight;
 
     io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;

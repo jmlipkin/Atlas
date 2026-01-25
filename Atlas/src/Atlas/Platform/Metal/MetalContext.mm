@@ -41,7 +41,7 @@ namespace Atlas {
         AT_PROFILE_FUNCTION();
 
         int width, height;
-        glfwGetFramebufferSize(m_window, &width, &height);
+		glfwGetFramebufferSize(m_window, &width, &height);
 
         NSWindow* nsWindow = (NSWindow*)glfwGetCocoaWindow(m_window);
         NSView* contentView = nsWindow.contentView;
@@ -53,7 +53,7 @@ namespace Atlas {
         CAMetalLayer* nativeLayer = [CAMetalLayer layer];
 		contentView.layer = nativeLayer;
         // Wrap in metal-cpp
-        m_layer = (CA::MetalLayer*)nativeLayer;
+		m_layer = (CA::MetalLayer*)nativeLayer;
         
         m_layer->setDevice(s_device);
         m_layer->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
@@ -77,7 +77,9 @@ namespace Atlas {
 
     void MetalContext::onResize(const WindowResizeEvent& e) {
         AT_PROFILE_FUNCTION();
-        
-        m_layer->setDrawableSize(CGSizeMake(e.getWidth(), e.getHeight()));
+
+		int fbWidth, fbHeight;
+		glfwGetFramebufferSize(m_window, &fbWidth, &fbHeight);
+		m_layer->setDrawableSize(CGSizeMake(fbWidth, fbHeight));
     }
 } // namespace Atlas

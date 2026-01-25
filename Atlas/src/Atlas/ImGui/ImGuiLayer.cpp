@@ -14,85 +14,97 @@
 
 namespace Atlas {
 
-    ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer") {
-        m_system = ImGuiSystem::create();
-    }
+ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer") {
+	m_system = ImGuiSystem::create();
+}
 
-    void ImGuiLayer::onEvent(Event& event) {
-        EventDispatcher dispatcher(event);
+void ImGuiLayer::onEvent(Event& event) {
+	EventDispatcher dispatcher(event);
 
-        dispatcher.dispatch<MouseButtonPressedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onMouseButtonPressedEvent));
-        dispatcher.dispatch<MouseButtonReleasedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onMouseButtonReleasedEvent));
-        dispatcher.dispatch<MouseMovedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onMouseMovedEvent));
-        dispatcher.dispatch<MouseScrolledEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onMouseScrolledEvent));
-        dispatcher.dispatch<KeyPressedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyPressedEvent));
-        dispatcher.dispatch<KeyReleasedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyReleasedEvent));
-        dispatcher.dispatch<KeyTypedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyTypedEvent));
-        dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onWindowResizeEvent));
-	}
+	dispatcher.dispatch<MouseButtonPressedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onMouseButtonPressedEvent));
+	dispatcher.dispatch<MouseButtonReleasedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onMouseButtonReleasedEvent));
+	dispatcher.dispatch<MouseMovedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onMouseMovedEvent));
+	dispatcher.dispatch<MouseScrolledEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onMouseScrolledEvent));
+	dispatcher.dispatch<KeyPressedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyPressedEvent));
+	dispatcher.dispatch<KeyReleasedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyReleasedEvent));
+	dispatcher.dispatch<KeyTypedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyTypedEvent));
+	dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onWindowResizeEvent));
+}
 
-    bool ImGuiLayer::onMouseButtonPressedEvent(MouseButtonPressedEvent& e) {
-        ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.getMouseButton()] = true;
+bool ImGuiLayer::onMouseButtonPressedEvent(MouseButtonPressedEvent& e) {
+	ImGuiIO& io = ImGui::GetIO();
+	io.MouseDown[e.getMouseButton()] = true;
 
-        return false;
-    }
+	return false;
+}
 
-    bool ImGuiLayer::onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e) {
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.getMouseButton()] = false;
+bool ImGuiLayer::onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e) {
+	ImGuiIO& io = ImGui::GetIO();
+	io.MouseDown[e.getMouseButton()] = false;
 
-        return false;
-    }
+	return false;
+}
 
-    bool ImGuiLayer::onMouseMovedEvent(MouseMovedEvent& e) {
-        ImGuiIO& io = ImGui::GetIO();
-		io.MousePos = ImVec2(e.getX(), e.getY());
+bool ImGuiLayer::onMouseMovedEvent(MouseMovedEvent& e) {
+	int winWidth, winHeight;
+	glfwGetWindowSize((GLFWwindow*)Application::get().getWindow().getNativeWindow(), &winWidth, &winHeight);
+	int fbWidth, fbHeight;
+	glfwGetFramebufferSize((GLFWwindow*)Application::get().getWindow().getNativeWindow(), &fbWidth, &fbHeight);
 
-        return false;
-    }
+	float scaleX = (float)fbWidth / (float)winWidth;
+	float scaleY = (float)fbHeight / (float)winHeight;
+	ImGuiIO& io = ImGui::GetIO();
+	io.MousePos = ImVec2(e.getX() * scaleX, e.getY() * scaleY);
 
-    bool ImGuiLayer::onMouseScrolledEvent(MouseScrolledEvent& e) {
-        ImGuiIO& io = ImGui::GetIO();
-		io.MouseWheelH += e.getXOffset();
-		io.MouseWheel += e.getYOffset();
+	return false;
+}
 
-		return false;
-    }
+bool ImGuiLayer::onMouseScrolledEvent(MouseScrolledEvent& e) {
+	ImGuiIO& io = ImGui::GetIO();
+	io.MouseWheelH += e.getXOffset();
+	io.MouseWheel += e.getYOffset();
 
-    bool ImGuiLayer::onKeyPressedEvent(KeyPressedEvent& e) {
-        ImGuiIO& io = ImGui::GetIO();
-        ImGuiKey key = keyCodeToImGuiKey(e.getKeyCode());
-        io.AddKeyEvent(key, true);
+	return false;
+}
 
-        // TODO: Add modifier key logic
+bool ImGuiLayer::onKeyPressedEvent(KeyPressedEvent& e) {
+	ImGuiIO& io = ImGui::GetIO();
+	ImGuiKey key = keyCodeToImGuiKey(e.getKeyCode());
+	io.AddKeyEvent(key, true);
 
-        return false;
-    }
+	// TODO: Add modifier key logic
 
-    bool ImGuiLayer::onKeyReleasedEvent(KeyReleasedEvent& e) {
-        ImGuiIO& io = ImGui::GetIO();
-        ImGuiKey key = keyCodeToImGuiKey(e.getKeyCode());
-        io.AddKeyEvent(key, false);
+	return false;
+}
 
-        return false;
-    }
+bool ImGuiLayer::onKeyReleasedEvent(KeyReleasedEvent& e) {
+	ImGuiIO& io = ImGui::GetIO();
+	ImGuiKey key = keyCodeToImGuiKey(e.getKeyCode());
+	io.AddKeyEvent(key, false);
 
-    bool ImGuiLayer::onKeyTypedEvent(KeyTypedEvent& e) {
-        ImGuiIO& io = ImGui::GetIO();
-		int keycode = e.getKeyCode();
-		if (keycode > 0 && keycode < 0x10000)
-			io.AddInputCharacter((unsigned short)keycode);
+	return false;
+}
 
-        return false;
-    }
+bool ImGuiLayer::onKeyTypedEvent(KeyTypedEvent& e) {
+	ImGuiIO& io = ImGui::GetIO();
+	int keycode = e.getKeyCode();
+	if (keycode > 0 && keycode < 0x10000)
+		io.AddInputCharacter((unsigned short)keycode);
 
-    bool ImGuiLayer::onWindowResizeEvent(WindowResizeEvent& e) {
-        ImGuiIO& io = ImGui::GetIO();
-		io.DisplaySize = ImVec2(e.getWidth(), e.getHeight());
-		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+	return false;
+}
 
-        return false;
-    }
+bool ImGuiLayer::onWindowResizeEvent(WindowResizeEvent& e) {
+	ImGuiIO& io = ImGui::GetIO();
+
+	// io.DisplaySize = ImVec2(e.getWidth(), e.getHeight());
+	
+	GLFWwindow* window = (GLFWwindow*)Application::get().getWindow().getNativeWindow();
+	int width, height;
+	glfwGetFramebufferSize(window, &width, &height);
+	io.DisplaySize = ImVec2((float)width, (float)height);
+
+	return false;
+}
 
 }  // namespace Atlas

@@ -86,14 +86,14 @@ void MacOSWindow::init(const WindowProperties& props) {
     {
         AT_PROFILE_SCOPE("Set GLFW Callbacks");
 
-        glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
+		glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             data.width = width;
             data.height = height;
 
             WindowResizeEvent event(width, height);
             data.eventCallback(event);
-        });
+		});
 
 		glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window) {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

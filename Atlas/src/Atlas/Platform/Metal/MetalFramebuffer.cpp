@@ -1,4 +1,6 @@
+#include "Atlas/Core/Application.h"
 #include "Atlas/Renderer/Framebuffer.h"
+#include "GLFW/glfw3.h"
 #include "atpch.h"
 #include "MetalContext.h"
 #include "MetalFramebuffer.h"
@@ -64,8 +66,11 @@ void* MetalFramebuffer::setDepthStencilState() {
 }
 
 void MetalFramebuffer::onResize(uint32_t width, uint32_t height) {
-	m_specs.width = width;
-	m_specs.height = height;
+	GLFWwindow* window = (GLFWwindow*)Application::get().getWindow().getNativeWindow();
+	int w, h;
+	glfwGetFramebufferSize(window, &w, &h);
+	m_specs.width = w;
+	m_specs.height = h;
 
 	invalidate();
 }

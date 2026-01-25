@@ -4,14 +4,15 @@
 
 namespace Atlas {
 class EditorLayer : public Layer {
-    public:
-     EditorLayer() : Layer("Editor") {}
+  public:
+	EditorLayer() : Layer("Editor") {}
 
-    virtual void onAttach() override {}
-    virtual void onDetach() override {}
-    virtual void onUpdate(DeltaTime dt) override {}
+	virtual void onAttach() override {}
+	virtual void onDetach() override {}
+	virtual void onUpdate(DeltaTime dt) override {}
+	virtual void onEvent(Event& event) override {}
 
-    virtual void onEvent(Event& event) override {}
+	virtual void onImGuiRender() override;
 };
 
 }  // namespace Atlas

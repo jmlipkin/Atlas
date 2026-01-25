@@ -1,6 +1,7 @@
 #include <Atlas.h>
 
 #include <Atlas/ImGui/ImGuiLayer.h>
+#include "Atlas/Renderer/Renderer.h"
 
 glm::vec4 quadColor(1.0f);
 
@@ -24,7 +25,7 @@ class ExampleLayer : public Atlas::Layer {
 
         // Atlas::Renderer::drawQuad(glm::vec3(0.0f), m_textureSheet);
         Atlas::Renderer::drawQuad(glm::vec2(0.0f, 32.0f), m_textureSheet);
-        Atlas::Renderer::drawQuad(glm::vec2(0.0f), m_sprite);
+		Atlas::Renderer::drawQuad(glm::vec2(0.0f), m_sprite);
 
         Atlas::Renderer::endScene();
     }

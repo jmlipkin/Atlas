@@ -6,37 +6,36 @@
 
 namespace Atlas {
 
-  class MetalContext : public GraphicsContext {
-     public:
-      MetalContext(GLFWwindow* window);
-      
-      virtual void init() override;
-      virtual void swapBuffers() override {}
+class MetalContext : public GraphicsContext {
+  public:
+	MetalContext(GLFWwindow* window);
 
-      CA::MetalDrawable* getNextDrawable() { return m_layer->nextDrawable(); }
+	virtual void init() override;
+	virtual void swapBuffers() override {}
 
-      CA::MetalLayer* getMTLLayer() const { return m_layer; }
+	CA::MetalDrawable* getNextDrawable() { return m_layer->nextDrawable(); }
 
-      static MTL::Library* setNewMTLLibrary(const std::string& filepath);
-      
-      static MTL::Device* getMTLDevice() { return s_device; }
-      static MTL::Library* getMTLLibrary() { return s_library; }
+	CA::MetalLayer* getMTLLayer() const { return m_layer; }
 
-	  virtual void onResize(const WindowResizeEvent& e) override;
+	static MTL::Library* setNewMTLLibrary(const std::string& filepath);
 
-	  virtual uint32_t getWidth() const override { return m_layer->drawableSize().width; }
-	  virtual uint32_t getHeight() const override { return m_layer->drawableSize().height; }
+	static MTL::Device* getMTLDevice() { return s_device; }
+	static MTL::Library* getMTLLibrary() { return s_library; }
 
-     private:
-      void initDevice();
-      void initWindow();
+	virtual void onResize(const WindowResizeEvent& e) override;
 
-     private:
-      static MTL::Device* s_device;
-      static MTL::Library* s_library;
+	virtual uint32_t getWidth() const override { return m_layer->drawableSize().width; }
+	virtual uint32_t getHeight() const override { return m_layer->drawableSize().height; }
 
-      CA::MetalLayer* m_layer;
-      GLFWwindow* m_window;
+  private:
+	void initDevice();
+	void initWindow();
 
-  };
+  private:
+	static MTL::Device* s_device;
+	static MTL::Library* s_library;
+
+	CA::MetalLayer* m_layer;
+	GLFWwindow* m_window;
+};
 }  // namespace Atlas
