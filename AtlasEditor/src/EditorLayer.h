@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Atlas.h>
+#include "LoggingPanel.h"
 
 namespace Atlas {
 class EditorLayer : public Layer {
@@ -13,6 +14,9 @@ class EditorLayer : public Layer {
 	virtual void onEvent(Event& event) override {}
 
 	virtual void onImGuiRender() override;
+
+  private:
+	LoggingPanel logger;
 };
 
 }  // namespace Atlas

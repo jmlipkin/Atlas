@@ -38,6 +38,8 @@ void EditorLayer::onImGuiRender() {
 		ImGui::EndMenuBar();
 	}
 
+	logger.onImGuiRender();
+	
 	ImGui::End();
 }
 
