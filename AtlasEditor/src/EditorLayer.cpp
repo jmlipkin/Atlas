@@ -5,6 +5,8 @@
 
 namespace Atlas {
 
+EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()){}
+
 void EditorLayer::onImGuiRender() {
 	static bool dockspaceOpen = true;
 	static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
@@ -39,6 +41,19 @@ void EditorLayer::onImGuiRender() {
 	}
 
 	logger.onImGuiRender();
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("Viewport");
+	ImVec2 viewportSize = ImGui::GetContentRegionAvail();
+	if (m_viewportSize != *((glm::vec2*)&viewportSize)) {
+		Application::get().getFramebuffer()->onResize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+		m_viewportSize = {viewportSize.x, viewportSize.y};
+		m_cameraController.onResize(viewportSize.x, viewportSize.y);
+	}
+	void* texture = Application::get().getFramebuffer()->getColorTexture(0);
+	ImGui::Image(texture, viewportSize);
+	ImGui::End();
+	ImGui::PopStyleVar();
 	
 	ImGui::End();
 }

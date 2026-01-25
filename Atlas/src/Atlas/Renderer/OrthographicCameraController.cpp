@@ -48,6 +48,11 @@ namespace Atlas {
         m_camera.setPosition(m_cameraPosition);
         
         m_translateSpeed = m_zoom;
+	}
+
+	void OrthographicCameraController::onResize(float width, float height) {
+		m_aspectRatio = width / height;
+        m_camera.setProjection(-m_aspectRatio * m_zoom, m_aspectRatio * m_zoom, -m_zoom, m_zoom);
     }
 
     void OrthographicCameraController::onEvent(Event& event) {

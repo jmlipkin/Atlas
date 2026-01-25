@@ -1,12 +1,13 @@
 #pragma once
 
 #include <Atlas.h>
+#include "Atlas/Renderer/OrthographicCameraController.h"
 #include "LoggingPanel.h"
 
 namespace Atlas {
 class EditorLayer : public Layer {
   public:
-	EditorLayer() : Layer("Editor") {}
+	EditorLayer();
 
 	virtual void onAttach() override {}
 	virtual void onDetach() override {}
@@ -17,6 +18,9 @@ class EditorLayer : public Layer {
 
   private:
 	LoggingPanel logger;
+
+	OrthographicCameraController m_cameraController;
+	glm::vec2 m_viewportSize;
 };
 
 }  // namespace Atlas

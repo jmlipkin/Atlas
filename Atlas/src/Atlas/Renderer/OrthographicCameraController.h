@@ -13,7 +13,8 @@ class OrthographicCameraController {
    public:
     OrthographicCameraController(float aspectRatio, bool enableRotation = false);
     void onUpdate(DeltaTime dt);
-    void onEvent(Event& e);
+	void onEvent(Event& e);
+	void onResize(float width, float height);
 
     OrthographicCamera& getCamera() { return m_camera; }
     const OrthographicCamera& getCamera() const { return m_camera; }
