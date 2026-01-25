@@ -16,7 +16,7 @@ class ImGuiLayer : public Layer {
     ImGuiLayer();
     virtual ~ImGuiLayer() = default;
 
-        void onUpdate(DeltaTime dt) final;
+        void onUpdate(DeltaTime dt) override {}
 
         void onAttach() final { m_system->initImGuiLayer(); }
         void onDetach() final { m_system->cleanImGuiLayer(); }
@@ -42,11 +42,6 @@ class ImGuiLayer : public Layer {
 
         private:
          std::unique_ptr<ImGuiSystem> m_system;
-
-        protected:
-         // TEMPORARY?
-         std::shared_ptr<ImGuiSink> m_sink;
-         void drawImGuiLogWindow();
 };
 
 }  // namespace Atlas

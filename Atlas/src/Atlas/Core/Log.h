@@ -5,6 +5,7 @@
 #include <spdlog/fmt/ostr.h>
 
 #include "Atlas/ImGui/ImGuiSink.h"
+#include "spdlog/logger.h"
 
 namespace Atlas {
 
@@ -14,16 +15,21 @@ class Log {
 
     inline static std::shared_ptr<spdlog::logger>& getCoreLogger() { return s_coreLogger; }
     inline static std::shared_ptr<spdlog::logger>& getClientLogger() { return s_clientLogger; }
+    inline static std::shared_ptr<spdlog::logger>& getRawLogger() { return s_rawLogger; }
 
     inline static std::shared_ptr<ImGuiSink>& getImGuiLogger() { return s_ImGuiSink; }
+    inline static std::shared_ptr<ImGuiSink>& getImGuiRawLogger() { return s_ImGuiRawSink; }
 
    private:
     static std::shared_ptr<spdlog::logger> s_coreLogger;
-    static std::shared_ptr<spdlog::logger> s_clientLogger;
-    static std::shared_ptr<ImGuiSink> s_ImGuiSink;
+	static std::shared_ptr<spdlog::logger> s_clientLogger;
+	static std::shared_ptr<spdlog::logger> s_rawLogger;
+	static std::shared_ptr<ImGuiSink> s_ImGuiSink;
+	static std::shared_ptr<ImGuiSink> s_ImGuiRawSink;
 };
 }  // namespace Atlas
 
+#define AT_LOG(...) ::Atlas::Log::getRawLogger()->trace(__VA_ARGS__)
 // Core log macros
 #define AT_CORE_TRACE(...) ::Atlas::Log::getCoreLogger()->trace(__VA_ARGS__)
 #define AT_CORE_DEBUG(...) ::Atlas::Log::getCoreLogger()->debug(__VA_ARGS__)
