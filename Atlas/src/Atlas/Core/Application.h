@@ -17,7 +17,8 @@ class Application {
     Application(const WindowProperties& winProps = WindowProperties());
     virtual ~Application();
 
-    void run();
+	void run();
+	void close() { m_isRunning = false; }
 
     void onEvent(Event& event);
 

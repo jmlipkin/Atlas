@@ -97,12 +97,7 @@ bool ImGuiLayer::onKeyTypedEvent(KeyTypedEvent& e) {
 bool ImGuiLayer::onWindowResizeEvent(WindowResizeEvent& e) {
 	ImGuiIO& io = ImGui::GetIO();
 
-	// io.DisplaySize = ImVec2(e.getWidth(), e.getHeight());
-	
-	GLFWwindow* window = (GLFWwindow*)Application::get().getWindow().getNativeWindow();
-	int width, height;
-	glfwGetFramebufferSize(window, &width, &height);
-	io.DisplaySize = ImVec2((float)width, (float)height);
+	io.DisplaySize = ImVec2(e.getWidth(), e.getHeight());
 
 	return false;
 }
