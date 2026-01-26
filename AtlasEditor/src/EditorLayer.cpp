@@ -1,13 +1,28 @@
 #include "Atlas/Core/Application.h"
+#include "Atlas/Core/Time.h"
+#include "SandboxScene.h"
 #include "atpch.h"
 #include "imgui/imgui.h"
 #include "EditorLayer.h"
 
+#include <memory>
 #include <metal-cpp/Metal.hpp>
 
 namespace Atlas {
 
-EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()) {}
+EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()) {
+	m_scenes.push_back(std::make_shared<SandboxScene>(m_cameraController));
+}
+
+void EditorLayer::onUpdate(DeltaTime dt) {
+	for (auto scene : m_scenes)
+		scene->onUpdate(dt);
+}
+
+void EditorLayer::onEvent(Event& event) {
+	for (auto scene : m_scenes)
+		scene->onEvent(event);
+}
 
 void EditorLayer::onImGuiRender() {
 	static bool dockspaceOpen = true;
