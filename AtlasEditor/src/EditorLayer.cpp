@@ -3,9 +3,11 @@
 #include "imgui/imgui.h"
 #include "EditorLayer.h"
 
+#include <metal-cpp/Metal.hpp>
+
 namespace Atlas {
 
-EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()){}
+EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()) {}
 
 void EditorLayer::onImGuiRender() {
 	static bool dockspaceOpen = true;
@@ -31,6 +33,7 @@ void EditorLayer::onImGuiRender() {
 
 	ImGui::DockSpace(ImGui::GetID("Dockspace"), ImVec2(0, 0), dockspace_flags);
 
+#ifndef AT_PLATFORM_MACOS
 	if (ImGui::BeginMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
 			if (ImGui::MenuItem("Exit"))
@@ -39,6 +42,7 @@ void EditorLayer::onImGuiRender() {
 		}
 		ImGui::EndMenuBar();
 	}
+#endif
 
 	logger.onImGuiRender();
 
@@ -54,7 +58,7 @@ void EditorLayer::onImGuiRender() {
 	ImGui::Image(texture, viewportSize);
 	ImGui::End();
 	ImGui::PopStyleVar();
-	
+
 	ImGui::End();
 }
 
