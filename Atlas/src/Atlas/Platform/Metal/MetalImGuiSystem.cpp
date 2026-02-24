@@ -34,6 +34,7 @@ void MetalImGuiSystem::initImGuiLayer() {
 	float font_scale;
 	glfwGetWindowContentScale(window, &font_scale, nullptr);
 	ImFont* HelveticaLight = io.Fonts->AddFontFromFileTTF("Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf", 14 * font_scale);
+	ImFont* HelveticaBold = io.Fonts->AddFontFromFileTTF("Atlas/assets/helvetica-neue-5/HelveticaNeueBold.otf", 14 * font_scale);
 	io.FontDefault = HelveticaLight;
 
     io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;

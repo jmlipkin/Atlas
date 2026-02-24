@@ -1,6 +1,7 @@
 #include "Atlas/Core/Application.h"
 #include "Atlas/Core/Time.h"
 #include "SandboxScene.h"
+#include "SceneHierarchyPanel.h"
 #include "atpch.h"
 #include "imgui/imgui.h"
 #include "EditorLayer.h"
@@ -11,7 +12,9 @@
 namespace Atlas {
 
 EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()) {
+	// TODO: Change to a more robust solution
 	m_scenes.push_back(std::make_shared<SandboxScene>(m_cameraController));
+	m_hierarchyPanel = new SceneHierarchyPanel(m_scenes[0]);
 }
 
 void EditorLayer::onUpdate(DeltaTime dt) {
@@ -59,7 +62,8 @@ void EditorLayer::onImGuiRender() {
 	}
 #endif
 
-	logger.onImGuiRender();
+	m_logger.onImGuiRender();
+	m_hierarchyPanel->onImGuiRender();
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Viewport");

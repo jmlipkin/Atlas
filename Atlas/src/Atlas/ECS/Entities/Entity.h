@@ -33,11 +33,15 @@ class Entity {
 
     template<typename T>
     bool hasComponent() {
-        return m_scene->m_registry.any_of<T>(m_entityID);
+		return m_scene->m_registry.any_of<T>(m_entityID);
     }
 
     operator entt::entity() { return m_entityID; }
-    operator const entt::entity() const { return m_entityID; }
+	operator const entt::entity() const { return m_entityID; }
+	bool operator ==(const Entity& other) const { return m_entityID == other.m_entityID; } 
+
+	// TEMPORARY
+	operator uint32_t() { return (uint32_t)m_entityID; }
 
    private:
     entt::entity m_entityID;

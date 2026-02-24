@@ -39,7 +39,8 @@ class SubTexture {
     float getNumTilesHorizontal() const { return m_specs.tileDims.x; }
     float getNumTilesVertical() const { return m_specs.tileDims.y; }
 
-    glm::vec2 getSizeInTiles() const { return m_specs.tileDims; }
+	glm::vec2 getSizeInTiles() const { return m_specs.tileDims; }
+	SubTextureSpecification& getSpecs() { return m_specs; }
 
     bool operator==(const SubTexture& other) const { return m_texture == other.m_texture && m_specs.coordinates == other.m_specs.coordinates; }
 

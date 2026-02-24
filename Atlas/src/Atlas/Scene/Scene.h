@@ -13,7 +13,8 @@ class Scene {
     Scene() = default;
     virtual ~Scene() = default;
 
-    Entity createEntity(const std::string& name);
+	Entity createEntity(const std::string& name);
+	Registry& getRegistry() { return m_registry; }
 
     virtual void setRegistryCallbacks() {}
 	virtual void onUpdate(DeltaTime dt) = 0;

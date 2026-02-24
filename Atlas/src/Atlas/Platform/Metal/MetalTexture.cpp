@@ -7,7 +7,7 @@
 
 namespace Atlas {
 
-MetalTexture::MetalTexture(const std::string& filepath) {
+MetalTexture::MetalTexture(const std::string& filepath) : m_path(filepath) {
     AT_PROFILE_FUNCTION();
 
     MTL::Device* device;
