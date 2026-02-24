@@ -17,6 +17,7 @@ add_subdirectory(extern/spdlog)
 add_subdirectory(extern/glad)
 add_subdirectory(extern/glfw)
 add_subdirectory(extern/glm)
+add_subdirectory(extern/freetype-2.14.1)
 
 add_library(${TARGET_NAME} STATIC)
 
@@ -104,6 +105,7 @@ target_link_libraries(${TARGET_NAME}
     glad
     glfw
     glm
+    freetype
 )
 
 if(APPLE)
