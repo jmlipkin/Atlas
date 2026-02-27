@@ -1,5 +1,6 @@
 #include "Application.h"
 
+#include "Atlas/Core/FontLibrary.h"
 #include "Atlas/Core/Log.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/ImGui/ImGuiLayer.h"
@@ -21,6 +22,7 @@ Application::Application(const WindowProperties& winProps) {
 	m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
 	m_context = m_window->getGraphicsContext();
 	Renderer::init(*m_context);
+	FontLibrary::init();
 
 	AT_CORE_INFO("Engine initialization complete!");
 

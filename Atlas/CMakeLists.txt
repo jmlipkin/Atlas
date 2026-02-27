@@ -96,7 +96,7 @@ target_compile_definitions(${TARGET_NAME}
     PRODUCT_NAME_WITHOUT_VERSION="${TARGET_NAME}"
 
     PRIVATE
-    $<$<CONFIG:Debug>:AT_DEBUG>
+    $<$<CONFIG:Debug>:AT_DEBUG_ENABLE>
 )
 
 target_link_libraries(${TARGET_NAME}

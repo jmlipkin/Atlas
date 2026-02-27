@@ -4,6 +4,7 @@
 
 #include "MetalContext.h"
 #include "atpch.h"
+#include "metal-cpp/Metal.hpp"
 
 namespace Atlas {
 
@@ -55,7 +56,13 @@ MetalTexture::MetalTexture(const std::string& filepath) {
     stbi_image_free(image);
 }
 
-MetalTexture::MetalTexture(uint32_t width, uint32_t height) : m_width(width), m_height(height), m_texture(nullptr) {}
+MetalTexture::MetalTexture(uint32_t width, uint32_t height) : m_width(width), m_height(height) {
+    MTL::TextureDescriptor* textureDescriptor = MTL::TextureDescriptor::alloc()->init();
+
+    MTL::Device* device = MetalContext::getMTLDevice();
+    m_texture = device->newTexture(textureDescriptor);
+    textureDescriptor->release();
+}
 
 void MetalTexture::setData(void* data, uint32_t size) {
     AT_PROFILE_FUNCTION();

@@ -3,6 +3,7 @@
 #include <Atlas.h>
 
 #include <glm/glm.hpp>
+#include "Atlas/Core/FontLibrary.h"
 #include "Atlas/Events/Event.h"
 #include "Atlas/Renderer/OrthographicCameraController.h"
 
@@ -14,6 +15,8 @@ class SandboxScene : public Atlas::Scene {
 	SandboxScene(Atlas::OrthographicCameraController& cameraController) : m_cameraController(cameraController) {
 		setRegistryCallbacks();
 
+		Atlas::FontLibrary::load("Helvetica Light", "Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf");
+		
 		m_cameraController.setZoomLevel(25.0f);
 		m_board = createEntity("Board");
 		m_player = createEntity("PacMan");

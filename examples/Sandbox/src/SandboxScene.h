@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include "Atlas/Core/Application.h"
 #include "Atlas/Core/Base.h"
+#include "Atlas/Core/FontLibrary.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Events/Event.h"
 
@@ -15,6 +16,8 @@ class SandboxScene : public Atlas::Scene {
   public:
 	SandboxScene() : m_cameraController(1280.0 / 720.0) {
 		setRegistryCallbacks();
+
+		Atlas::FontLibrary::load("Helvetica Light", "Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf");
 
 		m_cameraController.setZoomLevel(25.0f);
 		m_board = createEntity("Board");
