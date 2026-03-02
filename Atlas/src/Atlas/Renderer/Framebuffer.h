@@ -32,9 +32,6 @@ class Framebuffer {
 
 	virtual void* getPassDescriptor(void* drawable) = 0;
 
-	virtual void* getDepthStencilState() const = 0;
-	virtual void* setDepthStencilState() = 0;
-
 	virtual void onResize(uint32_t width, uint32_t height) = 0;
 	virtual void invalidate() = 0;
 

@@ -14,9 +14,6 @@ class MetalFramebuffer : public Framebuffer {
 
 	virtual void* getPassDescriptor(void* drawable) override;
 
-	virtual void* getDepthStencilState() const override { return m_depthStencilState; }
-	virtual void* setDepthStencilState() override;
-
 	virtual void onResize(uint32_t width, uint32_t height) override;
 	virtual void invalidate() override;
 
@@ -64,8 +61,6 @@ class MetalFramebuffer : public Framebuffer {
 	std::vector<MTL::TextureDescriptor*> m_colorDescriptors;
 	std::vector<MTL::TextureDescriptor*> m_msaaDescriptors;
 	MTL::TextureDescriptor* m_depthDescriptor;
-
-	MTL::DepthStencilState* m_depthStencilState;
 };
 
 }  // namespace Atlas

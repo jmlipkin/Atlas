@@ -12,7 +12,6 @@ namespace Atlas {
 MetalFramebuffer::MetalFramebuffer(const FramebufferSpecifications& specs) : m_specs(specs) {
 	m_passDesc = MTL::RenderPassDescriptor::alloc()->init();
 	createTextures();
-	setDepthStencilState();
 }
 
 MetalFramebuffer::~MetalFramebuffer() {
@@ -53,16 +52,6 @@ void* MetalFramebuffer::getPassDescriptor(void* drawable) {
 	}
 
 	return m_passDesc;
-}
-
-void* MetalFramebuffer::setDepthStencilState() {
-	auto depthStencilDesc = MTL::DepthStencilDescriptor::alloc()->init();
-	depthStencilDesc->setDepthCompareFunction(MTL::CompareFunctionLess);
-	depthStencilDesc->setDepthWriteEnabled(m_specs.isDepthEnabled);
-	m_depthStencilState = MetalContext::getMTLDevice()->newDepthStencilState(depthStencilDesc);
-	depthStencilDesc->release();
-
-	return m_depthStencilState;
 }
 
 void MetalFramebuffer::onResize(uint32_t width, uint32_t height) {

@@ -57,6 +57,12 @@ MetalPipeline::MetalPipeline(const PipelineSpecification& specs) : m_name(specs.
 	setLayout(specs.layout);
 	attachLayout();
 
+	auto depthDesc = MTL::DepthStencilDescriptor::alloc()->init();
+	depthDesc->setDepthCompareFunction(MTL::CompareFunctionLess);
+	depthDesc->setDepthWriteEnabled(specs.enableDepthWrite);
+	m_depthStencilState = MetalContext::getMTLDevice()->newDepthStencilState(depthDesc);
+	depthDesc->release();
+
 	m_pipelineState = MetalContext::getMTLDevice()->newRenderPipelineState(m_pipelineDescriptor, &error);
 
 	AT_CORE_ASSERT(m_pipelineState, "Pipeline Error: {}", error->localizedDescription()->utf8String());

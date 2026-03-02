@@ -71,7 +71,6 @@ void MetalRendererAPI::beginPass(std::shared_ptr<Framebuffer> framebuffer) {
 
 	MTL::Viewport viewport{0, 0, (double)m_framebuffer->getWidth(), (double)m_framebuffer->getHeight(), 0.0, 1.0};
 	m_encoder->setViewport(viewport);
-	m_encoder->setDepthStencilState((MTL::DepthStencilState*)m_framebuffer->getDepthStencilState());
  
 	clear();
 }
@@ -82,6 +81,7 @@ void MetalRendererAPI::bindPipeline(std::shared_ptr<Pipeline> pipeline, const Un
 	std::shared_ptr<MetalPipeline> p = std::static_pointer_cast<MetalPipeline>(pipeline);
 	p->attachFramebuffer(m_framebuffer);
 	m_encoder->setRenderPipelineState(p->getMTLPSO());
+	m_encoder->setDepthStencilState(p->getDepthStencilState());
 	m_encoder->setVertexBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
 	m_encoder->setFragmentBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
 }

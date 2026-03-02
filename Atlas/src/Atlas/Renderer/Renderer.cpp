@@ -136,6 +136,7 @@ void Renderer::init(GraphicsContext& context) {
 	PipelineSpecification textPipelineSpecs;
 	textPipelineSpecs.name = "Text Pipeline";
 	textPipelineSpecs.shader = s_data.shaderLib->get("Text Shader");
+	textPipelineSpecs.enableDepthWrite = false;
 	textPipelineSpecs.layout = BufferLayout({{"a_position", ShaderDataType::Float3},
 											 {"a_color", ShaderDataType::Float4},
 											 {"a_texIndex", ShaderDataType::Uint},

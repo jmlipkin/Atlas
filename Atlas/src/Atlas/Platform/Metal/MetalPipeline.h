@@ -21,6 +21,7 @@ class MetalPipeline : public Pipeline {
     virtual const std::string& getName() const override { return m_name; }
 
     MTL::RenderPipelineState* getMTLPSO() const { return m_pipelineState; }
+    MTL::DepthStencilState* getDepthStencilState() const { return m_depthStencilState; }
     MTL::RenderPipelineDescriptor* getMTLPipeDesc() const { return m_pipelineDescriptor; }
 
    private:
@@ -28,6 +29,7 @@ class MetalPipeline : public Pipeline {
 
    private:
     MTL::RenderPipelineState* m_pipelineState;
+    MTL::DepthStencilState* m_depthStencilState;
     MTL::RenderPipelineDescriptor* m_pipelineDescriptor;
 	MTL::VertexDescriptor* m_vertexDescriptor;
 

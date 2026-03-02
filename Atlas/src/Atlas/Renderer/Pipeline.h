@@ -12,6 +12,7 @@ struct PipelineSpecification {
 	std::string name;
 	std::shared_ptr<Shader> shader;
 	BufferLayout layout;
+	bool enableDepthWrite = true;
 };
 
 class Pipeline {

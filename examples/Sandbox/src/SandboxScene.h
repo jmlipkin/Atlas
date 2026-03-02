@@ -64,11 +64,11 @@ class SandboxScene : public Atlas::Scene {
 				Atlas::Component::Transform transform = view.get<Atlas::Component::Transform>(entity);
 				Atlas::Component::Sprite sprite = view.get<Atlas::Component::Sprite>(entity);
 
-				// Atlas::Renderer::drawQuad(transform.position, transform.size, sprite.subtexture);
+				Atlas::Renderer::drawQuad(transform.position, transform.size, sprite.subtexture);
 			}
 
-			Atlas::Renderer::drawText(m_font, "The quick brown fox jumps over the lazy dog", glm::vec3(-40, -10, 99.0), glm::vec2(0.02f));
-			Atlas::Renderer::drawText(m_font, "ATLAS: FontLibrary initialized!", glm::vec3(-40, -0, 99.0), glm::vec2(0.02f));
+			Atlas::Renderer::drawText(m_font, "The quick brown fox jumps over the lazy dog", glm::vec3(-40, -10, 99.0), glm::vec2(0.03f));
+			Atlas::Renderer::drawText(m_font, "ATLAS: FontLibrary initialized!", glm::vec3(-40, -0, 99.0), glm::vec2(0.03f));
 		}
 		
 		Atlas::Renderer::endScene();
