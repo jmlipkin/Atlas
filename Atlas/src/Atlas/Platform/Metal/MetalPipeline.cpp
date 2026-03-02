@@ -83,10 +83,8 @@ void MetalPipeline::attachFramebuffer(std::shared_ptr<Framebuffer> fb) {
 		colorAttach->setBlendingEnabled(true);
 		colorAttach->setSourceRGBBlendFactor(MTL::BlendFactorSourceAlpha);
 		colorAttach->setDestinationRGBBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
-		colorAttach->setRgbBlendOperation(MTL::BlendOperationAdd);
 		colorAttach->setSourceAlphaBlendFactor(MTL::BlendFactorOne);
 		colorAttach->setDestinationAlphaBlendFactor(MTL::BlendFactorOneMinusSourceAlpha);
-		colorAttach->setAlphaBlendOperation(MTL::BlendOperationAdd);
 	}
 	attachLayout();
 

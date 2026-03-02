@@ -456,25 +456,53 @@ void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const 
 	s_data.quadIndexCount += 6;
 }
 
-void Renderer::drawText(const std::shared_ptr<Font>& font, const glm::vec2& position, const glm::vec2& size) {
+void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec2& position, const glm::vec2& size) {
 	AT_PROFILE_FUNCTION();
 
-	drawText(font, glm::vec3(position, 0.0f), size);
+	drawText(font, text, glm::vec3(position, 0.0f), size);
 }
 
-void Renderer::drawText(const std::shared_ptr<Font>& font, const glm::vec3& position, const glm::vec2& size) {
+void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec3& position, const glm::vec2& size) {
 	AT_PROFILE_FUNCTION();
 
-	// float sizeX = size.x * font->getTexture()->getWidth();
-	// float sizeY = size.y * font->getTexture()->getHeight();
-	float sizeX = size.x;
-	float sizeY = size.y;
-	glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(sizeX, sizeY, 1.0f));
-	drawText(font, transform);
+
+	float scale = size.x;
+	float xOffset = position.x;
+
+	for(char c : text) {
+		Font::Character ch = font->getCharacter(c);
+
+		// Apply bearing so glyphs sit correctly on the baseline
+        float xPos = xOffset + ch.bearing.x * scale;
+        float yPos = position.y - ch.bearing.y * scale;
+        // float yPos = position.y + (ch.size.y - ch.bearing.y) * scale; // descender correction
+
+		glm::vec2 glyphSize = glm::vec2(ch.size.x * scale, ch.size.y * scale);
+
+		drawCharacter(font, c, glm::vec3(xPos, yPos, position.z), glyphSize);
+
+		// Advance stored in 1/64 pixels
+		xOffset += (ch.advance >> 6) * scale;
+	}
 }
 
-void Renderer::drawText(const std::shared_ptr<Font>& font, const glm::mat4& transform) {
+void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::vec2 &position, const glm::vec2 &size) {
 	AT_PROFILE_FUNCTION();
+
+	drawCharacter(font, character, glm::vec3(position, 0.0f), size);
+}
+
+void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::vec3 &position, const glm::vec2 &size) {
+	AT_PROFILE_FUNCTION();
+
+	glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(size, 1.0f));
+	drawCharacter(font, character, transform);
+}
+
+void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::mat4 &transform) {
+	AT_PROFILE_FUNCTION();
+
+	Font::Character c = font->getCharacter(character);
 
 	if (s_data.currentPipeline != s_data.textPipeline) {
 		flush();
@@ -482,11 +510,11 @@ void Renderer::drawText(const std::shared_ptr<Font>& font, const glm::mat4& tran
 		s_data.currentUniformBuffer = s_data.textUniforms;
 	}
 
-	glm::vec4 color = glm::vec4(0.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 color = glm::vec4(1.0f);
 	uint32_t texIndex = 0;
 
 	for (uint32_t i = 1; i < s_data.textureSlotIndex; i++) {
-		if (*font->getTexture().get() == *s_data.textureSlots[i].get()) {
+		if (*font->getTexture() == *s_data.textureSlots[i].get()) {
 			texIndex = i;
 			break;
 		}
@@ -503,7 +531,8 @@ void Renderer::drawText(const std::shared_ptr<Font>& font, const glm::mat4& tran
 	if (s_data.quadIndexCount >= s_data.maxIndexCount)
 		flush();
 
-	glm::vec2 texCoordinates[4] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+	TextureCoordinates tc = c.texCoords;
+	glm::vec2 texCoordinates[4] = {tc.bottom_left, tc.bottom_right, tc.top_right, tc.top_left};
 	constexpr size_t quadVertexCount = 4;
 
 	for (size_t i = 0; i < quadVertexCount; i++) {
@@ -515,6 +544,7 @@ void Renderer::drawText(const std::shared_ptr<Font>& font, const glm::mat4& tran
 	}
 
 	s_data.quadIndexCount += 6;
+
 }
 
 }  // namespace Atlas

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Atlas/Renderer/Texture.h"
+#include "Atlas/Renderer/TextureSheet.h"
 
 #include <glm/glm.hpp>
 #include <freetype/freetype.h>
@@ -18,14 +19,14 @@ class Font {
 		unsigned int advance;
 
 		glm::ivec2 texOffset;
-		glm::vec2 uvMin;
-		glm::vec2 uvMax;
+		TextureCoordinates texCoords;
 	};
 
   public:
-	Font(const std::string& name, const std::string& filepath, uint32_t fontSizePx = 12);
+	Font(const std::string& name, const std::string& filepath, uint32_t fontSizePx = 128);
 
 	const std::shared_ptr<Texture>& getTexture() const { return m_texture; }
+	const Character& getCharacter(unsigned long charcode) const { return m_characters.at(charcode); }
 	const std::string& getName() const { return m_name; }
 
 	static std::string to_utf8(uint32_t charcode);

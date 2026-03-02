@@ -33,10 +33,10 @@ vertex VertexOut textVertexShader(VertexIn in [[stage_in]], constant Uniforms* u
 }
 
 fragment float4 textFragmentShader(VertexOut in [[stage_in]], TextureArray textures, constant Uniforms* u [[buffer(2)]]) {
-    constexpr sampler textureSampler (mag_filter::nearest, min_filter::linear);
+    constexpr sampler textureSampler (mag_filter::linear, min_filter::linear);
     float alpha = textures.textures[in.texIndex].sample(textureSampler, in.texCoord).r;
     if(alpha < 0.001)
         discard_fragment();
         
-    return float4(in.color.rgb, in.color.a * alpha);
+    return float4(in.color.rgb * alpha, in.color.a * alpha);
 }

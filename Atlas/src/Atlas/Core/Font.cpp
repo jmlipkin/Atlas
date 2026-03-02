@@ -19,8 +19,9 @@ Font::Font(const std::string& name, const std::string& filepath, uint32_t fontSi
 	AT_CORE_ASSERT(!error, "Could not load font from file: {}", FT_Error_String(error));
 
 	glm::uvec2 resolution = Application::get().getWindow().getResolution();
-	FT_Set_Char_Size(face, 0, fontSizePx * 64, resolution.x, resolution.y);
-
+	// FT_Set_Char_Size(face, 0, fontSizePx * 64, resolution.x, resolution.y);
+	FT_Set_Pixel_Sizes(face, 0, fontSizePx);
+	
 	loadGlyphs(face);
 	createFontTextureAtlas();
 
@@ -133,15 +134,24 @@ void Font::createFontTextureAtlas() {
 		}
 	}
 
+	float epsilonOffset = 0.0002;
 	for (auto charcode : m_orderedGlyphs) {
 		Character& c = m_characters[charcode];
 
-		c.uvMin = {
-			(float)c.texOffset.x / atlasWidth,
+		c.texCoords.top_left = {
+			(float)c.texOffset.x / atlasWidth + epsilonOffset,
 			(float)c.texOffset.y / atlasHeight};
 
-		c.uvMax = {
-			(float)(c.texOffset.x + c.size.x) / atlasWidth,
+		c.texCoords.top_right = {
+			(float)(c.texOffset.x + c.size.x) / atlasWidth - epsilonOffset,
+			(float)c.texOffset.y / atlasHeight};
+
+		c.texCoords.bottom_left = {
+			(float)c.texOffset.x / atlasWidth + epsilonOffset,
+			(float)(c.texOffset.y + c.size.y) / atlasHeight};
+
+		c.texCoords.bottom_right = {
+			(float)(c.texOffset.x + c.size.x) / atlasWidth - epsilonOffset,
 			(float)(c.texOffset.y + c.size.y) / atlasHeight};
 	}
 
