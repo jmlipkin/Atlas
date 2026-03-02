@@ -1,7 +1,7 @@
+#include "atpch.h"
 #include "MetalRendererAPI.h"
 #include "Atlas/Platform/Metal/MetalFramebuffer.h"
 #include "Atlas/Renderer/Framebuffer.h"
-#include "atpch.h"
 
 #include "MetalBuffer.h"
 #include "MetalPipeline.h"
@@ -93,11 +93,11 @@ void MetalRendererAPI::bindTexture(const Texture& texture, uint32_t index) {
 	m_encoder->setFragmentTexture(t.getMTLTexture(), index);
 }
 
-void MetalRendererAPI::bindVertexBuffer(const VertexBuffer& buffer, int index) {
+void MetalRendererAPI::bindVertexBuffer(const VertexBuffer& buffer, uint32_t offset, int index) {
 	AT_PROFILE_FUNCTION();
 
 	const MetalVertexBuffer& mBuf = static_cast<const MetalVertexBuffer&>(buffer);
-	m_encoder->setVertexBuffer((MTL::Buffer*)mBuf.getNativeBuffer(), 0, index);
+	m_encoder->setVertexBuffer((MTL::Buffer*)mBuf.getNativeBuffer(), offset, index);
 }
 
 void MetalRendererAPI::endPass() {
@@ -127,9 +127,9 @@ void MetalRendererAPI::drawImGui() {
 
 	ImGui::Render();
 	ImGui_ImplMetal_RenderDrawData(
-	    ImGui::GetDrawData(),
-	    m_buffer,
-	    m_encoder);
+		ImGui::GetDrawData(),
+		m_buffer,
+		m_encoder);
 }
 
 }  // namespace Atlas

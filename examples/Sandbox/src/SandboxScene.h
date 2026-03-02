@@ -8,6 +8,7 @@
 #include "Atlas/Core/FontLibrary.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/Events/Event.h"
+#include "Atlas/Renderer/Renderer.h"
 
 #define BOARD_DEPTH 0.1f
 #define PLAYER_DEPTH 100
@@ -17,7 +18,7 @@ class SandboxScene : public Atlas::Scene {
 	SandboxScene() : m_cameraController(1280.0 / 720.0) {
 		setRegistryCallbacks();
 
-		Atlas::FontLibrary::load("Helvetica Light", "Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf");
+		m_font = Atlas::FontLibrary::load("Helvetica Light", "Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf");
 
 		m_cameraController.setZoomLevel(25.0f);
 		m_board = createEntity("Board");
@@ -45,9 +46,8 @@ class SandboxScene : public Atlas::Scene {
 		animation.playing = true;
 		animation.shouldLoop = true;
 		animation.animationSpeed = 0.5;
-
 	}
-	
+
 	~SandboxScene() {
 		delete m_textureSheet;
 	};
@@ -64,6 +64,8 @@ class SandboxScene : public Atlas::Scene {
 
 				Atlas::Renderer::drawQuad(transform.position, transform.size, sprite.subtexture);
 			}
+
+			Atlas::Renderer::drawText(m_font, glm::vec3(-40, -20, 0.3), glm::vec2(m_font->getTexture()->getWidth() / 80.0f, m_font->getTexture()->getHeight() / 80.0f));
 		}
 		
 		Atlas::Renderer::endScene();
@@ -83,4 +85,6 @@ class SandboxScene : public Atlas::Scene {
 
 	Atlas::OrthographicCameraController m_cameraController;
 	Atlas::TextureSheet* m_textureSheet;
+
+	std::shared_ptr<Atlas::Font> m_font;
 };

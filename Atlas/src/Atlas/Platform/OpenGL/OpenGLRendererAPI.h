@@ -18,7 +18,7 @@ class OpenGLRendererAPI : public RendererAPI {
 	virtual void drawImGui() override {}
 	void bindPipeline(std::shared_ptr<Pipeline> pipeline, const UniformBuffer& uBuffer) override {}
 	void bindTexture(const Texture& texture, uint32_t index) override {}
-	void bindVertexBuffer(const VertexBuffer& buffer, int index) override {}
+	void bindVertexBuffer(const VertexBuffer& buffer, uint32_t offset, int index) override {}
 	virtual void beginFrame() override;
 	virtual void endFrame() override {}
 	virtual void beginPass(std::shared_ptr<Framebuffer> framebuffer) override {}

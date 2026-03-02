@@ -35,7 +35,7 @@ class RendererAPI {
 
     virtual void bindPipeline(std::shared_ptr<Pipeline> pipeline, const UniformBuffer& uBuffer) = 0;
     virtual void bindTexture(const Texture& texture, uint32_t index) = 0;
-    virtual void bindVertexBuffer(const VertexBuffer& vBuffer, int index) = 0;
+    virtual void bindVertexBuffer(const VertexBuffer& vBuffer, uint32_t offset, int index) = 0;
 
     inline static API getAPI() { return s_API; }
 

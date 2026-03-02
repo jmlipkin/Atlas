@@ -10,6 +10,7 @@ class MetalTexture : public Texture {
    public:
     MetalTexture(const std::string& filepath);
     MetalTexture(uint32_t width, uint32_t height);
+    MetalTexture(TextureSpecification specs, void* data = nullptr);
     virtual ~MetalTexture() override;
 
     MTL::Texture* getMTLTexture() const { return m_texture; }
@@ -20,6 +21,8 @@ class MetalTexture : public Texture {
 
     virtual uint32_t getWidth() const override { return m_width; }
     virtual uint32_t getHeight() const override { return m_height; }
+
+    static MTL::PixelFormat toMTLPixelFormat(ImageFormat format);
 
    private:
     MTL::Texture* m_texture;
