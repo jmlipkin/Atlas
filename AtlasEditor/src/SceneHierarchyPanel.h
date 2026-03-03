@@ -2,6 +2,7 @@
 
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Entities/Entity.h"
+#include "Atlas/ECS/Registry.h"
 #include "Atlas/Renderer/TextureSheet.h"
 #include "Atlas/Scene/Scene.h"
 #include "imgui/imgui.h"
@@ -24,14 +25,17 @@ class SceneHierarchyPanel {
 		auto view = registry.view<Component::Tag>();
 		for (entt::entity entity : view) {
 			Entity e{entity, m_scene.get()};
+			ImGui::PushID((uint32_t)e);
 			drawEntityNode(e);
+			ImGui::PopID();
 		}
 
 		ImGui::End();
 
 		ImGui::Begin("Properties");
-		if (m_selectionContext)
+		if (m_selectionContext) {
 			drawComponents(m_selectionContext);
+		}
 		ImGui::End();
 	}
 
@@ -41,8 +45,10 @@ class SceneHierarchyPanel {
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)entity, tree_flags, "%s", tag.tag.c_str());
 
-		if (ImGui::IsItemClicked())
+		if (ImGui::IsItemClicked()) {
+			AT_DEBUG("Clicked {}, id: {}", tag.tag, (uint32_t)entity);
 			m_selectionContext = entity;
+		}
 
 		bool entityDeleted = false;
 		if (ImGui::BeginPopupContextItem()) {
@@ -52,9 +58,6 @@ class SceneHierarchyPanel {
 		}
 
 		if (opened) {
-			bool opened = ImGui::TreeNodeEx((void*)9817239, tree_flags, "%s", tag.tag.c_str());
-			if (opened)
-				ImGui::TreePop();
 			ImGui::TreePop();
 		}
 
@@ -82,14 +85,17 @@ class SceneHierarchyPanel {
 		bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, "%s", label);
 		ImGui::PopStyleVar();
 		ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
+
+		std::string popupID = std::string("ComponentSettings##") + typeid(T).name();
 		if (ImGui::Button("+", ImVec2{lineHeight, lineHeight})) {
-			ImGui::OpenPopup("ComponentSettings");
+			ImGui::OpenPopup(popupID.c_str());
 		}
 
 		bool removeComponent = false;
-		if (ImGui::BeginPopup("Component Settings")) {
+		if (ImGui::BeginPopup(popupID.c_str())) {
 			if (ImGui::MenuItem("Delete component"))
 				removeComponent = true;
+			ImGui::EndPopup();
 		}
 
 		if (open) {

@@ -3,6 +3,7 @@
 #include <Atlas.h>
 
 #include <glm/glm.hpp>
+#include "Atlas/ECS/Components/Components.h"
 
 #define BOARD_DEPTH 0.1f
 #define PLAYER_DEPTH 100
@@ -42,15 +43,53 @@ class SandboxScene : public Atlas::Scene {
 		std::shared_ptr<Atlas::AnimationClip> dyingClip = std::make_shared<Atlas::AnimationClip>(animDying);
 		Atlas::Component::Animation& animation = m_player.addComponent<Atlas::Component::Animation>(dyingClip);
 		animation.playing = true;
-		animation.shouldLoop = false;
+		animation.shouldLoop = true;
 		animation.animationSpeed = 0.5;
+
+		m_player.addComponent<Atlas::Component::Script>().bind<PlayerController>();
 	}
 
+	class PlayerController : public Atlas::ScriptableEntity {
+	  public:
+		virtual void onUpdate(Atlas::DeltaTime dt) {
+			using namespace Atlas;
+			auto& transform = getComponent<Component::Transform>();
+			if (Input::isKeyPressed(AT_KEY_W)) {
+				transform.position.y -= m_maxPlayerSpeed * dt;
+			}
+			if (Input::isKeyPressed(AT_KEY_S)) {
+				transform.position.y += m_maxPlayerSpeed * dt;
+			}
+			if (!Input::isKeyPressed(AT_KEY_W) && !Input::isKeyPressed(AT_KEY_S)) {
+				if (Input::isKeyPressed(AT_KEY_A)) {
+					transform.position.x -= m_maxPlayerSpeed * dt;
+				}
+				if (Input::isKeyPressed(AT_KEY_D)) {
+					transform.position.x += m_maxPlayerSpeed * dt;
+				}
+			}
+		}
+
+	  private:
+		float m_maxPlayerSpeed = 10;
+	};
 	~SandboxScene() {
 		delete m_textureSheet;
 	};
 
 	virtual void onUpdate(Atlas::DeltaTime dt) override {
+		{
+			auto view = m_registry.view<Atlas::Component::Script>();
+			for (auto entity : view) {
+				Atlas::Component::Script& script = view.get<Atlas::Component::Script>(entity);
+				if (!script.instance) {
+					script.instance = script.instantiateScript();
+					script.instance->m_entity = Atlas::Entity{entity, this};
+				}
+				script.instance->onUpdate(dt);
+			}
+		}
+
 		Atlas::System::Animation::updateFrames(m_registry, dt);
 
 		Atlas::Renderer::beginScene(m_cameraController.getCamera());
