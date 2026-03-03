@@ -84,6 +84,18 @@ add_custom_target(shader_library
 add_dependencies(${TARGET_NAME} shader_library)
 endif()
 
+# Resolve file paths
+if(APPLE)
+    set(ATLAS_SHADER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal/shaders.metallib")
+else()
+    set(ATLAS_SHADER_PATH "")  # or your future OpenGL/Vulkan path
+endif()
+
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas/AtlasPaths.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/generated/Atlas/AtlasPaths.h
+)
+
 # ADD FILES
 file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"

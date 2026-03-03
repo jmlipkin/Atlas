@@ -1,0 +1,5 @@
+#pragma once
+
+namespace Atlas {
+    static constexpr const char* SHADER_LIBRARY_PATH = "@ATLAS_SHADER_PATH@";
+}

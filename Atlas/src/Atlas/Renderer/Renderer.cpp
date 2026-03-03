@@ -1,3 +1,4 @@
+#include "Atlas/AtlasPaths.h.in"
 #include "atpch.h"
 #include "Renderer.h"
 
@@ -60,12 +61,7 @@ void Renderer::init(GraphicsContext& context) {
 
 	RenderCommand::init(context);
 
-	std::string filepath = "Invalid platform selection == shader library";
-#ifdef AT_PLATFORM_MACOS
-	filepath = "Atlas/assets/shaders/metal/shaders.metallib";
-#endif
-
-	s_data.shaderLib = ShaderLibrary::create(filepath);
+	s_data.shaderLib = ShaderLibrary::create(Atlas::SHADER_LIBRARY_PATH);
 	s_data.shaderLib->load("Quad Shader", "quadVertexShader", "quadFragmentShader");
 
 	s_data.shaderLib->load("Text Shader", "textVertexShader", "textFragmentShader");
