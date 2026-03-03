@@ -3,12 +3,6 @@
 #include <Atlas.h>
 
 #include <glm/glm.hpp>
-#include "Atlas/Core/Application.h"
-#include "Atlas/Core/Base.h"
-#include "Atlas/Core/FontLibrary.h"
-#include "Atlas/Events/ApplicationEvent.h"
-#include "Atlas/Events/Event.h"
-#include "Atlas/Renderer/Renderer.h"
 
 #define BOARD_DEPTH 0.1f
 #define PLAYER_DEPTH 100
@@ -29,9 +23,9 @@ class SandboxScene : public Atlas::Scene {
 		m_player = createEntity("PacMan");
 
 		Atlas::TextureSheetSpecification specs{glm::vec2(8.0f)};
-		m_textureSheet = new Atlas::TextureSheet("examples/PacMan/src/pacman_all.png", specs);
-		m_board.addComponent<Atlas::Component::Sprite>(m_textureSheet->addSubTexture("board", glm::ivec2(0), m_textureSheet->getSizeInTiles()));
-		m_player.addComponent<Atlas::Component::Sprite>(m_textureSheet->addSubTexture("player", glm::ivec2(0, 0), glm::ivec2(2, 2)));
+		m_textureSheet = new Atlas::TextureSheet("examples/PacMan/assets/pacman sprite sheet transparent.png", specs);
+		m_board.addComponent<Atlas::Component::Sprite>(m_textureSheet->addSubTexture("board", glm::ivec2(0), glm::ivec2(28, 31)));
+		m_player.addComponent<Atlas::Component::Sprite>(m_textureSheet->addSubTexture("player", glm::ivec2(28, 0), glm::ivec2(2, 2)));
 
 		// position board at center
 		Atlas::Component::Transform& t = m_board.getComponent<Atlas::Component::Transform>();
@@ -42,13 +36,13 @@ class SandboxScene : public Atlas::Scene {
 		std::vector<std::shared_ptr<Atlas::SubTexture>> animDying;
 		for (int i = 0; i < 11; i++) {
 			std::string tag = "Dying" + std::to_string(i);
-			std::shared_ptr<Atlas::SubTexture> frame = m_textureSheet->addSubTexture(tag, glm::ivec2(63 + 2 * i, 0), glm::ivec2(2, 2));
+			std::shared_ptr<Atlas::SubTexture> frame = m_textureSheet->addSubTexture(tag, glm::ivec2(34 + 2 * i, 0), glm::ivec2(2, 2));
 			animDying.push_back(frame);
 		}
 		std::shared_ptr<Atlas::AnimationClip> dyingClip = std::make_shared<Atlas::AnimationClip>(animDying);
 		Atlas::Component::Animation& animation = m_player.addComponent<Atlas::Component::Animation>(dyingClip);
 		animation.playing = true;
-		animation.shouldLoop = true;
+		animation.shouldLoop = false;
 		animation.animationSpeed = 0.5;
 	}
 
@@ -69,10 +63,19 @@ class SandboxScene : public Atlas::Scene {
 				Atlas::Renderer::drawQuad(transform.position, transform.size, sprite.subtexture);
 			}
 
-			Atlas::Renderer::drawText(m_font, "PacMan", glm::vec3(-10, -18, 100), 72);
+			Atlas::Renderer::drawText(m_font, "PacMan", glm::vec3(-15, -18, 100), 72);
 			Atlas::Renderer::drawText(m_font, "High Score: ", glm::vec3(22, -14, 99.0), 16);
 		}
-		
+		{
+			auto view = m_registry.view<Atlas::Component::Sprite, Atlas::Component::Animation>();
+			for (auto entity : view) {
+				Atlas::Component::Animation a = view.get<Atlas::Component::Animation>(entity);
+				if (!a.playing) {
+					Atlas::Renderer::drawText(m_font, "Game Over", glm::vec3(-5, 2.5, 99.0), 16, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+				}
+			}
+		}
+
 		Atlas::Renderer::endScene();
 	}
 

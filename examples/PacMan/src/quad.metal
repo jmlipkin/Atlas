@@ -35,5 +35,9 @@ vertex VertexOut quadVertexShader(VertexIn in [[stage_in]], constant Uniforms* u
 fragment float4 quadFragmentShader(VertexOut in [[stage_in]], TextureArray textures, constant Uniforms* u [[buffer(1)]]) {
     constexpr sampler textureSampler (mag_filter::nearest, min_filter::linear);
     float4 colorSample = textures.textures[in.texIndex].sample(textureSampler, in.texCoord);
+
+    if(colorSample.a < 0.001)
+        discard_fragment();
+
     return colorSample * in.color;
 }

@@ -9,6 +9,7 @@
 #include "Atlas/Core/MouseButtonCodes.h"
 
 #include "Atlas/Core/Font.h"
+#include "Atlas/Core/FontLibrary.h"
 
 #include "Atlas/Renderer/Renderer.h"
 #include "Atlas/Renderer/OrthographicCameraController.h"

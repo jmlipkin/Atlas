@@ -29,7 +29,7 @@ Application::Application(const WindowProperties& winProps) {
 	m_ImGuiLayer = new ImGuiLayer;
 	m_layerStack.pushOverlay(m_ImGuiLayer);
 
-	m_sceneFrameBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), false, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.15f, 0.15f, 0.15f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
+	m_sceneFrameBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), false, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.00f, 0.0f, 0.0f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
 	m_swapchainBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
 }
 

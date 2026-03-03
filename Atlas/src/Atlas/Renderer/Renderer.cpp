@@ -461,13 +461,13 @@ void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const 
 	s_data.quadIndexCount += 6;
 }
 
-void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec2& position, uint32_t sizePx) {
+void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec2& position, uint32_t sizePx, const glm::vec4& color) {
 	AT_PROFILE_FUNCTION();
 
-	drawText(font, text, glm::vec3(position, 0.0f), sizePx);
+	drawText(font, text, glm::vec3(position, 0.0f), sizePx, color);
 }
 
-void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec3& position, uint32_t sizePx) {
+void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec3& position, uint32_t sizePx, const glm::vec4& color) {
 	AT_PROFILE_FUNCTION();
 
 	float worldUnits = sizePx / s_data.pixelsPerWorldUnit;
@@ -485,27 +485,27 @@ void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& te
 
 		glm::vec2 glyphSize = glm::vec2(ch.size.x * scale, ch.size.y * scale);
 
-		drawCharacter(font, c, glm::vec3(xPos, yPos, position.z), glyphSize);
+		drawCharacter(font, c, glm::vec3(xPos, yPos, position.z), glyphSize, color);
 
 		// Advance stored in 1/64 pixels
 		xOffset += (ch.advance >> 6) * scale;
 	}
 }
 
-void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::vec2 &position, const glm::vec2 &size) {
+void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::vec2 &position, const glm::vec2 &size, const glm::vec4& color) {
 	AT_PROFILE_FUNCTION();
 
-	drawCharacter(font, character, glm::vec3(position, 0.0f), size);
+	drawCharacter(font, character, glm::vec3(position, 0.0f), size, color);
 }
 
-void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::vec3 &position, const glm::vec2 &size) {
+void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::vec3 &position, const glm::vec2 &size, const glm::vec4& color) {
 	AT_PROFILE_FUNCTION();
 
 	glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(size, 1.0f));
-	drawCharacter(font, character, transform);
+	drawCharacter(font, character, transform, color);
 }
 
-void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::mat4 &transform) {
+void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::mat4 &transform, const glm::vec4& color) {
 	AT_PROFILE_FUNCTION();
 
 	Font::Character c = font->getCharacter(character);
@@ -516,7 +516,6 @@ void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, 
 		s_data.currentUniformBuffer = s_data.textUniforms;
 	}
 
-	glm::vec4 color = glm::vec4(1.0f);
 	uint32_t texIndex = 0;
 
 	for (uint32_t i = 1; i < s_data.textureSlotIndex; i++) {
