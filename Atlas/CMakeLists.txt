@@ -41,6 +41,20 @@ atlas_dependency(glfw      "extern/glfw"            "https://github.com/glfw/glf
 atlas_dependency(glm       "extern/glm"             "https://github.com/g-truc/glm.git"                         "1.0.")
 atlas_dependency(freetype  "extern/freetype-2.14.1" "https://gitlab.freedesktop.org/freetype/freetype"          "2.14.1")
 
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/imgui.h")
+    message(STATUS "Atlas: imgui submodule found")
+else()
+    message(STATUS "Atlas: imgui submodule not found, fetching...")
+    FetchContent_Declare(imgui
+        GIT_REPOSITORY "https://github.com/ocornut/imgui.git"
+        GIT_TAG        "84a9d532b"
+        GIT_SHALLOW    TRUE
+    )
+    FetchContent_Populate(imgui)
+    # Copy fetched files to where Atlas expects them
+    file(COPY ${imgui_SOURCE_DIR}/ DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui)
+endif()
+
 if(NOT TARGET Atlas)
 add_library(${TARGET_NAME} STATIC)
 endif()
