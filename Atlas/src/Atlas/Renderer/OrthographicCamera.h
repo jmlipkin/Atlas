@@ -5,36 +5,42 @@
 namespace Atlas {
 
 class OrthographicCamera {
-   public:
-    OrthographicCamera(float left, float right, float top, float bottom);
-    void setProjection(float left, float right, float top, float bottom);
+  public:
+	OrthographicCamera(float left, float right, float top, float bottom);
+	void setProjection(float left, float right, float top, float bottom);
 
-    const glm::vec3& getPosition() const { return m_position; }
-    void setPosition(const glm::vec3& position) {
-        m_position = position;
-        recalculateViewMatrix();
-    }
+	const glm::vec3& getPosition() const { return m_position; }
+	void setPosition(const glm::vec3& position) {
+		m_position = position;
+		recalculateViewMatrix();
+	}
 
-    float getRotation() const { return m_rotation; }
-    void setRotation(float rotation) {
-        m_rotation = rotation;
-        recalculateViewMatrix();
-    }
+    void setViewportHeight(float height) { m_viewportHeight = height; }
 
-    const glm::mat4& getProjectionMatrix() const { return m_projectionMatrix; }
-    const glm::mat4& getViewMatrix() const { return m_viewMatrix; }
-    const glm::mat4& getViewProjectionMatrix() const { return m_viewProjectionMatrix; }
+	float getRotation() const { return m_rotation; }
+	void setRotation(float rotation) {
+		m_rotation = rotation;
+		recalculateViewMatrix();
+	}
 
-   private:
-    void recalculateViewMatrix();
+	float getZoom() const { return 1.0f / m_projectionMatrix[1][1]; }
+	float getPixelsPerWorldUnit() const { return m_viewportHeight / std::abs(2.0f / m_projectionMatrix[1][1]); }
 
-   private:
-    glm::mat4 m_projectionMatrix;
-    glm::mat4 m_viewMatrix;
-    glm::mat4 m_viewProjectionMatrix;
+	const glm::mat4& getProjectionMatrix() const { return m_projectionMatrix; }
+	const glm::mat4& getViewMatrix() const { return m_viewMatrix; }
+	const glm::mat4& getViewProjectionMatrix() const { return m_viewProjectionMatrix; }
 
-    glm::vec3 m_position{0.0f, 0.0f, 0.0f};
-    float m_rotation = 0.0f;
+  private:
+	void recalculateViewMatrix();
+
+  private:
+	glm::mat4 m_projectionMatrix;
+	glm::mat4 m_viewMatrix;
+	glm::mat4 m_viewProjectionMatrix;
+	float m_viewportHeight;
+
+	glm::vec3 m_position{0.0f, 0.0f, 0.0f};
+	float m_rotation = 0.0f;
 };
 
 }  // namespace Atlas

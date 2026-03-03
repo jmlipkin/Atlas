@@ -28,6 +28,7 @@ class Font {
 	const std::shared_ptr<Texture>& getTexture() const { return m_texture; }
 	const Character& getCharacter(unsigned long charcode) const { return m_characters.at(charcode); }
 	const std::string& getName() const { return m_name; }
+	uint32_t getFontSizePx() const { return m_fontSizePx; }
 
 	static std::string to_utf8(uint32_t charcode);
 
@@ -41,6 +42,7 @@ class Font {
 
 	std::shared_ptr<Texture> m_texture;
 	std::string m_name;
+	uint32_t m_fontSizePx;
 };
 
 }  // namespace Atlas

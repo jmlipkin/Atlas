@@ -71,8 +71,8 @@ namespace Atlas {
 
     bool OrthographicCameraController::onWindowResize(WindowResizeEvent& e) {
 		m_aspectRatio = (float)e.getWidth() / (float)e.getHeight();
+        m_camera.setViewportHeight(e.getHeight());
         m_camera.setProjection(-m_aspectRatio * m_zoom, m_aspectRatio * m_zoom, -m_zoom, m_zoom);
-
         return false;
     }
 }

@@ -39,8 +39,8 @@ class Renderer {
 	static void drawQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture);
 	static void drawQuad(const glm::mat4& transform, const std::shared_ptr<SubTexture>& texture);
 
-	static void drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec2& position, const glm::vec2& size);
-	static void drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec3& position, const glm::vec2& size);
+	static void drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec2& position, uint32_t sizePx);
+	static void drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec3& position, uint32_t sizePx);
 
 	static void drawCharacter(const std::shared_ptr<Font>& font, char character, const glm::vec2& position, const glm::vec2& size);
 	static void drawCharacter(const std::shared_ptr<Font>& font, char character, const glm::vec3& position, const glm::vec2& size);

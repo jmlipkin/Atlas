@@ -20,7 +20,9 @@ class SandboxScene : public Atlas::Scene {
 
 		// m_font = Atlas::FontLibrary::load("Helvetica Light", "Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf");
 		// m_font = Atlas::FontLibrary::load("Jetsy", "Atlas/assets/jetsy/Jetsy Trial.otf");
-		m_font = Atlas::FontLibrary::load("Starlight Romance", "Atlas/assets/starlight_romance/Starlight Romance.ttf");
+		// m_font = Atlas::FontLibrary::load("Starlight Romance", "Atlas/assets/starlight_romance/Starlight Romance.ttf");
+		// m_font = Atlas::FontLibrary::load("CrackMan", "examples/PacMan/assets/fonts/CrackMan.ttf");
+		m_font = Atlas::FontLibrary::load("Emulogic", "examples/PacMan/assets/fonts/emulogic.ttf");
 
 		m_cameraController.setZoomLevel(25.0f);
 		m_board = createEntity("Board");
@@ -67,8 +69,8 @@ class SandboxScene : public Atlas::Scene {
 				Atlas::Renderer::drawQuad(transform.position, transform.size, sprite.subtexture);
 			}
 
-			Atlas::Renderer::drawText(m_font, "The quick brown fox jumps over the lazy dog", glm::vec3(-40, -10, 99.0), glm::vec2(0.03f));
-			Atlas::Renderer::drawText(m_font, "ATLAS: FontLibrary initialized!", glm::vec3(-40, -0, 99.0), glm::vec2(0.03f));
+			Atlas::Renderer::drawText(m_font, "PacMan", glm::vec3(-10, -18, 100), 72);
+			Atlas::Renderer::drawText(m_font, "High Score: ", glm::vec3(22, -14, 99.0), 16);
 		}
 		
 		Atlas::Renderer::endScene();

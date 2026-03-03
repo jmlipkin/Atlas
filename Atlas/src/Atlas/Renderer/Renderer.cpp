@@ -48,6 +48,8 @@ struct RendererData {
 	std::shared_ptr<Pipeline> currentPipeline = nullptr;
 	std::shared_ptr<UniformBuffer> currentUniformBuffer = nullptr;
 
+	float pixelsPerWorldUnit;
+
 	glm::vec4 quadVertexPositions[4];
 };
 
@@ -175,6 +177,8 @@ void Renderer::beginScene(const OrthographicCamera& camera) {
 
 	s_data.quadVertexPtr = s_data.quadVertexBufferBase;
 	s_data.batchStartPtr = s_data.quadVertexBufferBase;
+
+	s_data.pixelsPerWorldUnit = camera.getPixelsPerWorldUnit();
 
 	startNewBatch();
 }
@@ -457,17 +461,18 @@ void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const 
 	s_data.quadIndexCount += 6;
 }
 
-void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec2& position, const glm::vec2& size) {
+void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec2& position, uint32_t sizePx) {
 	AT_PROFILE_FUNCTION();
 
-	drawText(font, text, glm::vec3(position, 0.0f), size);
+	drawText(font, text, glm::vec3(position, 0.0f), sizePx);
 }
 
-void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec3& position, const glm::vec2& size) {
+void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& text, const glm::vec3& position, uint32_t sizePx) {
 	AT_PROFILE_FUNCTION();
 
+	float worldUnits = sizePx / s_data.pixelsPerWorldUnit;
+	float scale = worldUnits / font->getFontSizePx();
 
-	float scale = size.x;
 	float xOffset = position.x;
 
 	for(char c : text) {

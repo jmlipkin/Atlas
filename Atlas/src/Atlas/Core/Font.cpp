@@ -11,8 +11,7 @@
 #define MAX_FONTATLAS_WIDTH 4096
 
 namespace Atlas {
-Font::Font(const std::string& name, const std::string& filepath, uint32_t fontSizePx) {
-	m_name = name;
+Font::Font(const std::string& name, const std::string& filepath, uint32_t fontSizePx) : m_name(name), m_fontSizePx(fontSizePx) {
 	FT_Face face;
 	int error = FT_New_Face(FontLibrary::getLibrary(), filepath.c_str(), 0, &face);
 

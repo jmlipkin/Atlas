@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "atpch.h"
 
 #include "Atlas/Core/FontLibrary.h"
 #include "Atlas/Core/Log.h"
@@ -6,7 +7,6 @@
 #include "Atlas/ImGui/ImGuiLayer.h"
 #include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Renderer/Renderer.h"
-#include "atpch.h"
 
 namespace Atlas {
 
