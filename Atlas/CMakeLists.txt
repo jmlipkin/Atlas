@@ -13,11 +13,33 @@ endif()
 
 set(TARGET_NAME "Atlas")
 
-add_subdirectory(extern/spdlog)
-add_subdirectory(extern/glad)
-add_subdirectory(extern/glfw)
-add_subdirectory(extern/glm)
-add_subdirectory(extern/freetype-2.14.1)
+# add_subdirectory(extern/spdlog)
+# add_subdirectory(extern/glad)
+# add_subdirectory(extern/glfw)
+# add_subdirectory(extern/glm)
+# add_subdirectory(extern/freetype-2.14.1)
+
+include(FetchContent)
+
+macro(atlas_dependency NAME SUBMODULE_PATH GIT_REPO GIT_TAG)
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SUBMODULE_PATH}/CMakeLists.txt")
+        add_subdirectory(${SUBMODULE_PATH})
+    else()
+        message(STATUS "Atlas: ${NAME} submodule not found, fetching...")
+        FetchContent_Declare(${NAME}
+            GIT_REPOSITORY ${GIT_REPO}
+            GIT_TAG        ${GIT_TAG}
+            GIT_SHALLOW    TRUE
+        )
+        FetchContent_MakeAvailable(${NAME})
+    endif()
+endmacro()
+
+atlas_dependency(spdlog    "extern/spdlog"          "https://github.com/gabime/spdlog.git"                      "v1.15.1")
+atlas_dependency(glad      "extern/glad"            "https://github.com/Dav1dde/glad.git"                       "v0.1.36")
+atlas_dependency(glfw      "extern/glfw"            "https://github.com/glfw/glfw.git"                          "3.4")
+atlas_dependency(glm       "extern/glm"             "https://github.com/g-truc/glm.git"                         "1.0.")
+atlas_dependency(freetype  "extern/freetype-2.14.1" "https://gitlab.freedesktop.org/freetype/freetype"          "2.14.1")
 
 if(NOT TARGET Atlas)
 add_library(${TARGET_NAME} STATIC)
