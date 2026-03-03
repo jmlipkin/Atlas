@@ -91,6 +91,8 @@ else()
     set(ATLAS_SHADER_PATH "")  # or your future OpenGL/Vulkan path
 endif()
 
+set(ATLAS_FONT_LIBRARY_PATH "${CMAKE_CURRENT_SOURCE_DIR}/assets/fonts/")
+
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas/AtlasPaths.h.in
     ${CMAKE_CURRENT_BINARY_DIR}/generated/Atlas/AtlasPaths.h

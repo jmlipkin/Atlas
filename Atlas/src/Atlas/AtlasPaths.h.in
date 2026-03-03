@@ -2,4 +2,5 @@
 
 namespace Atlas {
     static constexpr const char* SHADER_LIBRARY_PATH = "@ATLAS_SHADER_PATH@";
+    static constexpr const char* FONT_LIBRARY_PATH = "@ATLAS_FONT_LIBRARY_PATH@";
 }
