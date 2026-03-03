@@ -60,7 +60,11 @@ void Renderer::init(GraphicsContext& context) {
 
 	RenderCommand::init(context);
 
-	std::string filepath = "examples/PacMan/src/shaders.metallib";
+	std::string filepath = "Invalid platform selection == shader library";
+#ifdef AT_PLATFORM_MACOS
+	filepath = "Atlas/assets/shaders/metal/shaders.metallib";
+#endif
+
 	s_data.shaderLib = ShaderLibrary::create(filepath);
 	s_data.shaderLib->load("Quad Shader", "quadVertexShader", "quadFragmentShader");
 
@@ -475,13 +479,13 @@ void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& te
 
 	float xOffset = position.x;
 
-	for(char c : text) {
+	for (char c : text) {
 		Font::Character ch = font->getCharacter(c);
 
 		// Apply bearing so glyphs sit correctly on the baseline
-        float xPos = xOffset + ch.bearing.x * scale;
-        float yPos = position.y - ch.bearing.y * scale;
-        // float yPos = position.y + (ch.size.y - ch.bearing.y) * scale; // descender correction
+		float xPos = xOffset + ch.bearing.x * scale;
+		float yPos = position.y - ch.bearing.y * scale;
+		// float yPos = position.y + (ch.size.y - ch.bearing.y) * scale; // descender correction
 
 		glm::vec2 glyphSize = glm::vec2(ch.size.x * scale, ch.size.y * scale);
 
@@ -492,20 +496,20 @@ void Renderer::drawText(const std::shared_ptr<Font>& font, const std::string& te
 	}
 }
 
-void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::vec2 &position, const glm::vec2 &size, const glm::vec4& color) {
+void Renderer::drawCharacter(const std::shared_ptr<Font>& font, char character, const glm::vec2& position, const glm::vec2& size, const glm::vec4& color) {
 	AT_PROFILE_FUNCTION();
 
 	drawCharacter(font, character, glm::vec3(position, 0.0f), size, color);
 }
 
-void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::vec3 &position, const glm::vec2 &size, const glm::vec4& color) {
+void Renderer::drawCharacter(const std::shared_ptr<Font>& font, char character, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
 	AT_PROFILE_FUNCTION();
 
 	glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(size, 1.0f));
 	drawCharacter(font, character, transform, color);
 }
 
-void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, const glm::mat4 &transform, const glm::vec4& color) {
+void Renderer::drawCharacter(const std::shared_ptr<Font>& font, char character, const glm::mat4& transform, const glm::vec4& color) {
 	AT_PROFILE_FUNCTION();
 
 	Font::Character c = font->getCharacter(character);
@@ -549,7 +553,6 @@ void Renderer::drawCharacter(const std::shared_ptr<Font> &font, char character, 
 	}
 
 	s_data.quadIndexCount += 6;
-
 }
 
 }  // namespace Atlas

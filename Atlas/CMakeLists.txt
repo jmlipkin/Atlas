@@ -70,16 +70,16 @@ if(APPLE)
 #     COMMENT "Metal shaderlibrary (triangle.metallib) built"
 # )
 add_custom_target(shader_library
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal
     COMMAND xcrun -sdk macosx metal -o triangle.ir -c triangle.metal
     COMMAND xcrun -sdk macosx metal -o quad.ir -c quad.metal
     COMMAND xcrun -sdk macosx metal -o text.ir -c text.metal
     COMMAND xcrun -sdk macosx metal -o point.ir -c point.metal
     COMMAND xcrun -sdk macosx metal -o shaders.metallib triangle.ir quad.ir point.ir text.ir
     SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/triangle.metal
-    ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/quad.metal
-    ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/text.metal
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal/triangle.metal
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal/quad.metal
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal/text.metal
 )
 add_dependencies(${TARGET_NAME} shader_library)
 endif()
