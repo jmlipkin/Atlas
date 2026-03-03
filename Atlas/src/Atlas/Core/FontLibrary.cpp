@@ -19,7 +19,11 @@ namespace Atlas {
     void FontLibrary::add(std::string name, const std::shared_ptr<Font>& font) {
         AT_PROFILE_FUNCTION();
         
-        AT_CORE_ASSERT(!exists(name), "Font already exists!");
+        if(exists(name)) {
+            AT_CORE_WARN("Font \"{}\" is already saved in the library!", name);
+            return;
+        }
+
         s_fonts[name] = font;
     }
 
