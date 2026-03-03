@@ -6,6 +6,7 @@
 #include "Atlas/Renderer/Texture.h"
 #include "Atlas/Renderer/TextureSheet.h"
 #include "Atlas/Renderer/OrthographicCamera.h"
+#include "Atlas/Renderer/UniformBuffer.h"
 
 namespace Atlas {
 
@@ -44,13 +45,16 @@ class Renderer {
 
 	static void drawCharacter(const std::shared_ptr<Font>& font, char character, const glm::vec2& position, const glm::vec2& size, const glm::vec4& color = glm::vec4(1.0f));
 	static void drawCharacter(const std::shared_ptr<Font>& font, char character, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color = glm::vec4(1.0f));
-	static void drawCharacter(const std::shared_ptr<Font>& font, char character, const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f));
 
 	inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 
   private:
 	static void startNewBatch();
 	static void flush();
+
+	static void switchPipeline(std::shared_ptr<Pipeline> pipeline, std::shared_ptr<UniformBuffer> uniforms);
+	static uint32_t getTextureIndex(const std::shared_ptr<Texture>& texture);
+	static void submitQuad(const glm::mat4& transform, const glm::vec4& color, uint32_t texIndex, const glm::vec2 texCoords[4]);
 };
 
 }  // namespace Atlas

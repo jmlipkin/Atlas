@@ -5,3 +5,7 @@ UseTab: Always
 ColumnLimit: 0
 AccessModifierOffset: -2
 SortIncludes: Never
+
+AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments: true
+AlignConsecutiveMacros: true
