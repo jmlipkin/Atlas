@@ -19,8 +19,11 @@ add_subdirectory(extern/glfw)
 add_subdirectory(extern/glm)
 add_subdirectory(extern/freetype-2.14.1)
 
+if(NOT TARGET Atlas)
 add_library(${TARGET_NAME} STATIC)
+endif()
 
+if(APPLE)
 # Generates .metallib file
 # TODO: Reconsider .metallib location
 # add_custom_command(TARGET ${TARGET_NAME}
@@ -43,6 +46,7 @@ add_custom_target(shader_library
     ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src/text.metal
 )
 add_dependencies(${TARGET_NAME} shader_library)
+endif()
 
 # ADD FILES
 file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
@@ -85,8 +89,9 @@ list(FILTER BINARY_FILES EXCLUDE REGEX "/\\.DS_Store$")
 
 target_include_directories(${TARGET_NAME}
     PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/extern
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/extern>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<INSTALL_INTERFACE:include>
 )
 
 target_compile_definitions(${TARGET_NAME}

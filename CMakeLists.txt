@@ -14,6 +14,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 add_subdirectory(Atlas)
-add_subdirectory(AtlasEditor)
-add_subdirectory(examples/Sandbox)
-add_subdirectory(examples/PacMan)
+
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    add_subdirectory(AtlasEditor)
+    add_subdirectory(examples/Sandbox)
+    add_subdirectory(examples/PacMan)
+endif()
