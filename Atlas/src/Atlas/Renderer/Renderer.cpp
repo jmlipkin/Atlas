@@ -1,7 +1,7 @@
-#include "Atlas/AtlasPaths.h.in"
 #include "atpch.h"
 #include "Renderer.h"
 
+#include "Atlas/AtlasPaths.h"
 #include "Atlas/Core/Log.h"
 #include "Atlas/Core/Font.h"
 #include "Atlas/Renderer/Buffer.h"
