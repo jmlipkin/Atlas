@@ -20,6 +20,8 @@ class MacOSWindow : public Window {
 
     inline unsigned int getWidth() const override { return m_data.width; }
     inline unsigned int getHeight() const override { return m_data.height; }
+    glm::uvec2 getResolution() const override;
+    
     inline void* getNativeWindow() const override { return m_window; }
     inline std::shared_ptr<GraphicsContext> getGraphicsContext() const override { return m_data.context; }
 

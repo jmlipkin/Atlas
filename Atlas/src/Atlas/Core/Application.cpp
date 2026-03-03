@@ -1,11 +1,12 @@
 #include "Application.h"
+#include "atpch.h"
 
+#include "Atlas/Core/FontLibrary.h"
 #include "Atlas/Core/Log.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/ImGui/ImGuiLayer.h"
 #include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Renderer/Renderer.h"
-#include "atpch.h"
 
 namespace Atlas {
 
@@ -21,13 +22,14 @@ Application::Application(const WindowProperties& winProps) {
 	m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
 	m_context = m_window->getGraphicsContext();
 	Renderer::init(*m_context);
+	FontLibrary::init();
 
 	AT_CORE_INFO("Engine initialization complete!");
 
 	m_ImGuiLayer = new ImGuiLayer;
 	m_layerStack.pushOverlay(m_ImGuiLayer);
 
-	m_sceneFrameBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), false, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.15f, 0.15f, 0.15f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
+	m_sceneFrameBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), false, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.00f, 0.0f, 0.0f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
 	m_swapchainBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
 }
 

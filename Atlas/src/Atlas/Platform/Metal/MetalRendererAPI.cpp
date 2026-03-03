@@ -1,7 +1,7 @@
+#include "atpch.h"
 #include "MetalRendererAPI.h"
 #include "Atlas/Platform/Metal/MetalFramebuffer.h"
 #include "Atlas/Renderer/Framebuffer.h"
-#include "atpch.h"
 
 #include "MetalBuffer.h"
 #include "MetalPipeline.h"
@@ -71,7 +71,6 @@ void MetalRendererAPI::beginPass(std::shared_ptr<Framebuffer> framebuffer) {
 
 	MTL::Viewport viewport{0, 0, (double)m_framebuffer->getWidth(), (double)m_framebuffer->getHeight(), 0.0, 1.0};
 	m_encoder->setViewport(viewport);
-	m_encoder->setDepthStencilState((MTL::DepthStencilState*)m_framebuffer->getDepthStencilState());
  
 	clear();
 }
@@ -82,6 +81,7 @@ void MetalRendererAPI::bindPipeline(std::shared_ptr<Pipeline> pipeline, const Un
 	std::shared_ptr<MetalPipeline> p = std::static_pointer_cast<MetalPipeline>(pipeline);
 	p->attachFramebuffer(m_framebuffer);
 	m_encoder->setRenderPipelineState(p->getMTLPSO());
+	m_encoder->setDepthStencilState(p->getDepthStencilState());
 	m_encoder->setVertexBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
 	m_encoder->setFragmentBuffer(static_cast<MTL::Buffer*>(uBuffer.getNativeBuffer()), 0, uBuffer.getIndex());
 }
@@ -93,11 +93,11 @@ void MetalRendererAPI::bindTexture(const Texture& texture, uint32_t index) {
 	m_encoder->setFragmentTexture(t.getMTLTexture(), index);
 }
 
-void MetalRendererAPI::bindVertexBuffer(const VertexBuffer& buffer, int index) {
+void MetalRendererAPI::bindVertexBuffer(const VertexBuffer& buffer, uint32_t offset, int index) {
 	AT_PROFILE_FUNCTION();
 
 	const MetalVertexBuffer& mBuf = static_cast<const MetalVertexBuffer&>(buffer);
-	m_encoder->setVertexBuffer((MTL::Buffer*)mBuf.getNativeBuffer(), 0, index);
+	m_encoder->setVertexBuffer((MTL::Buffer*)mBuf.getNativeBuffer(), offset, index);
 }
 
 void MetalRendererAPI::endPass() {
@@ -127,9 +127,9 @@ void MetalRendererAPI::drawImGui() {
 
 	ImGui::Render();
 	ImGui_ImplMetal_RenderDrawData(
-	    ImGui::GetDrawData(),
-	    m_buffer,
-	    m_encoder);
+		ImGui::GetDrawData(),
+		m_buffer,
+		m_encoder);
 }
 
 }  // namespace Atlas

@@ -32,6 +32,9 @@ class Texture {
 
     static std::shared_ptr<Texture> create(const std::string& filepath);
     static std::shared_ptr<Texture> create(uint32_t width, uint32_t height);
+    static std::shared_ptr<Texture> create(TextureSpecification specs, void* data = nullptr);
+
+    static uint32_t formatSize(ImageFormat);
 };
 
 }  // namespace Atlas

@@ -41,7 +41,7 @@
 	#error "Unknown platform!"
 #endif  // End of platform detection
 
-#ifdef AT_DEBUG
+#ifdef AT_DEBUG_ENABLE
 	#if defined(AT_PLATFORM_WINDOWS)
 		#define AT_DEBUG_BREAK() __debugbreak()
 	#elif defined(__clang__) || defined(__GNUC__)

@@ -13,7 +13,7 @@ class RenderCommand {
     inline static void bindPipeline(std::shared_ptr<Pipeline> pipeline, const UniformBuffer& uBuffer) { s_rendererAPI->bindPipeline(pipeline, uBuffer); }
     inline static void bindTexture(const Texture& texture, uint32_t index) { s_rendererAPI->bindTexture(texture, index); }
 
-    inline static void bindVertexBuffer(const VertexBuffer& vBuffer, int index = 0) { s_rendererAPI->bindVertexBuffer(vBuffer, index); }
+    inline static void bindVertexBuffer(const VertexBuffer& vBuffer, uint32_t offset = 0, int index = 0) { s_rendererAPI->bindVertexBuffer(vBuffer, offset, index); }
 
     inline static void beginFrame() { s_rendererAPI->beginFrame(); }
     inline static void endFrame() { s_rendererAPI->endFrame(); }

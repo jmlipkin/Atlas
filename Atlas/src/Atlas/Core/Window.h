@@ -29,6 +29,7 @@ class Window {
 
     virtual unsigned int getWidth() const = 0;
     virtual unsigned int getHeight() const = 0;
+    virtual glm::uvec2 getResolution() const = 0;
 
     virtual void* getNativeWindow() const = 0;
     virtual std::shared_ptr<GraphicsContext> getGraphicsContext() const = 0;

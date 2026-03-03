@@ -6,6 +6,7 @@
 
 #include <metal-cpp/Metal.hpp>
 
+#include "Atlas/Core/Base.h"
 #include "Atlas/Core/Input.h"
 #include "Atlas/Core/KeyCodes.h"
 #include "GLFW/glfw3.h"
@@ -173,6 +174,15 @@ void MacOSWindow::init(const WindowProperties& props) {
             data.eventCallback(event);
         });
     }
+}
+
+glm::uvec2 MacOSWindow::getResolution() const {
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    AT_CORE_ASSERT(monitor, "GLFW could not identify the primary monitor");
+    
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+    AT_CORE_ASSERT(mode, "GLFW could not identify the video mode");
+    return glm::uvec2(mode->width, mode->height);
 }
 
 void MacOSWindow::shutdown() {

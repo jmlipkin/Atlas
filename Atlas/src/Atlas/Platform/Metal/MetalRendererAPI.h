@@ -28,7 +28,7 @@ class MetalRendererAPI : public RendererAPI {
 
     void bindPipeline(std::shared_ptr<Pipeline> pipeline, const UniformBuffer& uBuffer) override;
     void bindTexture(const Texture& texture, uint32_t index) override;
-    void bindVertexBuffer(const VertexBuffer& buffer, int index) override;
+    void bindVertexBuffer(const VertexBuffer& buffer, uint32_t offset, int index) override;
 
     virtual void drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer) override;
     virtual void drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer, uint32_t count) override;
