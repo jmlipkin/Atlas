@@ -8,78 +8,85 @@
 #define GLFW_EXPOSE_NATIVE_COCOA
 #include <GLFW/glfw3native.h>
 
+#include "Atlas/AtlasPaths.h"
 #include "Atlas/Events/ApplicationEvent.h"
 
 namespace Atlas {
 
-    MTL::Device* MetalContext::s_device = nullptr;
-    MTL::Library* MetalContext::s_library = nullptr;
+MTL::Device*  MetalContext::s_device  = nullptr;
+MTL::Library* MetalContext::s_library = nullptr;
 
-    MetalContext::MetalContext(GLFWwindow* window) : m_window(window) {
-        AT_CORE_ASSERT(window, "Window handle is null!");
-    }
+MetalContext::MetalContext(GLFWwindow* window) : m_window(window) {
+	AT_CORE_ASSERT(window, "Window handle is null!");
+}
 
-    void MetalContext::init() { 
-        AT_PROFILE_FUNCTION();
-        
-        initDevice();
-        initWindow();
-        AT_CORE_TRACE("MetalContext initialized");
-    }
+void MetalContext::init() {
+	AT_PROFILE_FUNCTION();
 
-    void MetalContext::initDevice() {
-        AT_PROFILE_FUNCTION();
+	initDevice();
+	initWindow();
+	AT_CORE_TRACE("MetalContext initialized");
+}
 
-        s_device = MTL::CreateSystemDefaultDevice();
-        // An assert here means MetalContext::initDevice() could not create system default device.
-        AT_CORE_ASSERT(s_device, "MetalContext device is null!");
+void MetalContext::initDevice() {
+	AT_PROFILE_FUNCTION();
 
-        s_library = s_device->newDefaultLibrary();
-    }
+	s_device = MTL::CreateSystemDefaultDevice();
+	// An assert here means MetalContext::initDevice() could not create system default device.
+	AT_CORE_ASSERT(s_device, "MetalContext device is null!");
 
-    void MetalContext::initWindow() {
-        AT_PROFILE_FUNCTION();
+	NS::Error* error = nullptr;
 
-        int width, height;
-		glfwGetFramebufferSize(m_window, &width, &height);
+	MTL::Library* library = s_device->newLibrary(NS::String::string(SHADER_LIBRARY_PATH, NS::UTF8StringEncoding), &error);
+	if (!library) {
+		AT_CORE_ERROR("Failed to create library at {}", SHADER_LIBRARY_PATH);
+		exit(-1);
+	}
+	s_library = library;
+}
 
-        NSWindow* nsWindow = (NSWindow*)glfwGetCocoaWindow(m_window);
-        NSView* contentView = nsWindow.contentView;
+void MetalContext::initWindow() {
+	AT_PROFILE_FUNCTION();
 
-        // Make the view layer-backed
-        [contentView setWantsLayer:YES];
+	int width, height;
+	glfwGetFramebufferSize(m_window, &width, &height);
 
-        // Create and attach a CAMetalLayer
-        CAMetalLayer* nativeLayer = [CAMetalLayer layer];
-		contentView.layer = nativeLayer;
-        // Wrap in metal-cpp
-		m_layer = (CA::MetalLayer*)nativeLayer;
-        
-        m_layer->setDevice(s_device);
-        m_layer->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
-        m_layer->setDrawableSize(CGSizeMake(width, height));
-		m_layer->setFramebufferOnly(false);
+	NSWindow* nsWindow	  = (NSWindow*)glfwGetCocoaWindow(m_window);
+	NSView*	  contentView = nsWindow.contentView;
 
-    }
+	// Make the view layer-backed
+	[contentView setWantsLayer:YES];
 
-    MTL::Library* MetalContext::setNewMTLLibrary(const std::string& filepath) {
-        AT_PROFILE_FUNCTION();
+	// Create and attach a CAMetalLayer
+	CAMetalLayer* nativeLayer = [CAMetalLayer layer];
+	contentView.layer		  = nativeLayer;
+	// Wrap in metal-cpp
+	m_layer = (CA::MetalLayer*)nativeLayer;
 
-        NS::Error* error = nullptr;
-        MTL::Library* library = getMTLDevice()->newLibrary(NS::String::string(filepath.c_str(), NS::UTF8StringEncoding), &error);
-        if (!library) {
-            AT_CORE_ERROR("Failed to create library at {}", filepath);
-            exit(-1);
-        }
-        s_library = library;
-        return library;
-    }
+	m_layer->setDevice(s_device);
+	m_layer->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
+	m_layer->setDrawableSize(CGSizeMake(width, height));
+	m_layer->setFramebufferOnly(false);
+}
 
-    void MetalContext::onResize(const WindowResizeEvent& e) {
-        AT_PROFILE_FUNCTION();
+MTL::Library* MetalContext::setNewMTLLibrary(const std::string& filepath) {
+	AT_PROFILE_FUNCTION();
 
-		int fbWidth, fbHeight;
-		glfwGetFramebufferSize(m_window, &fbWidth, &fbHeight);
-		m_layer->setDrawableSize(CGSizeMake(fbWidth, fbHeight));
-    }
-} // namespace Atlas
+	NS::Error*	  error	  = nullptr;
+	MTL::Library* library = s_device->newLibrary(NS::String::string(filepath.c_str(), NS::UTF8StringEncoding), &error);
+	if (!library) {
+		AT_CORE_ERROR("Failed to create library at {}", filepath);
+		exit(-1);
+	}
+	s_library = library;
+	return library;
+}
+
+void MetalContext::onResize(const WindowResizeEvent& e) {
+	AT_PROFILE_FUNCTION();
+
+	int fbWidth, fbHeight;
+	glfwGetFramebufferSize(m_window, &fbWidth, &fbHeight);
+	m_layer->setDrawableSize(CGSizeMake(fbWidth, fbHeight));
+}
+}  // namespace Atlas

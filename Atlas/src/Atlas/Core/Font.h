@@ -5,9 +5,7 @@
 
 #include <glm/glm.hpp>
 #include <freetype/freetype.h>
-#include <memory>
-#include <string>
-#include <unordered_map>
+#include <vector>
 
 namespace Atlas {
 class Font {

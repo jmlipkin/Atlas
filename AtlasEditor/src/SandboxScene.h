@@ -3,7 +3,7 @@
 #include <Atlas.h>
 
 #include <glm/glm.hpp>
-#include "Atlas/Core/FontLibrary.h"
+#include "Atlas/Core/AssetManager.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Behavior.h"
@@ -47,7 +47,7 @@ class SandboxScene : public Atlas::Scene {
 		// m_font = Atlas::FontLibrary::load("Jetsy", "Atlas/assets/jetsy/Jetsy Trial.otf");
 		// m_font = Atlas::FontLibrary::load("Starlight Romance", "Atlas/assets/starlight_romance/Starlight Romance.ttf");
 		// m_font = Atlas::FontLibrary::load("CrackMan", "examples/PacMan/assets/fonts/CrackMan.ttf");
-		m_font = Atlas::FontLibrary::load("Emulogic", "examples/PacMan/assets/fonts/emulogic.ttf");
+		m_font = Atlas::AssetManager::loadFont("Emulogic", "examples/PacMan/assets/fonts/emulogic.ttf");
 
 		m_cameraController.setZoomLevel(25.0f);
 		m_board	 = createEntity("Board");

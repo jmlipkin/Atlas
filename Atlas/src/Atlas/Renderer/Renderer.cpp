@@ -1,13 +1,14 @@
-#include "Atlas/Renderer/TextureSheet.h"
 #include "atpch.h"
 #include "Renderer.h"
 
+
 #include "Atlas/Core/Log.h"
+#include "Atlas/Core/AssetManager.h"
 #include "Atlas/Core/Font.h"
+
 #include "Atlas/Renderer/Buffer.h"
 #include "Atlas/Renderer/Texture.h"
-
-#include "Atlas/AtlasPaths.h"
+#include "Atlas/Renderer/TextureSheet.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -35,8 +36,6 @@ struct RendererData {
 
 	std::shared_ptr<Pipeline>	   textPipeline;
 	std::shared_ptr<UniformBuffer> textUniforms;
-
-	std::shared_ptr<ShaderLibrary> shaderLib;
 
 	std::array<std::shared_ptr<Texture>, maxTextureSlots> textureSlots;
 
@@ -117,10 +116,8 @@ void Renderer::init(GraphicsContext& context) {
 
 	RenderCommand::init(context);
 
-	s_data.shaderLib = ShaderLibrary::create(Atlas::SHADER_LIBRARY_PATH);
-	s_data.shaderLib->load("Quad Shader", "quadVertexShader", "quadFragmentShader");
-
-	s_data.shaderLib->load("Text Shader", "textVertexShader", "textFragmentShader");
+	AssetManager::loadShader("Quad Shader", "quadVertexShader", "quadFragmentShader");
+	AssetManager::loadShader("Text Shader", "textVertexShader", "textFragmentShader");
 
 	s_data.quadVertexBufferBase = new QuadVertex[s_data.maxVertexCount];
 	s_data.quadVertexBuffer		= VertexBuffer::create(s_data.maxVertexCount * sizeof(QuadVertex));
@@ -142,7 +139,7 @@ void Renderer::init(GraphicsContext& context) {
 	// Quad pipeline
 	PipelineSpecification quadPipelineSpecs;
 	quadPipelineSpecs.name	 = "Quad Pipeline";
-	quadPipelineSpecs.shader = s_data.shaderLib->get("Quad Shader");
+	quadPipelineSpecs.shader = AssetManager::get<Shader>("Quad Shader");
 	quadPipelineSpecs.layout = BufferLayout({{"a_position", ShaderDataType::Float3},
 											 {"a_color", ShaderDataType::Float4},
 											 {"a_texIndex", ShaderDataType::Uint},
@@ -157,7 +154,7 @@ void Renderer::init(GraphicsContext& context) {
 	// Text pipeline
 	PipelineSpecification textPipelineSpecs;
 	textPipelineSpecs.name			   = "Text Pipeline";
-	textPipelineSpecs.shader		   = s_data.shaderLib->get("Text Shader");
+	textPipelineSpecs.shader		   = AssetManager::get<Shader>("Text Shader");
 	textPipelineSpecs.enableDepthWrite = false;
 	textPipelineSpecs.layout		   = BufferLayout({{"a_position", ShaderDataType::Float3},
 													   {"a_color", ShaderDataType::Float4},

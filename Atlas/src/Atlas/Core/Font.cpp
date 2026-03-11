@@ -3,24 +3,30 @@
 
 #include "Atlas/Core/Application.h"
 #include "Atlas/Core/Log.h"
-#include "Atlas/Core/FontLibrary.h"
 #include "Atlas/Renderer/Texture.h"
 
 #include "freetype/freetype.h"
 
 #define MAX_FONTATLAS_WIDTH 4096
 
+static FT_Library s_FTLibrary = NULL;
+
 namespace Atlas {
 Font::Font(const std::string& name, const std::string& filepath, uint32_t fontSizePx) : m_name(name), m_fontSizePx(fontSizePx) {
+	if (!s_FTLibrary) {
+		int error = FT_Init_FreeType(&s_FTLibrary);
+		AT_ASSERT(!error, "Error initializing FreeType library: {}", FT_Error_String(error));
+	}
+
 	FT_Face face;
-	int error = FT_New_Face(FontLibrary::getLibrary(), filepath.c_str(), 0, &face);
+	int		error = FT_New_Face(s_FTLibrary, filepath.c_str(), 0, &face);
 
 	AT_CORE_ASSERT(!error, "Could not load font from file: {}", FT_Error_String(error));
 
 	glm::uvec2 resolution = Application::get().getWindow().getResolution();
 	// FT_Set_Char_Size(face, 0, fontSizePx * 64, resolution.x, resolution.y);
 	FT_Set_Pixel_Sizes(face, 0, fontSizePx);
-	
+
 	loadGlyphs(face);
 	createFontTextureAtlas();
 
@@ -50,10 +56,10 @@ std::string Font::to_utf8(uint32_t cp) {
 }
 
 void Font::loadGlyphs(FT_Face face) {
-	FT_ULong charcode;
-	FT_UInt gindex;
+	FT_ULong  charcode;
+	FT_UInt	  gindex;
 	Character character;
-	int error = 0;
+	int		  error = 0;
 
 	charcode = FT_Get_First_Char(face, &gindex);
 	while (gindex != 0) {
@@ -63,11 +69,11 @@ void Font::loadGlyphs(FT_Face face) {
 
 		const FT_Bitmap& bitmap = face->glyph->bitmap;
 
-		character.size.x = bitmap.width;
-		character.size.y = bitmap.rows;
+		character.size.x	= bitmap.width;
+		character.size.y	= bitmap.rows;
 		character.bearing.x = face->glyph->bitmap_left;
 		character.bearing.y = face->glyph->bitmap_top;
-		character.advance = face->glyph->advance.x;
+		character.advance	= face->glyph->advance.x;
 
 		character.data.resize(character.size.x * character.size.y);
 		for (uint32_t row = 0; row < bitmap.rows; row++) {
@@ -85,11 +91,11 @@ void Font::loadGlyphs(FT_Face face) {
 }
 
 void Font::createFontTextureAtlas() {
-	uint32_t currentX = 0;
-	uint32_t currentY = 0;
+	uint32_t currentX  = 0;
+	uint32_t currentY  = 0;
 	uint32_t rowHeight = 0;
 
-	uint32_t atlasWidth = 0;
+	uint32_t atlasWidth	 = 0;
 	uint32_t atlasHeight = 0;
 
 	for (auto charcode : m_orderedGlyphs) {
