@@ -1,91 +1,76 @@
+#include "Atlas/Renderer/TextureSheet.h"
 #include "atpch.h"
 #include "JSONSerializer.h"
+
+#include "Atlas/ECS/Components/Components.h"
 
 #include <json/include/nlohmann/json.hpp>
 
 namespace Atlas {
 
-JSONSerializer::JSONSerializer(const std::string& filepath, SerializerMode mode) {
+using json = nlohmann::ordered_json;
+
+JSONSerializer::JSONSerializer(const std::string& filepath, SerializerMode mode) : m_filepath(filepath) {
 }
 
-void JSONSerializer::writeString(const std::string& key, const std::string& value) {
+void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
+    std::ofstream file(m_filepath);
+    AT_CORE_ASSERT(file.is_open(), "Could not open file {} for writing!", m_filepath);
+
+    json root;
+    root["name"] = "Scene name here";
+
+    json entities = json::array();
+    auto& reg = scene->getRegistry();
+    auto view = scene->getRegistry().view<entt::entity>();
+
+    for (entt::entity entt : view) {
+        Entity entity = {entt, scene.get()};
+        json e;
+        if(entity.hasComponent<Component::Tag>()) {
+            Component::Tag& tag = entity.getComponent<Component::Tag>();
+            e["Tag"] = tag.tag;
+        }
+        if(entity.hasComponent<Component::Transform>()) {
+            Component::Transform& transform = entity.getComponent<Component::Transform>();
+            json t;
+            t["position"] = {transform.position.x, transform.position.y, transform.position.z};
+            t["rotation"] = transform.rotation;
+            t["size"] = {transform.size.x, transform.size.y};
+            e["Transform"] = t;
+        }
+        if(entity.hasComponent<Component::Sprite>()) {
+            json s;
+            Component::Sprite& sprite = entity.getComponent<Component::Sprite>();
+            SubTextureSpecification& specs = sprite.subtexture->getSpecs();
+
+            s["Texture"] = sprite.subtexture->getTexture()->getFilepath();
+            json coords;
+
+            coords["Top left"] = {specs.coordinates.top_left.x, specs.coordinates.top_left.y};
+            coords["Top right"] = {specs.coordinates.top_right.x, specs.coordinates.top_right.y};
+            coords["Bottom left"] = {specs.coordinates.bottom_left.x, specs.coordinates.bottom_left.y};
+            coords["Bottom right"] = {specs.coordinates.bottom_right.x, specs.coordinates.bottom_right.y};
+
+            s["Coordinates"] = coords;
+            s["Tile Dimensions"] = {specs.tileDims.x, specs.tileDims.y};
+            s["Index"] = {specs.index.x, specs.index.y};
+
+            e["Sprite"] = s;
+        }
+        if(entity.hasComponent<Component::Script>()) {
+            e["Script"] = "TODO!!";
+        }
+
+        entities.push_back(e);
+    }
+    root["entities"] = entities;
+    file << root.dump(2);
+    file.close();
+
 }
 
-void JSONSerializer::writeFloat(const std::string& key, float value) {
-}
-
-void JSONSerializer::writeInt(const std::string& key, int value) {
-}
-
-void JSONSerializer::writeBool(const std::string& key, bool value) {
-}
-
-void JSONSerializer::writeVec2(const std::string& key, const glm::vec2& value) {
-}
-
-void JSONSerializer::writeVec3(const std::string& key, const glm::vec3& value) {
-}
-
-void JSONSerializer::writeVec4(const std::string& key, const glm::vec4& value) {
-}
-
-void JSONSerializer::writeMat4(const std::string& key, const glm::mat4& value) {
-}
-
-void JSONSerializer::beginWriteObject(const std::string& name) {
-}
-
-void JSONSerializer::endWriteObject() {
-}
-
-void JSONSerializer::beginWriteArray(const std::string& name) {
-}
-
-void JSONSerializer::endWriteArray() {
-}
-
-std::string JSONSerializer::readString(const std::string& key) {
-	return "Unknown";
-}
-
-float JSONSerializer::readFloat(const std::string& key) {
-	return 0.0;
-}
-
-int JSONSerializer::readInt(const std::string& key) {
-	return 0;
-}
-
-bool JSONSerializer::readBool(const std::string& key) {
-	return false;
-}
-
-glm::vec2 readVec2(const std::string& key) {
-	return glm::vec2(0.0);
-}
-
-glm::vec3 readVec3(const std::string& key) {
-	return glm::vec3(0.0);
-}
-
-glm::vec4 readVec4(const std::string& key) {
-	return glm::vec4(0.0);
-}
-
-glm::mat4 readMat4(const std::string& key) {
-	return glm::mat4(0.0);
-}
-
-void JSONSerializer::beginReadObject(const std::string& name) {
-}
-
-void JSONSerializer::endReadObject() {
-}
-
-void JSONSerializer::beginReadArray(const std::string& name) {
-}
-
-void JSONSerializer::endReadArray() {
+void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 }
 
 }  // namespace Atlas
