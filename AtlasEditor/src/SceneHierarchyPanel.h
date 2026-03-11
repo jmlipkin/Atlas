@@ -46,7 +46,6 @@ class SceneHierarchyPanel {
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)entity, tree_flags, "%s", tag.tag.c_str());
 
 		if (ImGui::IsItemClicked()) {
-			AT_DEBUG("Clicked {}, id: {}", tag.tag, (uint32_t)entity);
 			m_selectionContext = entity;
 		}
 

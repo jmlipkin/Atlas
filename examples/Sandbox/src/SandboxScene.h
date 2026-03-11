@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include "Atlas/ECS/Components/Components.h"
+#include "Atlas/ECS/Components/Behavior.h"
 
 #define BOARD_DEPTH 0.1f
 #define PLAYER_DEPTH 100
@@ -46,10 +47,10 @@ class SandboxScene : public Atlas::Scene {
 		animation.shouldLoop = true;
 		animation.animationSpeed = 0.5;
 
-		m_player.addComponent<Atlas::Component::Script>().bind<PlayerController>();
+		m_player.addScript<PlayerController>();
 	}
 
-	class PlayerController : public Atlas::ScriptableEntity {
+	class PlayerController : public Atlas::Behavior {
 	  public:
 		virtual void onUpdate(Atlas::DeltaTime dt) {
 			using namespace Atlas;
@@ -82,10 +83,6 @@ class SandboxScene : public Atlas::Scene {
 			auto view = m_registry.view<Atlas::Component::Script>();
 			for (auto entity : view) {
 				Atlas::Component::Script& script = view.get<Atlas::Component::Script>(entity);
-				if (!script.instance) {
-					script.instance = script.instantiateScript();
-					script.instance->m_entity = Atlas::Entity{entity, this};
-				}
 				script.instance->onUpdate(dt);
 			}
 		}

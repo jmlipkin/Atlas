@@ -6,12 +6,37 @@
 #include "Atlas/Core/FontLibrary.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Components.h"
-#include "Atlas/ECS/Entities/ScriptableEntity.h"
+#include "Atlas/ECS/Components/Behavior.h"
 #include "Atlas/Events/Event.h"
 #include "Atlas/Renderer/OrthographicCameraController.h"
 
-#define BOARD_DEPTH 0.1f
+#define BOARD_DEPTH	 0.1f
 #define PLAYER_DEPTH 100
+
+class PlayerBehavior : public Atlas::Behavior {
+  public:
+	virtual void onUpdate(Atlas::DeltaTime dt) {
+		using namespace Atlas;
+		auto& transform = getComponent<Component::Transform>();
+		if (Input::isKeyPressed(AT_KEY_W)) {
+			transform.position.y -= m_playerSpeed * dt;
+		}
+		if (Input::isKeyPressed(AT_KEY_S)) {
+			transform.position.y += m_playerSpeed * dt;
+		}
+		if (!Input::isKeyPressed(AT_KEY_W) && !Input::isKeyPressed(AT_KEY_S)) {
+			if (Input::isKeyPressed(AT_KEY_A)) {
+				transform.position.x -= m_playerSpeed * dt;
+			}
+			if (Input::isKeyPressed(AT_KEY_D)) {
+				transform.position.x += m_playerSpeed * dt;
+			}
+		}
+	}
+
+  private:
+	float m_playerSpeed = 10;
+};
 
 class SandboxScene : public Atlas::Scene {
   public:
@@ -25,7 +50,7 @@ class SandboxScene : public Atlas::Scene {
 		m_font = Atlas::FontLibrary::load("Emulogic", "examples/PacMan/assets/fonts/emulogic.ttf");
 
 		m_cameraController.setZoomLevel(25.0f);
-		m_board = createEntity("Board");
+		m_board	 = createEntity("Board");
 		m_player = createEntity("PacMan");
 
 		Atlas::TextureSheetSpecification specs{glm::vec2(8.0f)};
@@ -34,50 +59,25 @@ class SandboxScene : public Atlas::Scene {
 		m_player.addComponent<Atlas::Component::Sprite>(m_textureSheet->addSubTexture("player", glm::ivec2(28, 0), glm::ivec2(2, 2)));
 
 		// position board at center
-		Atlas::Component::Transform& t = m_board.getComponent<Atlas::Component::Transform>();
-		t.position = glm::vec3(-t.size.x / 2.0f, -t.size.y / 2.0f, BOARD_DEPTH);
+		Atlas::Component::Transform& t		 = m_board.getComponent<Atlas::Component::Transform>();
+		t.position							 = glm::vec3(-t.size.x / 2.0f, -t.size.y / 2.0f, BOARD_DEPTH);
 		Atlas::Component::Transform& tPlayer = m_player.getComponent<Atlas::Component::Transform>();
-		tPlayer.position = glm::vec3(-tPlayer.size.x / 2.0f, -tPlayer.size.y / 2.0f, PLAYER_DEPTH);
+		tPlayer.position					 = glm::vec3(-tPlayer.size.x / 2.0f, -tPlayer.size.y / 2.0f, PLAYER_DEPTH);
 
 		std::vector<std::shared_ptr<Atlas::SubTexture>> animDying;
 		for (int i = 0; i < 11; i++) {
-			std::string tag = "Dying" + std::to_string(i);
+			std::string						   tag	 = "Dying" + std::to_string(i);
 			std::shared_ptr<Atlas::SubTexture> frame = m_textureSheet->addSubTexture(tag, glm::ivec2(34 + 2 * i, 0), glm::ivec2(2, 2));
 			animDying.push_back(frame);
 		}
 		std::shared_ptr<Atlas::AnimationClip> dyingClip = std::make_shared<Atlas::AnimationClip>(animDying);
-		Atlas::Component::Animation& animation = m_player.addComponent<Atlas::Component::Animation>(dyingClip);
-		animation.playing = true;
-		animation.shouldLoop = true;
-		animation.animationSpeed = 0.5;
+		Atlas::Component::Animation&		  animation = m_player.addComponent<Atlas::Component::Animation>(dyingClip);
+		animation.playing								= true;
+		animation.shouldLoop							= true;
+		animation.animationSpeed						= 0.5;
 
-		m_player.addComponent<Atlas::Component::Script>().bind<PlayerController>();
+		m_player.addScript<PlayerBehavior>();
 	}
-
-	class PlayerController : public Atlas::ScriptableEntity {
-	  public:
-		virtual void onUpdate(Atlas::DeltaTime dt) {
-			using namespace Atlas;
-			auto& transform = getComponent<Component::Transform>();
-			if (Input::isKeyPressed(AT_KEY_W)) {
-				transform.position.y -= m_playerSpeed * dt;
-			}
-			if (Input::isKeyPressed(AT_KEY_S)) {
-				transform.position.y += m_playerSpeed * dt;
-			}
-			if (!Input::isKeyPressed(AT_KEY_W) && !Input::isKeyPressed(AT_KEY_S)) {
-				if (Input::isKeyPressed(AT_KEY_A)) {
-					transform.position.x -= m_playerSpeed * dt;
-				}
-				if (Input::isKeyPressed(AT_KEY_D)) {
-					transform.position.x += m_playerSpeed * dt;
-				}
-			}
-		}
-
-	  private:
-		float m_playerSpeed = 10;
-	};
 
 	~SandboxScene() {
 		delete m_textureSheet;
@@ -88,10 +88,6 @@ class SandboxScene : public Atlas::Scene {
 			auto view = m_registry.view<Atlas::Component::Script>();
 			for (auto entity : view) {
 				Atlas::Component::Script& script = view.get<Atlas::Component::Script>(entity);
-				if (!script.instance) {
-					script.instance = script.instantiateScript();
-					script.instance->m_entity = Atlas::Entity{entity, this};
-				}
 				script.instance->onUpdate(dt);
 			}
 		}
@@ -103,7 +99,7 @@ class SandboxScene : public Atlas::Scene {
 			auto view = m_registry.view<Atlas::Component::Transform, Atlas::Component::Sprite>();
 			for (auto entity : view) {
 				Atlas::Component::Transform transform = view.get<Atlas::Component::Transform>(entity);
-				Atlas::Component::Sprite sprite = view.get<Atlas::Component::Sprite>(entity);
+				Atlas::Component::Sprite	sprite	  = view.get<Atlas::Component::Sprite>(entity);
 
 				Atlas::Renderer::drawQuad(transform.position, transform.size, sprite.subtexture);
 			}
@@ -137,7 +133,7 @@ class SandboxScene : public Atlas::Scene {
 	Atlas::Entity m_player;
 
 	Atlas::OrthographicCameraController& m_cameraController;
-	Atlas::TextureSheet* m_textureSheet;
+	Atlas::TextureSheet*				 m_textureSheet;
 
 	std::shared_ptr<Atlas::Font> m_font;
 };

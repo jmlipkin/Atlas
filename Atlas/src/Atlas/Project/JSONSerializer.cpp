@@ -3,6 +3,7 @@
 #include "JSONSerializer.h"
 
 #include "Atlas/ECS/Components/Components.h"
+#include "Atlas/ECS/Components/Behavior.h"
 
 #include <json/include/nlohmann/json.hpp>
 
@@ -22,7 +23,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 
     json entities = json::array();
     auto& reg = scene->getRegistry();
-    auto view = scene->getRegistry().view<entt::entity>();
+    auto view = scene->getRegistry().view<Component::Tag>();
 
     for (entt::entity entt : view) {
         Entity entity = {entt, scene.get()};
