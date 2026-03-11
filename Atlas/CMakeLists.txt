@@ -13,6 +13,8 @@ endif()
 
 set(TARGET_NAME "Atlas")
 
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+
 # add_subdirectory(extern/spdlog)
 # add_subdirectory(extern/glad)
 # add_subdirectory(extern/glfw)
@@ -35,6 +37,7 @@ macro(atlas_dependency NAME SUBMODULE_PATH GIT_REPO GIT_TAG)
     endif()
 endmacro()
 
+atlas_dependency(json "extern/json" "https://github.com/nlohmann/json.git" "v3.12.0")
 atlas_dependency(spdlog    "extern/spdlog"          "https://github.com/gabime/spdlog.git"                      "v1.15.1")
 atlas_dependency(glad      "extern/glad"            "https://github.com/Dav1dde/glad.git"                       "v0.1.36")
 atlas_dependency(glfw      "extern/glfw"            "https://github.com/glfw/glfw.git"                          "3.4")
@@ -165,6 +168,7 @@ target_link_libraries(${TARGET_NAME}
     glfw
     glm
     freetype
+    nlohmann_json::nlohmann_json
 )
 
 if(APPLE)
