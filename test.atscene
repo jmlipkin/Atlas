@@ -4,13 +4,13 @@
     {
       "Tag": "PacMan",
       "Transform": {
-        "position": [
+        "Position": [
           -1.0,
           -1.0,
           100.0
         ],
-        "rotation": 0.0,
-        "size": [
+        "Rotation": 0.0,
+        "Size": [
           2.0,
           2.0
         ]
@@ -49,13 +49,13 @@
     {
       "Tag": "Board",
       "Transform": {
-        "position": [
+        "Position": [
           -14.0,
           -15.5,
           0.10000000149011612
         ],
-        "rotation": 0.0,
-        "size": [
+        "Rotation": 0.0,
+        "Size": [
           28.0,
           31.0
         ]
@@ -64,19 +64,19 @@
         "Texture": "examples/PacMan/assets/pacman sprite sheet transparent.png",
         "Coordinates": {
           "Top left": [
-            0.0,
+            0.5,
             0.0
           ],
           "Top right": [
-            0.5,
+            1.0,
             0.0
           ],
           "Bottom left": [
-            0.0,
+            0.5,
             1.0
           ],
           "Bottom right": [
-            0.5,
+            1.0,
             1.0
           ]
         },
@@ -85,7 +85,7 @@
           31.0
         ],
         "Index": [
-          0,
+          29,
           0
         ]
       }

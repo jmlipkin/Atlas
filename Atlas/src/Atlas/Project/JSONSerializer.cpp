@@ -1,3 +1,4 @@
+#include "Atlas/Core/AssetManager.h"
 #include "Atlas/Renderer/TextureSheet.h"
 #include "atpch.h"
 #include "JSONSerializer.h"
@@ -6,6 +7,7 @@
 #include "Atlas/ECS/Components/Behavior.h"
 
 #include <json/include/nlohmann/json.hpp>
+#include <memory>
 
 namespace Atlas {
 
@@ -15,63 +17,97 @@ JSONSerializer::JSONSerializer(const std::string& filepath, SerializerMode mode)
 }
 
 void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
-    std::ofstream file(m_filepath);
-    AT_CORE_ASSERT(file.is_open(), "Could not open file {} for writing!", m_filepath);
+	std::ofstream file(m_filepath);
+	AT_CORE_ASSERT(file.is_open(), "Could not open file {} for writing!", m_filepath);
 
-    json root;
-    root["name"] = "Scene name here";
+	json root;
+	root["name"] = "Scene name here";
 
-    json entities = json::array();
-    auto& reg = scene->getRegistry();
-    auto view = scene->getRegistry().view<Component::Tag>();
+	json  entities = json::array();
+	auto& reg	   = scene->getRegistry();
+	auto  view	   = scene->getRegistry().view<Component::Tag>();
 
-    for (entt::entity entt : view) {
-        Entity entity = {entt, scene.get()};
-        json e;
-        if(entity.hasComponent<Component::Tag>()) {
-            Component::Tag& tag = entity.getComponent<Component::Tag>();
-            e["Tag"] = tag.tag;
-        }
-        if(entity.hasComponent<Component::Transform>()) {
-            Component::Transform& transform = entity.getComponent<Component::Transform>();
-            json t;
-            t["position"] = {transform.position.x, transform.position.y, transform.position.z};
-            t["rotation"] = transform.rotation;
-            t["size"] = {transform.size.x, transform.size.y};
-            e["Transform"] = t;
-        }
-        if(entity.hasComponent<Component::Sprite>()) {
-            json s;
-            Component::Sprite& sprite = entity.getComponent<Component::Sprite>();
-            SubTextureSpecification& specs = sprite.subtexture->getSpecs();
+	for (entt::entity entt : view) {
+		Entity entity = {entt, scene.get()};
+		json   e;
+		if (entity.hasComponent<Component::Tag>()) {
+			Component::Tag& tag = entity.getComponent<Component::Tag>();
+			e["Tag"]			= tag.tag;
+		}
+		if (entity.hasComponent<Component::Transform>()) {
+			Component::Transform& transform = entity.getComponent<Component::Transform>();
+			json				  t;
+			t["Position"]  = {transform.position.x, transform.position.y, transform.position.z};
+			t["Rotation"]  = transform.rotation;
+			t["Size"]	   = {transform.size.x, transform.size.y};
+			e["Transform"] = t;
+		}
+		if (entity.hasComponent<Component::Sprite>()) {
+			json					 s;
+			Component::Sprite&		 sprite = entity.getComponent<Component::Sprite>();
+			SubTextureSpecification& specs	= sprite.subtexture->getSpecs();
 
-            s["Texture"] = sprite.subtexture->getTexture()->getFilepath();
-            json coords;
+			s["Texture"] = sprite.subtexture->getTexture()->getFilepath();
+			json coords;
 
-            coords["Top left"] = {specs.coordinates.top_left.x, specs.coordinates.top_left.y};
-            coords["Top right"] = {specs.coordinates.top_right.x, specs.coordinates.top_right.y};
-            coords["Bottom left"] = {specs.coordinates.bottom_left.x, specs.coordinates.bottom_left.y};
-            coords["Bottom right"] = {specs.coordinates.bottom_right.x, specs.coordinates.bottom_right.y};
+			coords["Top left"]	   = {specs.coordinates.top_left.x, specs.coordinates.top_left.y};
+			coords["Top right"]	   = {specs.coordinates.top_right.x, specs.coordinates.top_right.y};
+			coords["Bottom left"]  = {specs.coordinates.bottom_left.x, specs.coordinates.bottom_left.y};
+			coords["Bottom right"] = {specs.coordinates.bottom_right.x, specs.coordinates.bottom_right.y};
 
-            s["Coordinates"] = coords;
-            s["Tile Dimensions"] = {specs.tileDims.x, specs.tileDims.y};
-            s["Index"] = {specs.index.x, specs.index.y};
+			s["Coordinates"]	 = coords;
+			s["Tile Dimensions"] = {specs.tileDims.x, specs.tileDims.y};
+			s["Index"]			 = {specs.index.x, specs.index.y};
 
-            e["Sprite"] = s;
-        }
-        if(entity.hasComponent<Component::Script>()) {
-            e["Script"] = "TODO!!";
-        }
+			e["Sprite"] = s;
+		}
+		if (entity.hasComponent<Component::Script>()) {
+			e["Script"] = "TODO!!";
+		}
 
-        entities.push_back(e);
-    }
-    root["entities"] = entities;
-    file << root.dump(2);
-    file.close();
-
+		entities.push_back(e);
+	}
+	root["entities"] = entities;
+	file << root.dump(2);
+	file.close();
 }
 
 void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
+	std::ifstream file(m_filepath);
+	AT_CORE_ASSERT(file.is_open(), "Could not open file {} for reading!", m_filepath);
+
+	json root = json::parse(file);
+
+	for (auto& e : root["entities"]) {
+		Entity entity = scene->createEntity(e["Tag"]);
+
+		if (e.contains("Transform")) {
+			Component::Transform& transform = entity.getComponent<Component::Transform>();
+			transform.position				= {e["Transform"]["Position"][0], e["Transform"]["Position"][1], e["Transform"]["Position"][2]};
+			transform.size					= {e["Transform"]["Size"][0], e["Transform"]["Size"][1]};
+			transform.rotation				= e["Transform"]["Rotation"];
+		}
+
+		if (e.contains("Sprite")) {
+			std::string				 texPath = e["Sprite"]["Texture"];
+			std::shared_ptr<Texture> texture = AssetManager::loadTexture(texPath);
+			SubTextureSpecification	 specs;
+			specs.index	   = {e["Sprite"]["Index"][0], e["Sprite"]["Index"][1]};
+			specs.tileDims = {e["Sprite"]["Tile Dimensions"][0], e["Sprite"]["Tile Dimensions"][1]};
+
+			json coords					   = e["Sprite"]["Coordinates"];
+			specs.coordinates.top_left	   = {coords["Top left"][0], coords["Top left"][1]};
+			specs.coordinates.top_right	   = {coords["Top right"][0], coords["Top right"][1]};
+			specs.coordinates.bottom_left  = {coords["Bottom left"][0], coords["Bottom left"][1]};
+			specs.coordinates.bottom_right = {coords["Bottom right"][0], coords["Bottom right"][1]};
+
+			entity.addComponent<Component::Sprite>(std::make_shared<SubTexture>(texture, specs));
+		}
+        if(e.contains("Script")) {
+            AT_CORE_WARN("Script deserialization not implemented!");
+        }
+	}
+	file.close();
 }
 
 }  // namespace Atlas
