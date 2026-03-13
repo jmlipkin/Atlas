@@ -13,12 +13,17 @@ namespace Atlas {
 
 using json = nlohmann::ordered_json;
 
-JSONSerializer::JSONSerializer(const std::string& filepath, SerializerMode mode) : m_filepath(filepath) {
+void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
+
+}
+
+void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
+
 }
 
 void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
-	std::ofstream file(m_filepath);
-	AT_CORE_ASSERT(file.is_open(), "Could not open file {} for writing!", m_filepath);
+	std::ofstream file(scene->getPath());
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", scene->getPath());
 
 	json root;
 	root["name"] = "Scene name here";
@@ -76,8 +81,8 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 }
 
 void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
-	std::ifstream file(m_filepath);
-	AT_CORE_ASSERT(file.is_open(), "Could not open file {} for reading!", m_filepath);
+	std::ifstream file(scene->getPath());
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for reading!", scene->getPath());
 
 	std::unordered_map<UUID, Entity> existing;
 	auto							 view = scene->getRegistry().view<Component::UUID>();

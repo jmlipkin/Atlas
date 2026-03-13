@@ -155,6 +155,11 @@ target_compile_definitions(${TARGET_NAME}
     $<$<CONFIG:Debug>:AT_DEBUG_ENABLE>
 )
 
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas/Core/Version.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/generated/Version.h
+)
+
 target_link_libraries(${TARGET_NAME}
     PUBLIC
     spdlog::spdlog
