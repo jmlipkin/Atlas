@@ -2,6 +2,7 @@
   "name": "Scene name here",
   "entities": [
     {
+      "UUID": 5637955258813314327,
       "Tag": "PacMan",
       "Transform": {
         "Position": [
@@ -47,6 +48,7 @@
       "Script": "TODO!!"
     },
     {
+      "UUID": 18188768337169112170,
       "Tag": "Board",
       "Transform": {
         "Position": [
@@ -85,7 +87,7 @@
           31.0
         ],
         "Index": [
-          29,
+          0,
           0
         ]
       }

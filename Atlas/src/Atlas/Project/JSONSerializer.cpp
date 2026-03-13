@@ -1,13 +1,13 @@
-#include "Atlas/Core/AssetManager.h"
-#include "Atlas/Renderer/TextureSheet.h"
 #include "atpch.h"
 #include "JSONSerializer.h"
+
+#include "Atlas/Core/AssetManager.h"
+#include "Atlas/Renderer/TextureSheet.h"
 
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Behavior.h"
 
 #include <json/include/nlohmann/json.hpp>
-#include <memory>
 
 namespace Atlas {
 
@@ -25,14 +25,17 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 
 	json  entities = json::array();
 	auto& reg	   = scene->getRegistry();
-	auto  view	   = scene->getRegistry().view<Component::Tag>();
+	auto  view	   = scene->getRegistry().view<Component::UUID>();
 
 	for (entt::entity entt : view) {
 		Entity entity = {entt, scene.get()};
 		json   e;
+
+		if (entity.hasComponent<Component::UUID>()) {
+			e["UUID"] = (uint64_t)entity.getComponent<Component::UUID>().id;
+		}
 		if (entity.hasComponent<Component::Tag>()) {
-			Component::Tag& tag = entity.getComponent<Component::Tag>();
-			e["Tag"]			= tag.tag;
+			e["Tag"] = entity.getComponent<Component::Tag>().tag;
 		}
 		if (entity.hasComponent<Component::Transform>()) {
 			Component::Transform& transform = entity.getComponent<Component::Transform>();
@@ -76,10 +79,25 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 	std::ifstream file(m_filepath);
 	AT_CORE_ASSERT(file.is_open(), "Could not open file {} for reading!", m_filepath);
 
+	std::unordered_map<UUID, Entity> existing;
+	auto							 view = scene->getRegistry().view<Component::UUID>();
+	for (entt::entity e : view) {
+		Entity entity{e, scene.get()};
+		existing[entity.getComponent<Component::UUID>().id] = entity;
+	}
+
 	json root = json::parse(file);
 
 	for (auto& e : root["entities"]) {
-		Entity entity = scene->createEntity(e["Tag"]);
+		UUID uuid((uint64_t)e["UUID"]);
+
+		Entity entity;
+		if(existing.contains(uuid)) {
+			entity = existing[uuid];
+		} else {
+			entity = scene->createEntity(e["Tag"]);
+			entity.getComponent<Component::UUID>().id = uuid;
+		}
 
 		if (e.contains("Transform")) {
 			Component::Transform& transform = entity.getComponent<Component::Transform>();
@@ -103,9 +121,9 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 
 			entity.addComponent<Component::Sprite>(std::make_shared<SubTexture>(texture, specs));
 		}
-        if(e.contains("Script")) {
-            AT_CORE_WARN("Script deserialization not implemented!");
-        }
+		if (e.contains("Script")) {
+			AT_CORE_WARN("Script deserialization not implemented!");
+		}
 	}
 	file.close();
 }

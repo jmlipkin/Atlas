@@ -7,6 +7,7 @@ namespace Atlas {
 
     Entity Scene::createEntity(const std::string& name) {
         Entity entity = {m_registry.create(), this};
+        entity.addComponent<Component::UUID>();
         entity.addComponent<Component::Tag>(name);
         entity.addComponent<Component::Transform>();
         return entity;

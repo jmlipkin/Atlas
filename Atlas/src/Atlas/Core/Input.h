@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Atlas/Core/Base.h"
+#include <utility>
 
 namespace Atlas {
 

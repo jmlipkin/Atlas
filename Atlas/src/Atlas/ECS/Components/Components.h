@@ -1,11 +1,17 @@
 #pragma once
 
+#include "Atlas/Core/UUID.h"
 #include "Atlas/Renderer/TextureSheet.h"
 
 #include <glm/glm.hpp>
 
 namespace Atlas::Component {
 
+struct UUID {
+	Atlas::UUID id;
+	UUID() = default;
+	UUID(Atlas::UUID uuid) : id(uuid) {}
+};
 struct Tag {
 	std::string tag;
 
