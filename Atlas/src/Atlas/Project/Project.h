@@ -1,29 +1,58 @@
 #pragma once
 
+#include "Atlas/Project/Serializer.h"
 #include "Version.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
 namespace Atlas {
 struct ProjectData {
-	int atproj_version = 1;
-	std::string atlas_version = AT_VERSION;
-	std::string name;
+	inline static const int	  atproj_version = 1;
+	inline static const char* atlas_version	 = AT_VERSION;
+
+	std::string				 name;
 	std::vector<std::string> scene_filepaths;
-	std::string startup_scene;
+	std::string				 startup_scene;
+
+	ProjectData(std::string Name = "UnnamedProject", std::string load_scene = "") : name(Name), startup_scene(load_scene) {
+		if (!load_scene.empty()) {
+			scene_filepaths.push_back(load_scene);
+		}
+	}
 };
 
 class Project {
   public:
 	Project(std::string project_path, ProjectData data) : m_path(project_path), m_data(data) {}
 
-    std::string& getPath() { return m_path; }
-    ProjectData& getData() { return m_data; }
+	void			   setName(const std::string& name) { m_data.name = name; }
+	const std::string& getName() const { return m_data.name; }
+	std::string&	   getName() { return m_data.name; }
+
+	std::string& getPath() { return m_path; }
+	ProjectData& getData() { return m_data; }
 
   private:
 	std::string m_path;
 	ProjectData m_data;
+};
+
+class ProjectManager {
+  public:
+	static void createNewProject(const std::string& filepath, const std::string& name);
+
+	static void saveProjectAs(const std::string& filepath, const std::string& name);
+	static void saveProject();
+
+	static void loadProject(const std::string& filepath);
+	static void closeProject(bool shouldSave);
+
+	static std::shared_ptr<Project> getActiveProject() { return s_activeProject; }
+
+  private:
+	static std::shared_ptr<Project> s_activeProject;
 };
 
 }  // namespace Atlas

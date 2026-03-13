@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Atlas/Project/Project.h"
 #include "Atlas/Scene/Scene.h"
 
 #include <glm/glm.hpp>
 
 namespace Atlas {
+
+class Project;
 
 class SerializerAPI {
   public:

@@ -2,6 +2,7 @@
 #include "JSONSerializer.h"
 
 #include "Atlas/Core/AssetManager.h"
+#include "Atlas/Project/Project.h"
 #include "Atlas/Renderer/TextureSheet.h"
 
 #include "Atlas/ECS/Components/Components.h"
@@ -14,11 +15,40 @@ namespace Atlas {
 using json = nlohmann::ordered_json;
 
 void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
+	std::filesystem::create_directories(std::filesystem::path(project->getPath()).parent_path());
+	
+	std::ofstream file(project->getPath());
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", project->getPath());
 
+	json root;
+	root["Atlas Version"]		 = project->getData().atlas_version;
+	root["AtlasProject version"] = project->getData().atproj_version;
+
+	root["Name"]		  = project->getName();
+	root["Startup Scene"] = project->getData().startup_scene;
+
+	root["Scenes"] = project->getData().scene_filepaths;
+
+	file << root.dump(2);
+	file.close();
 }
 
 void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
+	std::ifstream file(project->getPath());
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for reading!", project->getPath());
 
+	json root = json::parse(file);
+	file.close();
+
+	if (root["atproj_version"] != ProjectData::atproj_version) {
+		AT_CORE_WARN("Project file version mismatch — expected {}, got {}",
+					 ProjectData::atproj_version, (int)root["atproj_version"]);
+	}
+
+	project->getName()				 = root["Name"];
+	project->getData().startup_scene = root["Startup Scene"];
+
+	project->getData().scene_filepaths = root["Scenes"].get<std::vector<std::string>>();
 }
 
 void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
@@ -26,7 +56,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", scene->getPath());
 
 	json root;
-	root["name"] = "Scene name here";
+	root["Name"] = scene->getName();
 
 	json  entities = json::array();
 	auto& reg	   = scene->getRegistry();
@@ -75,7 +105,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 
 		entities.push_back(e);
 	}
-	root["entities"] = entities;
+	root["Entities"] = entities;
 	file << root.dump(2);
 	file.close();
 }
@@ -92,15 +122,18 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 	}
 
 	json root = json::parse(file);
+	file.close();
 
-	for (auto& e : root["entities"]) {
+	scene->getName() = root["Name"];
+
+	for (auto& e : root["Entities"]) {
 		UUID uuid((uint64_t)e["UUID"]);
 
 		Entity entity;
-		if(existing.contains(uuid)) {
+		if (existing.contains(uuid)) {
 			entity = existing[uuid];
 		} else {
-			entity = scene->createEntity(e["Tag"]);
+			entity									  = scene->createEntity(e["Tag"]);
 			entity.getComponent<Component::UUID>().id = uuid;
 		}
 
@@ -130,7 +163,6 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 			AT_CORE_WARN("Script deserialization not implemented!");
 		}
 	}
-	file.close();
 }
 
 }  // namespace Atlas

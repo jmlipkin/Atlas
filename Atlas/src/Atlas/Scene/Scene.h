@@ -20,6 +20,7 @@ class Scene {
 	virtual void onUpdate(DeltaTime dt) = 0;
 	virtual void onEvent(Event& event) = 0;
 
+    std::string& getName() { return m_name; }
     std::string& getPath() { return m_filepath; }
    protected:
     Registry m_registry;
