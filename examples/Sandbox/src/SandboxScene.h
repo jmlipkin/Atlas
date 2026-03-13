@@ -12,7 +12,7 @@
 
 class SandboxScene : public Atlas::Scene {
   public:
-	SandboxScene() : m_cameraController(1280.0 / 720.0) {
+	SandboxScene() : Scene("SandboxScene"), m_cameraController(1280.0 / 720.0) {
 		setRegistryCallbacks();
 
 		// m_font = Atlas::FontLibrary::load("Helvetica Light", "Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf");

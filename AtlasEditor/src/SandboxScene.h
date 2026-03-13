@@ -41,7 +41,7 @@ class PlayerBehavior : public Atlas::Behavior {
 
 class SandboxScene : public Atlas::Scene {
   public:
-	SandboxScene(Atlas::OrthographicCameraController& cameraController) : m_cameraController(cameraController) {
+	SandboxScene(Atlas::OrthographicCameraController& cameraController) : Scene("ActiveScene"), m_cameraController(cameraController) {
 		setRegistryCallbacks();
 
 		// m_font = Atlas::FontLibrary::load("Helvetica Light", "Atlas/assets/helvetica-neue-5/HelveticaNeueLight.otf");

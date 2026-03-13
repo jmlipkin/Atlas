@@ -18,8 +18,7 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 	m_scenes.push_back(std::make_shared<SandboxScene>(m_cameraController));
 	m_hierarchyPanel = new SceneHierarchyPanel(m_scenes[0]);
 
-	std::shared_ptr<Serializer> ss = Serializer::create("test.atscene", Serializer::SerializerMode::READ);
-	ss->deserializeScene(m_scenes[0]);
+	Serializer::deserializeScene(m_scenes[0]);
 }
 
 void EditorLayer::onUpdate(DeltaTime dt) {
