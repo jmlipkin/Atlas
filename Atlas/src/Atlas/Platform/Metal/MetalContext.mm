@@ -8,7 +8,7 @@
 #define GLFW_EXPOSE_NATIVE_COCOA
 #include <GLFW/glfw3native.h>
 
-#include "Atlas/AtlasPaths.h"
+#include "Atlas/Core/Platform.h"
 #include "Atlas/Events/ApplicationEvent.h"
 
 namespace Atlas {
@@ -37,9 +37,9 @@ void MetalContext::initDevice() {
 
 	NS::Error* error = nullptr;
 
-	MTL::Library* library = s_device->newLibrary(NS::String::string(SHADER_LIBRARY_PATH, NS::UTF8StringEncoding), &error);
+	MTL::Library* library = s_device->newLibrary(NS::String::string((Platform::getResourcesPath() + "/default.metallib").c_str(), NS::UTF8StringEncoding), &error);
 	if (!library) {
-		AT_CORE_ERROR("Failed to create library at {}", SHADER_LIBRARY_PATH);
+		AT_CORE_ERROR("Failed to create library at {}", Platform::getResourcesPath());
 		exit(-1);
 	}
 	s_library = library;

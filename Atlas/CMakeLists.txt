@@ -1,28 +1,16 @@
-cmake_minimum_required(VERSION 3.22)
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
-
-# Enable Objective-C++ for .mm files on macOS
-if(APPLE)
-    enable_language(OBJC)
-    enable_language(OBJCXX)
-    set(CMAKE_OBJCXX_STANDARD ${CMAKE_CXX_STANDARD})
-    set(CMAKE_OBJCXX_STANDARD_REQUIRED True)
-endif()
-
 set(TARGET_NAME "Atlas")
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 
-# add_subdirectory(extern/spdlog)
-# add_subdirectory(extern/glad)
-# add_subdirectory(extern/glfw)
-# add_subdirectory(extern/glm)
-# add_subdirectory(extern/freetype-2.14.1)
-
 include(FetchContent)
 
+# -----------------------------------------------------------------------------
+#
+# atlas_dependency(<name> <submodule_path> <git_repo> <git_tag>)
+#
+# Uses a vendored submodule if present, otherwises fetches via FetchContent.
+#
+# -----------------------------------------------------------------------------
 macro(atlas_dependency NAME SUBMODULE_PATH GIT_REPO GIT_TAG)
     if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SUBMODULE_PATH}/CMakeLists.txt")
         add_subdirectory(${SUBMODULE_PATH})
@@ -59,47 +47,53 @@ else()
 endif()
 
 if(NOT TARGET Atlas)
-add_library(${TARGET_NAME} STATIC)
+    add_library(${TARGET_NAME} STATIC)
 endif()
 
+# -----------------------------------------------------------------------------
+#
+# Metal shader library
+#
+# Outputs default.metallib into the build directory
+#
+# -----------------------------------------------------------------------------
 if(APPLE)
-# Generates .metallib file
-# TODO: Reconsider .metallib location
-# add_custom_command(TARGET ${TARGET_NAME}
-#     PRE_BUILD
-#     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../examples/PacMan/src
-#     COMMAND xcrun -sdk macosx metal -o triangle.ir -c triangle.metal
-#     COMMAND xcrun -sdk macosx metal -o triangle.metallib triangle.ir
-#     COMMENT "Metal shaderlibrary (triangle.metallib) built"
-# )
-add_custom_target(shader_library
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal
-    COMMAND xcrun -sdk macosx metal -o triangle.ir -c triangle.metal
-    COMMAND xcrun -sdk macosx metal -o quad.ir -c quad.metal
-    COMMAND xcrun -sdk macosx metal -o text.ir -c text.metal
-    COMMAND xcrun -sdk macosx metal -o point.ir -c point.metal
-    COMMAND xcrun -sdk macosx metal -o shaders.metallib triangle.ir quad.ir point.ir text.ir
-    SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal/triangle.metal
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal/quad.metal
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal/text.metal
-)
-add_dependencies(${TARGET_NAME} shader_library)
+    set(ATLAS_METAL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal")
+    set(ATLAS_METALLIB_OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/default.metallib")
+
+    add_custom_target(shader_library
+        COMMAND xcrun -sdk macosx metal
+            -o ${CMAKE_CURRENT_BINARY_DIR}/triangle.ir
+            -c ${ATLAS_METAL_SRC}/triangle.metal
+        COMMAND xcrun -sdk macosx metal
+            -o ${CMAKE_CURRENT_BINARY_DIR}/quad.ir
+            -c ${ATLAS_METAL_SRC}/quad.metal
+        COMMAND xcrun -sdk macosx metal
+            -o ${CMAKE_CURRENT_BINARY_DIR}/text.ir
+            -c ${ATLAS_METAL_SRC}/text.metal
+        COMMAND xcrun -sdk macosx metal
+            -o ${CMAKE_CURRENT_BINARY_DIR}/point.ir
+            -c ${ATLAS_METAL_SRC}/point.metal
+
+        COMMAND xcrun -sdk macosx metallib
+            -o "${ATLAS_METALLIB_OUTPUT}"
+            "${CMAKE_CURRENT_BINARY_DIR}/triangle.ir"
+            "${CMAKE_CURRENT_BINARY_DIR}/quad.ir"
+            "${CMAKE_CURRENT_BINARY_DIR}/text.ir"
+            "${CMAKE_CURRENT_BINARY_DIR}/point.ir"
+        
+        SOURCES
+        ${ATLAS_METAL_SRC}/triangle.metal
+        ${ATLAS_METAL_SRC}/quad.metal
+        ${ATLAS_METAL_SRC}/text.metal
+        ${ATLAS_METAL_SRC}/point.metal
+    )
+    add_dependencies(${TARGET_NAME} shader_library)
+
+    set(ATLAS_METALLIB "${ATLAS_METALLIB_OUTPUT}" PARENT_SCOPE)
 endif()
 
-# Resolve file paths
-if(APPLE)
-    set(ATLAS_SHADER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/assets/shaders/metal/shaders.metallib")
-else()
-    set(ATLAS_SHADER_PATH "")  # or your future OpenGL/Vulkan path
-endif()
-
-set(ATLAS_FONT_LIBRARY_PATH "${CMAKE_CURRENT_SOURCE_DIR}/assets/fonts/")
-
-configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas/AtlasPaths.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/generated/Atlas/AtlasPaths.h
-)
+set(ATLAS_RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets" PARENT_SCOPE)
 
 # ADD FILES
 file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS

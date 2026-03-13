@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include "Atlas/Core/AssetManager.h"
+#include "Atlas/Core/Platform.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Behavior.h"
@@ -47,14 +48,14 @@ class SandboxScene : public Atlas::Scene {
 		// m_font = Atlas::FontLibrary::load("Jetsy", "Atlas/assets/jetsy/Jetsy Trial.otf");
 		// m_font = Atlas::FontLibrary::load("Starlight Romance", "Atlas/assets/starlight_romance/Starlight Romance.ttf");
 		// m_font = Atlas::FontLibrary::load("CrackMan", "examples/PacMan/assets/fonts/CrackMan.ttf");
-		m_font = Atlas::AssetManager::loadFont("Emulogic", "examples/PacMan/assets/fonts/emulogic.ttf");
+		m_font = Atlas::AssetManager::loadFont("Emulogic", Atlas::Platform::getResourcesPath() + "/assets/fonts/emulogic.ttf");
 
 		m_cameraController.setZoomLevel(25.0f);
 		m_board	 = createEntity("Board");
 		m_player = createEntity("PacMan");
 
 		Atlas::TextureSheetSpecification specs{glm::vec2(8.0f)};
-		m_textureSheet = new Atlas::TextureSheet("examples/PacMan/assets/pacman sprite sheet transparent.png", specs);
+		m_textureSheet = new Atlas::TextureSheet(Atlas::Platform::getResourcesPath() + "/assets/pacman sprite sheet transparent.png", specs);
 		m_board.addComponent<Atlas::Component::Sprite>(m_textureSheet->addSubTexture("board", glm::ivec2(0), glm::ivec2(28, 31)));
 		m_player.addComponent<Atlas::Component::Sprite>(m_textureSheet->addSubTexture("player", glm::ivec2(28, 0), glm::ivec2(2, 2)));
 

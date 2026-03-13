@@ -1,17 +1,14 @@
-#include "GLFW/glfw3.h"
 #include "atpch.h"
 #include "MetalImGuiSystem.h"
 
-#include "MetalContext.h"
-
-#include <filesystem>
-
-#include <imgui/imgui.h>
-
-#include "Atlas/AtlasPaths.h"
 #include "Atlas/Core/Application.h"
-#include "ImGuiMetalRenderer.h"
+#include "Atlas/Core/Platform.h"
 
+#include "Atlas/Platform/Metal/MetalContext.h"
+#include "Atlas/Platform/Metal/ImGuiMetalRenderer.h"
+
+#include <GLFW/glfw3.h>
+#include <imgui/imgui.h>
 
 namespace Atlas {
 
@@ -35,13 +32,16 @@ void MetalImGuiSystem::initImGuiLayer() {
 	float font_scale;
 	glfwGetWindowContentScale(window, &font_scale, nullptr);
 
-    std::string fontpath = (std::string(FONT_LIBRARY_PATH) + "helvetica-neue-5/HelveticaNeueLight.otf");
+    std::string fontpath = (Platform::getResourcesPath() + "/Atlas/fonts/helvetica-neue-5/HelveticaNeueLight.otf");
+    AT_CORE_ASSERT(std::filesystem::exists(fontpath), "Could not find font file: {}", fontpath);
 	ImFont* HelveticaLight = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 14 * font_scale);
     AT_CORE_ASSERT(HelveticaLight, "ImGui -- error loading font");
-
-    fontpath = (std::string(FONT_LIBRARY_PATH) + "helvetica-neue-5/HelveticaNeueBold.otf");
+    
+    fontpath = (Platform::getResourcesPath() + "/Atlas/fonts/helvetica-neue-5/HelveticaNeueBold.otf");
+    AT_CORE_ASSERT(std::filesystem::exists(fontpath), "Could not find font file: {}", fontpath);
 	ImFont* HelveticaBold = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 14 * font_scale);
 	io.FontDefault = HelveticaLight;
+    AT_CORE_ASSERT(HelveticaBold, "ImGui -- error loading font");
 
     io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
     io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;

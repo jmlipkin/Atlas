@@ -1,14 +1,15 @@
-#include "Atlas/Core/Application.h"
-#include "Atlas/Core/Time.h"
-#include "Atlas/Project/Serializer.h"
+#include "atpch.h"
+
+#include "EditorLayer.h"
 #include "SandboxScene.h"
 #include "SceneHierarchyPanel.h"
-#include "atpch.h"
-#include "imgui/imgui.h"
-#include "EditorLayer.h"
 
-#include <memory>
-#include <metal-cpp/Metal.hpp>
+#include "Atlas/Core/Application.h"
+#include "Atlas/Core/Time.h"
+
+#include "Atlas/Project/Serializer.h"
+
+#include <imgui/imgui.h>
 
 namespace Atlas {
 

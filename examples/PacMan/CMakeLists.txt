@@ -1,36 +1,31 @@
-cmake_minimum_required(VERSION 3.22)
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 set(TARGET_NAME "PacMan")
-
-add_executable(${TARGET_NAME} ${PACMAN_SOURCES})
 
 # ADD FILES
 file(GLOB_RECURSE PACMAN_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
 )
-target_sources(${TARGET_NAME} PRIVATE ${PACMAN_SOURCES})
 
-# BINARY DATA
-file(GLOB_RECURSE BINARY_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/*")
-list(FILTER BINARY_FILES EXCLUDE REGEX "/\\.DS_Store$")
+add_executable(${TARGET_NAME} ${PACMAN_SOURCES})
+
+set_target_properties(${TARGET_NAME} PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER "com.atlas.pacman"
+    MACOSX_BUNDLE_BUNDLE_NAME    "PacMan"
+)
 
 target_include_directories(${TARGET_NAME} 
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/extern
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/extern
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 target_compile_definitions(${TARGET_NAME}
-    PUBLIC
-
-    CMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
-    VERSION="${CURRENT_VERSION}"
+    PRIVATE
+        CMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
+        VERSION="${CURRENT_VERSION}"
 )
 
 target_link_libraries(${TARGET_NAME}
     PRIVATE
-    Atlas
+        Atlas
 )

@@ -1,5 +1,6 @@
 #include "atpch.h"
 #include "Font.h"
+#include <string>
 
 #include "Atlas/Core/Application.h"
 #include "Atlas/Core/Log.h"
@@ -11,19 +12,24 @@
 
 static FT_Library s_FTLibrary = NULL;
 
+static std::string at_ftErrorString(int error_code) { 
+	const char* str = FT_Error_String(error_code);
+	return str ? str : "Unknown FreeType error (code " + std::to_string(error_code) + ")";
+}
+
 namespace Atlas {
 Font::Font(const std::string& name, const std::string& filepath, uint32_t fontSizePx) : m_name(name), m_fontSizePx(fontSizePx) {
 	if (!s_FTLibrary) {
 		int error = FT_Init_FreeType(&s_FTLibrary);
-		AT_ASSERT(!error, "Error initializing FreeType library: {}", FT_Error_String(error));
+		AT_ASSERT(!error, "Error initializing FreeType library: {}", at_ftErrorString(error));
 	}
 
 	FT_Face face;
 	int		error = FT_New_Face(s_FTLibrary, filepath.c_str(), 0, &face);
-
-	AT_CORE_ASSERT(!error, "Could not load font from file: {}", FT_Error_String(error));
+	AT_CORE_ASSERT(!error, "Could not load font from file: {}", at_ftErrorString(error));
 
 	glm::uvec2 resolution = Application::get().getWindow().getResolution();
+
 	// FT_Set_Char_Size(face, 0, fontSizePx * 64, resolution.x, resolution.y);
 	FT_Set_Pixel_Sizes(face, 0, fontSizePx);
 
