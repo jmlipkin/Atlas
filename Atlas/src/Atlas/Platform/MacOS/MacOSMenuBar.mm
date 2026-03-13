@@ -11,11 +11,16 @@
 #include <Foundation/Foundation.h>
 
 @interface AtlasMenuBarDelegate : NSObject
+
+@property(nonatomic, assign) Atlas::MenuBar::SceneLoadedCallback onSceneLoaded;
+@property(nonatomic, assign) Atlas::MenuBar::SceneSavedCallback onSceneSaved;
 - (void)newProject:(id)sender;
 - (void)openProject:(id)sender;
 - (void)saveProject:(id)sender;
 - (void)saveProjectAs:(id)sender;
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
+- (void)saveScene:(id)sender;
+- (void)loadScene:(id)sender;
+- (BOOL)validateMenuItem:(NSMenuItem*)menuItem;
 
 @end
 
@@ -44,6 +49,17 @@
 	if (path.empty()) return;
 	// TODO: prompt for name, hardcode for now
 	Atlas::ProjectManager::saveProjectAs(path, Atlas::ProjectManager::getActiveProject()->getName());
+}
+
+- (void)saveScene:(id)sender {
+	if(self.onSceneSaved) self.onSceneSaved();
+}
+
+- (void)loadScene:(id)sender {
+	std::string path = Atlas::Platform::openFileDialog("atscene");
+	if (path.empty()) return;
+	std::shared_ptr<Atlas::Scene> scene = Atlas::ProjectManager::loadScene(path);
+	if(self.onSceneLoaded) self.onSceneLoaded(scene);
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem*)menuItem {
@@ -82,6 +98,7 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	NSMenu* fileMenu = [[NSMenu alloc] initWithTitle:@"File"];
 
 	AtlasMenuBarDelegate* delegate = [[AtlasMenuBarDelegate alloc] init];
+	delegate.onSceneLoaded		   = m_onSceneLoaded;
 
 	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"Create Project" action:@selector(newProject:) keyEquivalent:@"N"];
 	[newProject setTarget:delegate];
@@ -91,15 +108,24 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	[openProject setTarget:delegate];
 	[fileMenu addItem:openProject];
 
-	[fileMenu addItem:[NSMenuItem separatorItem]];
-
 	NSMenuItem* saveProject = [[NSMenuItem alloc] initWithTitle:@"Save Project" action:@selector(saveProject:) keyEquivalent:@"s"];
 	[saveProject setTarget:delegate];
+	[saveProject setKeyEquivalentModifierMask:NSEventModifierFlagOption | NSEventModifierFlagCommand];
 	[fileMenu addItem:saveProject];
 
 	NSMenuItem* saveProjectAs = [[NSMenuItem alloc] initWithTitle:@"Save Project As" action:@selector(saveProjectAs:) keyEquivalent:@"S"];
 	[saveProjectAs setTarget:delegate];
+	[saveProjectAs setKeyEquivalentModifierMask:NSEventModifierFlagOption | NSEventModifierFlagCommand];
 	[fileMenu addItem:saveProjectAs];
+
+	[fileMenu addItem:[NSMenuItem separatorItem]];
+
+	NSMenuItem* saveScene = [[NSMenuItem alloc] initWithTitle:@"Save Scene" action:@selector(saveScene:) keyEquivalent:@"s"];
+	[saveScene setTarget:delegate];
+	[fileMenu addItem:saveScene];
+	NSMenuItem* loadScene = [[NSMenuItem alloc] initWithTitle:@"Load Scene" action:@selector(loadScene:) keyEquivalent:@""];
+	[loadScene setTarget:delegate];
+	[fileMenu addItem:loadScene];
 
 	[fileMenuItem setSubmenu:fileMenu];
 }

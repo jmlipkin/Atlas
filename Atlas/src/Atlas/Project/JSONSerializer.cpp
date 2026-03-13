@@ -114,6 +114,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 	std::ifstream file(scene->getPath());
 	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for reading!", scene->getPath());
 
+	// Protects against reconciling existing scenes
 	std::unordered_map<UUID, Entity> existing;
 	auto							 view = scene->getRegistry().view<Component::UUID>();
 	for (entt::entity e : view) {

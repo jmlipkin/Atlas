@@ -15,6 +15,8 @@ class SceneHierarchyPanel {
 	SceneHierarchyPanel(std::shared_ptr<Scene> scene) : m_scene(scene) {}
 	~SceneHierarchyPanel() = default;
 
+	void setScene(std::shared_ptr<Scene> scene) { m_scene = scene; }
+
 	void onImGuiRender() {
 		ImGui::Begin("Scene Hierarchy");
 

@@ -1,22 +1,39 @@
 #include "atpch.h"
-
 #include "EditorLayer.h"
+
 #include "SandboxScene.h"
 #include "SceneHierarchyPanel.h"
 
-#include "Atlas/Core/Application.h"
-#include "Atlas/Core/Time.h"
 
-#include "Atlas/Project/Serializer.h"
+#include "Atlas/Core/Application.h"
+#include "Atlas/Core/MenuBar.h"
+#include "Atlas/Core/Time.h"
+#include "Atlas/Project/Project.h"
 
 #include <imgui/imgui.h>
 
 namespace Atlas {
 
 EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()) {
+	m_menuBar = MenuBar::create();
+
+	m_menuBar->setOnSceneSaved([this]() {
+		ProjectManager::saveScene(m_scenes[0]);
+	});
+
+	m_menuBar->setOnSceneLoaded([this](std::shared_ptr<Scene> scene) {
+		setScene(scene);
+	});
+
+	m_menuBar->generateMenuBar("Atlas Editor");
 	// TODO: Change to a more robust solution
 	m_scenes.push_back(std::make_shared<SandboxScene>(m_cameraController));
 	m_hierarchyPanel = new SceneHierarchyPanel(m_scenes[0]);
+}
+
+void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
+	m_scenes[0] = scene;
+	m_hierarchyPanel->setScene(scene);
 }
 
 void EditorLayer::onUpdate(DeltaTime dt) {
@@ -30,7 +47,7 @@ void EditorLayer::onEvent(Event& event) {
 }
 
 void EditorLayer::onImGuiRender() {
-	static bool dockspaceOpen = true;
+	static bool				  dockspaceOpen	  = true;
 	static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;

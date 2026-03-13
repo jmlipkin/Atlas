@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Atlas.h>
+
+#include "Atlas/Core/MenuBar.h"
 #include "Atlas/Renderer/OrthographicCameraController.h"
 #include "Atlas/Scene/Scene.h"
 
@@ -12,6 +14,7 @@ class EditorLayer : public Layer {
   public:
 	EditorLayer();
 
+	virtual void setScene(std::shared_ptr<Scene> scene);
 	virtual void onAttach() override {}
 	virtual void onDetach() override {}
 	virtual void onUpdate(DeltaTime dt) override;
@@ -20,6 +23,7 @@ class EditorLayer : public Layer {
 	virtual void onImGuiRender() override;
 
   private:
+  std::shared_ptr<MenuBar> m_menuBar;
 	SceneHierarchyPanel* m_hierarchyPanel;
 	LoggingPanel m_logger;
 

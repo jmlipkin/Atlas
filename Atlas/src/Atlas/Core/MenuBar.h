@@ -4,12 +4,23 @@
 
 namespace Atlas {
 
+class Scene;
 class MenuBar {
   public:
+	using SceneLoadedCallback = std::function<void(std::shared_ptr<Scene>)>;
+	using SceneSavedCallback = std::function<void()>;
+
 	virtual ~MenuBar() = default;
 
-	virtual void generateMenuBar(const std::string& title) = 0;
+	void setOnSceneLoaded(SceneLoadedCallback callback) { m_onSceneLoaded = callback; }
+	void setOnSceneSaved(SceneSavedCallback callback) { m_onSceneSaved = callback; }
+
+	virtual void					generateMenuBar(const std::string& title) = 0;
 	static std::shared_ptr<MenuBar> create();
+
+  protected:
+	SceneLoadedCallback m_onSceneLoaded;
+	SceneSavedCallback m_onSceneSaved;
 };
 
 }  // namespace Atlas

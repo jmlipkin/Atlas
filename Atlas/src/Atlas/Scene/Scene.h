@@ -17,8 +17,8 @@ class Scene {
 	Registry& getRegistry() { return m_registry; }
 
     virtual void setRegistryCallbacks() {}
-	virtual void onUpdate(DeltaTime dt) = 0;
-	virtual void onEvent(Event& event) = 0;
+	virtual void onUpdate(DeltaTime dt) {}
+	virtual void onEvent(Event& event) {}
 
     std::string& getName() { return m_name; }
     std::string& getPath() { return m_filepath; }
