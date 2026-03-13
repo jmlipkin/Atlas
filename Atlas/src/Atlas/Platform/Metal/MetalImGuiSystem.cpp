@@ -19,7 +19,8 @@ void MetalImGuiSystem::initImGuiLayer() {
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
 
-    io.IniFilename = "build/Atlas/extern/imgui.ini";
+    static std::string iniPath = Platform::getResourcesPath() + "/imgui.ini";
+    io.IniFilename = iniPath.c_str();
     if (std::filesystem::exists(io.IniFilename)) {
         ImGui::LoadIniSettingsFromDisk(io.IniFilename);
     }

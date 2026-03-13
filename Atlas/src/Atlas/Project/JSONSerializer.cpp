@@ -22,7 +22,7 @@ void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
 
 	json root;
 	root["Atlas Version"]		 = project->getData().atlas_version;
-	root["AtlasProject version"] = project->getData().atproj_version;
+	root["AtlasProject Version"] = project->getData().atproj_version;
 
 	root["Name"]		  = project->getName();
 	root["Startup Scene"] = project->getData().startup_scene;
@@ -40,7 +40,7 @@ void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
 	json root = json::parse(file);
 	file.close();
 
-	if (root["atproj_version"] != ProjectData::atproj_version) {
+	if (root["AtlasProject Version"] != ProjectData::atproj_version) {
 		AT_CORE_WARN("Project file version mismatch — expected {}, got {}",
 					 ProjectData::atproj_version, (int)root["atproj_version"]);
 	}

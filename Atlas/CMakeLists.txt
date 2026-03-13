@@ -177,5 +177,6 @@ if(APPLE)
         "-framework Foundation"
         "-framework QuartzCore"
         "-framework Metal"
+        "-framework UniformTypeIdentifiers"
     )
 endif()
