@@ -18,7 +18,7 @@ class SandboxLayer : public Atlas::Layer {
 		m_scene->onUpdate(dt);
 	}
 	virtual void onEvent(Atlas::Event& event) override {
-		m_scene->onEvent(event);
+		m_scene->dispatchEvent(event);
 	}
 
 	virtual void onImGuiRender() override {

@@ -1,9 +1,7 @@
 #include "atpch.h"
 #include "EditorLayer.h"
 
-#include "SandboxScene.h"
 #include "SceneHierarchyPanel.h"
-
 
 #include "Atlas/Core/Application.h"
 #include "Atlas/Core/MenuBar.h"
@@ -26,8 +24,9 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 	});
 
 	m_menuBar->generateMenuBar("Atlas Editor");
+	m_cameraController.setZoomLevel(25.0f);
 	// TODO: Change to a more robust solution
-	m_scenes.push_back(std::make_shared<SandboxScene>(m_cameraController));
+	m_scenes.push_back(std::make_shared<Scene>("ActiveScene"));
 	m_hierarchyPanel = new SceneHierarchyPanel(m_scenes[0]);
 }
 
@@ -37,13 +36,19 @@ void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
 }
 
 void EditorLayer::onUpdate(DeltaTime dt) {
-	for (auto scene : m_scenes)
+	// TODO: Fix camera controller to act differently according to game mode
+	// m_cameraController.onUpdate(dt);
+	for (auto scene : m_scenes) {
+		Renderer::beginScene(m_cameraController.getCamera());
 		scene->onUpdate(dt);
+		Renderer::endScene();
+	}
 }
 
 void EditorLayer::onEvent(Event& event) {
+	m_cameraController.onEvent(event);
 	for (auto scene : m_scenes)
-		scene->onEvent(event);
+		scene->dispatchEvent(event);
 }
 
 void EditorLayer::onImGuiRender() {

@@ -16,7 +16,7 @@ using json = nlohmann::ordered_json;
 
 void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
 	std::filesystem::create_directories(std::filesystem::path(project->getPath()).parent_path());
-	
+
 	std::ofstream file(project->getPath());
 	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", project->getPath());
 
@@ -52,6 +52,8 @@ void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
 }
 
 void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
+	std::filesystem::create_directories(std::filesystem::path(scene->getPath()).parent_path());
+
 	std::ofstream file(scene->getPath());
 	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", scene->getPath());
 
@@ -106,6 +108,9 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 		entities.push_back(e);
 	}
 	root["Entities"] = entities;
+
+	scene->serializeData(root);
+
 	file << root.dump(2);
 	file.close();
 }
@@ -126,6 +131,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 	file.close();
 
 	scene->getName() = root["Name"];
+	scene->deserializeData(root);
 
 	for (auto& e : root["Entities"]) {
 		UUID uuid((uint64_t)e["UUID"]);
