@@ -25,26 +25,26 @@ struct ProjectData {
 
 class Project {
   public:
-	Project(std::string project_path, ProjectData data) : m_path(project_path), m_data(data) {}
+	Project(std::string project_directory, ProjectData data) : m_directory(project_directory), m_data(data) {}
 
 	void			   setName(const std::string& name) { m_data.name = name; }
 	const std::string& getName() const { return m_data.name; }
 	std::string&	   getName() { return m_data.name; }
 
-	std::string& getPath() { return m_path; }
+	std::string& getDirectory() { return m_directory; }
 	ProjectData& getData() { return m_data; }
 
   private:
-	std::string m_path;
+	std::string m_directory;
 	ProjectData m_data;
 };
 
 class ProjectManager {
   public:
-	static void saveScene(std::shared_ptr<Scene> scene, const std::string& explicitPath = "");
+	static void					  saveScene(std::shared_ptr<Scene> scene, const std::string& explicitPath = "");
 	static std::shared_ptr<Scene> loadScene(const std::string& filepath);
 
-	static std::shared_ptr<Project> attachScenetoProject(std::shared_ptr<Scene> scene);
+	static void attachScenetoProject(std::shared_ptr<Scene> scene);
 
 	static void createNewProject(const std::string& filepath, const std::string& name);
 
@@ -55,6 +55,9 @@ class ProjectManager {
 	static void closeProject(bool shouldSave);
 
 	static std::shared_ptr<Project> getActiveProject() { return s_activeProject; }
+
+	static std::string toRelativePath(const std::string& absolutePath);
+	static std::string toAbsolutePath(const std::string& relativePath);
 
   private:
 	static std::shared_ptr<Project> s_activeProject;

@@ -1,0 +1,96 @@
+{
+  "Name": "test",
+  "Entities": [
+    {
+      "UUID": 5637955258813314327,
+      "Tag": "PacMan",
+      "Transform": {
+        "Position": [
+          -1.0,
+          -1.0,
+          100.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "assets/pacman sprite sheet transparent.png",
+        "Coordinates": {
+          "Top left": [
+            0.5,
+            0.0
+          ],
+          "Top right": [
+            0.535714328289032,
+            0.0
+          ],
+          "Bottom left": [
+            0.5,
+            0.06451612710952759
+          ],
+          "Bottom right": [
+            0.535714328289032,
+            0.06451612710952759
+          ]
+        },
+        "Tile Dimensions": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          28,
+          0
+        ]
+      },
+      "Script": "TODO!!"
+    },
+    {
+      "UUID": 18188768337169112170,
+      "Tag": "Board",
+      "Transform": {
+        "Position": [
+          -14.0,
+          -15.5,
+          0.10000000149011612
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          28.0,
+          31.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "assets/pacman sprite sheet transparent.png",
+        "Coordinates": {
+          "Top left": [
+            0.5,
+            0.0
+          ],
+          "Top right": [
+            1.0,
+            0.0
+          ],
+          "Bottom left": [
+            0.5,
+            1.0
+          ],
+          "Bottom right": [
+            1.0,
+            1.0
+          ]
+        },
+        "Tile Dimensions": [
+          28.0,
+          31.0
+        ],
+        "Index": [
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

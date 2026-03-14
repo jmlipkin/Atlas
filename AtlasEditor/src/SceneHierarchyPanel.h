@@ -1,8 +1,10 @@
 #pragma once
 
+#include <memory>
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Registry.h"
+#include "Atlas/Project/Project.h"
 #include "Atlas/Renderer/TextureSheet.h"
 #include "Atlas/Scene/Scene.h"
 #include "imgui/imgui.h"
@@ -19,6 +21,11 @@ class SceneHierarchyPanel {
 
 	void onImGuiRender() {
 		ImGui::Begin("Scene Hierarchy");
+
+		std::shared_ptr<Project> activeProj = ProjectManager::getActiveProject();
+		std::string projName = activeProj ? activeProj->getName() : "No active project";
+
+		ImGui::Text("%s", projName.c_str());
 
 		if (!m_scene)
 			return;

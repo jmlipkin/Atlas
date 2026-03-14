@@ -31,7 +31,8 @@
 	if (path.empty()) return;
 
 	std::string name = std::filesystem::path(path).stem().string();
-	Atlas::ProjectManager::createNewProject(path, name);
+	std::string directory = std::filesystem::path(path).parent_path().string();
+	Atlas::ProjectManager::createNewProject(directory, name);
 }
 
 - (void)openProject:(id)sender {

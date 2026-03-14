@@ -15,10 +15,11 @@ namespace Atlas {
 using json = nlohmann::ordered_json;
 
 void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
-	std::filesystem::create_directories(std::filesystem::path(project->getPath()).parent_path());
+	std::filesystem::create_directories(project->getDirectory());
 
-	std::ofstream file(project->getPath());
-	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", project->getPath());
+	std::string filepath = project->getDirectory() + "/" + project->getName() + ".atproj";
+	std::ofstream file(filepath);
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", filepath);
 
 	json root;
 	root["Atlas Version"]		 = project->getData().atlas_version;
@@ -34,15 +35,16 @@ void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
 }
 
 void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
-	std::ifstream file(project->getPath());
-	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for reading!", project->getPath());
+	std::string filepath = project->getDirectory() + "/" + project->getName() + ".atproj";
+	std::ifstream file(filepath);
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for reading!", filepath);
 
 	json root = json::parse(file);
 	file.close();
 
 	if (root["AtlasProject Version"] != ProjectData::atproj_version) {
 		AT_CORE_WARN("Project file version mismatch — expected {}, got {}",
-					 ProjectData::atproj_version, (int)root["atproj_version"]);
+					 ProjectData::atproj_version, (int)root["AtlasProject Version"]);
 	}
 
 	project->getName()				 = root["Name"];
@@ -87,7 +89,8 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			Component::Sprite&		 sprite = entity.getComponent<Component::Sprite>();
 			SubTextureSpecification& specs	= sprite.subtexture->getSpecs();
 
-			s["Texture"] = sprite.subtexture->getTexture()->getFilepath();
+			std::string texPath = ProjectManager::toRelativePath(sprite.subtexture->getTexture()->getFilepath());
+			s["Texture"] = texPath;
 			json coords;
 
 			coords["Top left"]	   = {specs.coordinates.top_left.x, specs.coordinates.top_left.y};
@@ -152,7 +155,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 		}
 
 		if (e.contains("Sprite")) {
-			std::string				 texPath = e["Sprite"]["Texture"];
+			std::string				 texPath = ProjectManager::toAbsolutePath(e["Sprite"]["Texture"]);
 			std::shared_ptr<Texture> texture = AssetManager::loadTexture(texPath);
 			SubTextureSpecification	 specs;
 			specs.index	   = {e["Sprite"]["Index"][0], e["Sprite"]["Index"][1]};
