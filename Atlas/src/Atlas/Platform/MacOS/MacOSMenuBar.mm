@@ -12,9 +12,11 @@
 
 @interface AtlasMenuBarDelegate : NSObject
 
-@property(nonatomic, assign) Atlas::MenuBar::SceneLoadedCallback onSceneLoaded;
-@property(nonatomic, assign) Atlas::MenuBar::SceneSavedCallback	 onSceneSaved;
+@property(nonatomic, assign) Atlas::MenuBar::SceneLoadedCallback  onSceneLoaded;
+@property(nonatomic, assign) Atlas::MenuBar::SceneSavedCallback	  onSceneSaved;
+@property(nonatomic, assign) Atlas::MenuBar::SceneCreatedCallback onNewScene;
 - (void)newProject:(id)sender;
+- (void)newScene:(id)sender;
 - (void)openProject:(id)sender;
 - (void)saveProject:(id)sender;
 - (void)saveProjectAs:(id)sender;
@@ -30,9 +32,17 @@
 	std::string path = Atlas::Platform::saveFileDialog("atproj");
 	if (path.empty()) return;
 
-	std::string name = std::filesystem::path(path).stem().string();
+	std::string name	  = std::filesystem::path(path).stem().string();
 	std::string directory = std::filesystem::path(path).parent_path().string();
 	Atlas::ProjectManager::createNewProject(directory, name);
+}
+
+- (void)newScene:(id)sender {
+	std::string path = Atlas::Platform::saveFileDialog("atscene");
+	if (path.empty()) return;
+
+	std::string name	  = std::filesystem::path(path).stem().string();
+	Atlas::ProjectManager::createNewScene(path, name);
 }
 
 - (void)openProject:(id)sender {
@@ -101,9 +111,13 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	AtlasMenuBarDelegate* delegate = [[AtlasMenuBarDelegate alloc] init];
 	delegate.onSceneLoaded		   = m_onSceneLoaded;
 
-	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"Create Project" action:@selector(newProject:) keyEquivalent:@"N"];
+	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"New Project" action:@selector(newProject:) keyEquivalent:@"N"];
 	[newProject setTarget:delegate];
 	[fileMenu addItem:newProject];
+
+	NSMenuItem* newScene = [[NSMenuItem alloc] initWithTitle:@"New Scene" action:@selector(newScene:) keyEquivalent:@"n"];
+	[newScene setTarget:delegate];
+	[fileMenu addItem:newScene];
 
 	[fileMenu addItem:[NSMenuItem separatorItem]];
 
@@ -116,7 +130,7 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	[fileMenu addItem:loadScene];
 
 	[fileMenu addItem:[NSMenuItem separatorItem]];
-	
+
 	NSMenuItem* saveProject = [[NSMenuItem alloc] initWithTitle:@"Save Project" action:@selector(saveProject:) keyEquivalent:@"s"];
 	[saveProject setTarget:delegate];
 	[saveProject setKeyEquivalentModifierMask:NSEventModifierFlagOption | NSEventModifierFlagCommand];

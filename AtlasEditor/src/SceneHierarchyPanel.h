@@ -30,6 +30,8 @@ class SceneHierarchyPanel {
 		if (!m_scene)
 			return;
 
+		ImGui::Text("%s", m_scene->getName().c_str());
+
 		Registry& registry = m_scene->getRegistry();
 		auto view = registry.view<Component::Tag>();
 		for (entt::entity entity : view) {

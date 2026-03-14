@@ -47,6 +47,7 @@ class ProjectManager {
 	static void attachScenetoProject(std::shared_ptr<Scene> scene);
 
 	static void createNewProject(const std::string& filepath, const std::string& name);
+	static std::shared_ptr<Scene> createNewScene(const std::string& filepath, const std::string& name);
 
 	static void saveProjectAs(const std::string& filepath, const std::string& name);
 	static void saveProject();

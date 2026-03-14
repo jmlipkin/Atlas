@@ -23,6 +23,10 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 		setScene(scene);
 	});
 
+	m_menuBar->setOnNewScene([this](std::shared_ptr<Scene> scene) {
+		setScene(scene);
+	});
+
 	m_menuBar->generateMenuBar("Atlas Editor");
 	m_cameraController.setZoomLevel(25.0f);
 	// TODO: Change to a more robust solution
