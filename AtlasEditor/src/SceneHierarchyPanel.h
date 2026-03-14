@@ -27,8 +27,10 @@ class SceneHierarchyPanel {
 
 		ImGui::Text("%s", projName.c_str());
 
-		if (!m_scene)
+		if (!m_scene) {
+			ImGui::End();
 			return;
+		}
 
 		ImGui::Text("%s", m_scene->getName().c_str());
 

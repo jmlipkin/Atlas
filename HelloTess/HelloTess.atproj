@@ -1,0 +1,10 @@
+{
+  "Atlas Version": "0.0.1",
+  "AtlasProject Version": 1,
+  "Name": "HelloTess",
+  "Startup Scene": "scenes/ImGonnaMarryYou.atscene",
+  "Last Active Scene": "scenes/Testing.atscene",
+  "Scenes": [
+    "scenes/Testing.atscene"
+  ]
+}

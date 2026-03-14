@@ -27,6 +27,7 @@ void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
 
 	root["Name"]		  = project->getName();
 	root["Startup Scene"] = project->getData().startup_scene;
+	root["Last Active Scene"] = project->getData().last_active_scene;
 
 	root["Scenes"] = project->getData().scene_filepaths;
 
@@ -49,6 +50,7 @@ void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
 
 	project->getName()				 = root["Name"];
 	project->getData().startup_scene = root["Startup Scene"];
+	project->getData().last_active_scene = root["Last Active Scene"];
 
 	project->getData().scene_filepaths = root["Scenes"].get<std::vector<std::string>>();
 }

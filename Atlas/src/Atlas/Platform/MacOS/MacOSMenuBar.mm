@@ -41,14 +41,16 @@
 	std::string path = Atlas::Platform::saveFileDialog("atscene");
 	if (path.empty()) return;
 
-	std::string name	  = std::filesystem::path(path).stem().string();
-	Atlas::ProjectManager::createNewScene(path, name);
+	std::string					  name	= std::filesystem::path(path).stem().string();
+	std::shared_ptr<Atlas::Scene> scene = Atlas::ProjectManager::createNewScene(path, name);
+	if (self.onNewScene) self.onNewScene(scene);
 }
 
 - (void)openProject:(id)sender {
 	std::string path = Atlas::Platform::openFileDialog("atproj");
 	if (path.empty()) return;
-	Atlas::ProjectManager::loadProject(path);
+	std::shared_ptr<Atlas::Scene> scene = Atlas::ProjectManager::loadProject(path);
+	if(self.onSceneLoaded && scene) self.onSceneLoaded(scene);
 }
 
 - (void)saveProject:(id)sender {
@@ -110,6 +112,8 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 
 	AtlasMenuBarDelegate* delegate = [[AtlasMenuBarDelegate alloc] init];
 	delegate.onSceneLoaded		   = m_onSceneLoaded;
+	delegate.onSceneSaved		   = m_onSceneSaved;
+	delegate.onNewScene			   = m_onNewScene;
 
 	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"New Project" action:@selector(newProject:) keyEquivalent:@"N"];
 	[newProject setTarget:delegate];

@@ -6,6 +6,7 @@
 #include "Atlas/ImGui/ImGuiLayer.h"
 #include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Renderer/Renderer.h"
+#include "Atlas/Project/Project.h"
 #include "Atlas/Project/Serializer.h"
 namespace Atlas {
 
@@ -34,6 +35,7 @@ Application::Application(const WindowProperties& winProps) {
 
 Application::~Application() {
 	Renderer::shutdown();
+	ProjectManager::closeProject(true);
 }
 
 void Application::run() {

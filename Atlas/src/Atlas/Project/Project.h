@@ -15,6 +15,7 @@ struct ProjectData {
 	std::string				 name;
 	std::vector<std::string> scene_filepaths;
 	std::string				 startup_scene;
+	std::string				 last_active_scene = "";
 
 	ProjectData(std::string Name = "UnnamedProject", std::string load_scene = "") : name(Name), startup_scene(load_scene) {
 		if (!load_scene.empty()) {
@@ -46,22 +47,27 @@ class ProjectManager {
 
 	static void attachScenetoProject(std::shared_ptr<Scene> scene);
 
-	static void createNewProject(const std::string& filepath, const std::string& name);
+	static void					  createNewProject(const std::string& filepath, const std::string& name);
 	static std::shared_ptr<Scene> createNewScene(const std::string& filepath, const std::string& name);
 
 	static void saveProjectAs(const std::string& filepath, const std::string& name);
 	static void saveProject();
 
-	static void loadProject(const std::string& filepath);
+	// Returns the first active scene
+	// TODO: determine internally which scene is the correct scene
+	// based on run mode 
+	static std::shared_ptr<Scene> loadProject(const std::string& filepath);
 	static void closeProject(bool shouldSave);
 
 	static std::shared_ptr<Project> getActiveProject() { return s_activeProject; }
+	static void setActiveScene(std::shared_ptr<Scene> scene);
 
 	static std::string toRelativePath(const std::string& absolutePath);
 	static std::string toAbsolutePath(const std::string& relativePath);
 
   private:
 	static std::shared_ptr<Project> s_activeProject;
+	static std::shared_ptr<Scene>	s_activeScene;
 };
 
 }  // namespace Atlas

@@ -16,7 +16,7 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 	m_menuBar = MenuBar::create();
 
 	m_menuBar->setOnSceneSaved([this]() {
-		ProjectManager::saveScene(m_scenes[0]);
+		ProjectManager::saveScene(m_activeScene);
 	});
 
 	m_menuBar->setOnSceneLoaded([this](std::shared_ptr<Scene> scene) {
@@ -25,34 +25,32 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 
 	m_menuBar->setOnNewScene([this](std::shared_ptr<Scene> scene) {
 		setScene(scene);
+		AT_CORE_DEBUG("New scene callback fired: {}", scene->getName());
 	});
 
 	m_menuBar->generateMenuBar("Atlas Editor");
 	m_cameraController.setZoomLevel(25.0f);
 	// TODO: Change to a more robust solution
-	m_scenes.push_back(std::make_shared<Scene>("ActiveScene"));
-	m_hierarchyPanel = new SceneHierarchyPanel(m_scenes[0]);
+	m_hierarchyPanel = new SceneHierarchyPanel(nullptr);
 }
 
 void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
-	m_scenes[0] = scene;
+	m_activeScene = scene;
 	m_hierarchyPanel->setScene(scene);
+	ProjectManager::setActiveScene(scene);
 }
 
 void EditorLayer::onUpdate(DeltaTime dt) {
 	// TODO: Fix camera controller to act differently according to game mode
 	// m_cameraController.onUpdate(dt);
-	for (auto scene : m_scenes) {
-		Renderer::beginScene(m_cameraController.getCamera());
-		scene->onUpdate(dt);
-		Renderer::endScene();
-	}
+	Renderer::beginScene(m_cameraController.getCamera());
+	if (m_activeScene != nullptr) m_activeScene->onUpdate(dt);
+	Renderer::endScene();
 }
 
 void EditorLayer::onEvent(Event& event) {
 	m_cameraController.onEvent(event);
-	for (auto scene : m_scenes)
-		scene->dispatchEvent(event);
+	if (m_activeScene != nullptr) m_activeScene->dispatchEvent(event);
 }
 
 void EditorLayer::onImGuiRender() {

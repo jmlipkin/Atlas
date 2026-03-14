@@ -30,7 +30,7 @@ class EditorLayer : public Layer {
 	OrthographicCameraController m_cameraController;
 	glm::vec2 m_viewportSize;
 
-	std::vector<std::shared_ptr<Scene>> m_scenes;
+	std::shared_ptr<Scene> m_activeScene;
 };
 
 }  // namespace Atlas
