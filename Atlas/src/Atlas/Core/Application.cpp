@@ -6,7 +6,6 @@
 #include "Atlas/ImGui/ImGuiLayer.h"
 #include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Renderer/Renderer.h"
-#include "Atlas/Project/Project.h"
 #include "Atlas/Project/Serializer.h"
 namespace Atlas {
 
@@ -35,7 +34,7 @@ Application::Application(const WindowProperties& winProps) {
 
 Application::~Application() {
 	Renderer::shutdown();
-	ProjectManager::closeProject(true);
+	m_layerStack.popOverlay(m_ImGuiLayer);
 }
 
 void Application::run() {
@@ -90,6 +89,14 @@ void Application::pushLayer(Layer* layer) {
 
 void Application::pushOverlay(Layer* overlay) {
 	m_layerStack.pushOverlay(overlay);
+}
+
+void Application::popLayer(Layer* layer) {
+	m_layerStack.popLayer(layer);
+}
+
+void Application::popOverlay(Layer* overlay) {
+	m_layerStack.popOverlay(overlay);
 }
 
 bool Application::onWindowClose(WindowCloseEvent& e) {

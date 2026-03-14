@@ -24,6 +24,8 @@ class Application {
 
     void pushLayer(Layer* layer);
     void pushOverlay(Layer* overlay);
+    void popLayer(Layer* layer);
+    void popOverlay(Layer* overlay);
 
 	inline Window& getWindow() const { return *m_window; }
 	inline std::shared_ptr<Framebuffer> getFramebuffer() { return m_sceneFrameBuf; }

@@ -4,16 +4,22 @@
 #include "SceneHierarchyPanel.h"
 
 #include "Atlas/Core/Application.h"
+#include "Atlas/Core/Platform.h"
 #include "Atlas/Core/MenuBar.h"
 #include "Atlas/Core/Time.h"
 #include "Atlas/Project/Project.h"
 
 #include <imgui/imgui.h>
+#include <json/include/nlohmann/json.hpp>
 
 namespace Atlas {
 
 EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()) {
 	m_menuBar = MenuBar::create();
+
+	m_menuBar->setOnProjectChanged([this](std::string filepath) {
+		m_config.last_open_project = filepath;
+	});
 
 	m_menuBar->setOnSceneSaved([this]() {
 		ProjectManager::saveScene(m_activeScene);
@@ -25,7 +31,6 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 
 	m_menuBar->setOnNewScene([this](std::shared_ptr<Scene> scene) {
 		setScene(scene);
-		AT_CORE_DEBUG("New scene callback fired: {}", scene->getName());
 	});
 
 	m_menuBar->generateMenuBar("Atlas Editor");
@@ -38,6 +43,9 @@ void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
 	m_activeScene = scene;
 	m_hierarchyPanel->setScene(scene);
 	ProjectManager::setActiveScene(scene);
+	if (ProjectManager::getActiveProject() && scene) {
+		m_config.last_open_scene = scene->getPath();
+	}
 }
 
 void EditorLayer::onUpdate(DeltaTime dt) {
@@ -105,6 +113,48 @@ void EditorLayer::onImGuiRender() {
 	ImGui::PopStyleVar();
 
 	ImGui::End();
+}
+
+void EditorLayer::loadConfig() {
+	using json			 = nlohmann::ordered_json;
+	std::string filepath = Platform::getResourcesPath() + "/editor.atconfig";
+	if (!std::filesystem::exists(filepath)) {
+		return;
+	}
+
+	std::ifstream file(filepath);
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for reading!", filepath);
+
+	json root = json::parse(file);
+	file.close();
+
+	if (root.contains("Last Opened Project")) {
+		auto scene = ProjectManager::loadProject(root["Last Opened Project"]);
+		setScene(scene);
+	} else if (root.contains("Last Opened Scene") && !root["Last Opened Scene"].get<std::string>().empty()) {
+		auto scene = ProjectManager::loadScene(root["Last Opened Scene"].get<std::string>());
+		setScene(scene);
+	} else {
+		setScene(std::make_shared<Scene>("New scene"));
+	}
+}
+
+void EditorLayer::saveConfig() {
+	using json			   = nlohmann::ordered_json;
+	std::string	  filepath = Platform::getResourcesPath() + "/editor.atconfig";
+	std::ofstream file(filepath);
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", filepath);
+
+	json root;
+
+	if (m_config.last_open_project.empty()) {
+		root["Last Opened Scene"] = m_config.last_open_scene;
+	} else {
+		root["Last Opened Project"] = m_config.last_open_project;
+	}
+	file << root.dump(2);
+
+	file.close();
 }
 
 }  // namespace Atlas

@@ -12,9 +12,10 @@
 
 @interface AtlasMenuBarDelegate : NSObject
 
-@property(nonatomic, assign) Atlas::MenuBar::SceneLoadedCallback  onSceneLoaded;
-@property(nonatomic, assign) Atlas::MenuBar::SceneSavedCallback	  onSceneSaved;
-@property(nonatomic, assign) Atlas::MenuBar::SceneCreatedCallback onNewScene;
+@property(nonatomic, assign) Atlas::MenuBar::ProjectChangedCallback onProjectChanged;
+@property(nonatomic, assign) Atlas::MenuBar::SceneLoadedCallback	onSceneLoaded;
+@property(nonatomic, assign) Atlas::MenuBar::SceneSavedCallback		onSceneSaved;
+@property(nonatomic, assign) Atlas::MenuBar::SceneCreatedCallback	onNewScene;
 - (void)newProject:(id)sender;
 - (void)newScene:(id)sender;
 - (void)openProject:(id)sender;
@@ -35,6 +36,7 @@
 	std::string name	  = std::filesystem::path(path).stem().string();
 	std::string directory = std::filesystem::path(path).parent_path().string();
 	Atlas::ProjectManager::createNewProject(directory, name);
+	if (self.onProjectChanged) self.onProjectChanged(directory + "/" + name);
 }
 
 - (void)newScene:(id)sender {
@@ -49,8 +51,13 @@
 - (void)openProject:(id)sender {
 	std::string path = Atlas::Platform::openFileDialog("atproj");
 	if (path.empty()) return;
+
+	std::string name	  = std::filesystem::path(path).stem().string();
+	std::string directory = std::filesystem::path(path).parent_path().string();
+
 	std::shared_ptr<Atlas::Scene> scene = Atlas::ProjectManager::loadProject(path);
-	if(self.onSceneLoaded && scene) self.onSceneLoaded(scene);
+	if (self.onSceneLoaded && scene) self.onSceneLoaded(scene);
+	if (self.onProjectChanged) self.onProjectChanged(directory + "/" + name);
 }
 
 - (void)saveProject:(id)sender {
@@ -111,6 +118,7 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	NSMenu* fileMenu = [[NSMenu alloc] initWithTitle:@"File"];
 
 	AtlasMenuBarDelegate* delegate = [[AtlasMenuBarDelegate alloc] init];
+	delegate.onProjectChanged	   = m_onProjectChanged;
 	delegate.onSceneLoaded		   = m_onSceneLoaded;
 	delegate.onSceneSaved		   = m_onSceneSaved;
 	delegate.onNewScene			   = m_onNewScene;
