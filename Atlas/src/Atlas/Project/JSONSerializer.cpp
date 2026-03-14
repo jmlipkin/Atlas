@@ -17,7 +17,7 @@ using json = nlohmann::ordered_json;
 void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
 	std::filesystem::create_directories(project->getDirectory());
 
-	std::string filepath = project->getDirectory() + "/" + project->getName() + ".atproj";
+	std::string	  filepath = project->getDirectory() + "/" + project->getName() + ".atproj";
 	std::ofstream file(filepath);
 	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", filepath);
 
@@ -25,8 +25,8 @@ void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
 	root["Atlas Version"]		 = project->getData().atlas_version;
 	root["AtlasProject Version"] = project->getData().atproj_version;
 
-	root["Name"]		  = project->getName();
-	root["Startup Scene"] = project->getData().startup_scene;
+	root["Name"]			  = project->getName();
+	root["Startup Scene"]	  = project->getData().startup_scene;
 	root["Last Active Scene"] = project->getData().last_active_scene;
 
 	root["Scenes"] = project->getData().scene_filepaths;
@@ -36,7 +36,7 @@ void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
 }
 
 void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
-	std::string filepath = project->getDirectory() + "/" + project->getName() + ".atproj";
+	std::string	  filepath = project->getDirectory() + "/" + project->getName() + ".atproj";
 	std::ifstream file(filepath);
 	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for reading!", filepath);
 
@@ -48,8 +48,8 @@ void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
 					 ProjectData::atproj_version, (int)root["AtlasProject Version"]);
 	}
 
-	project->getName()				 = root["Name"];
-	project->getData().startup_scene = root["Startup Scene"];
+	project->getName()					 = root["Name"];
+	project->getData().startup_scene	 = root["Startup Scene"];
 	project->getData().last_active_scene = root["Last Active Scene"];
 
 	project->getData().scene_filepaths = root["Scenes"].get<std::vector<std::string>>();
@@ -92,7 +92,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			SubTextureSpecification& specs	= sprite.subtexture->getSpecs();
 
 			std::string texPath = ProjectManager::toRelativePath(sprite.subtexture->getTexture()->getFilepath());
-			s["Texture"] = texPath;
+			s["Texture"]		= texPath;
 			json coords;
 
 			coords["Top left"]	   = {specs.coordinates.top_left.x, specs.coordinates.top_left.y};
@@ -107,7 +107,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			e["Sprite"] = s;
 		}
 		if (entity.hasComponent<Component::Script>()) {
-			e["Script"] = "TODO!!";
+			e["Script"] = entity.getComponent<Component::Script>().instance->getTypeName();
 		}
 
 		entities.push_back(e);
@@ -172,7 +172,8 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 			entity.addComponent<Component::Sprite>(std::make_shared<SubTexture>(texture, specs));
 		}
 		if (e.contains("Script")) {
-			AT_CORE_WARN("Script deserialization not implemented!");
+			AT_CORE_WARN("Script '{}' on entity '{}' not deserialized - script serialization not yet implemented",
+						 e["Script"].get<std::string>(), e["Name"].get<std::string>());
 		}
 	}
 }

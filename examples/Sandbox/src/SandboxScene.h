@@ -49,6 +49,7 @@ class SandboxScene : public Atlas::Scene {
 	}
 
 	class PlayerController : public Atlas::Behavior {
+		AT_BEHAVIOR(PlayerController)
 	  public:
 		virtual void onUpdate(Atlas::DeltaTime dt) {
 			using namespace Atlas;

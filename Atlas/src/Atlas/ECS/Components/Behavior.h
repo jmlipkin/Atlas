@@ -7,6 +7,9 @@
 #include <memory>
 #include <unordered_map>
 
+#define AT_BEHAVIOR(Type) \
+	virtual std::string getTypeName() const override { return #Type; }
+
 namespace Atlas {
 
 class Behavior {
@@ -33,8 +36,10 @@ class Behavior {
   public:
 	virtual ~Behavior() = default;
 
+	virtual std::string getTypeName() const { return "Unregistered behavior type"; }
+	
 	void setEntity(Entity entity) { m_entity = entity; }
-
+	
 	virtual void exposeProperties() {}
 	const auto&	 getProperties() { return m_properties; }
 
@@ -69,7 +74,7 @@ struct Script {
 
 template <typename T>
 void Entity::addScript() {
-	auto& script = addComponent<Atlas::Component::Script>();
+	auto& script	= addComponent<Atlas::Component::Script>();
 	script.instance = std::make_unique<T>();
 	script.instance->setEntity(*this);
 	script.instance->onCreate();
