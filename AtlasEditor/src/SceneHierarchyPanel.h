@@ -4,7 +4,6 @@
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Registry.h"
-#include "Atlas/Project/Project.h"
 #include "Atlas/Renderer/TextureSheet.h"
 #include "Atlas/Scene/Scene.h"
 #include "imgui/imgui.h"
@@ -18,6 +17,8 @@ class SceneHierarchyPanel {
 	~SceneHierarchyPanel() = default;
 
 	void setScene(std::shared_ptr<Scene> scene) { m_scene = scene; }
+	void addComponent() { m_openComponentPicker = true; }
+	const Entity& getSelectionContext() const { return m_selectionContext; }
 
 	void onImGuiRender() {
 		if (!m_scene) {
@@ -28,6 +29,10 @@ class SceneHierarchyPanel {
 
 		ImGui::Text("%s", m_scene->getName().c_str());
 
+		if (ImGui::Button("Add Entity")) {
+			m_scene->createEntity("New Entity");
+		}
+
 		Registry& registry = m_scene->getRegistry();
 		auto	  view	   = registry.view<Component::Tag>();
 		for (entt::entity entity : view) {
@@ -35,6 +40,24 @@ class SceneHierarchyPanel {
 			ImGui::PushID((uint32_t)e);
 			drawEntityNode(e);
 			ImGui::PopID();
+		}
+
+		ImGui::SetNextWindowSizeConstraints(ImVec2(360, 0), ImVec2(FLT_MAX, FLT_MAX));
+		if (ImGui::BeginPopupContextWindow("SceneHierarchyContextMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
+			if (ImGui::MenuItem("Add entity", "Cmd+E")) {
+				m_scene->createEntity("New Entity");
+			}
+			ImGui::EndPopup();
+		}
+
+		if (m_openComponentPicker) {
+			ImGui::OpenPopup("AddComponentPopup");
+			m_openComponentPicker = false;
+		}
+		if (ImGui::BeginPopup("AddComponentPopup")) {
+			if (m_selectionContext)
+				drawComponentPicker(m_selectionContext);
+			ImGui::EndPopup();
 		}
 
 		ImGui::End();
@@ -58,6 +81,10 @@ class SceneHierarchyPanel {
 
 		bool entityDeleted = false;
 		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::BeginMenu("Add Component")) {
+				drawComponentPicker(entity);
+				ImGui::EndMenu();
+			}
 			if (ImGui::MenuItem("Delete entity"))
 				entityDeleted = true;
 			ImGui::EndPopup();
@@ -192,9 +219,19 @@ class SceneHierarchyPanel {
 		ImGui::PopID();
 	}
 
+	void drawComponentPicker(Entity& entity) {
+		if (ImGui::MenuItem("Animation")) {
+			AT_CORE_WARN("Cannot add Animation component: Default constructor isn't implemented yet");
+		}
+		if (ImGui::MenuItem("Script")) {
+			AT_CORE_WARN("Cannot add Script component: Default constructor isn't implemented yet");
+		}
+	}
+
   private:
 	std::shared_ptr<Scene> m_scene;
 	Entity				   m_selectionContext;
+	bool				   m_openComponentPicker = false;
 };
 
 }  // namespace Atlas

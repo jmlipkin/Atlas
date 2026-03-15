@@ -39,6 +39,16 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 		m_config.last_open_project = "";
 	});
 
+	m_menuBar->setOnNewEntity([this]() {
+		if(m_activeScene)
+			m_activeScene->createEntity("New Entity");
+	});
+
+	m_menuBar->setOnAddComponent([this]() {
+		if(m_hierarchyPanel->getSelectionContext())
+			m_hierarchyPanel->addComponent();
+	});
+
 	m_menuBar->generateMenuBar("Atlas Editor");
 	m_cameraController.setZoomLevel(25.0f);
 

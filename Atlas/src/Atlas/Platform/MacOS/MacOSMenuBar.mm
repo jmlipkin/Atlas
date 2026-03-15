@@ -18,6 +18,10 @@
 @property(nonatomic, assign) Atlas::MenuBar::SceneCreatedCallback	onNewScene;
 @property(nonatomic, assign) Atlas::MenuBar::ProjectClosedCallback	onProjectClosed;
 @property(nonatomic, assign) Atlas::MenuBar::SceneClosedCallback	onSceneClosed;
+
+@property(nonatomic, assign) Atlas::MenuBar::NewEntityCallback	  onNewEntity;
+@property(nonatomic, assign) Atlas::MenuBar::AddComponentCallback onAddComponent;
+
 - (void)newProject:(id)sender;
 - (void)newScene:(id)sender;
 - (void)openProject:(id)sender;
@@ -25,7 +29,11 @@
 - (void)saveProject:(id)sender;
 - (void)saveProjectAs:(id)sender;
 - (void)saveScene:(id)sender;
-- (void)loadScene:(id)sender;
+- (void)openScene:(id)sender;
+
+- (void)addEntity:(id)sender;
+- (void)addComponent:(id)sender;
+
 - (BOOL)validateMenuItem:(NSMenuItem*)menuItem;
 
 @end
@@ -93,11 +101,19 @@
 	if (self.onSceneSaved) self.onSceneSaved();
 }
 
-- (void)loadScene:(id)sender {
+- (void)openScene:(id)sender {
 	std::string path = Atlas::Platform::openFileDialog("atscene");
 	if (path.empty()) return;
 	std::shared_ptr<Atlas::Scene> scene = Atlas::ProjectManager::loadScene(path);
 	if (self.onSceneLoaded) self.onSceneLoaded(scene);
+}
+
+- (void)addEntity:(id)sender {
+	if (self.onNewEntity) self.onNewEntity();
+}
+
+- (void)addComponent:(id)sender {
+	if (self.onAddComponent) self.onAddComponent();
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem*)menuItem {
@@ -143,6 +159,9 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	delegate.onProjectClosed	   = m_onProjectClosed;
 	delegate.onSceneClosed		   = m_onSceneClosed;
 
+	delegate.onNewEntity	= m_onNewEntity;
+	delegate.onAddComponent = m_onAddComponent;
+
 	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"New Project" action:@selector(newProject:) keyEquivalent:@"N"];
 	[newProject setTarget:delegate];
 	[fileMenu addItem:newProject];
@@ -157,15 +176,14 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	[openProject setTarget:delegate];
 	[fileMenu addItem:openProject];
 
-	NSMenuItem* loadScene = [[NSMenuItem alloc] initWithTitle:@"Load Scene" action:@selector(loadScene:) keyEquivalent:@""];
-	[loadScene setTarget:delegate];
-	[fileMenu addItem:loadScene];
+	NSMenuItem* openScene = [[NSMenuItem alloc] initWithTitle:@"Open Scene" action:@selector(openScene:) keyEquivalent:@""];
+	[openScene setTarget:delegate];
+	[fileMenu addItem:openScene];
 
 	[fileMenu addItem:[NSMenuItem separatorItem]];
 
-	NSMenuItem* saveProject = [[NSMenuItem alloc] initWithTitle:@"Save Project" action:@selector(saveProject:) keyEquivalent:@"s"];
+	NSMenuItem* saveProject = [[NSMenuItem alloc] initWithTitle:@"Save Project" action:@selector(saveProject:) keyEquivalent:@"S"];
 	[saveProject setTarget:delegate];
-	[saveProject setKeyEquivalentModifierMask:NSEventModifierFlagOption | NSEventModifierFlagCommand];
 	[fileMenu addItem:saveProject];
 
 	NSMenuItem* saveProjectAs = [[NSMenuItem alloc] initWithTitle:@"Save Project As" action:@selector(saveProjectAs:) keyEquivalent:@"S"];
@@ -184,6 +202,22 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	[fileMenu addItem:closeProject];
 
 	[fileMenuItem setSubmenu:fileMenu];
+
+	/////////////////////////////////////////////
+
+	NSMenuItem* editMenuItem = [[NSMenuItem alloc] init];
+	[menuBar addItem:editMenuItem];
+	NSMenu* editMenu = [[NSMenu alloc] initWithTitle:@"Edit"];
+
+	NSMenuItem* addEntity = [[NSMenuItem alloc] initWithTitle:@"Add Entity" action:@selector(addEntity:) keyEquivalent:@"e"];
+	[addEntity setTarget:delegate];
+	[editMenu addItem:addEntity];
+
+	NSMenuItem* addComponent = [[NSMenuItem alloc] initWithTitle:@"Add Component" action:@selector(addComponent:) keyEquivalent:@"a"];
+	[addComponent setTarget:delegate];
+	[editMenu addItem:addComponent];
+
+	[editMenuItem setSubmenu:editMenu];
 }
 
 }  // namespace Atlas

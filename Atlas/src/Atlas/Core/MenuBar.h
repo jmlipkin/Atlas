@@ -16,6 +16,9 @@ class MenuBar {
 	using ProjectClosedCallback	 = std::function<void()>;
 	using SceneClosedCallback	 = std::function<void()>;
 
+	using NewEntityCallback	   = std::function<void()>;
+	using AddComponentCallback = std::function<void()>;
+
 	virtual ~MenuBar() = default;
 
 	// Takes path to project file
@@ -25,6 +28,9 @@ class MenuBar {
 	void setOnNewScene(SceneCreatedCallback callback) { m_onNewScene = callback; }
 	void setOnProjectClosed(ProjectClosedCallback callback) { m_onProjectClosed = callback; }
 	void setOnSceneClosed(SceneClosedCallback callback) { m_onSceneClosed = callback; }
+
+	void setOnNewEntity(NewEntityCallback callback) { m_onNewEntity = callback; }
+	void setOnAddComponent(AddComponentCallback callback) { m_onAddComponent = callback; }
 
 	virtual void					generateMenuBar(const std::string& title) = 0;
 	static std::shared_ptr<MenuBar> create();
@@ -36,6 +42,9 @@ class MenuBar {
 	SceneCreatedCallback   m_onNewScene;
 	ProjectClosedCallback  m_onProjectClosed;
 	SceneClosedCallback	   m_onSceneClosed;
+
+	NewEntityCallback	 m_onNewEntity;
+	AddComponentCallback m_onAddComponent;
 };
 
 }  // namespace Atlas
