@@ -32,7 +32,7 @@ class SceneHierarchyPanel {
 	Entity m_selectionContext;
 	Entity m_renameTarget;
 	bool   m_openComponentPicker = false;
-	bool   m_focusRenameCursor	 = false;
+	int	   m_focusRenameCursor	 = 0;
 };
 
 }  // namespace Atlas

@@ -15,8 +15,10 @@ void SceneHierarchyPanel::setScene(std::shared_ptr<Scene> scene) {
 	m_renameTarget	   = {};
 }
 void SceneHierarchyPanel::addEmptyEntity() {
-	m_renameTarget		= m_scene->createEntity("New Entity");
-	m_focusRenameCursor = true;
+    Entity newEntity = m_scene->createEntity("New Entity");
+    m_selectionContext = newEntity;
+    m_renameTarget = newEntity;
+	m_focusRenameCursor = 2;
 }
 
 void SceneHierarchyPanel::onImGuiRender() {
@@ -40,6 +42,11 @@ void SceneHierarchyPanel::onImGuiRender() {
 		drawEntityNode(e);
 		ImGui::PopID();
 	}
+
+    if(ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0) && !ImGui::IsAnyItemHovered()) {
+        if(!m_renameTarget) // Don't deselect while renaming
+            m_selectionContext = {};
+    }
 
 	ImGui::SetNextWindowSizeConstraints(ImVec2(360, 0), ImVec2(FLT_MAX, FLT_MAX));
 	if (ImGui::BeginPopupContextWindow("SceneHierarchyContextMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
@@ -70,11 +77,15 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 	auto&			   tag		  = entity.getComponent<Component::Tag>();
 	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
 
+    if(entity == m_selectionContext) {
+        tree_flags |= ImGuiTreeNodeFlags_Selected;
+    }
+
 	bool opened = false;
 	if (entity == m_renameTarget) {
-		if (m_focusRenameCursor) {
+		if (m_focusRenameCursor > 0) {
 			ImGui::SetKeyboardFocusHere();
-			m_focusRenameCursor = false;
+			m_focusRenameCursor--;
 		}
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
@@ -85,7 +96,7 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 
 	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
 		m_renameTarget		= entity;
-		m_focusRenameCursor = true;
+		m_focusRenameCursor = 2;
 	}
 
 	if (ImGui::IsItemClicked()) {
@@ -100,7 +111,7 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 	if (ImGui::BeginPopupContextItem()) {
 		if (ImGui::MenuItem("Rename")) {
 			m_renameTarget		= entity;
-			m_focusRenameCursor = true;
+			m_focusRenameCursor = 2;
 		}
 		if (ImGui::BeginMenu("Add Component")) {
 			drawComponentPicker(entity);
