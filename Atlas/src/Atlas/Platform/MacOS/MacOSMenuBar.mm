@@ -66,9 +66,9 @@
 - (void)closeProject:(id)sender {
 	if (Atlas::ProjectManager::isDirty()) {
 		int result = Atlas::Platform::showConfirmDialog("Do you want to save changes to your project?", "Save", "Don't Save", "Cancel");
-		if (result == 1000) {
+		if (result == NSAlertFirstButtonReturn) {
 			Atlas::ProjectManager::closeProject(true);
-		} else if (result == 1002) {
+		} else if (result == NSAlertThirdButtonReturn) {
 			Atlas::ProjectManager::closeProject(false);
 		}
 	} else {

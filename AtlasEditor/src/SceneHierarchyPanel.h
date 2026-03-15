@@ -20,22 +20,16 @@ class SceneHierarchyPanel {
 	void setScene(std::shared_ptr<Scene> scene) { m_scene = scene; }
 
 	void onImGuiRender() {
-		ImGui::Begin("Scene Hierarchy");
-
-		std::shared_ptr<Project> activeProj = ProjectManager::getActiveProject();
-		std::string projName = activeProj ? activeProj->getName() : "No active project";
-
-		ImGui::Text("%s", projName.c_str());
-
 		if (!m_scene) {
-			ImGui::End();
 			return;
 		}
+
+		ImGui::Begin("Scene Hierarchy");
 
 		ImGui::Text("%s", m_scene->getName().c_str());
 
 		Registry& registry = m_scene->getRegistry();
-		auto view = registry.view<Component::Tag>();
+		auto	  view	   = registry.view<Component::Tag>();
 		for (entt::entity entity : view) {
 			Entity e{entity, m_scene.get()};
 			ImGui::PushID((uint32_t)e);
@@ -54,9 +48,9 @@ class SceneHierarchyPanel {
 
   private:
 	void drawEntityNode(Entity& entity) {
-		auto& tag = entity.getComponent<Component::Tag>();
+		auto&			   tag		  = entity.getComponent<Component::Tag>();
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
-		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)entity, tree_flags, "%s", tag.tag.c_str());
+		bool			   opened	  = ImGui::TreeNodeEx((void*)(uint64_t)entity, tree_flags, "%s", tag.tag.c_str());
 
 		if (ImGui::IsItemClicked()) {
 			m_selectionContext = entity;
@@ -86,7 +80,7 @@ class SceneHierarchyPanel {
 		if (!entity.hasComponent<T>())
 			return;
 
-		auto& component = entity.getComponent<T>();
+		auto&					 component	   = entity.getComponent<T>();
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowOverlap | ImGuiTreeNodeFlags_FramePadding;
 
 		// TODO: Update formatting
@@ -125,8 +119,8 @@ class SceneHierarchyPanel {
 			drawVec3Control("Position", component.position, 0.0f, 120.0f);
 		});
 		drawComponent<Component::Sprite>("Sprite", entity, [this](auto& component) {
-			SubTextureSpecification& specs = component.subtexture->getSpecs();
-			std::string& filepath = component.subtexture->getTexture()->getFilepath();
+			SubTextureSpecification& specs	  = component.subtexture->getSpecs();
+			std::string&			 filepath = component.subtexture->getTexture()->getFilepath();
 			ImGui::Text("%s", filepath.c_str());
 			ImGui::Text("Tile size: %.f x %.f", specs.tileDims.x, specs.tileDims.y);
 			ImGui::Text("[%d] [%d]", specs.index.y, specs.index.x);
@@ -134,7 +128,7 @@ class SceneHierarchyPanel {
 	}
 
 	void drawVec3Control(const char* label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f) {
-		ImGuiIO io = ImGui::GetIO();
+		ImGuiIO io		 = ImGui::GetIO();
 		ImFont* boldFont = io.Fonts->Fonts[0];
 
 		ImGui::PushID(label);
@@ -147,7 +141,7 @@ class SceneHierarchyPanel {
 		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
 
-		float lineHeight = GImGui->Font->LegacySize + GImGui->Style.FramePadding.y * 2.0f;
+		float  lineHeight = GImGui->Font->LegacySize + GImGui->Style.FramePadding.y * 2.0f;
 		ImVec2 buttonSize = {lineHeight + 3.0f, lineHeight};
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0.1f, 0.15f, 1.0f});
@@ -200,7 +194,7 @@ class SceneHierarchyPanel {
 
   private:
 	std::shared_ptr<Scene> m_scene;
-	Entity m_selectionContext;
+	Entity				   m_selectionContext;
 };
 
 }  // namespace Atlas

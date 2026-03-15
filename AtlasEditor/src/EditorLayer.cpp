@@ -1,6 +1,7 @@
 #include "atpch.h"
 #include "EditorLayer.h"
 
+#include "ProjectPanel.h"
 #include "SceneHierarchyPanel.h"
 
 #include "Atlas/Core/Application.h"
@@ -40,7 +41,12 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 
 	m_menuBar->generateMenuBar("Atlas Editor");
 	m_cameraController.setZoomLevel(25.0f);
-	// TODO: Change to a more robust solution
+
+	m_projectPanel = new ProjectPanel();
+	m_projectPanel->setOnSceneSelected([this](std::shared_ptr<Scene> scene) {
+		setScene(scene);
+	});
+
 	m_hierarchyPanel = new SceneHierarchyPanel(nullptr);
 }
 
@@ -104,6 +110,7 @@ void EditorLayer::onImGuiRender() {
 #endif
 
 	m_logger.onImGuiRender();
+	m_projectPanel->onImGuiRender();
 	m_hierarchyPanel->onImGuiRender();
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));

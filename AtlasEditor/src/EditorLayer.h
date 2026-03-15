@@ -6,6 +6,7 @@
 #include "Atlas/Renderer/OrthographicCameraController.h"
 #include "Atlas/Scene/Scene.h"
 
+#include "ProjectPanel.h"
 #include "SceneHierarchyPanel.h"
 #include "LoggingPanel.h"
 
@@ -35,6 +36,7 @@ class EditorLayer : public Layer {
   private:
 	std::shared_ptr<MenuBar> m_menuBar;
 	SceneHierarchyPanel*	 m_hierarchyPanel;
+	ProjectPanel*			 m_projectPanel;
 	LoggingPanel			 m_logger;
 
 	OrthographicCameraController m_cameraController;
