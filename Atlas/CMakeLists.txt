@@ -109,6 +109,8 @@ file(GLOB_RECURSE ATLAS_SOURCES CONFIGURE_DEPENDS
 file(GLOB IMGUI_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/misc/cpp/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/misc/cpp/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/stb_image/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/stb_image/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/entt/entt.hpp"
@@ -120,9 +122,14 @@ target_sources(${TARGET_NAME} PRIVATE ${ATLAS_SOURCES})
 
 # Silence ImGui + Metal-cpp bridging warning
 set_source_files_properties(
-    src/Atlas/Platform/Metal/ImGuiMetalRenderer.mm
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas/Platform/Metal/ImGuiMetalRenderer.mm"
     PROPERTIES
     COMPILE_OPTIONS "-Wno-arc-bridge-casts-disallowed-in-nonarc"
+)
+set_source_files_properties(
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/misc/cpp/imgui_stdlib.cpp"
+    PROPERTIES
+    INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui"
 )
 
 target_precompile_headers(${TARGET_NAME}

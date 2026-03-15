@@ -145,8 +145,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 		if (existing.contains(uuid)) {
 			entity = existing[uuid];
 		} else {
-			entity									  = scene->createEntity(e["Tag"]);
-			entity.getComponent<Component::UUID>().id = uuid;
+			entity = scene->createEntity(e["Tag"], uuid);
 		}
 
 		if (e.contains("Transform")) {

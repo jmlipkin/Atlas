@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Atlas/Core/UUID.h"
+#include "Atlas/ECS/Components/Components.h"
+
 #include <entt/entt.hpp>
 
 namespace Atlas {
@@ -9,10 +12,13 @@ namespace Atlas {
 
 class Entity {
   public:
-	Entity() = default;
-	Entity(entt::entity entityID, Scene* scene) : m_entityID(entityID), m_scene(scene) {}
+	Entity() : m_atlasID(UUID::null()) {}
+	Entity(entt::entity entityID, Scene* scene) : m_entityID(entityID), m_scene(scene), m_atlasID(getComponent<Component::UUID>().id) {}
+	Entity(entt::entity entityID, Scene* scene, UUID id) : m_entityID(entityID), m_scene(scene), m_atlasID(id) {}
 
 	Entity(const Entity& other) = default;
+
+	UUID getUUID() const { return m_atlasID; }
 
 	template <typename T, typename... Args>
 	T& addComponent(Args&&... args);
@@ -33,16 +39,17 @@ class Entity {
 	operator entt::entity() { return m_entityID; }
 	operator const entt::entity() const { return m_entityID; }
 
-	bool operator==(const Entity& other) const { return m_entityID == other.m_entityID; }
+	bool operator==(const Entity& other) const { return m_atlasID == other.m_atlasID; }
 
-	operator bool() const { return m_entityID != entt::null && m_scene != nullptr; }
+	operator bool() const { return m_atlasID != UUID::null() && m_scene != nullptr; }
 
 	// TEMPORARY
-	explicit operator uint32_t() { return (uint32_t)m_entityID; }
+	// explicit operator uint32_t() { return (uint32_t)m_entityID; }
 
   private:
 	entt::entity m_entityID;
 	Scene*		 m_scene = nullptr;
+	UUID		 m_atlasID;
 };
 
 }  // namespace Atlas

@@ -41,7 +41,7 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 
 	m_menuBar->setOnNewEntity([this]() {
 		if(m_activeScene)
-			m_activeScene->createEntity("New Entity");
+			m_hierarchyPanel->addEmptyEntity();
 	});
 
 	m_menuBar->setOnAddComponent([this]() {

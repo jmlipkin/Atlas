@@ -16,9 +16,9 @@ Scene::Scene(const std::string& name) : m_name(name), m_filepath(name + ".atscen
 	m_registry.on_construct<Component::Sprite>().connect<&System::SpriteInitializer::OnSpriteAttach>();
 }
 
-Entity Scene::createEntity(const std::string& name) {
-	Entity entity = {m_registry.create(), this};
-	entity.addComponent<Component::UUID>();
+Entity Scene::createEntity(const std::string& name, UUID id) {
+	Entity entity = {m_registry.create(), this, id};
+	entity.addComponent<Component::UUID>(id);
 	entity.addComponent<Component::Tag>(name);
 	entity.addComponent<Component::Transform>();
 	return entity;

@@ -1,0 +1,11 @@
+{
+  "Atlas Version": "0.0.1",
+  "AtlasProject Version": 1,
+  "Name": "SandboxProject",
+  "Startup Scene": "",
+  "Last Active Scene": "scenes/Scene2.atscene",
+  "Scenes": [
+    "scenes/Scene1.atscene",
+    "scenes/Scene2.atscene"
+  ]
+}

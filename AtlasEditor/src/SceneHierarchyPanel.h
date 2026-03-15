@@ -6,8 +6,10 @@
 #include "Atlas/ECS/Registry.h"
 #include "Atlas/Renderer/TextureSheet.h"
 #include "Atlas/Scene/Scene.h"
-#include "imgui/imgui.h"
-#include "imgui/imgui_internal.h"
+
+#include <imgui/imgui.h>
+#include <imgui/imgui_internal.h>
+#include <imgui/misc/cpp/imgui_stdlib.h>
 
 namespace Atlas {
 
@@ -16,8 +18,17 @@ class SceneHierarchyPanel {
 	SceneHierarchyPanel(std::shared_ptr<Scene> scene) : m_scene(scene) {}
 	~SceneHierarchyPanel() = default;
 
-	void setScene(std::shared_ptr<Scene> scene) { m_scene = scene; }
-	void addComponent() { m_openComponentPicker = true; }
+	void setScene(std::shared_ptr<Scene> scene) {
+		m_scene			   = scene;
+		m_selectionContext = {};
+		m_renameTarget	   = {};
+	}
+	void addEmptyEntity() {
+		m_renameTarget		= m_scene->createEntity("New Entity");
+		m_focusRenameCursor = true;
+	}
+
+	void		  addComponent() { m_openComponentPicker = true; }
 	const Entity& getSelectionContext() const { return m_selectionContext; }
 
 	void onImGuiRender() {
@@ -30,14 +41,14 @@ class SceneHierarchyPanel {
 		ImGui::Text("%s", m_scene->getName().c_str());
 
 		if (ImGui::Button("Add Entity")) {
-			m_scene->createEntity("New Entity");
+			addEmptyEntity();
 		}
 
 		Registry& registry = m_scene->getRegistry();
 		auto	  view	   = registry.view<Component::Tag>();
 		for (entt::entity entity : view) {
 			Entity e{entity, m_scene.get()};
-			ImGui::PushID((uint32_t)e);
+			ImGui::PushID(e.getComponent<Component::UUID>().id);
 			drawEntityNode(e);
 			ImGui::PopID();
 		}
@@ -45,7 +56,7 @@ class SceneHierarchyPanel {
 		ImGui::SetNextWindowSizeConstraints(ImVec2(360, 0), ImVec2(FLT_MAX, FLT_MAX));
 		if (ImGui::BeginPopupContextWindow("SceneHierarchyContextMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
 			if (ImGui::MenuItem("Add entity", "Cmd+E")) {
-				m_scene->createEntity("New Entity");
+				addEmptyEntity();
 			}
 			ImGui::EndPopup();
 		}
@@ -73,19 +84,45 @@ class SceneHierarchyPanel {
 	void drawEntityNode(Entity& entity) {
 		auto&			   tag		  = entity.getComponent<Component::Tag>();
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
-		bool			   opened	  = ImGui::TreeNodeEx((void*)(uint64_t)entity, tree_flags, "%s", tag.tag.c_str());
+
+		bool opened = false;
+		if (entity == m_renameTarget) {
+			if (m_focusRenameCursor) {
+				ImGui::SetKeyboardFocusHere();
+				m_focusRenameCursor = false;
+			}
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetTreeNodeToLabelSpacing());
+			ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+			ImGui::InputText("##rename", &tag.tag, ImGuiInputTextFlags_AutoSelectAll);
+		} else {
+			opened = ImGui::TreeNodeEx((void*)(uint64_t)entity.getUUID(), tree_flags, "%s", tag.tag.c_str());
+		}
+
+		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
+			m_renameTarget		= entity;
+			m_focusRenameCursor = true;
+		}
 
 		if (ImGui::IsItemClicked()) {
 			m_selectionContext = entity;
 		}
 
+		if (entity == m_renameTarget && ImGui::IsItemDeactivated()) {
+			m_renameTarget = {};
+		}
+
 		bool entityDeleted = false;
 		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Rename")) {
+				m_renameTarget = entity;
+				m_focusRenameCursor = true;
+				ImGui::EndMenu();
+			}
 			if (ImGui::BeginMenu("Add Component")) {
 				drawComponentPicker(entity);
 				ImGui::EndMenu();
 			}
-			if (ImGui::MenuItem("Delete entity"))
+			if (ImGui::MenuItem("Delete"))
 				entityDeleted = true;
 			ImGui::EndPopup();
 		}
@@ -142,6 +179,9 @@ class SceneHierarchyPanel {
 	}
 
 	void drawComponents(Entity& entity) {
+		auto& UUID = entity.getComponent<Component::UUID>().id;
+		ImGui::Text("UUID: 0x%016llX", (uint64_t)UUID);
+
 		drawComponent<Component::Transform>("Transform", entity, [this](auto& component) {
 			drawVec3Control("Position", component.position, 0.0f, 120.0f);
 		});
@@ -230,8 +270,11 @@ class SceneHierarchyPanel {
 
   private:
 	std::shared_ptr<Scene> m_scene;
-	Entity				   m_selectionContext;
-	bool				   m_openComponentPicker = false;
+
+	Entity m_selectionContext;
+	Entity m_renameTarget;
+	bool   m_openComponentPicker = false;
+	bool   m_focusRenameCursor	 = false;
 };
 
 }  // namespace Atlas

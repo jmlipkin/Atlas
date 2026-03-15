@@ -1,0 +1,53 @@
+{
+  "Name": "Scene1",
+  "Entities": [
+    {
+      "UUID": 18031357280409163922,
+      "Tag": "RenamingEntity",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "UUID": 14970872023506877474,
+      "Tag": "Entity2",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "UUID": 1664691399688745188,
+      "Tag": "Entity6",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ]
+}

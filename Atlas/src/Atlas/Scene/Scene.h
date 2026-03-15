@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Atlas/Core/Time.h"
+#include "Atlas/Core/UUID.h"
 #include "Atlas/Events/Event.h"
 #include "Atlas/ECS/Registry.h"
 
@@ -19,7 +20,7 @@ class Scene {
 	virtual void serializeData(json& data) {}
 	virtual void deserializeData(const json& data) {}
 
-	Entity	  createEntity(const std::string& name);
+	Entity	  createEntity(const std::string& name, UUID id = UUID{});
 	Registry& getRegistry() { return m_registry; }
 
 	// Renamed so that derived classes can call onEvent()

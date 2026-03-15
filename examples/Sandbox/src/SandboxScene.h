@@ -51,7 +51,7 @@ class SandboxScene : public Atlas::Scene {
 	class PlayerController : public Atlas::Behavior {
 		AT_BEHAVIOR(PlayerController)
 	  public:
-		virtual void onUpdate(Atlas::DeltaTime dt) {
+		virtual void onUpdate(Atlas::DeltaTime dt) override {
 			using namespace Atlas;
 			auto& transform = getComponent<Component::Transform>();
 			if (Input::isKeyPressed(AT_KEY_W)) {
