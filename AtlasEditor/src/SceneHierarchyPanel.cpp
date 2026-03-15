@@ -1,11 +1,13 @@
 #include "atpch.h"
 #include "SceneHierarchyPanel.h"
 
+#include "Atlas/Project/Project.h"
 #include "Atlas/Scene/Scene.h"
 #include "Atlas/ECS/Entities/Entity.h"
 
 #include <imgui/imgui.h>
 #include <imgui/misc/cpp/imgui_stdlib.h>
+#include <filesystem>
 
 namespace Atlas {
 
@@ -15,9 +17,11 @@ void SceneHierarchyPanel::setScene(std::shared_ptr<Scene> scene) {
 	m_renameTarget	   = {};
 }
 void SceneHierarchyPanel::addEmptyEntity() {
-    Entity newEntity = m_scene->createEntity("New Entity");
-    m_selectionContext = newEntity;
-    m_renameTarget = newEntity;
+	Entity newEntity = m_scene->createEntity("New Entity");
+	autoSave();
+
+	m_selectionContext	= newEntity;
+	m_renameTarget		= newEntity;
 	m_focusRenameCursor = 2;
 }
 
@@ -43,10 +47,10 @@ void SceneHierarchyPanel::onImGuiRender() {
 		ImGui::PopID();
 	}
 
-    if(ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0) && !ImGui::IsAnyItemHovered()) {
-        if(!m_renameTarget) // Don't deselect while renaming
-            m_selectionContext = {};
-    }
+	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0) && !ImGui::IsAnyItemHovered()) {
+		if (!m_renameTarget)  // Don't deselect while renaming
+			m_selectionContext = {};
+	}
 
 	ImGui::SetNextWindowSizeConstraints(ImVec2(360, 0), ImVec2(FLT_MAX, FLT_MAX));
 	if (ImGui::BeginPopupContextWindow("SceneHierarchyContextMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
@@ -77,9 +81,9 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 	auto&			   tag		  = entity.getComponent<Component::Tag>();
 	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
 
-    if(entity == m_selectionContext) {
-        tree_flags |= ImGuiTreeNodeFlags_Selected;
-    }
+	if (entity == m_selectionContext) {
+		tree_flags |= ImGuiTreeNodeFlags_Selected;
+	}
 
 	bool opened = false;
 	if (entity == m_renameTarget) {
@@ -105,6 +109,7 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 
 	if (entity == m_renameTarget && ImGui::IsItemDeactivated()) {
 		m_renameTarget = {};
+		autoSave();
 	}
 
 	bool entityDeleted = false;
@@ -131,15 +136,25 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 		if (m_selectionContext == entity) {
 			m_selectionContext = {};
 		}
+		autoSave();
 	}
 }
 
 void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 	if (ImGui::MenuItem("Animation")) {
 		AT_CORE_WARN("Cannot add Animation component: Default constructor isn't implemented yet");
+		autoSave();
 	}
 	if (ImGui::MenuItem("Script")) {
 		AT_CORE_WARN("Cannot add Script component: Default constructor isn't implemented yet");
+		autoSave();
+	}
+}
+
+void SceneHierarchyPanel::autoSave() {
+	if (std::filesystem::path(m_scene->getPath()).is_absolute()) {
+		ProjectManager::saveScene(m_scene);
+		AT_CORE_TRACE("Saving scene...");
 	}
 }
 

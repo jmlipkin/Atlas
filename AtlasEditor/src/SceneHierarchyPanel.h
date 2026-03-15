@@ -25,6 +25,8 @@ class SceneHierarchyPanel {
 	void drawEntityNode(Entity& entity);
 	void drawComponentPicker(Entity& entity);
 
+	void autoSave();
+
   private:
 	PropertiesPanel		   m_propertiesPanel;
 	std::shared_ptr<Scene> m_scene;

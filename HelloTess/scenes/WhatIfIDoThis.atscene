@@ -1,4 +1,21 @@
 {
   "Name": "WhatIfIDoThis",
-  "Entities": []
+  "Entities": [
+    {
+      "UUID": 16612486020616169821,
+      "Tag": "NewEntity",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ]
 }
