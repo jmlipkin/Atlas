@@ -141,7 +141,7 @@ void EditorLayer::onImGuiRender() {
 
 void EditorLayer::loadConfig() {
 	using json			 = nlohmann::ordered_json;
-	std::string filepath = Platform::getResourcesPath() + "/editor.atconfig";
+	std::string filepath = Platform::getAppSupportPath() + "/editor.atconfig";
 	if (!std::filesystem::exists(filepath)) {
 		return;
 	}
@@ -165,7 +165,7 @@ void EditorLayer::loadConfig() {
 
 void EditorLayer::saveConfig() {
 	using json			   = nlohmann::ordered_json;
-	std::string	  filepath = Platform::getResourcesPath() + "/editor.atconfig";
+	std::string	  filepath = Platform::getAppSupportPath() + "/editor.atconfig";
 	std::ofstream file(filepath);
 	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", filepath);
 

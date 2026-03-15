@@ -116,7 +116,6 @@ class SceneHierarchyPanel {
 			if (ImGui::MenuItem("Rename")) {
 				m_renameTarget = entity;
 				m_focusRenameCursor = true;
-				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Add Component")) {
 				drawComponentPicker(entity);

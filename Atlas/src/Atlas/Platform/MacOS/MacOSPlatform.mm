@@ -6,6 +6,8 @@
 #include <AppKit/AppKit.h>
 #include <CoreFoundation/CFBundle.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <Foundation/Foundation.h>
+#include <objc/objc.h>
 
 namespace Atlas {
 Platform* Platform::s_instance = new MacOSPlatform();
@@ -26,6 +28,19 @@ std::string MacOSPlatform::getExecutablePathImpl() {
 	CFURLGetFileSystemRepresentation(executableURL, true, (UInt8*)path, PATH_MAX);
 	CFRelease(executableURL);
 	return std::string(path);
+}
+
+std::string MacOSPlatform::getAppSupportPathImpl() {
+	NSArray*  paths		 = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+	NSString* appSupport = [paths firstObject];
+	NSString* atlasPath	 = [appSupport stringByAppendingPathComponent:@"Atlas Editor"];
+
+	NSFileManager* fm = [NSFileManager defaultManager];
+	if (![fm fileExistsAtPath:atlasPath]) {
+		[fm createDirectoryAtPath:atlasPath withIntermediateDirectories:YES attributes:Nil error:Nil];
+	}
+
+	return std::string([atlasPath UTF8String]);
 }
 
 std::string MacOSPlatform::openFileDialogImpl(const std::string& filter) {
@@ -61,7 +76,7 @@ std::string MacOSPlatform::saveFileDialogImpl(const std::string& filter) {
 	return "";
 }
 
-int MacOSPlatform::showConfirmDialogImpl(const std::string &message, const std::string &confirm, const std::string &deny, const std::string& cancel) {
+int MacOSPlatform::showConfirmDialogImpl(const std::string& message, const std::string& confirm, const std::string& deny, const std::string& cancel) {
 	NSAlert* alert = [[NSAlert alloc] init];
 	[alert setMessageText:[NSString stringWithUTF8String:message.c_str()]];
 	[alert setAlertStyle:NSAlertStyleWarning];
