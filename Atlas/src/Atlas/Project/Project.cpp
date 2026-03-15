@@ -1,6 +1,7 @@
 #include "atpch.h"
 #include "Project.h"
 #include <filesystem>
+#include <memory>
 
 #include "Atlas/Project/Serializer.h"
 #include "Atlas/Scene/Scene.h"
@@ -102,6 +103,16 @@ void ProjectManager::saveProject() {
 		return;
 	}
 	Serializer::serializeProject(s_activeProject);
+
+	if (s_activeScene && std::filesystem::path(s_activeScene->getPath()).is_absolute()) {
+		for (auto& relativePath : s_activeProject->getData().scene_filepaths) {
+			if (toAbsolutePath(relativePath) == s_activeScene->getPath()) {
+				Serializer::serializeScene(s_activeScene);
+				break;
+			}
+		}
+	}
+
 	s_isDirty = false;
 }
 
@@ -110,7 +121,7 @@ void ProjectManager::closeProject(bool shouldSave) {
 		saveProject();
 	}
 	s_activeProject = nullptr;
-	s_activeScene = nullptr;
+	s_activeScene	= nullptr;
 }
 
 void ProjectManager::setActiveScene(std::shared_ptr<Scene> scene) {
