@@ -62,12 +62,14 @@ class ProjectManager {
 	static std::shared_ptr<Project> getActiveProject() { return s_activeProject; }
 	static void setActiveScene(std::shared_ptr<Scene> scene);
 
+	static bool isDirty() { return s_isDirty; }
 	static std::string toRelativePath(const std::string& absolutePath);
 	static std::string toAbsolutePath(const std::string& relativePath);
 
   private:
 	static std::shared_ptr<Project> s_activeProject;
 	static std::shared_ptr<Scene>	s_activeScene;
+	static bool s_isDirty;
 };
 
 }  // namespace Atlas

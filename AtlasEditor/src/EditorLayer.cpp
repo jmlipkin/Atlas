@@ -33,6 +33,11 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 		setScene(scene);
 	});
 
+	m_menuBar->setOnProjectClosed([this]() {
+		setScene(std::make_shared<Scene>("New Scene"));
+		m_config.last_open_project = "";
+	});
+
 	m_menuBar->generateMenuBar("Atlas Editor");
 	m_cameraController.setZoomLevel(25.0f);
 	// TODO: Change to a more robust solution
@@ -43,8 +48,10 @@ void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
 	m_activeScene = scene;
 	m_hierarchyPanel->setScene(scene);
 	ProjectManager::setActiveScene(scene);
-	if (ProjectManager::getActiveProject() && scene) {
-		m_config.last_open_scene = scene->getPath();
+	if (!ProjectManager::getActiveProject() && scene) {
+		if (std::filesystem::path(scene->getPath()).is_absolute()) {
+			m_config.last_open_scene = scene->getPath();
+		}
 	}
 }
 

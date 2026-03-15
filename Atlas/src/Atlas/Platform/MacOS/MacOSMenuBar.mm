@@ -16,9 +16,12 @@
 @property(nonatomic, assign) Atlas::MenuBar::SceneLoadedCallback	onSceneLoaded;
 @property(nonatomic, assign) Atlas::MenuBar::SceneSavedCallback		onSceneSaved;
 @property(nonatomic, assign) Atlas::MenuBar::SceneCreatedCallback	onNewScene;
+@property(nonatomic, assign) Atlas::MenuBar::ProjectClosedCallback	onProjectClosed;
+@property(nonatomic, assign) Atlas::MenuBar::SceneClosedCallback	onSceneClosed;
 - (void)newProject:(id)sender;
 - (void)newScene:(id)sender;
 - (void)openProject:(id)sender;
+- (void)closeProject:(id)sender;
 - (void)saveProject:(id)sender;
 - (void)saveProjectAs:(id)sender;
 - (void)saveScene:(id)sender;
@@ -58,6 +61,21 @@
 	std::shared_ptr<Atlas::Scene> scene = Atlas::ProjectManager::loadProject(path);
 	if (self.onSceneLoaded && scene) self.onSceneLoaded(scene);
 	if (self.onProjectChanged) self.onProjectChanged(directory + "/" + name);
+}
+
+- (void)closeProject:(id)sender {
+	if (Atlas::ProjectManager::isDirty()) {
+		int result = Atlas::Platform::showConfirmDialog("Do you want to save changes to your project?", "Save", "Don't Save", "Cancel");
+		if (result == 1000) {
+			Atlas::ProjectManager::closeProject(true);
+		} else if (result == 1002) {
+			Atlas::ProjectManager::closeProject(false);
+		}
+	} else {
+		// Project has not changed, so no need to save
+		Atlas::ProjectManager::closeProject(false);
+	}
+	if (self.onProjectClosed) self.onProjectClosed();
 }
 
 - (void)saveProject:(id)sender {
@@ -122,6 +140,8 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	delegate.onSceneLoaded		   = m_onSceneLoaded;
 	delegate.onSceneSaved		   = m_onSceneSaved;
 	delegate.onNewScene			   = m_onNewScene;
+	delegate.onProjectClosed	   = m_onProjectClosed;
+	delegate.onSceneClosed		   = m_onSceneClosed;
 
 	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"New Project" action:@selector(newProject:) keyEquivalent:@"N"];
 	[newProject setTarget:delegate];
@@ -156,6 +176,12 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	NSMenuItem* saveScene = [[NSMenuItem alloc] initWithTitle:@"Save Scene" action:@selector(saveScene:) keyEquivalent:@"s"];
 	[saveScene setTarget:delegate];
 	[fileMenu addItem:saveScene];
+
+	[fileMenu addItem:[NSMenuItem separatorItem]];
+
+	NSMenuItem* closeProject = [[NSMenuItem alloc] initWithTitle:@"Close Project" action:@selector(closeProject:) keyEquivalent:@"W"];
+	[closeProject setTarget:delegate];
+	[fileMenu addItem:closeProject];
 
 	[fileMenuItem setSubmenu:fileMenu];
 }

@@ -3,7 +3,7 @@
   "AtlasProject Version": 1,
   "Name": "HelloTess",
   "Startup Scene": "scenes/ImGonnaMarryYou.atscene",
-  "Last Active Scene": "scenes/Testing.atscene",
+  "Last Active Scene": "../TestScene.atscene",
   "Scenes": [
     "scenes/Testing.atscene"
   ]

@@ -61,4 +61,17 @@ std::string MacOSPlatform::saveFileDialogImpl(const std::string& filter) {
 	return "";
 }
 
+int MacOSPlatform::showConfirmDialogImpl(const std::string &message, const std::string &confirm, const std::string &deny, const std::string& cancel) {
+	NSAlert* alert = [[NSAlert alloc] init];
+	[alert setMessageText:[NSString stringWithUTF8String:message.c_str()]];
+	[alert setAlertStyle:NSAlertStyleWarning];
+
+	[alert addButtonWithTitle:[NSString stringWithUTF8String:confirm.c_str()]];
+	[alert addButtonWithTitle:[NSString stringWithUTF8String:cancel.c_str()]];
+	[alert addButtonWithTitle:[NSString stringWithUTF8String:deny.c_str()]];
+
+	NSModalResponse response = [alert runModal];
+	return (int)response;
+}
+
 }  // namespace Atlas

@@ -9,6 +9,7 @@ namespace Atlas {
 
 std::shared_ptr<Project> ProjectManager::s_activeProject = nullptr;
 std::shared_ptr<Scene>	 ProjectManager::s_activeScene	 = nullptr;
+bool					 ProjectManager::s_isDirty		 = false;
 
 void ProjectManager::saveScene(std::shared_ptr<Scene> scene, const std::string& explicitPath) {
 	if (!explicitPath.empty()) {
@@ -47,6 +48,7 @@ void ProjectManager::attachScenetoProject(std::shared_ptr<Scene> scene) {
 	if (std::find(paths.begin(), paths.end(), path) == paths.end()) {
 		paths.push_back(path);
 	}
+	s_isDirty = true;
 }
 
 void ProjectManager::createNewProject(const std::string& filepath, const std::string& name) {
@@ -91,6 +93,7 @@ void ProjectManager::saveProjectAs(const std::string& filepath, const std::strin
 	s_activeProject->getDirectory() = filepath;
 	s_activeProject->setName(name);
 	Serializer::serializeProject(s_activeProject);
+	s_isDirty = false;
 }
 
 void ProjectManager::saveProject() {
@@ -99,6 +102,7 @@ void ProjectManager::saveProject() {
 		return;
 	}
 	Serializer::serializeProject(s_activeProject);
+	s_isDirty = false;
 }
 
 void ProjectManager::closeProject(bool shouldSave) {
@@ -106,6 +110,7 @@ void ProjectManager::closeProject(bool shouldSave) {
 		saveProject();
 	}
 	s_activeProject = nullptr;
+	s_activeScene = nullptr;
 }
 
 void ProjectManager::setActiveScene(std::shared_ptr<Scene> scene) {
@@ -113,6 +118,7 @@ void ProjectManager::setActiveScene(std::shared_ptr<Scene> scene) {
 	if (s_activeProject && scene) {
 		s_activeProject->getData().last_active_scene = toRelativePath(scene->getPath());
 	}
+	s_isDirty = true;
 }
 
 std::string ProjectManager::toRelativePath(const std::string& absolutePath) {
