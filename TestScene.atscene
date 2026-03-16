@@ -3,7 +3,23 @@
   "Entities": [
     {
       "UUID": 6007123375104751276,
-      "Tag": "Name",
+      "Tag": "testing123",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "UUID": 3935775761440938774,
+      "Tag": "Doesthiswork",
       "Transform": {
         "Position": [
           0.0,

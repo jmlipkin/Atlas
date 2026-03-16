@@ -62,6 +62,14 @@ void SceneHierarchyPanel::onImGuiRender() {
 		ImGui::EndPopup();
 	}
 
+	// -1 means we just finished renaming, and so we need to skip this frame
+	if (m_justFinishedRename) {
+		m_justFinishedRename = false;
+	} else if (m_selectionContext && !m_renameTarget && ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+		m_renameTarget		= m_selectionContext;
+		m_focusRenameCursor = 2;
+	}
+
 	if (m_openComponentPicker) {
 		ImGui::OpenPopup("AddComponentPopup");
 		m_openComponentPicker = false;
@@ -93,7 +101,13 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 		}
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
-		ImGui::InputText("##rename", &tag.tag, ImGuiInputTextFlags_AutoSelectAll);
+		if (ImGui::InputText("##rename", &tag.tag, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
+			m_renameTarget = {};
+			ImGui::SetKeyboardFocusHere(-1);
+            m_justFinishedRename = true;
+			AT_CORE_TRACE("Enter! trying to exit");
+			autoSave();
+		}
 	} else {
 		opened = ImGui::TreeNodeEx((void*)(uint64_t)entity.getUUID(), tree_flags, "%s", tag.tag.c_str());
 	}
