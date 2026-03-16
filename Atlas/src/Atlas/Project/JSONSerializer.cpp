@@ -6,6 +6,7 @@
 #include "Atlas/Renderer/SubTexture.h"
 
 #include "Atlas/ECS/Components/Components.h"
+#include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
 
 #include <json/include/nlohmann/json.hpp>
@@ -91,9 +92,9 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			Component::Sprite&		 sprite = entity.getComponent<Component::Sprite>();
 			SubTextureSpecification& specs	= sprite.specs;
 
-			std::string texPath = sprite.texturePath;
-			s["Texture"]		= texPath;
-			s["Tile Size"] = {specs.tileSize.x, specs.tileSize.y};
+			std::string texPath	 = sprite.texturePath;
+			s["Texture"]		 = texPath;
+			s["Tile Size"]		 = {specs.tileSize.x, specs.tileSize.y};
 			s["Size (in Tiles)"] = {specs.sizeInTiles.x, specs.sizeInTiles.y};
 			s["Index"]			 = {specs.index.x, specs.index.y};
 
@@ -102,7 +103,35 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 		if (entity.hasComponent<Component::Script>()) {
 			e["Script"] = entity.getComponent<Component::Script>().instance->getTypeName();
 		}
+		if (entity.hasComponent<Component::Animations>()) {
+			json a;
 
+			Component::Animations& animations = entity.getComponent<Component::Animations>();
+
+			if (animations.containsActiveClip()) {
+				a["Active Clip"] = entity.getComponent<Component::Animations>().activeClip;
+			}
+			json clipsArray = json::array();
+			for (const auto& [clipName, clip] : animations.clips) {
+				json c;
+				c["Name"]			 = clipName;
+				c["Texture"]		 = clip.texturePath;
+				c["Frame Rate"]		 = clip.frameRate;
+				c["Should loop"]	 = clip.shouldLoop;
+				c["Tile Size"]		 = {clip.tileSize.x, clip.tileSize.y};
+				c["Size (in Tiles)"] = {clip.sizeInTiles.x, clip.sizeInTiles.y};
+
+				json f = json::array();
+				for (const auto& frame : clip.frames) {
+					f.push_back({frame.index.x, frame.index.y});
+				}
+
+				c["Frames"] = f;
+				clipsArray.push_back(c);
+			}
+			a["Clips"]		= clipsArray;
+			e["Animations"] = a;
+		}
 		entities.push_back(e);
 	}
 	root["Entities"] = entities;
@@ -149,11 +178,11 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 		}
 
 		if (e.contains("Sprite")) {
-			std::string				 texPath = ProjectManager::toAbsolutePath(e["Sprite"]["Texture"]);
+			std::string texPath = ProjectManager::toAbsolutePath(e["Sprite"]["Texture"]);
 			AssetManager::loadTexture(texPath);
 			glm::ivec2 index	   = {e["Sprite"]["Index"][0], e["Sprite"]["Index"][1]};
-			glm::vec2 tileSize	   = {e["Sprite"]["Tile Size"][0], e["Sprite"]["Tile Size"][1]};
-			glm::vec2 sizeInTiles = {e["Sprite"]["Size (in Tiles)"][0], e["Sprite"]["Size (in Tiles)"][1]};
+			glm::vec2  tileSize	   = {e["Sprite"]["Tile Size"][0], e["Sprite"]["Tile Size"][1]};
+			glm::vec2  sizeInTiles = {e["Sprite"]["Size (in Tiles)"][0], e["Sprite"]["Size (in Tiles)"][1]};
 
 			SubTexture sub(texPath, tileSize, index, sizeInTiles);
 			entity.addComponent<Component::Sprite>(texPath, sub.getSpecs());
@@ -161,6 +190,32 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 		if (e.contains("Script")) {
 			AT_CORE_WARN("Script '{}' on entity '{}' not deserialized - script serialization not yet implemented",
 						 e["Script"].get<std::string>(), e["Name"].get<std::string>());
+		}
+		if (e.contains("Animations")) {
+			Component::Animations& animations = entity.addComponent<Component::Animations>();
+
+			json a = e["Animations"];
+
+			if (a.contains("Active Clip"))
+				animations.activeClip = a["Active Clip"].get<std::string>();
+
+			for (const auto& c : a["Clips"]) {
+				AnimationClip clip;
+				clip.name		 = c["Name"];
+				clip.texturePath = ProjectManager::toAbsolutePath(c["Texture"]);
+				clip.frameRate	 = c["Frame Rate"];
+				clip.shouldLoop	 = c["Should loop"];
+				clip.tileSize	 = {c["Tile Size"][0], c["Tile Size"][1]};
+				clip.sizeInTiles = {c["Size (in Tiles)"][0], c["Size (in Tiles)"][1]};
+
+				for (const auto& f : c["Frames"]) {
+					AnimationFrame frame;
+					frame.index = {f[0], f[1]};
+					clip.frames.push_back(frame);
+				}
+
+				animations.clips[clip.name] = clip;
+			}
 		}
 	}
 }

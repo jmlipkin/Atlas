@@ -1,32 +1,43 @@
 #pragma once
 
-#include "Atlas/Renderer/SubTexture.h"
+#include <glm/glm.hpp>
 
+#include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace Atlas {
 
+struct AnimationFrame {
+	glm::ivec2 index;
+};
+
 struct AnimationClip {
-    const std::vector<std::shared_ptr<SubTexture>> frames;
+	std::string name;
 
-    AnimationClip(std::vector<std::shared_ptr<SubTexture>> frameData) : frames(frameData) {}
+	std::string texturePath;
+	glm::vec2	tileSize;
+	glm::ivec2	sizeInTiles;
+
+	bool  shouldLoop = false;
+	float frameRate	 = 12.0f;
+
+	std::vector<AnimationFrame> frames;
+
+	double timeSinceLastFrame = 0.0;  // internal only!
+	size_t currentFrame		  = 0;	  // internal only!
+	bool   playing			  = false;
 };
 
+namespace Component {
+
+struct Animations {
+	std::unordered_map<std::string, AnimationClip> clips;
+
+	std::string activeClip;
+
+	bool containsActiveClip() const { return !activeClip.empty() && clips.contains(activeClip); }
+};
+
+}  // namespace Component
 }  // namespace Atlas
-
-namespace Atlas::Component {
-
-struct Animation {
-    std::shared_ptr<AnimationClip> clip = nullptr;
-    double timeSinceLastFrame = 0.0f;    // internal only!
-    size_t nextFrame = 0;               // internal only!
-
-    bool playing = false;
-    float animationSpeed = 1.0f;
-    bool shouldLoop = false;
-    
-    Animation(std::shared_ptr<AnimationClip> frameData) : clip(frameData) {}
-    Animation(std::vector<std::shared_ptr<SubTexture>> frameData) : clip(std::make_shared<AnimationClip>(frameData)) {}
-};
-
-}  // namespace Atlas::Component

@@ -40,10 +40,33 @@ void Scene::onUpdate(DeltaTime dt) {
 	{
 		auto view = m_registry.view<Component::Transform, Component::Sprite>();
 		for (auto entity : view) {
+			if (m_registry.all_of<Component::Animations>(entity)) continue;
 			Component::Transform transform = view.get<Component::Transform>(entity);
 
 			Component::Sprite sprite = view.get<Component::Sprite>(entity);
 
+			Renderer::drawSprite(transform, sprite);
+		}
+	}
+	{
+		auto view = m_registry.view<Component::Transform, Component::Sprite, Component::Animations>();
+		for (auto entity : view) {
+			Component::Transform   transform = view.get<Component::Transform>(entity);
+			Component::Animations& anim		 = view.get<Component::Animations>(entity);
+
+			if (!anim.containsActiveClip()) {
+				continue;
+			}
+
+			AnimationClip& clip = anim.clips[anim.activeClip];
+			if (clip.playing && !clip.frames.empty()) {
+				SubTexture		  frame(clip.texturePath, clip.tileSize, clip.frames[clip.currentFrame].index, clip.sizeInTiles);
+				Component::Sprite sprite(clip.texturePath, frame.getSpecs());
+				Renderer::drawSprite(transform, sprite);
+				continue;
+			}
+
+			Component::Sprite sprite = view.get<Component::Sprite>(entity);
 			Renderer::drawSprite(transform, sprite);
 		}
 	}

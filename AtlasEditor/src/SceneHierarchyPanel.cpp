@@ -105,7 +105,6 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 			m_renameTarget = {};
 			ImGui::SetKeyboardFocusHere(-1);
             m_justFinishedRename = true;
-			AT_CORE_TRACE("Enter! trying to exit");
 			autoSave();
 		}
 	} else {
@@ -168,7 +167,6 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 void SceneHierarchyPanel::autoSave() {
 	if (std::filesystem::path(m_scene->getPath()).is_absolute()) {
 		ProjectManager::saveScene(m_scene);
-		AT_CORE_TRACE("Saving scene...");
 	}
 }
 

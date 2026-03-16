@@ -10,43 +10,43 @@
 namespace Atlas::System {
 
 struct Animation {
-    static void updateFrames(Registry& registry, Atlas::DeltaTime dt) {
-        auto view = registry.view<Component::Sprite, Component::Animation>();
-        for (auto entity : view) {
-            Component::Sprite& sprite = view.get<Component::Sprite>(entity);
-            Component::Animation& animation = view.get<Component::Animation>(entity);
+	static void updateFrames(Registry& registry, Atlas::DeltaTime dt) {
+		auto view = registry.view<Component::Sprite, Component::Animations>();
+		for (auto entity : view) {
+			Component::Sprite&	   sprite	 = view.get<Component::Sprite>(entity);
+			Component::Animations& animation = view.get<Component::Animations>(entity);
 
-            if(!animation.playing)
-                continue;
-                
-            // sprite.subtexture = animation.clip->frames[animation.nextFrame];
-            AT_CORE_WARN("Animation updating is broken for now");
-            // AS = 0.5 = 15fps
-            // AS = 1.0 = 30fps
-            // AS = 2.0 = 60fps
-            animation.timeSinceLastFrame += dt;
-            if(animation.timeSinceLastFrame >= 1.0f / (animation.animationSpeed * 30.0f)) {
-                animation.nextFrame++;
-                animation.timeSinceLastFrame = 0.0f;
-            }
+			if (!animation.containsActiveClip())
+				continue;
 
-            if (animation.nextFrame == animation.clip->frames.size()) {
-                animation.nextFrame = 0;
+			AnimationClip& clip = animation.clips[animation.activeClip];
 
-                if(!animation.shouldLoop)
-                    animation.playing = false;
-            }
-        }
-    }
+			if (!clip.playing)
+				continue;
+
+			clip.timeSinceLastFrame += dt;
+			if (clip.timeSinceLastFrame >= 1.0f / (clip.frameRate)) {
+				clip.currentFrame++;
+				clip.timeSinceLastFrame = 0.0f;
+			}
+
+			if (clip.currentFrame == clip.frames.size()) {
+				clip.currentFrame = 0;
+
+				if (!clip.shouldLoop)
+					clip.playing = false;
+			}
+		}
+	}
 };
 
 struct SpriteInitializer {
-    static void OnSpriteAttach(entt::registry& registry, entt::entity entity) {
-        auto& transform = registry.get<Component::Transform>(entity);
-        auto& sprite = registry.get<Component::Sprite>(entity);
+	static void OnSpriteAttach(entt::registry& registry, entt::entity entity) {
+		auto& transform = registry.get<Component::Transform>(entity);
+		auto& sprite	= registry.get<Component::Sprite>(entity);
 
-        transform.size = sprite.specs.sizeInTiles;
-    }
+		transform.size = sprite.specs.sizeInTiles;
+	}
 };
 
 }  // namespace Atlas::System
