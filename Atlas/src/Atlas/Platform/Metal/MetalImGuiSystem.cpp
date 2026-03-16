@@ -48,6 +48,8 @@ void MetalImGuiSystem::initImGuiLayer() {
     io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
     ImGui::StyleColorsDark();
 
+    setupImGuiStyle(ImGui::GetStyle());
+
     {
         AT_PROFILE_SCOPE("ImGui Metal init backend");
         

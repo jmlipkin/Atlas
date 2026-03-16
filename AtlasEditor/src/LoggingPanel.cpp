@@ -1,6 +1,8 @@
-#include "LoggingPanel.h"
-#include "Atlas/Core/Log.h"
 #include "atpch.h"
+#include "LoggingPanel.h"
+
+#include "Atlas/Core/Log.h"
+#include "Atlas/ImGui/ImGuiSystem.h"
 
 #include <imgui/imgui.h>
 

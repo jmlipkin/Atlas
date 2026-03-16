@@ -1,6 +1,7 @@
 #include "atpch.h"
 #include "PropertiesPanel.h"
 
+#include "Atlas/ImGui/ImGuiSystem.h"
 #include "Atlas/ECS/Entities/Entity.h"
 
 #include <imgui/imgui.h>
@@ -10,9 +11,10 @@ namespace Atlas {
 
 void PropertiesPanel::onImGuiRender(Entity& selection) {
 	ImGui::Begin("Properties");
-	AT_CORE_ASSERT(selection, "Properties panel cannot operate on an empty entity!");
+	ImGuiSystem::DrawPanelAccentBar(ImGuiSystem::PanelAccent::Purple);
 
-	drawComponents(selection);
+	if (selection)
+		drawComponents(selection);
 
 	ImGui::End();
 }

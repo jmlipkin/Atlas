@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Atlas/Project/Project.h"
+#include "Atlas/ImGui/ImGuiSystem.h"
 
 #include <imgui/imgui.h>
 #include <memory>
@@ -17,6 +18,7 @@ class ProjectPanel {
 		m_activeProject = ProjectManager::getActiveProject();
 
 		ImGui::Begin("Project");
+		ImGuiSystem::DrawPanelAccentBar(ImGuiSystem::PanelAccent::Purple);
 
 		if (m_activeProject == nullptr) {
 			ImGui::Text("No active project");

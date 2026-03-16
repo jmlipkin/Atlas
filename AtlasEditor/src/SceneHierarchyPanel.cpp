@@ -1,6 +1,7 @@
 #include "atpch.h"
 #include "SceneHierarchyPanel.h"
 
+#include "Atlas/ImGui/ImGuiSystem.h"
 #include "Atlas/Project/Project.h"
 #include "Atlas/Scene/Scene.h"
 #include "Atlas/ECS/Entities/Entity.h"
@@ -31,6 +32,7 @@ void SceneHierarchyPanel::onImGuiRender() {
 	}
 
 	ImGui::Begin("Scene Hierarchy");
+	ImGuiSystem::DrawPanelAccentBar(ImGuiSystem::PanelAccent::Purple);
 
 	ImGui::Text("%s", m_scene->getName().c_str());
 
@@ -52,7 +54,7 @@ void SceneHierarchyPanel::onImGuiRender() {
 			m_selectionContext = {};
 	}
 
-	ImGui::SetNextWindowSizeConstraints(ImVec2(360, 0), ImVec2(FLT_MAX, FLT_MAX));
+	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 0), ImVec2(FLT_MAX, FLT_MAX));
 	if (ImGui::BeginPopupContextWindow("SceneHierarchyContextMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
 		if (ImGui::MenuItem("Add entity", "Cmd+E")) {
 			addEmptyEntity();
@@ -72,9 +74,7 @@ void SceneHierarchyPanel::onImGuiRender() {
 
 	ImGui::End();
 
-	if (m_selectionContext) {
-		m_propertiesPanel.onImGuiRender(m_selectionContext);
-	}
+	m_propertiesPanel.onImGuiRender(m_selectionContext);
 }
 
 void SceneHierarchyPanel::drawEntityNode(Entity& entity) {

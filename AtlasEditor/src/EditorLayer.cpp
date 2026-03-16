@@ -40,12 +40,12 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 	});
 
 	m_menuBar->setOnNewEntity([this]() {
-		if(m_activeScene)
+		if (m_activeScene)
 			m_hierarchyPanel->addEmptyEntity();
 	});
 
 	m_menuBar->setOnAddComponent([this]() {
-		if(m_hierarchyPanel->getSelectionContext())
+		if (m_hierarchyPanel->getSelectionContext())
 			m_hierarchyPanel->addComponent();
 	});
 
@@ -125,6 +125,7 @@ void EditorLayer::onImGuiRender() {
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Viewport");
+	ImGuiSystem::DrawPanelAccentBar(ImGuiSystem::PanelAccent::Purple);
 	ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 	if (m_viewportSize != *((glm::vec2*)&viewportSize)) {
 		Application::get().getFramebuffer()->onResize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
