@@ -2,7 +2,7 @@
   "Name": "Testing",
   "Entities": [
     {
-      "UUID": 7447006361618306169,
+      "UUID": 339291173521086202,
       "Tag": "New Entity",
       "Transform": {
         "Position": [
@@ -18,23 +18,7 @@
       }
     },
     {
-      "UUID": 5791311695441004381,
-      "Tag": "New Entity",
-      "Transform": {
-        "Position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          1.0,
-          1.0
-        ]
-      }
-    },
-    {
-      "UUID": 5839161614430051057,
+      "UUID": 15709338735336233891,
       "Tag": "New Entity",
       "Transform": {
         "Position": [
@@ -66,7 +50,39 @@
       }
     },
     {
-      "UUID": 15709338735336233891,
+      "UUID": 5839161614430051057,
+      "Tag": "New Entity",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "UUID": 5791311695441004381,
+      "Tag": "New Entity",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "UUID": 7447006361618306169,
       "Tag": "New Entity",
       "Transform": {
         "Position": [
