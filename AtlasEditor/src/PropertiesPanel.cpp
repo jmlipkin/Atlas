@@ -24,18 +24,18 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 	ImGui::Text("UUID: 0x%016llX", (uint64_t)UUID);
 
 	drawComponent<Component::Transform>("Transform", entity, [this](auto& component) {
-		drawVec3Control("Position", component.position, 0.0f, 120.0f);
+		drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, 120.0f);
 	});
 	drawComponent<Component::Sprite>("Sprite", entity, [this](auto& component) {
-		SubTextureSpecification& specs	  = component.subtexture->getSpecs();
-		std::string&			 filepath = component.subtexture->getTexture()->getFilepath();
+		SubTextureSpecification& specs	  = component.specs;
+		const std::string&		 filepath = component.texturePath;
 		ImGui::Text("%s", filepath.c_str());
-		ImGui::Text("Tile size: %.f x %.f", specs.tileDims.x, specs.tileDims.y);
+		ImGui::Text("Tile size: %.f x %.f", specs.sizeInTiles.x, specs.sizeInTiles.y);
 		ImGui::Text("[%d] [%d]", specs.index.y, specs.index.x);
 	});
 }
 
-void PropertiesPanel::drawVec3Control(const char* label, glm::vec3& values, float resetValue, float columnWidth) {
+void PropertiesPanel::drawVec3Control(const char* label, glm::vec3& values, float resetX, float resetY, float resetZ, float columnWidth) {
 	ImGuiIO io		 = ImGui::GetIO();
 	ImFont* boldFont = io.Fonts->Fonts[0];
 
@@ -57,7 +57,7 @@ void PropertiesPanel::drawVec3Control(const char* label, glm::vec3& values, floa
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{0.8f, 0.1f, 0.15f, 1.0f});
 	ImGui::PushFont(boldFont);
 	if (ImGui::Button("X", buttonSize))
-		values.x = resetValue;
+		values.x = resetX;
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 
@@ -71,7 +71,7 @@ void PropertiesPanel::drawVec3Control(const char* label, glm::vec3& values, floa
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{0.2f, 0.7f, 0.2f, 1.0f});
 	ImGui::PushFont(boldFont);
 	if (ImGui::Button("Y", buttonSize))
-		values.y = resetValue;
+		values.y = resetY;
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 
@@ -85,7 +85,7 @@ void PropertiesPanel::drawVec3Control(const char* label, glm::vec3& values, floa
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{0.1f, 0.25f, 0.8f, 1.0f});
 	ImGui::PushFont(boldFont);
 	if (ImGui::Button("Z", buttonSize))
-		values.z = resetValue;
+		values.z = resetZ;
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 

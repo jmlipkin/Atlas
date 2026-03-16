@@ -1,5 +1,6 @@
 #include "atpch.h"
 #include "Scene.h"
+#include <memory>
 
 #include "Atlas/Core/Time.h"
 #include "Atlas/Renderer/Renderer.h"
@@ -43,7 +44,7 @@ void Scene::onUpdate(DeltaTime dt) {
 
 			Component::Sprite sprite = view.get<Component::Sprite>(entity);
 
-			Renderer::drawQuad(transform.position, transform.size, sprite.subtexture);
+			Renderer::drawSprite(transform, sprite);
 		}
 	}
 

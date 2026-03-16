@@ -1,13 +1,15 @@
 #pragma once
 
 #include "Atlas/Core/Font.h"
-#include "Atlas/Renderer/RenderCommand.h"
 
+#include "Atlas/Renderer/GraphicsContext.h"
+#include "Atlas/Renderer/RendererAPI.h"
 #include "Atlas/Renderer/Texture.h"
-#include "Atlas/Renderer/TextureSheet.h"
+#include "Atlas/Renderer/SubTexture.h"
 #include "Atlas/Renderer/OrthographicCamera.h"
 #include "Atlas/Renderer/UniformBuffer.h"
 
+#include "Atlas/ECS/Components/Components.h"
 namespace Atlas {
 
 class Renderer {
@@ -31,10 +33,7 @@ class Renderer {
 	static void drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<SubTexture>& texture);
 	static void drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<SubTexture>& texture);
 
-	static void drawQuad(const glm::vec2& position, const std::shared_ptr<TextureSheet>& texture);
-	static void drawQuad(const glm::vec3& position, const std::shared_ptr<TextureSheet>& texture);
-	static void drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& texture);
-	static void drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& texture);
+	static void drawSprite(Component::Transform transform, Component::Sprite sprite);
 
 	static void drawQuad(const glm::mat4& transform, const glm::vec4& color);
 	static void drawQuad(const glm::mat4& transform, const std::shared_ptr<Texture>& texture);

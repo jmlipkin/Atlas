@@ -27,12 +27,4 @@ std::shared_ptr<Texture> AssetManager::loadTexture(const std::string& filepath) 
 	return cache[filepath] = Texture::create(filepath);
 }
 
-std::shared_ptr<TextureSheet> AssetManager::loadTextureSheet(const std::string& filepath, const TextureSheetSpecification& specs) {
-	auto& cache = getCache<TextureSheet>();
-	if (cache.contains(filepath)) {
-		return cache[filepath];
-	}
-	return cache[filepath] = std::make_shared<TextureSheet>(filepath, specs);
-}
-
 }  // namespace Atlas

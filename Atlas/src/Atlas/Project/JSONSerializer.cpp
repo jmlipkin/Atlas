@@ -3,7 +3,7 @@
 
 #include "Atlas/Core/AssetManager.h"
 #include "Atlas/Project/Project.h"
-#include "Atlas/Renderer/TextureSheet.h"
+#include "Atlas/Renderer/SubTexture.h"
 
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Behavior.h"
@@ -89,19 +89,12 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 		if (entity.hasComponent<Component::Sprite>()) {
 			json					 s;
 			Component::Sprite&		 sprite = entity.getComponent<Component::Sprite>();
-			SubTextureSpecification& specs	= sprite.subtexture->getSpecs();
+			SubTextureSpecification& specs	= sprite.specs;
 
-			std::string texPath = ProjectManager::toRelativePath(sprite.subtexture->getTexture()->getFilepath());
+			std::string texPath = sprite.texturePath;
 			s["Texture"]		= texPath;
-			json coords;
-
-			coords["Top left"]	   = {specs.coordinates.top_left.x, specs.coordinates.top_left.y};
-			coords["Top right"]	   = {specs.coordinates.top_right.x, specs.coordinates.top_right.y};
-			coords["Bottom left"]  = {specs.coordinates.bottom_left.x, specs.coordinates.bottom_left.y};
-			coords["Bottom right"] = {specs.coordinates.bottom_right.x, specs.coordinates.bottom_right.y};
-
-			s["Coordinates"]	 = coords;
-			s["Tile Dimensions"] = {specs.tileDims.x, specs.tileDims.y};
+			s["Tile Size"] = {specs.tileSize.x, specs.tileSize.y};
+			s["Size (in Tiles)"] = {specs.sizeInTiles.x, specs.sizeInTiles.y};
 			s["Index"]			 = {specs.index.x, specs.index.y};
 
 			e["Sprite"] = s;
@@ -157,18 +150,13 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 
 		if (e.contains("Sprite")) {
 			std::string				 texPath = ProjectManager::toAbsolutePath(e["Sprite"]["Texture"]);
-			std::shared_ptr<Texture> texture = AssetManager::loadTexture(texPath);
-			SubTextureSpecification	 specs;
-			specs.index	   = {e["Sprite"]["Index"][0], e["Sprite"]["Index"][1]};
-			specs.tileDims = {e["Sprite"]["Tile Dimensions"][0], e["Sprite"]["Tile Dimensions"][1]};
+			AssetManager::loadTexture(texPath);
+			glm::ivec2 index	   = {e["Sprite"]["Index"][0], e["Sprite"]["Index"][1]};
+			glm::vec2 tileSize	   = {e["Sprite"]["Tile Size"][0], e["Sprite"]["Tile Size"][1]};
+			glm::vec2 sizeInTiles = {e["Sprite"]["Size (in Tiles)"][0], e["Sprite"]["Size (in Tiles)"][1]};
 
-			json coords					   = e["Sprite"]["Coordinates"];
-			specs.coordinates.top_left	   = {coords["Top left"][0], coords["Top left"][1]};
-			specs.coordinates.top_right	   = {coords["Top right"][0], coords["Top right"][1]};
-			specs.coordinates.bottom_left  = {coords["Bottom left"][0], coords["Bottom left"][1]};
-			specs.coordinates.bottom_right = {coords["Bottom right"][0], coords["Bottom right"][1]};
-
-			entity.addComponent<Component::Sprite>(std::make_shared<SubTexture>(texture, specs));
+			SubTexture sub(texPath, tileSize, index, sizeInTiles);
+			entity.addComponent<Component::Sprite>(texPath, sub.getSpecs());
 		}
 		if (e.contains("Script")) {
 			AT_CORE_WARN("Script '{}' on entity '{}' not deserialized - script serialization not yet implemented",

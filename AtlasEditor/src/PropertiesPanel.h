@@ -56,7 +56,7 @@ class PropertiesPanel {
 
 	void drawComponents(Entity& entity);
 
-	void drawVec3Control(const char* label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f);
+	void drawVec3Control(const char* label, glm::vec3& values, float resetX = 0.0f, float resetY = 0.0f, float resetZ = 0.0f, float columnWidth = 100.0f);
 };
 
 }  // namespace Atlas

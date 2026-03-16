@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Atlas/Renderer/Texture.h"
-#include "Atlas/Renderer/TextureSheet.h"
+#include "Atlas/Renderer/SubTexture.h"
 
 #include <glm/glm.hpp>
 #include <freetype/freetype.h>
 #include <vector>
+#include <unordered_map>
 
 namespace Atlas {
 class Font {

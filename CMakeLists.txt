@@ -77,6 +77,5 @@ add_subdirectory(Atlas)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     add_subdirectory(AtlasEditor)
-    add_subdirectory(examples/Sandbox)
     add_subdirectory(examples/PacMan)
 endif()

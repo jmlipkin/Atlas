@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Atlas/Core/UUID.h"
-#include "Atlas/Renderer/TextureSheet.h"
+#include "Atlas/Renderer/SubTexture.h"
 
 #include <glm/glm.hpp>
 
@@ -20,7 +20,7 @@ struct Tag {
 };
 
 struct Transform {
-	glm::vec3 position{0.0f};
+	glm::vec3 position{0.0f, 0.0f, 1.0f};
 	float	  rotation{0.0f};
 	glm::vec2 size{1.0f};
 
@@ -29,8 +29,10 @@ struct Transform {
 };
 
 struct Sprite {
-	std::shared_ptr<SubTexture> subtexture;
-	Sprite(std::shared_ptr<SubTexture> sprite) : subtexture(sprite) {}
+	std::string texturePath;
+	SubTextureSpecification specs;
+	Sprite(std::string path, SubTextureSpecification texSpecs) : texturePath(path), specs(texSpecs) {}
+	Sprite(std::shared_ptr<SubTexture> sprite) : texturePath(sprite->getTexturePath()), specs(sprite->getSpecs()) {}
 };
 
 }  // namespace Atlas::Component

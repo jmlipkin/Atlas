@@ -5,6 +5,7 @@
 #include "Atlas/ECS/Registry.h"
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Components.h"
+#include "Atlas/ECS/Components/Animation.h"
 
 namespace Atlas::System {
 
@@ -18,8 +19,8 @@ struct Animation {
             if(!animation.playing)
                 continue;
                 
-            sprite.subtexture = animation.clip->frames[animation.nextFrame];
-            
+            // sprite.subtexture = animation.clip->frames[animation.nextFrame];
+            AT_CORE_WARN("Animation updating is broken for now");
             // AS = 0.5 = 15fps
             // AS = 1.0 = 30fps
             // AS = 2.0 = 60fps
@@ -44,7 +45,7 @@ struct SpriteInitializer {
         auto& transform = registry.get<Component::Transform>(entity);
         auto& sprite = registry.get<Component::Sprite>(entity);
 
-        transform.size = sprite.subtexture->getSizeInTiles();
+        transform.size = sprite.specs.sizeInTiles;
     }
 };
 

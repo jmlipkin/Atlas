@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Atlas/Renderer/TextureSheet.h"
+#include "Atlas/Renderer/SubTexture.h"
 
 #include <vector>
 

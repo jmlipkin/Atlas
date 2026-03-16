@@ -1,14 +1,14 @@
 #include "atpch.h"
 #include "Renderer.h"
 
-
 #include "Atlas/Core/Log.h"
 #include "Atlas/Core/AssetManager.h"
 #include "Atlas/Core/Font.h"
 
+#include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Renderer/Buffer.h"
 #include "Atlas/Renderer/Texture.h"
-#include "Atlas/Renderer/TextureSheet.h"
+#include "Atlas/Renderer/SubTexture.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -335,7 +335,7 @@ void Renderer::drawQuad(const glm::mat4& transform, const std::shared_ptr<SubTex
 	switchPipeline(s_data.quadPipeline, s_data.quadUniforms);
 
 	glm::vec4 color	   = glm::vec4(1.0f);
-	uint32_t  texIndex = getTextureIndex(texture->getTexture());
+	uint32_t  texIndex = getTextureIndex(AssetManager::loadTexture(texture->getTexturePath()));
 
 	TextureCoordinates tc			= texture->getTexCoords();
 	glm::vec2		   texCoords[4] = {tc.bottom_left, tc.bottom_right, tc.top_right, tc.top_left};
@@ -343,36 +343,19 @@ void Renderer::drawQuad(const glm::mat4& transform, const std::shared_ptr<SubTex
 	submitQuad(transform, color, texIndex, texCoords);
 }
 
-void Renderer::drawQuad(const glm::vec2& position, const std::shared_ptr<TextureSheet>& sheet) {
-	drawQuad(glm::vec3(position, 0.0f), sheet->getSizeInTiles(), sheet);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//
-// TextureSheet Quads
-//
-///////////////////////////////////////////////////////////////////////////////
-
-void Renderer::drawQuad(const glm::vec3& position, const std::shared_ptr<TextureSheet>& sheet) {
-	drawQuad(position, sheet->getSizeInTiles(), sheet);
-}
-
-void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& sheet) {
-	drawQuad(glm::vec3(position, 0.0f), size, sheet);
-}
-
-void Renderer::drawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<TextureSheet>& sheet) {
+void Renderer::drawSprite(Component::Transform transform, Component::Sprite sprite) {
 	switchPipeline(s_data.quadPipeline, s_data.quadUniforms);
 
-	glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(size, 1.0f));
+	glm::mat4 trans = glm::translate(glm::mat4(1.0f), transform.position) * glm::scale(glm::mat4(1.0f), glm::vec3(transform.size, 1.0f));
 
 	glm::vec4 color	   = glm::vec4(1.0f);
-	uint32_t  texIndex = getTextureIndex(sheet->getTexture());
+	uint32_t  texIndex = getTextureIndex(AssetManager::loadTexture(sprite.texturePath));
 
-	TextureCoordinates tc			= sheet->getTexCoords();
-	glm::vec2		   texCoords[4] = {tc.bottom_left, tc.bottom_right, tc.top_right, tc.top_left};
+	TextureCoordinates tc = sprite.specs.coordinates;
 
-	submitQuad(transform, color, texIndex, texCoords);
+	glm::vec2 texCoords[4] = {tc.bottom_left, tc.bottom_right, tc.top_right, tc.top_left};
+
+	submitQuad(trans, color, texIndex, texCoords);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
