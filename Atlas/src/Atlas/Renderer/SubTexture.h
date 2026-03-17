@@ -7,10 +7,10 @@
 namespace Atlas {
 
 struct TextureCoordinates {
-	glm::vec2 top_left;
-	glm::vec2 top_right;
-	glm::vec2 bottom_left;
-	glm::vec2 bottom_right;
+	glm::vec2 top_left {0, 1};
+	glm::vec2 top_right {1, 1};
+	glm::vec2 bottom_left {0, 0};
+	glm::vec2 bottom_right {1, 0};
 
 	bool operator==(const TextureCoordinates& other) const {
 		bool equal = true;

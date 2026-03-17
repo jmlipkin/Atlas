@@ -1,10 +1,14 @@
 #include "atpch.h"
 #include "SceneHierarchyPanel.h"
 
-#include "Atlas/ImGui/ImGuiSystem.h"
+#include "Atlas/Core/Platform.h"
 #include "Atlas/Project/Project.h"
+#include "Atlas/ImGui/ImGuiSystem.h"
+#include "Atlas/Renderer/SubTexture.h"
 #include "Atlas/Scene/Scene.h"
 #include "Atlas/ECS/Entities/Entity.h"
+#include "Atlas/ECS/Components/Components.h"
+#include "Atlas/ECS/Components/Animation.h"
 
 #include <imgui/imgui.h>
 #include <imgui/misc/cpp/imgui_stdlib.h>
@@ -16,6 +20,7 @@ void SceneHierarchyPanel::setScene(std::shared_ptr<Scene> scene) {
 	m_scene			   = scene;
 	m_selectionContext = {};
 	m_renameTarget	   = {};
+	m_propertiesPanel.setScene(scene);
 }
 void SceneHierarchyPanel::addEmptyEntity() {
 	Entity newEntity = m_scene->createEntity("New Entity");
@@ -155,9 +160,16 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 
 void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 	if (ImGui::MenuItem("Animation")) {
-		AT_CORE_WARN("Cannot add Animation component: Default constructor isn't implemented yet");
+		entity.addComponent<Component::Animations>();
 		autoSave();
 	}
+
+	if(ImGui::MenuItem("Sprite")) {
+		std::string filepath = Platform::openFileDialog("png");
+		entity.addComponent<Component::Sprite>(filepath, SubTextureSpecification{});
+		autoSave();
+	}
+
 	if (ImGui::MenuItem("Script")) {
 		AT_CORE_WARN("Cannot add Script component: Default constructor isn't implemented yet");
 		autoSave();

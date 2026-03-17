@@ -8,9 +8,7 @@ namespace Atlas {
 
 class SceneHierarchyPanel {
   public:
-	SceneHierarchyPanel(std::shared_ptr<Scene> scene) : m_scene(scene) {
-		m_propertiesPanel = PropertiesPanel{};
-	}
+	SceneHierarchyPanel(std::shared_ptr<Scene> scene) : m_scene(scene), m_propertiesPanel(scene) {}
 	~SceneHierarchyPanel() = default;
 
 	void setScene(std::shared_ptr<Scene> scene);
@@ -35,7 +33,7 @@ class SceneHierarchyPanel {
 	Entity m_renameTarget;
 	bool   m_openComponentPicker = false;
 	int	   m_focusRenameCursor	 = 0;
-	bool m_justFinishedRename = false;
+	bool   m_justFinishedRename	 = false;
 };
 
 }  // namespace Atlas

@@ -44,6 +44,8 @@ void Scene::onUpdate(DeltaTime dt) {
 			Component::Transform transform = view.get<Component::Transform>(entity);
 
 			Component::Sprite sprite = view.get<Component::Sprite>(entity);
+			if (sprite.texturePath.empty())
+				continue;
 
 			Renderer::drawSprite(transform, sprite);
 		}
@@ -62,11 +64,16 @@ void Scene::onUpdate(DeltaTime dt) {
 			if (clip.playing && !clip.frames.empty()) {
 				SubTexture		  frame(clip.texturePath, clip.tileSize, clip.frames[clip.currentFrame].index, clip.sizeInTiles);
 				Component::Sprite sprite(clip.texturePath, frame.getSpecs());
+				if (sprite.texturePath.empty())
+					continue;
+
 				Renderer::drawSprite(transform, sprite);
 				continue;
 			}
 
 			Component::Sprite sprite = view.get<Component::Sprite>(entity);
+			if (sprite.texturePath.empty())
+				continue;
 			Renderer::drawSprite(transform, sprite);
 		}
 	}

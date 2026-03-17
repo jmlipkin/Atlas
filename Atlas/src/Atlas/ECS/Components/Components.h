@@ -31,8 +31,16 @@ struct Transform {
 struct Sprite {
 	std::string texturePath;
 	SubTextureSpecification specs;
+
+	Sprite() = default;
 	Sprite(std::string path, SubTextureSpecification texSpecs) : texturePath(path), specs(texSpecs) {}
 	Sprite(std::shared_ptr<SubTexture> sprite) : texturePath(sprite->getTexturePath()), specs(sprite->getSpecs()) {}
+
+	void recalculateCoordinates() {
+		if (texturePath.empty()) return;
+		SubTexture sub(texturePath, specs.tileSize, specs.index, specs.sizeInTiles);
+		specs.coordinates = sub.getSpecs().coordinates;
+	}
 };
 
 }  // namespace Atlas::Component

@@ -2,34 +2,33 @@
   "Name": "Scene1",
   "Entities": [
     {
-      "UUID": 1664691399688745188,
-      "Tag": "Entity6",
-      "Transform": {
-        "Position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          1.0,
-          1.0
-        ]
-      }
-    },
-    {
       "UUID": 14970872023506877474,
-      "Tag": "Entity2",
+      "Tag": "Player",
       "Transform": {
         "Position": [
+          3.700000047683716,
           0.0,
-          0.0,
-          0.0
+          12.300000190734863
         ],
         "Rotation": 0.0,
         "Size": [
-          1.0,
-          1.0
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Tile Size": [
+          8.0,
+          8.0
+        ],
+        "Size (in Tiles)": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          28,
+          0
         ]
       }
     },
