@@ -3,16 +3,12 @@
 
 #include "Atlas/Core/Platform.h"
 #include "Atlas/Project/Project.h"
-#include "Atlas/ImGui/ImGuiSystem.h"
+#include "Atlas/ImGui/EditorWidgets.h"
 #include "Atlas/Renderer/SubTexture.h"
 #include "Atlas/Scene/Scene.h"
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
-
-#include <imgui/imgui.h>
-#include <imgui/misc/cpp/imgui_stdlib.h>
-#include <filesystem>
 
 namespace Atlas {
 
@@ -37,7 +33,7 @@ void SceneHierarchyPanel::onImGuiRender() {
 	}
 
 	ImGui::Begin("Scene Hierarchy");
-	ImGuiSystem::DrawPanelAccentBar(ImGuiSystem::PanelAccent::Purple);
+	EditorWidgets::DrawPanelAccentBar(EditorWidgets::PanelAccent::Purple);
 
 	ImGui::Text("%s", m_scene->getName().c_str());
 
@@ -101,9 +97,9 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 		bool panelFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
 		if (!panelFocused) {
 			wasDimmed = true;
-			ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImGuiSystem::green);
-			ImGui::PushStyleColor(ImGuiCol_Header, ImGuiSystem::greenSub);
-			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(ImGuiSystem::greenSub.x, ImGuiSystem::greenSub.y, ImGuiSystem::greenSub.z, ImGuiSystem::greenSub.w * 0.5f));
+			ImGui::PushStyleColor(ImGuiCol_HeaderActive, EditorWidgets::green);
+			ImGui::PushStyleColor(ImGuiCol_Header, EditorWidgets::greenSub);
+			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(EditorWidgets::greenSub.x, EditorWidgets::greenSub.y, EditorWidgets::greenSub.z, EditorWidgets::greenSub.w * 0.5f));
 		}
 	}
 

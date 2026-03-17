@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Atlas/Project/Project.h"
-#include "Atlas/ImGui/ImGuiSystem.h"
+#include "Atlas/ImGui/EditorWidgets.h"
 
 #include <imgui/imgui.h>
 #include <memory>
@@ -18,7 +18,7 @@ class ProjectPanel {
 		m_activeProject = ProjectManager::getActiveProject();
 
 		ImGui::Begin("Project");
-		ImGuiSystem::DrawPanelAccentBar(ImGuiSystem::PanelAccent::Purple);
+		EditorWidgets::DrawPanelAccentBar(EditorWidgets::PanelAccent::Purple);
 
 		ImGuiIO io = ImGui::GetIO();
 		ImGui::PushFont(io.Fonts->Fonts[1]);

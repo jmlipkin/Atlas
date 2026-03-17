@@ -10,6 +10,8 @@
 #include "Atlas/Core/Time.h"
 #include "Atlas/Project/Project.h"
 
+#include "Atlas/ImGui/EditorWidgets.h"
+
 #include <imgui/imgui.h>
 #include <json/include/nlohmann/json.hpp>
 
@@ -125,7 +127,7 @@ void EditorLayer::onImGuiRender() {
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Viewport");
-	ImGuiSystem::DrawPanelAccentBar(ImGuiSystem::PanelAccent::Purple);
+	EditorWidgets::DrawPanelAccentBar(EditorWidgets::PanelAccent::Purple);
 	ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 	if (m_viewportSize != *((glm::vec2*)&viewportSize)) {
 		Application::get().getFramebuffer()->onResize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);

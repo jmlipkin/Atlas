@@ -3,19 +3,16 @@
 
 #include "Atlas/Core/Platform.h"
 #include "Atlas/Project/Project.h"
-#include "Atlas/ImGui/ImGuiSystem.h"
+#include "Atlas/ImGui/EditorWidgets.h"
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Animation.h"
 
-#include <imgui/imgui.h>
-#include <imgui/imgui_internal.h>
-#include <imgui/misc/cpp/imgui_stdlib.h>
 
 namespace Atlas {
 
 void PropertiesPanel::onImGuiRender(Entity& selection) {
 	ImGui::Begin("Properties");
-	ImGuiSystem::DrawPanelAccentBar(ImGuiSystem::PanelAccent::Purple);
+	EditorWidgets::DrawPanelAccentBar(EditorWidgets::PanelAccent::Purple);
 
 	if (selection)
 		drawComponents(selection);
@@ -34,6 +31,8 @@ void PropertiesPanel::onImGuiRender(Entity& selection) {
 		m_focusRenameCursor = 2;
 	}
 
+	m_animationEditor.onImGuiRender();
+
 	ImGui::End();
 }
 
@@ -42,7 +41,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 	ImGui::Text("UUID: 0x%016llX", (uint64_t)UUID);
 
 	drawComponent<Component::Transform>("Transform", entity, [this](auto& component) {
-		drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, 120.0f);
+		EditorWidgets::drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, 120.0f);
 	});
 	drawComponent<Component::Sprite>("Sprite", entity, [this](auto& component) {
 		SubTextureSpecification& specs	  = component.specs;
@@ -56,10 +55,10 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 		}
 
 		bool changed = false;
-		changed |= drawVec2Control<glm::vec2>("Size (tiles)", specs.sizeInTiles);
-		changed |= drawVec2Control<glm::vec2>("Grid Size", specs.tileSize);
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size (tiles)", specs.sizeInTiles);
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Grid Size", specs.tileSize);
 
-		changed |= drawVec2Control<glm::ivec2>("Index", specs.index);
+		changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Index", specs.index);
 
 		if (changed) {
 			component.recalculateCoordinates();
@@ -71,10 +70,10 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			AnimationClip clip;
 			if (!component.clips.contains("Unnamed animation")) {
 				component.clips["Unnamed animation"] = clip;
-				m_selectedClip = "Unnamed animation";
-				m_renameTarget = "Unnamed animation";
-				m_selectionType = SelectionType::AnimationClip;
-				m_focusRenameCursor = 2;
+				m_selectedClip						 = "Unnamed animation";
+				m_renameTarget						 = "Unnamed animation";
+				m_selectionType						 = SelectionType::AnimationClip;
+				m_focusRenameCursor					 = 2;
 				ProjectManager::saveScene(m_scene);
 			} else {
 				AT_CORE_WARN("Clips cannot shared the same name!\n\t\tSolution: Provide a name for clip: \"Unnamed animation\"");
@@ -112,6 +111,11 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 				ProjectManager::saveScene(m_scene);
 				break;
 			}
+
+			if (m_animationEditorShouldOpen) {
+				m_animationEditorShouldOpen = false;
+				m_animationEditor.open(&component, m_selectedClip, m_scene);
+			}
 		}
 	});
 }
@@ -128,9 +132,9 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 		if (!panelFocused) {
 			wasDimmed = true;
 			// Dimmed selection color when panel is inactive
-			ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImGuiSystem::green);
-			ImGui::PushStyleColor(ImGuiCol_Header, ImGuiSystem::greenSub);	// greenSub dimmed
-			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(ImGuiSystem::greenSub.x, ImGuiSystem::greenSub.y, ImGuiSystem::greenSub.z, ImGuiSystem::greenSub.w * 0.5f));
+			ImGui::PushStyleColor(ImGuiCol_HeaderActive, EditorWidgets::green);
+			ImGui::PushStyleColor(ImGuiCol_Header, EditorWidgets::greenSub);	// greenSub dimmed
+			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(EditorWidgets::greenSub.x, EditorWidgets::greenSub.y, EditorWidgets::greenSub.z, EditorWidgets::greenSub.w * 0.5f));
 		}
 	}
 
@@ -165,6 +169,14 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 		m_focusRenameCursor = 2;
 	}
 
+	if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0)) {
+		m_selectedClip	= clip;
+		m_selectionType = type;
+		if (type == SelectionType::AnimationClip) {
+			m_animationEditorShouldOpen = true;
+		}
+	}
+
 	if (ImGui::IsItemClicked()) {
 		m_selectedClip = clip;
 	}
@@ -192,70 +204,6 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 	if (clipDeleted) {
 		m_clipToDelete = clip;
 	}
-}
-
-bool PropertiesPanel::drawVec3Control(const char* label, glm::vec3& values, float resetX, float resetY, float resetZ, float columnWidth) {
-	ImGuiIO io		 = ImGui::GetIO();
-	ImFont* boldFont = io.Fonts->Fonts[0];
-
-	bool changed = false;
-
-	ImGui::PushID(label);
-
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, columnWidth);
-	ImGui::Text("%s", label);
-	ImGui::NextColumn();
-
-	ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
-	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
-
-	float  lineHeight = GImGui->Font->LegacySize + GImGui->Style.FramePadding.y * 2.0f;
-	ImVec2 buttonSize = {lineHeight + 3.0f, lineHeight};
-
-	// X
-	ImGui::PushStyleColor(ImGuiCol_Button, ImGuiSystem::steelBlue);
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGuiSystem::steelBlueLight);
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGuiSystem::steelBlueActive);
-	ImGui::PushFont(boldFont);
-	if (ImGui::Button("X", buttonSize)) values.x = resetX;
-	ImGui::PopFont();
-	ImGui::PopStyleColor(3);
-	ImGui::SameLine();
-	changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
-	ImGui::PopItemWidth();
-	ImGui::SameLine();
-
-	// Y
-	ImGui::PushStyleColor(ImGuiCol_Button, ImGuiSystem::green);
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGuiSystem::greenLight);
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGuiSystem::greenActive);
-	ImGui::PushFont(boldFont);
-	if (ImGui::Button("Y", buttonSize)) values.y = resetY;
-	ImGui::PopFont();
-	ImGui::PopStyleColor(3);
-	ImGui::SameLine();
-	changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
-	ImGui::PopItemWidth();
-	ImGui::SameLine();
-
-	// Z
-	ImGui::PushStyleColor(ImGuiCol_Button, ImGuiSystem::purple);
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGuiSystem::purpleLight);
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGuiSystem::purpleActive);
-	ImGui::PushFont(boldFont);
-	if (ImGui::Button("Z", buttonSize)) values.z = resetZ;
-	ImGui::PopFont();
-	ImGui::PopStyleColor(3);
-	ImGui::SameLine();
-	changed |= ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
-	ImGui::PopItemWidth();
-
-	ImGui::PopStyleVar();
-	ImGui::Columns(1);
-	ImGui::PopID();
-
-	return changed;
 }
 
 }  // namespace Atlas
