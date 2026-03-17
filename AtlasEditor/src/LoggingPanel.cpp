@@ -25,6 +25,8 @@ void LoggingPanel::onImGuiRender() {
 
 	ImGui::BeginChild("Scrolling");
 
+	ImGui::PushTextWrapPos(0.0f);
+
 	for (const auto& message : m_rawOut->getMessages()) {
 		ImVec4 color;
 		color.x = message.color.x;
@@ -50,6 +52,8 @@ void LoggingPanel::onImGuiRender() {
 		ImGui::SetScrollHereY(1.0f);
 		m_rawOut->clearScrollFlag();
 	}
+	
+	ImGui::PopTextWrapPos();
 
 	if (m_logger->scrollsToBottom()) {
 		ImGui::SetScrollHereY(1.0f);

@@ -4,9 +4,9 @@ int main(int argc, char** argv) {
 	Atlas::Log::init();
 
 	char welcome_msg[] =
-		"================================================================================\n\n"
-		"                              WELCOME TO ATLAS ENGINE                            \n\n"
-		"================================================================================\n\n";
+		"=====================================\n\n"
+		"        WELCOME TO ATLAS ENGINE      \n\n"
+		"=====================================\n\n";
 	AT_LOG(welcome_msg);
 
     AT_PROFILE_BEGIN_SESSION("Startup", "AtlasProfile.Startup.json");
