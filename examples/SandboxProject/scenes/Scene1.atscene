@@ -30,6 +30,25 @@
           28,
           0
         ]
+      },
+      "Animations": {
+        "Clips": [
+          {
+            "Name": "Name",
+            "Texture": "",
+            "Frame Rate": 12.0,
+            "Should loop": false,
+            "Tile Size": [
+              0.0,
+              0.0
+            ],
+            "Size (in Tiles)": [
+              0,
+              0
+            ],
+            "Frames": []
+          }
+        ]
       }
     },
     {
@@ -37,9 +56,9 @@
       "Tag": "Board",
       "Transform": {
         "Position": [
-          -13.100000381469727,
-          -13.0,
-          10.0
+          -14.300000190734863,
+          -14.699999809265137,
+          1.0
         ],
         "Rotation": 0.0,
         "Size": [

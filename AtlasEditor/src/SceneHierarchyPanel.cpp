@@ -54,7 +54,7 @@ void SceneHierarchyPanel::onImGuiRender() {
 		ImGui::PopID();
 	}
 
-	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0) && !ImGui::IsAnyItemHovered()) {
+	if (ImGui::IsWindowHovered() && ImGui::IsMouseDoubleClicked(0) && !ImGui::IsAnyItemHovered()) {
 		if (!m_renameTarget)  // Don't deselect while renaming
 			m_selectionContext = {};
 	}
@@ -70,7 +70,7 @@ void SceneHierarchyPanel::onImGuiRender() {
 	// -1 means we just finished renaming, and so we need to skip this frame
 	if (m_justFinishedRename) {
 		m_justFinishedRename = false;
-	} else if (m_selectionContext && !m_renameTarget && ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+	} else if (ImGui::IsWindowFocused() && m_selectionContext && !m_renameTarget && ImGui::IsKeyPressed(ImGuiKey_Enter)) {
 		m_renameTarget		= m_selectionContext;
 		m_focusRenameCursor = 2;
 	}
@@ -94,8 +94,17 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 	auto&			   tag		  = entity.getComponent<Component::Tag>();
 	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
 
+	bool wasDimmed = false;
 	if (entity == m_selectionContext) {
 		tree_flags |= ImGuiTreeNodeFlags_Selected;
+
+		bool panelFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
+		if (!panelFocused) {
+			wasDimmed = true;
+			ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImGuiSystem::green);
+			ImGui::PushStyleColor(ImGuiCol_Header, ImGuiSystem::greenSub);
+			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(ImGuiSystem::greenSub.x, ImGuiSystem::greenSub.y, ImGuiSystem::greenSub.z, ImGuiSystem::greenSub.w * 0.5f));
+		}
 	}
 
 	bool opened = false;
@@ -109,12 +118,14 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 		if (ImGui::InputText("##rename", &tag.tag, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
 			m_renameTarget = {};
 			ImGui::SetKeyboardFocusHere(-1);
-            m_justFinishedRename = true;
+			m_justFinishedRename = true;
 			autoSave();
 		}
 	} else {
 		opened = ImGui::TreeNodeEx((void*)(uint64_t)entity.getUUID(), tree_flags, "%s", tag.tag.c_str());
 	}
+
+	if (wasDimmed) ImGui::PopStyleColor(3);
 
 	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
 		m_renameTarget		= entity;
@@ -164,7 +175,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 		autoSave();
 	}
 
-	if(ImGui::MenuItem("Sprite")) {
+	if (ImGui::MenuItem("Sprite")) {
 		std::string filepath = Platform::openFileDialog("png");
 		entity.addComponent<Component::Sprite>(filepath, SubTextureSpecification{});
 		autoSave();

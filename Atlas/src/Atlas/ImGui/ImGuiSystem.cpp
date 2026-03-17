@@ -58,46 +58,6 @@ void ImGuiSystem::setupImGuiStyle(ImGuiStyle& style)
     style.TabBarBorderSize         = 1.0f;
  
     // -------------------------------------------------------------------------
-    //  Palette (identical to v3 — roles only have changed)
-    // -------------------------------------------------------------------------
- 
-    // --- Backgrounds ---
-    const ImVec4 bg0 = ImVec4(0.114f, 0.122f, 0.141f, 1.00f); // #1D1F24  deepest chrome
-    const ImVec4 bg1 = ImVec4(0.145f, 0.155f, 0.180f, 1.00f); // #25272E  main window
-    const ImVec4 bg2 = ImVec4(0.178f, 0.190f, 0.220f, 1.00f); // #2D3038  child panels
-    const ImVec4 bg3 = ImVec4(0.212f, 0.226f, 0.261f, 1.00f); // #363943  widget fills
-    const ImVec4 bg4 = ImVec4(0.250f, 0.265f, 0.306f, 1.00f); // #40434E  elevated / hovered
- 
-    // --- Borders ---
-    const ImVec4 border      = ImVec4(0.318f, 0.333f, 0.380f, 1.00f);
-    const ImVec4 borderDim   = ImVec4(0.245f, 0.257f, 0.294f, 0.70f);
- 
-    // --- Text ---
-    const ImVec4 textPrimary  = ImVec4(0.906f, 0.910f, 0.925f, 1.00f);
-    const ImVec4 textDisabled = ImVec4(0.370f, 0.382f, 0.415f, 1.00f);
- 
-    // --- STEEL BLUE #6AACEC — active selection & UI confirmation ---
-    const ImVec4 steelBlue       = ImVec4(0.416f, 0.675f, 0.925f, 1.00f); // #6AACEC
-    const ImVec4 steelBlueHover  = ImVec4(0.416f, 0.675f, 0.925f, 0.32f);
-    const ImVec4 steelBlueSub    = ImVec4(0.416f, 0.675f, 0.925f, 0.16f);
-    const ImVec4 steelBlueActive = ImVec4(0.278f, 0.518f, 0.780f, 1.00f); // #4784C7
- 
-    // --- GREEN #3EC96A — entity & component identity ---
-    const ImVec4 green       = ImVec4(0.243f, 0.788f, 0.416f, 1.00f); // #3EC96A
-    const ImVec4 greenHover  = ImVec4(0.243f, 0.788f, 0.416f, 0.32f);
-    const ImVec4 greenSub    = ImVec4(0.243f, 0.788f, 0.416f, 0.14f); // resting entity row tint
-    const ImVec4 greenActive = ImVec4(0.169f, 0.588f, 0.302f, 1.00f); // #2B964D confirmed pick
- 
-    // --- PURPLE #B98AE8 — panel focus & chrome ---
-    const ImVec4 purple      = ImVec4(0.725f, 0.541f, 0.910f, 1.00f); // #B98AE8
-    const ImVec4 purpleHover = ImVec4(0.725f, 0.541f, 0.910f, 0.32f);
-    const ImVec4 purpleActive= ImVec4(0.545f, 0.380f, 0.722f, 1.00f); // #8B61B8
-    const ImVec4 purpleTabBg = ImVec4(0.228f, 0.196f, 0.318f, 1.00f); // #3A3251 active tab
- 
-    // --- TEAL #3BBFA8 — plot lines & data vis ---
-    const ImVec4 teal        = ImVec4(0.231f, 0.749f, 0.659f, 1.00f); // #3BBFA8
- 
-    // -------------------------------------------------------------------------
     //  Color assignments
     // -------------------------------------------------------------------------
     ImVec4* c = style.Colors;
