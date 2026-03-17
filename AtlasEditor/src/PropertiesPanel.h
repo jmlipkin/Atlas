@@ -132,6 +132,8 @@ class PropertiesPanel {
 	SelectionType m_selectionType = PropertiesPanel::SelectionType::None;
 	std::string	  m_selectedClip;
 
+	std::string m_clipToDelete;
+
 	std::string m_renameTarget;
 	std::string m_renamedClip;
 	std::string m_renameBuffer;

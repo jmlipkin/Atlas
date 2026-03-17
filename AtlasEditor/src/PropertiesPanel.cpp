@@ -71,6 +71,11 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			AnimationClip clip;
 			if (!component.clips.contains("Unnamed animation")) {
 				component.clips["Unnamed animation"] = clip;
+				m_selectedClip = "Unnamed animation";
+				m_renameTarget = "Unnamed animation";
+				m_selectionType = SelectionType::AnimationClip;
+				m_focusRenameCursor = 2;
+				ProjectManager::saveScene(m_scene);
 			} else {
 				AT_CORE_WARN("Clips cannot shared the same name!\n\t\tSolution: Provide a name for clip: \"Unnamed animation\"");
 			}
@@ -92,6 +97,18 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 				}
 				m_selectedClip = m_renamedClip;
 				m_renamedClip  = {};
+				ProjectManager::saveScene(m_scene);
+				break;
+			}
+
+			if (!m_clipToDelete.empty()) {
+				if (component.clips.contains(m_clipToDelete)) {
+					component.clips.erase(m_clipToDelete);
+				}
+				if (m_selectedClip == m_clipToDelete) {
+					m_selectedClip = {};
+				}
+				m_clipToDelete = {};
 				ProjectManager::saveScene(m_scene);
 				break;
 			}
@@ -173,8 +190,7 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 	}
 
 	if (clipDeleted) {
-		AT_CORE_WARN("Clip delete not implemented yet");
-		ProjectManager::saveScene(m_scene);
+		m_clipToDelete = clip;
 	}
 }
 
