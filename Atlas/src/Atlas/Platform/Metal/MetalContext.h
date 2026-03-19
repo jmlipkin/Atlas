@@ -22,6 +22,7 @@ class MetalContext : public GraphicsContext {
 	static MTL::Device* getMTLDevice() { return s_device; }
 	static MTL::Library* getMTLLibrary() { return s_library; }
 
+	GLFWwindow* getGLFWwindow() { return m_window; }
 	virtual void onResize(const WindowResizeEvent& e) override;
 
 	virtual uint32_t getWidth() const override { return m_layer->drawableSize().width; }

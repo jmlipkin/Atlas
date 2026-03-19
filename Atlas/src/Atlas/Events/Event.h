@@ -1,6 +1,5 @@
 #pragma once
 
-#include "atpch.h"
 #include "Atlas/Core/Base.h"
 
 #include <spdlog/fmt/ostr.h>
@@ -9,6 +8,7 @@ namespace Atlas {
 
 enum class EventType {
     NONE = 0,
+    DISPLAY_CHANGED,
     WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_FOCUS, WINDOW_LOST_FOCUS, WINDOW_MOVED,
     APP_TICK, APP_UPDATE, APP_RENDER,
     KEY_PRESSED, KEY_TYPED, KEY_RELEASED,

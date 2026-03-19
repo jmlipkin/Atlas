@@ -56,7 +56,7 @@ void SceneHierarchyPanel::onImGuiRender() {
 			m_selectionContext = {};
 	}
 
-	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 0), ImVec2(FLT_MAX, FLT_MAX));
+	ImGui::SetNextWindowSizeConstraints(ImVec2(100 * EditorWidgets::displayScale, 0), ImVec2(FLT_MAX, FLT_MAX));
 	if (ImGui::BeginPopupContextWindow("SceneHierarchyContextMenu", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems)) {
 		if (ImGui::MenuItem("Add entity", "Cmd+E")) {
 			addEmptyEntity();

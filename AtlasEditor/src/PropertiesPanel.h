@@ -3,6 +3,7 @@
 #include "AnimationClipPanel.h"
 
 #include "Atlas/ECS/Entities/Entity.h"
+#include "Atlas/ImGui/EditorWidgets.h"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
@@ -35,11 +36,13 @@ class PropertiesPanel {
 
 		// TODO: Update formatting
 		ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{4, 4});
-		float lineHeight = GImGui->Font->LegacySize + GImGui->Style.FramePadding.y * 2.0f;
+		float  padding				  = 2.0 * EditorWidgets::displayScale;
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{padding, padding});
 		ImGui::Separator();
 		bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, "%s", label);
 		ImGui::PopStyleVar();
+
+		float lineHeight = ImGui::GetFrameHeight();
 		ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
 
 		std::string popupID = std::string("ComponentSettings##") + typeid(T).name();
@@ -71,8 +74,8 @@ class PropertiesPanel {
   private:
 	std::shared_ptr<Scene> m_scene;
 
-	AnimationClipPanel	   m_animationEditor;
-	bool m_animationEditorShouldOpen = false;
+	AnimationClipPanel m_animationEditor;
+	bool			   m_animationEditorShouldOpen = false;
 
 	SelectionType m_selectionType = PropertiesPanel::SelectionType::None;
 	std::string	  m_selectedClip;

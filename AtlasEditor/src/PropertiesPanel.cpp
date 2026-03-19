@@ -45,15 +45,17 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 	ImGui::Text("UUID: 0x%016llX", (uint64_t)UUID);
 
 	drawComponent<Component::Transform>("Transform", entity, [this](auto& component) {
-		EditorWidgets::drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, 170.0f, 240, true);
+		float columnWidth = 85.0f;
+		float valueWidth  = 120.0f;
+		EditorWidgets::drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, columnWidth, valueWidth, true);
 	});
 	drawComponent<Component::Sprite>("Sprite", entity, [this](auto& component) {
 		SubTextureSpecification& specs	  = component.specs;
 		const std::string&		 filepath = ProjectManager::toRelativePath(component.texturePath);
 
-		float changeButtonWidth = 125;
-		float padding			= 8;
-		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - padding * 2;
+		float changeButtonWidth = 62.0f;
+		float padding			= 4.0f;
+		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - padding * 2.0f;
 
 		std::string displayPath = filepath.empty() ? "No texture" : filepath;
 		if (!filepath.empty() && ImGui::CalcTextSize(filepath.c_str()).x > maxWidth) {
@@ -81,10 +83,13 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 		ImGui::Dummy(ImVec2(0, padding));
 
 		bool changed = false;
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size (tiles)", specs.sizeInTiles, 0, 0, 170);
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Grid Size", specs.tileSize, 0, 0, 170);
 
-		changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Index", specs.index, 0, 0, 170);
+		float columnWidth = 85.0f;
+		float valueWidth = 50.0f;
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size (tiles)", specs.sizeInTiles, 0, 0, columnWidth, valueWidth);
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Grid Size", specs.tileSize, 0, 0, columnWidth, valueWidth);
+
+		changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Index", specs.index, 0, 0, columnWidth, valueWidth);
 
 		ImGui::Dummy(ImVec2(0, padding));
 

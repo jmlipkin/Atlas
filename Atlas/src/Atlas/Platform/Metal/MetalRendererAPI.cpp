@@ -11,6 +11,8 @@
 #include "ImGuiMetalRenderer.h"
 #include <metal-cpp/Metal.hpp>
 
+#include <GLFW/glfw3.h>
+
 namespace Atlas {
 
 MetalRendererAPI::MetalRendererAPI(MetalContext& context) : m_context(context) {
@@ -32,16 +34,16 @@ void MetalRendererAPI::clear() {
 void MetalRendererAPI::drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer) {
 	AT_PROFILE_FUNCTION();
 
-	std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(indexBuffer);
-	MTL::Buffer* buffer = MIB->getBuffer();
+	std::shared_ptr<MetalIndexBuffer> MIB	 = std::static_pointer_cast<MetalIndexBuffer>(indexBuffer);
+	MTL::Buffer*					  buffer = MIB->getBuffer();
 	m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, indexBuffer->getCount(), MTL::IndexTypeUInt32, buffer, 0);
 }
 
 void MetalRendererAPI::drawIndexed(const std::shared_ptr<IndexBuffer>& indexBuffer, uint32_t count) {
 	AT_PROFILE_FUNCTION();
 
-	std::shared_ptr<MetalIndexBuffer> MIB = std::static_pointer_cast<MetalIndexBuffer>(indexBuffer);
-	MTL::Buffer* buffer = MIB->getBuffer();
+	std::shared_ptr<MetalIndexBuffer> MIB	 = std::static_pointer_cast<MetalIndexBuffer>(indexBuffer);
+	MTL::Buffer*					  buffer = MIB->getBuffer();
 	m_encoder->drawIndexedPrimitives(MTL::PrimitiveTypeTriangle, count, MTL::IndexTypeUInt32, buffer, 0);
 }
 
@@ -59,19 +61,19 @@ void MetalRendererAPI::beginFrame() {
 	m_pool = NS::AutoreleasePool::alloc()->init();
 
 	m_drawable = m_context.getNextDrawable();
-	m_buffer = m_commandQueue->commandBuffer();
+	m_buffer   = m_commandQueue->commandBuffer();
 }
 
 void MetalRendererAPI::beginPass(std::shared_ptr<Framebuffer> framebuffer) {
 	m_framebuffer = std::static_pointer_cast<MetalFramebuffer>(framebuffer);
-	m_passDesc = (MTL::RenderPassDescriptor*)m_framebuffer->getPassDescriptor(m_drawable);
+	m_passDesc	  = (MTL::RenderPassDescriptor*)m_framebuffer->getPassDescriptor(m_drawable);
 	m_passDesc->setRenderTargetWidth(m_framebuffer->getWidth());
 	m_passDesc->setRenderTargetHeight(m_framebuffer->getHeight());
 	m_encoder = m_buffer->renderCommandEncoder(m_passDesc);
 
 	MTL::Viewport viewport{0, 0, (double)m_framebuffer->getWidth(), (double)m_framebuffer->getHeight(), 0.0, 1.0};
 	m_encoder->setViewport(viewport);
- 
+
 	clear();
 }
 
@@ -115,8 +117,9 @@ void MetalRendererAPI::endFrame() {
 void MetalRendererAPI::beginImGui() {
 	AT_PROFILE_FUNCTION();
 
-	ImGuiIO& io = ImGui::GetIO();
-	io.DisplaySize = ImVec2((float)m_framebuffer->getWidth(), (float)m_framebuffer->getHeight());
+	int width, height;
+	glfwGetWindowSize(m_context.getGLFWwindow(), &width, &height);
+	ImGui::GetIO().DisplaySize = ImVec2((float)width, (float)height);
 
 	ImGui_ImplMetal_NewFrame(m_passDesc);
 	ImGui::NewFrame();

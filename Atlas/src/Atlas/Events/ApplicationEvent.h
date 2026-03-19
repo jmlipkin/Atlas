@@ -3,76 +3,111 @@
 #include "Event.h"
 
 namespace Atlas {
-    class WindowResizeEvent : public Event {
-        public:
-        WindowResizeEvent(unsigned int width, unsigned int height) : m_width(width), m_height(height) {}
 
-        inline unsigned int getWidth() const { return m_width; }
-        inline unsigned int getHeight() const { return m_height; }
+class DisplayChangedEvent : public Event {
+  public:
+	DisplayChangedEvent(float displayScale) : m_scale(displayScale) {}
 
-        std::string toString() const override {
-            std::stringstream ss;
-            ss << "WindowResizeEvent: " << m_width << ", " << m_height;
+	inline float getScale() const { return m_scale; }
 
-            return ss.str();
-        }
+	std::string toString() const override {
+		std::stringstream ss;
+		ss << "DisplayChangedEvent. New Scale: " << m_scale;
+		return ss.str();
+	}
 
-        EVENT_CLASS_TYPE(WINDOW_RESIZE)
-        EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+	EVENT_CLASS_TYPE(DISPLAY_CHANGED)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+  private:
+	float m_scale;
+};
 
-        private:
-         unsigned int m_width, m_height;
-    };
+class WindowResizeEvent : public Event {
+  public:
+	WindowResizeEvent(unsigned int width, unsigned int height) : m_width(width), m_height(height) {}
 
-    class WindowCloseEvent : public Event
-	{
-	public:
-		WindowCloseEvent() {}
+	inline unsigned int getWidth() const { return m_width; }
+	inline unsigned int getHeight() const { return m_height; }
 
-		EVENT_CLASS_TYPE(WINDOW_CLOSE)
-		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
-	};
+	std::string toString() const override {
+		std::stringstream ss;
+		ss << "WindowResizeEvent: " << m_width << ", " << m_height;
 
-	class WindowFocusEvent : public Event {
-	  public:
-		WindowFocusEvent() {}
+		return ss.str();
+	}
 
-		EVENT_CLASS_TYPE(WINDOW_FOCUS)
-		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
-	};
+	EVENT_CLASS_TYPE(WINDOW_RESIZE)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
 
-	class WindowLostFocusEvent : public Event {
-	  public:
-		WindowLostFocusEvent() {}
+  private:
+	unsigned int m_width, m_height;
+};
 
-		EVENT_CLASS_TYPE(WINDOW_LOST_FOCUS)
-		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
-	};
+class WindowCloseEvent : public Event {
+  public:
+	WindowCloseEvent() {}
 
-	class AppTickEvent : public Event
-	{
-	public:
-		AppTickEvent() {}
+	EVENT_CLASS_TYPE(WINDOW_CLOSE)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+};
 
-		EVENT_CLASS_TYPE(APP_TICK)
-		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
-	};
+class WindowFocusEvent : public Event {
+  public:
+	WindowFocusEvent() {}
 
-	class AppUpdateEvent : public Event
-	{
-	public:
-		AppUpdateEvent() {}
+	EVENT_CLASS_TYPE(WINDOW_FOCUS)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+};
 
-		EVENT_CLASS_TYPE(APP_UPDATE)
-		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
-	};
+class WindowLostFocusEvent : public Event {
+  public:
+	WindowLostFocusEvent() {}
 
-	class AppRenderEvent : public Event
-	{
-	public:
-		AppRenderEvent() {}
+	EVENT_CLASS_TYPE(WINDOW_LOST_FOCUS)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+};
 
-		EVENT_CLASS_TYPE(APP_RENDER)
-		EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
-	};
+class WindowMovedEvent : public Event {
+  public:
+	WindowMovedEvent(float xPos, float yPos) : m_xPos(xPos), m_yPos(yPos) {}
+
+	inline float getXPos() const { return m_xPos; }
+	inline float getYPos() const { return m_yPos; }
+
+	std::string toString() const override {
+		std::stringstream ss;
+		ss << "WindowMovedEvent: " << m_xPos << ", " << m_yPos;
+		return ss.str();
+	}
+
+	EVENT_CLASS_TYPE(WINDOW_MOVED)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+
+  private:
+	float m_xPos, m_yPos;
+};
+
+class AppTickEvent : public Event {
+  public:
+	AppTickEvent() {}
+
+	EVENT_CLASS_TYPE(APP_TICK)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+};
+
+class AppUpdateEvent : public Event {
+  public:
+	AppUpdateEvent() {}
+
+	EVENT_CLASS_TYPE(APP_UPDATE)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+};
+
+class AppRenderEvent : public Event {
+  public:
+	AppRenderEvent() {}
+
+	EVENT_CLASS_TYPE(APP_RENDER)
+	EVENT_CLASS_CATEGORY(EVENT_CATEGORY_APPLICATION)
+};
 }  // namespace Atlas

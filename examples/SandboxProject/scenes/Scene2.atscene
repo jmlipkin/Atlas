@@ -2,13 +2,13 @@
   "Name": "Scene2",
   "Entities": [
     {
-      "UUID": 16265639245062520380,
-      "Tag": "menubar",
+      "UUID": 6578047577350748389,
+      "Tag": "New Entity",
       "Transform": {
         "Position": [
           0.0,
           0.0,
-          0.0
+          1.0
         ],
         "Rotation": 0.0,
         "Size": [
@@ -18,40 +18,8 @@
       }
     },
     {
-      "UUID": 17256053762274796656,
-      "Tag": "rightclick",
-      "Transform": {
-        "Position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          1.0,
-          1.0
-        ]
-      }
-    },
-    {
-      "UUID": 4792193422389964558,
-      "Tag": "FromButton",
-      "Transform": {
-        "Position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          1.0,
-          1.0
-        ]
-      }
-    },
-    {
-      "UUID": 1771568461862727879,
-      "Tag": "Other Entity",
+      "UUID": 17396566149649578340,
+      "Tag": "Testing",
       "Transform": {
         "Position": [
           0.0,
@@ -82,8 +50,56 @@
       }
     },
     {
-      "UUID": 17396566149649578340,
-      "Tag": "Testing",
+      "UUID": 1771568461862727879,
+      "Tag": "Other Entity",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "UUID": 4792193422389964558,
+      "Tag": "FromButton",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "UUID": 17256053762274796656,
+      "Tag": "rightclick",
+      "Transform": {
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "UUID": 16265639245062520380,
+      "Tag": "menubar",
       "Transform": {
         "Position": [
           0.0,

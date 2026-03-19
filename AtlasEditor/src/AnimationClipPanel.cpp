@@ -65,8 +65,8 @@ void AnimationClipPanel::onImGuiRender() {
 	}
 	ImGui::SameLine();
 
-	float playButtonWidth = 80;
-	float padding		  = 8;
+	float playButtonWidth = 40 * EditorWidgets::displayScale;
+	float padding		  = 4 * EditorWidgets::displayScale;
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - playButtonWidth - padding);
 	if (ImGui::Button(clip.playing ? "Stop" : "Play", ImVec2(playButtonWidth, 0))) {
 		clip.playing = !clip.playing;
@@ -92,15 +92,17 @@ void AnimationClipPanel::onImGuiRender() {
 		ImGui::SetTooltip("%s", relativePath.c_str());
 	}
 
-	changed |= EditorWidgets::drawVec2Control<glm::vec2>("Tile Size", clip.tileSize, 0, 0, 200);
-	changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Size in Tiles", clip.sizeInTiles, 0, 0, 200);
+	float columnWidth = 100.0f;
+	float valueWidth = 50.0f;
+	changed |= EditorWidgets::drawVec2Control<glm::vec2>("Tile Size", clip.tileSize, 0, 0, columnWidth, valueWidth);
+	changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Size in Tiles", clip.sizeInTiles, 0, 0, columnWidth, valueWidth);
 
 	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, 200);
+	ImGui::SetColumnWidth(0, columnWidth);
 	ImGui::Text("Frame Rate");
 	ImGui::NextColumn();
-	ImGui::PushItemWidth(100);
-	changed |= ImGui::DragFloat("  fps##framerate", &clip.frameRate, 0.1f, 0.1f, 60.0f, "%.1f");
+	ImGui::PushItemWidth(25 * EditorWidgets::displayScale);
+	changed |= ImGui::DragFloat("fps##framerate", &clip.frameRate, 0.1f, 0.1f, 60.0f, "%.1f");
 	ImGui::PopItemWidth();
 	ImGui::Columns(1);
 
@@ -212,17 +214,20 @@ void AnimationClipPanel::drawClipLabel() {
 bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 	bool changed = false;
 
-	float cellWidth		  = 100;
-	float imageWidth	  = 75;
-	float controlWidth	  = 100;
-	float scrollbarHeight = ImGui::GetStyle().ScrollbarSize + 4.0f;
-	float lineHeight	  = GImGui->Font->LegacySize + GImGui->Style.FramePadding.y * 2.0f;
+	float displayScale = EditorWidgets::displayScale;
+
+	float cellWidth		  = 75;
+	float imageWidth	  = 37.5;
+	float controlWidth	  = 75;
+
+	float scrollbarHeight = ImGui::GetStyle().ScrollbarSize + 2.0f * displayScale;
+	float lineHeight	  = ImGui::GetFrameHeight();
 	float controlHeight	  = lineHeight * 2 + GImGui->Style.ItemSpacing.y;
 
-	const float stripPadX = 8.0f;
-	const float stripPadY = 4.0f;
+	const float stripPadX = 4 * displayScale;
+	const float stripPadY = 2 * displayScale;
 
-	float cellHeight  = imageWidth + 4 + controlHeight + stripPadY * 2;
+	float cellHeight  = imageWidth + (2*displayScale) + controlHeight + stripPadY * 2;
 	float stripHeight = cellHeight + scrollbarHeight + stripPadY * 2;
 
 	ImVec4 frameBgColor	 = ImGui::GetStyleColorVec4(ImGuiCol_ChildBg);
@@ -239,7 +244,7 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 	for (int i = 0; i <= clip.frames.size(); i++) {
 		ImGui::PushID(i);
 
-		ImGui::InvisibleButton("##dragTarget", ImVec2(10, cellHeight));
+		ImGui::InvisibleButton("##dragTarget", ImVec2(2.5 * displayScale, cellHeight));
 
 		// Register as drop target
 		if (ImGui::BeginDragDropTarget()) {
@@ -268,12 +273,12 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 				ImVec2(x, min.y),
 				ImVec2(x, max.y),
 				ImGui::ColorConvertFloat4ToU32(EditorWidgets::steelBlue),
-				2.0f);
+				1.0f);
 		}
 
 		if (i == clip.frames.size()) {
 			ImGui::SameLine();
-			float buttonSize	= 50;
+			float buttonSize	= ImGui::GetFrameHeight();
 			float buttonOffsetY = (cellHeight - buttonSize) * 0.5;
 			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + buttonOffsetY);
 			if (ImGui::Button("+##frame", ImVec2(buttonSize, buttonSize))) {
@@ -286,7 +291,7 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 
 		ImGui::SameLine();
 
-		ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 10);
+		ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, ImGui::GetFrameHeight() * 0.25f);
 		ImGui::PushStyleColor(ImGuiCol_ChildBg, frameBgColor);
 		ImGui::BeginChild(("##cell" + std::to_string(i)).c_str(), ImVec2(cellWidth, cellHeight), false);
 		ImGui::PopStyleVar();
@@ -306,13 +311,13 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 			float imageOffsetX = (cellWidth - imageWidth) * 0.5f;
 			ImGui::SetCursorPosX(imageOffsetX);
 			drawFrame({clip.texturePath, clip.tileSize, clip.frames[i].index, clip.sizeInTiles});
-			ImGui::Dummy(ImVec2(0, 4));
+			ImGui::Dummy(ImVec2(0, 2.0 * displayScale));
 
 			float controlOffsetX = (cellWidth - controlWidth) * 0.5f;
 			ImGui::SetCursorPosX(controlOffsetX);
 			ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
 			ImGui::BeginChild("##dragctrl", ImVec2(controlWidth, 0), false, ImGuiWindowFlags_NoScrollbar);
-			EditorWidgets::drawVec2Control("", clip.frames[i].index, 0, 0, 0, 50, true);
+			EditorWidgets::drawVec2Control("", clip.frames[i].index, 0, 0, 0, 40, true);
 			ImGui::EndChild();
 			ImGui::PopStyleColor();
 
@@ -327,13 +332,13 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 
 		ImGui::SetCursorPos(framePos);
 		drawFrame({clip.texturePath, clip.tileSize, clip.frames[i].index, clip.sizeInTiles});
-		ImGui::Dummy(ImVec2(0, 4));	 // Spacer
+		ImGui::Dummy(ImVec2(0, 2 * displayScale));	 // Spacer
 
 		float controlOffsetX = (cellWidth - controlWidth) * 0.5f - 2;
 		ImGui::SetCursorPosX(controlOffsetX);
 		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
 		ImGui::BeginChild("##ctrl", ImVec2(controlWidth, 0), false, ImGuiWindowFlags_NoScrollbar);
-		EditorWidgets::drawVec2Control("", clip.frames[i].index, 0, 0, 0, 50, true);
+		EditorWidgets::drawVec2Control("", clip.frames[i].index, 0, 0, 0, 40, true);
 		ImGui::EndChild();
 		ImGui::PopStyleColor();
 
@@ -356,7 +361,7 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 void AnimationClipPanel::drawFrame(SubTexture texture) {
 	void*					data	  = AssetManager::get<Texture>(texture.getTexturePath())->getData();
 	SubTextureSpecification specs	  = texture.getSpecs();
-	ImVec2					max		  = ImVec2(75, 75);
+	ImVec2					max		  = ImVec2(37.5, 37.5);
 	ImVec2					size	  = {specs.sizeInTiles.x * specs.tileSize.x, specs.sizeInTiles.y * specs.tileSize.y};
 	float					targetAR  = size.x / size.y;
 	float					currentAR = max.x / max.y;

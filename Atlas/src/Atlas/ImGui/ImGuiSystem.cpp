@@ -34,30 +34,30 @@ void ImGuiSystem::setupImGuiStyle(ImGuiStyle& style)
     // -------------------------------------------------------------------------
     //  Geometry
     // -------------------------------------------------------------------------
-    style.WindowPadding            = ImVec2(10.0f, 10.0f);
-    style.FramePadding             = ImVec2(6.0f,  4.0f);
-    style.CellPadding              = ImVec2(6.0f,  4.0f);
-    style.ItemSpacing              = ImVec2(8.0f,  5.0f);
-    style.ItemInnerSpacing         = ImVec2(5.0f,  4.0f);
-    style.IndentSpacing            = 18.0f;
-    style.ScrollbarSize            = 11.0f;
-    style.GrabMinSize              = 10.0f;
+    style.WindowPadding            = ImVec2(5.0f, 5.0f);
+    style.FramePadding             = ImVec2(3.0f,  2.0f);
+    style.CellPadding              = ImVec2(3.0f,  2.0f);
+    style.ItemSpacing              = ImVec2(4.0f,  2.5f);
+    style.ItemInnerSpacing         = ImVec2(2.5f,  2.0f);
+    style.IndentSpacing            = 9.0f;
+    style.ScrollbarSize            = 5.5f;
+    style.GrabMinSize              = 5.0f;
  
-    style.WindowRounding           = 5.0f;
-    style.ChildRounding            = 4.0f;
-    style.FrameRounding            = 4.0f;
-    style.PopupRounding            = 5.0f;
-    style.ScrollbarRounding        = 4.0f;
-    style.GrabRounding             = 3.0f;
-    style.TabRounding              = 4.0f;
-    style.LogSliderDeadzone        = 4.0f;
+    style.WindowRounding           = 2.5f;
+    style.ChildRounding            = 2.0f;
+    style.FrameRounding            = 2.0f;
+    style.PopupRounding            = 2.5f;
+    style.ScrollbarRounding        = 2.0f;
+    style.GrabRounding             = 1.5f;
+    style.TabRounding              = 2.0f;
+    style.LogSliderDeadzone        = 2.0f;
  
-    style.WindowBorderSize         = 1.0f;
-    style.ChildBorderSize          = 1.0f;
-    style.PopupBorderSize          = 1.0f;
-    style.FrameBorderSize          = 1.0f;
-    style.TabBorderSize            = 1.0f;
-    style.TabBarBorderSize         = 1.0f;
+    style.WindowBorderSize         = 0.5f;
+    style.ChildBorderSize          = 0.5f;
+    style.PopupBorderSize          = 0.5f;
+    style.FrameBorderSize          = 0.5f;
+    style.TabBorderSize            = 0.5f;
+    style.TabBarBorderSize         = 0.5f;
  
     // -------------------------------------------------------------------------
     //  Color assignments

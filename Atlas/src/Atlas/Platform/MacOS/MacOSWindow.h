@@ -1,11 +1,11 @@
 #pragma once
 
-#include <Atlas/Renderer/GraphicsContext.h>
-#include <Atlas/Core/Window.h>
+#include "Atlas/Core/Window.h"
+#include "Atlas/Renderer/GraphicsContext.h"
+
 #include <GLFW/glfw3.h>
 
-#include <metal-cpp/Metal.hpp>
-
+#include <memory>
 namespace Atlas {
 
 class MacOSWindow : public Window {
@@ -36,7 +36,6 @@ class MacOSWindow : public Window {
 
    private:
     GLFWwindow* m_window;
-    NS::AutoreleasePool* m_pool;
 
     struct WindowData {
         std::string title;

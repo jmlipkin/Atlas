@@ -8,11 +8,16 @@
 
 #include <Atlas/Core/Base.h>
 #include <Atlas/Core/Application.h>
+#include "Atlas/Events/ApplicationEvent.h"
 #include <Atlas/Renderer/Renderer.h>
 #include <Atlas/Core/KeyCodes.h>
 #include <Atlas/Core/MouseButtonCodes.h>
 
 namespace Atlas {
+
+static GLFWwindow* getNativeWindow() {
+	return (GLFWwindow*)Application::get().getWindow().getNativeWindow();
+}
 
 ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer") {
 	m_system = ImGuiSystem::create();
@@ -29,32 +34,26 @@ void ImGuiLayer::onEvent(Event& event) {
 	dispatcher.dispatch<KeyReleasedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyReleasedEvent));
 	dispatcher.dispatch<KeyTypedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onKeyTypedEvent));
 	dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onWindowResizeEvent));
+	dispatcher.dispatch<DisplayChangedEvent>(AT_BIND_EVENT_FN(ImGuiLayer::onDisplayChangedEvent));
 }
 
 bool ImGuiLayer::onMouseButtonPressedEvent(MouseButtonPressedEvent& e) {
-	ImGuiIO& io = ImGui::GetIO();
+	ImGuiIO& io						 = ImGui::GetIO();
 	io.MouseDown[e.getMouseButton()] = true;
 
 	return false;
 }
 
 bool ImGuiLayer::onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e) {
-	ImGuiIO& io = ImGui::GetIO();
+	ImGuiIO& io						 = ImGui::GetIO();
 	io.MouseDown[e.getMouseButton()] = false;
 
 	return false;
 }
 
 bool ImGuiLayer::onMouseMovedEvent(MouseMovedEvent& e) {
-	int winWidth, winHeight;
-	glfwGetWindowSize((GLFWwindow*)Application::get().getWindow().getNativeWindow(), &winWidth, &winHeight);
-	int fbWidth, fbHeight;
-	glfwGetFramebufferSize((GLFWwindow*)Application::get().getWindow().getNativeWindow(), &fbWidth, &fbHeight);
-
-	float scaleX = (float)fbWidth / (float)winWidth;
-	float scaleY = (float)fbHeight / (float)winHeight;
-	ImGuiIO& io = ImGui::GetIO();
-	io.MousePos = ImVec2(e.getX() * scaleX, e.getY() * scaleY);
+	ImGuiIO& io		= ImGui::GetIO();
+	io.MousePos		= ImVec2(e.getX(), e.getY());
 
 	return false;
 }
@@ -68,7 +67,7 @@ bool ImGuiLayer::onMouseScrolledEvent(MouseScrolledEvent& e) {
 }
 
 bool ImGuiLayer::onKeyPressedEvent(KeyPressedEvent& e) {
-	ImGuiIO& io = ImGui::GetIO();
+	ImGuiIO& io	 = ImGui::GetIO();
 	ImGuiKey key = keyCodeToImGuiKey(e.getKeyCode());
 	io.AddKeyEvent(key, true);
 
@@ -78,7 +77,7 @@ bool ImGuiLayer::onKeyPressedEvent(KeyPressedEvent& e) {
 }
 
 bool ImGuiLayer::onKeyReleasedEvent(KeyReleasedEvent& e) {
-	ImGuiIO& io = ImGui::GetIO();
+	ImGuiIO& io	 = ImGui::GetIO();
 	ImGuiKey key = keyCodeToImGuiKey(e.getKeyCode());
 	io.AddKeyEvent(key, false);
 
@@ -86,8 +85,8 @@ bool ImGuiLayer::onKeyReleasedEvent(KeyReleasedEvent& e) {
 }
 
 bool ImGuiLayer::onKeyTypedEvent(KeyTypedEvent& e) {
-	ImGuiIO& io = ImGui::GetIO();
-	int keycode = e.getKeyCode();
+	ImGuiIO& io		 = ImGui::GetIO();
+	int		 keycode = e.getKeyCode();
 	if (keycode > 0 && keycode < 0x10000)
 		io.AddInputCharacter((unsigned short)keycode);
 
@@ -97,7 +96,21 @@ bool ImGuiLayer::onKeyTypedEvent(KeyTypedEvent& e) {
 bool ImGuiLayer::onWindowResizeEvent(WindowResizeEvent& e) {
 	ImGuiIO& io = ImGui::GetIO();
 
-	io.DisplaySize = ImVec2(e.getWidth(), e.getHeight());
+	GLFWwindow* window = getNativeWindow();
+	int			winWidth, winHeight, fbWidth, fbHeight;
+	glfwGetWindowSize(window, &winWidth, &winHeight);
+	glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+
+	io.DisplaySize			   = ImVec2((float)winWidth, (float)winHeight);
+	io.DisplayFramebufferScale = ImVec2((float)fbWidth / winWidth, (float)fbHeight / winHeight);
+
+	return false;
+}
+
+bool ImGuiLayer::onDisplayChangedEvent(DisplayChangedEvent& e) {
+	m_system->rescale(e.getScale());
+
+	AT_CORE_TRACE("{}", e.toString());
 
 	return false;
 }

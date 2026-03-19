@@ -55,6 +55,8 @@ class EditorWidgets {
 							 Purple,
 							 Blue };
 
+	static float displayScale;
+
 	//  Usage:
 	//    if (ImGui::Begin("Scene Hierarchy"))
 	//    {
@@ -69,18 +71,7 @@ class EditorWidgets {
 	//        // ... content ...
 	//    }
 	//    ImGui::End();
-	static inline void DrawPanelAccentBar(PanelAccent color, bool onlyWhenFocused = true) {
-		if (onlyWhenFocused && !ImGui::IsWindowFocused(ImGuiFocusedFlags_RootWindow))
-			return;
-
-		ImDrawList* dl	= ImGui::GetWindowDrawList();
-		ImVec2		pos = ImGui::GetWindowPos();
-		ImVec2		sz	= ImGui::GetWindowSize();
-		dl->AddRectFilled(
-			ImVec2(pos.x, pos.y),
-			ImVec2(pos.x + 3.0f, pos.y + sz.y),
-			getAccentColor(color));
-	}
+	static void DrawPanelAccentBar(PanelAccent color, bool onlyWhenFocused = true);
 
 	template <typename T>
 	static bool drawVec2Control(const char* label, T& values, typename T::value_type resetX = 0, typename T::value_type resetY = 0, float columnWidth = 100.0f, float valueWidth = 100.0f, bool vertical = false) {
@@ -107,8 +98,8 @@ class EditorWidgets {
 		ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
 
-		float  lineHeight = GImGui->Font->LegacySize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize = {lineHeight + 3.0f, lineHeight};
+		float lineHeight = ImGui::GetFrameHeight();
+		ImVec2 buttonSize = {lineHeight, lineHeight};
 
 		// X
 		ImGui::PushStyleColor(ImGuiCol_Button, steelBlue);
@@ -159,91 +150,10 @@ class EditorWidgets {
 		return changed;
 	}
 
-	static bool drawVec3Control(const char* label, glm::vec3& values, float resetX = 0.f, float resetY = 0.0f, float resetZ = 0.0f, float columnWidth = 100.0f, float valueWidth = 100.0f, bool vertical = false) {
-		ImGuiIO io		 = ImGui::GetIO();
-		ImFont* boldFont = io.Fonts->Fonts[0];
-
-		bool changed = false;
-
-		ImGui::PushID(label);
-
-		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, columnWidth);
-		ImGui::Text("%s", label);
-		ImGui::NextColumn();
-
-		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
-
-		float  lineHeight = GImGui->Font->LegacySize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize = {lineHeight + 3.0f, lineHeight};
-
-		// X
-		ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::steelBlue);
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::steelBlueLight);
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::steelBlueActive);
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("X", buttonSize)) values.x = resetX;
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(valueWidth);
-		changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
-		ImGui::PopItemWidth();
-		ImGui::PopItemWidth();
-
-		if (!vertical)
-			ImGui::SameLine();
-
-		// Y
-		ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::green);
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::greenLight);
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::greenActive);
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("Y", buttonSize)) values.y = resetY;
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(valueWidth);
-		changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
-		ImGui::PopItemWidth();
-		ImGui::PopItemWidth();
-
-		if (!vertical)
-			ImGui::SameLine();
-
-		// Z
-		ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::purple);
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::purpleLight);
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::purpleActive);
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("Z", buttonSize)) values.z = resetZ;
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(valueWidth);
-		changed |= ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
-		ImGui::PopItemWidth();
-		ImGui::PopItemWidth();
-
-		ImGui::PopStyleVar();
-		ImGui::Columns(1);
-		ImGui::PopID();
-
-		return changed;
-	}
+	static bool drawVec3Control(const char* label, glm::vec3& values, float resetX = 0.f, float resetY = 0.0f, float resetZ = 0.0f, float columnWidth = 100.0f, float valueWidth = 100.0f, bool vertical = false);
 
   private:
-	static ImU32 getAccentColor(PanelAccent color) {
-		switch (color) {
-			case PanelAccent::Blue:
-				return ImGui::ColorConvertFloat4ToU32(steelBluePanelAccent);
-			case PanelAccent::Green:
-				return ImGui::ColorConvertFloat4ToU32(steelBluePanelAccent);
-			case PanelAccent::Purple:
-				return ImGui::ColorConvertFloat4ToU32(purplePanelAccent);
-		}
-	}
+	static ImU32 getAccentColor(PanelAccent color);
 };
 
 }  // namespace Atlas
