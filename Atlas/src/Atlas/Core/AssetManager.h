@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Atlas/Core/Base.h"
 #include "Atlas/Core/Font.h"
 
 #include "Atlas/Renderer/Shader.h"

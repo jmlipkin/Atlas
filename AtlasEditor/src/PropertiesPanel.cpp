@@ -33,6 +33,9 @@ void PropertiesPanel::onImGuiRender(Entity& selection) {
 	}
 
 	m_animationEditor.onImGuiRender();
+	if (m_selectionType == SelectionType::AnimationClip && m_animationEditor.isClipNameChanged()) {
+		m_selectedClip = m_animationEditor.getClipName();
+	}
 
 	ImGui::End();
 }
@@ -111,7 +114,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 		for (auto& [clipName, clip] : component.clips) {
 			std::string editableName = clipName;
 			drawClipLabel(editableName, SelectionType::AnimationClip);
-			if (!m_renamedClip.empty() && clipName == m_selectedClip) {
+			if (!m_renamedClip.empty() && clipName == m_selectedClip && !component.clips.contains(m_renamedClip)) {
 				auto node  = component.clips.extract(clipName);
 				node.key() = m_renamedClip;
 				component.clips.insert(std::move(node));
@@ -120,7 +123,8 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 					component.activeClip = m_renamedClip;
 				}
 				m_selectedClip = m_renamedClip;
-				m_renamedClip  = {};
+				m_animationEditor.setClipName(m_renamedClip);
+				m_renamedClip = {};
 				ProjectManager::saveScene(m_scene);
 				break;
 			}

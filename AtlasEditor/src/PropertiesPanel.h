@@ -1,5 +1,7 @@
 #pragma once
 
+#include "AnimationClipPanel.h"
+
 #include "Atlas/ECS/Entities/Entity.h"
 
 #include <imgui/imgui.h>
@@ -13,7 +15,10 @@ class PropertiesPanel {
 	~PropertiesPanel() = default;
 
 	void onImGuiRender(Entity& selection);
-	void setScene(std::shared_ptr<Scene> scene) { m_scene = scene; }
+	void setScene(std::shared_ptr<Scene> scene) {
+		m_scene = scene;
+		m_animationEditor.close();
+	}
 
   private:
 	enum class SelectionType { None,
@@ -38,7 +43,7 @@ class PropertiesPanel {
 		ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
 
 		std::string popupID = std::string("ComponentSettings##") + typeid(T).name();
-		if (ImGui::Button("+", ImVec2{lineHeight, lineHeight})) {
+		if (ImGui::Button("\u2013", ImVec2{lineHeight, lineHeight})) {
 			ImGui::OpenPopup(popupID.c_str());
 		}
 
@@ -65,6 +70,9 @@ class PropertiesPanel {
 
   private:
 	std::shared_ptr<Scene> m_scene;
+
+	AnimationClipPanel	   m_animationEditor;
+	bool m_animationEditorShouldOpen = false;
 
 	SelectionType m_selectionType = PropertiesPanel::SelectionType::None;
 	std::string	  m_selectedClip;

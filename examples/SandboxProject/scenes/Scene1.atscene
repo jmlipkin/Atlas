@@ -2,12 +2,139 @@
   "Name": "Scene1",
   "Entities": [
     {
+      "UUID": 14970872023506877474,
+      "Tag": "Player",
+      "Transform": {
+        "Position": [
+          -0.8999999761581421,
+          7.0,
+          2.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Tile Size": [
+          8.0,
+          8.0
+        ],
+        "Size (in Tiles)": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          32,
+          0
+        ]
+      },
+      "Animations": {
+        "Clips": [
+          {
+            "Name": "MoveRight",
+            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+            "Frame Rate": 30.0,
+            "Should loop": true,
+            "Tile Size": [
+              8.0,
+              8.0
+            ],
+            "Size (in Tiles)": [
+              2,
+              2
+            ],
+            "Frames": [
+              [
+                28,
+                0
+              ],
+              [
+                30,
+                0
+              ],
+              [
+                32,
+                0
+              ]
+            ]
+          },
+          {
+            "Name": "Dying",
+            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+            "Frame Rate": 15.0,
+            "Should loop": false,
+            "Tile Size": [
+              8.0,
+              8.0
+            ],
+            "Size (in Tiles)": [
+              2,
+              2
+            ],
+            "Frames": [
+              [
+                32,
+                0
+              ],
+              [
+                34,
+                0
+              ],
+              [
+                36,
+                0
+              ],
+              [
+                38,
+                0
+              ],
+              [
+                40,
+                0
+              ],
+              [
+                42,
+                0
+              ],
+              [
+                44,
+                0
+              ],
+              [
+                46,
+                0
+              ],
+              [
+                48,
+                0
+              ],
+              [
+                50,
+                0
+              ],
+              [
+                52,
+                0
+              ],
+              [
+                54,
+                0
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
       "UUID": 18031357280409163922,
       "Tag": "Board",
       "Transform": {
         "Position": [
-          -14.300000190734863,
-          -14.699999809265137,
+          -14.0,
+          -15.5,
           1.0
         ],
         "Rotation": 0.0,
@@ -30,101 +157,9 @@
           0,
           0
         ]
-      }
-    },
-    {
-      "UUID": 14970872023506877474,
-      "Tag": "Player",
-      "Transform": {
-        "Position": [
-          3.700000047683716,
-          0.0,
-          12.300000190734863
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          2.0,
-          2.0
-        ]
-      },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Tile Size": [
-          8.0,
-          8.0
-        ],
-        "Size (in Tiles)": [
-          2.0,
-          2.0
-        ],
-        "Index": [
-          28,
-          0
-        ]
       },
       "Animations": {
-        "Clips": [
-          {
-            "Name": "That's better!",
-            "Texture": "",
-            "Frame Rate": 12.0,
-            "Should loop": false,
-            "Tile Size": [
-              0.0,
-              0.0
-            ],
-            "Size (in Tiles)": [
-              0,
-              0
-            ],
-            "Frames": []
-          },
-          {
-            "Name": "Testing",
-            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/",
-            "Frame Rate": 12.0,
-            "Should loop": false,
-            "Tile Size": [
-              0.0,
-              0.0
-            ],
-            "Size (in Tiles)": [
-              0,
-              0
-            ],
-            "Frames": []
-          },
-          {
-            "Name": "asdf",
-            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/",
-            "Frame Rate": 12.0,
-            "Should loop": false,
-            "Tile Size": [
-              0.0,
-              0.0
-            ],
-            "Size (in Tiles)": [
-              0,
-              0
-            ],
-            "Frames": []
-          },
-          {
-            "Name": "Fixing",
-            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/",
-            "Frame Rate": 12.0,
-            "Should loop": false,
-            "Tile Size": [
-              0.0,
-              0.0
-            ],
-            "Size (in Tiles)": [
-              0,
-              0
-            ],
-            "Frames": []
-          }
-        ]
+        "Clips": []
       }
     }
   ]

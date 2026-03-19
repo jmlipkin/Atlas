@@ -32,6 +32,7 @@ class Texture {
 	virtual std::string& getFilepath() = 0;
 	virtual std::string getFilepath() const = 0;
 
+    virtual void* getData() const = 0;
     virtual void setData(void* data, uint32_t size) = 0;
 
     static std::shared_ptr<Texture> create(const std::string& filepath);

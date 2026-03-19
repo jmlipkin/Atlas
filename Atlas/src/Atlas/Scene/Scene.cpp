@@ -57,6 +57,9 @@ void Scene::onUpdate(DeltaTime dt) {
 			Component::Animations& anim		 = view.get<Component::Animations>(entity);
 
 			if (!anim.containsActiveClip()) {
+				Component::Sprite sprite = view.get<Component::Sprite>(entity);
+				if (!sprite.texturePath.empty())
+					Renderer::drawSprite(transform, sprite);
 				continue;
 			}
 
