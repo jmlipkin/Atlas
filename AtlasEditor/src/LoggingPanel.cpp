@@ -23,7 +23,9 @@ void LoggingPanel::onImGuiRender() {
 
 	ImGui::Separator();
 
+	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
 	ImGui::BeginChild("Scrolling");
+	ImGui::PopStyleColor();
 
 	ImGui::PushTextWrapPos(0.0f);
 
@@ -52,7 +54,7 @@ void LoggingPanel::onImGuiRender() {
 		ImGui::SetScrollHereY(1.0f);
 		m_rawOut->clearScrollFlag();
 	}
-	
+
 	ImGui::PopTextWrapPos();
 
 	if (m_logger->scrollsToBottom()) {

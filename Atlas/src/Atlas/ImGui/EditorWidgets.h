@@ -83,9 +83,17 @@ class EditorWidgets {
 	}
 
 	template <typename T>
-	static bool drawVec2Control(const char* label, T& values, typename T::value_type resetX = 0, typename T::value_type resetY = 0, float columnWidth = 100.0f) {
+	static bool drawVec2Control(const char* label, T& values, typename T::value_type resetX = 0, typename T::value_type resetY = 0, float columnWidth = 100.0f, float valueWidth = 100.0f, bool vertical = false) {
 		ImGuiIO io		 = ImGui::GetIO();
 		ImFont* boldFont = io.Fonts->Fonts[0];
+
+		// No label, so disable separator
+		bool showSeparator = strcmp(label, "");
+		if (!showSeparator) {
+			ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(0, 0, 0, 0));
+			ImGui::PushStyleColor(ImGuiCol_SeparatorActive, ImVec4(0, 0, 0, 0));
+			ImGui::PushStyleColor(ImGuiCol_SeparatorHovered, ImVec4(0, 0, 0, 0));
+		}
 
 		bool changed = false;
 
@@ -111,13 +119,17 @@ class EditorWidgets {
 		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
+		ImGui::PushItemWidth(valueWidth);
 		if constexpr (std::is_same_v<T, glm::ivec2>) {
 			changed |= ImGui::DragInt("##X", &values.x, 1, 0, 0, "%d");
 		} else {
 			changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
 		}
 		ImGui::PopItemWidth();
-		ImGui::SameLine();
+		ImGui::PopItemWidth();
+
+		if (!vertical)
+			ImGui::SameLine();
 
 		// Y
 		ImGui::PushStyleColor(ImGuiCol_Button, green);
@@ -128,21 +140,26 @@ class EditorWidgets {
 		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
+		ImGui::PushItemWidth(valueWidth);
 		if constexpr (std::is_same_v<T, glm::ivec2>) {
 			changed |= ImGui::DragInt("##Y", &values.y, 1, 0, 0, "%d");
 		} else {
 			changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
 		}
 		ImGui::PopItemWidth();
+		ImGui::PopItemWidth();
 
 		ImGui::PopStyleVar();
 		ImGui::Columns(1);
 		ImGui::PopID();
 
+		if (!showSeparator)
+			ImGui::PopStyleColor(3);
+
 		return changed;
 	}
 
-	static bool drawVec3Control(const char* label, glm::vec3& values, float resetX, float resetY, float resetZ, float columnWidth) {
+	static bool drawVec3Control(const char* label, glm::vec3& values, float resetX = 0.f, float resetY = 0.0f, float resetZ = 0.0f, float columnWidth = 100.0f, float valueWidth = 100.0f, bool vertical = false) {
 		ImGuiIO io		 = ImGui::GetIO();
 		ImFont* boldFont = io.Fonts->Fonts[0];
 
@@ -170,9 +187,13 @@ class EditorWidgets {
 		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
+		ImGui::PushItemWidth(valueWidth);
 		changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
 		ImGui::PopItemWidth();
-		ImGui::SameLine();
+		ImGui::PopItemWidth();
+
+		if (!vertical)
+			ImGui::SameLine();
 
 		// Y
 		ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::green);
@@ -183,9 +204,13 @@ class EditorWidgets {
 		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
+		ImGui::PushItemWidth(valueWidth);
 		changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
 		ImGui::PopItemWidth();
-		ImGui::SameLine();
+		ImGui::PopItemWidth();
+
+		if (!vertical)
+			ImGui::SameLine();
 
 		// Z
 		ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::purple);
@@ -196,7 +221,9 @@ class EditorWidgets {
 		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
+		ImGui::PushItemWidth(valueWidth);
 		changed |= ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth();
 		ImGui::PopItemWidth();
 
 		ImGui::PopStyleVar();

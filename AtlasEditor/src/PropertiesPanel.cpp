@@ -7,6 +7,7 @@
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Animation.h"
 
+#include <imgui/imgui.h>
 
 namespace Atlas {
 
@@ -41,24 +42,48 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 	ImGui::Text("UUID: 0x%016llX", (uint64_t)UUID);
 
 	drawComponent<Component::Transform>("Transform", entity, [this](auto& component) {
-		EditorWidgets::drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, 120.0f);
+		EditorWidgets::drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, 170.0f, 240, true);
 	});
 	drawComponent<Component::Sprite>("Sprite", entity, [this](auto& component) {
 		SubTextureSpecification& specs	  = component.specs;
 		const std::string&		 filepath = ProjectManager::toRelativePath(component.texturePath);
 
-		ImGui::Text("%s", filepath.c_str());
+		float changeButtonWidth = 125;
+		float padding			= 8;
+		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - padding * 2;
+
+		std::string displayPath = filepath.empty() ? "No texture" : filepath;
+		if (!filepath.empty() && ImGui::CalcTextSize(filepath.c_str()).x > maxWidth) {
+			std::string truncated = std::filesystem::path(filepath).filename().string();
+			while (!truncated.empty() &&
+				   ImGui::CalcTextSize((truncated + "...").c_str()).x > maxWidth) {
+				truncated.pop_back();
+			}
+			displayPath = truncated + "...";
+		}
+
+		ImGui::Text("%s", displayPath.c_str());
+		if (ImGui::IsItemHovered() && !filepath.empty()) {
+			ImGui::SetTooltip("%s", filepath.c_str());
+		}
+
 		ImGui::SameLine();
-		if (ImGui::Button("Change")) {
+
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - padding);
+
+		if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0))) {
 			component.texturePath = Platform::openFileDialog("png");
 			ProjectManager::saveScene(m_scene);
 		}
+		ImGui::Dummy(ImVec2(0, padding));
 
 		bool changed = false;
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size (tiles)", specs.sizeInTiles);
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Grid Size", specs.tileSize);
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size (tiles)", specs.sizeInTiles, 0, 0, 170);
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Grid Size", specs.tileSize, 0, 0, 170);
 
-		changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Index", specs.index);
+		changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Index", specs.index, 0, 0, 170);
+
+		ImGui::Dummy(ImVec2(0, padding));
 
 		if (changed) {
 			component.recalculateCoordinates();
@@ -133,7 +158,7 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 			wasDimmed = true;
 			// Dimmed selection color when panel is inactive
 			ImGui::PushStyleColor(ImGuiCol_HeaderActive, EditorWidgets::green);
-			ImGui::PushStyleColor(ImGuiCol_Header, EditorWidgets::greenSub);	// greenSub dimmed
+			ImGui::PushStyleColor(ImGuiCol_Header, EditorWidgets::greenSub);  // greenSub dimmed
 			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(EditorWidgets::greenSub.x, EditorWidgets::greenSub.y, EditorWidgets::greenSub.z, EditorWidgets::greenSub.w * 0.5f));
 		}
 	}
