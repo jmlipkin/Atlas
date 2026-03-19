@@ -9,6 +9,7 @@
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
+#include "Atlas/ECS/Components/Behavior.h"
 
 namespace Atlas {
 
@@ -167,19 +168,31 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 
 void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 	if (ImGui::MenuItem("Animation")) {
-		entity.addComponent<Component::Animations>();
-		autoSave();
+		if (!entity.hasComponent<Component::Animations>()) {
+			entity.addComponent<Component::Animations>();
+			autoSave();
+		} else {
+			AT_CORE_WARN("Entity \"{}\" already has Animations component!", entity.getComponent<Component::Tag>().tag);
+		}
 	}
 
 	if (ImGui::MenuItem("Sprite")) {
-		std::string filepath = Platform::openFileDialog("png");
-		entity.addComponent<Component::Sprite>(filepath, SubTextureSpecification{});
-		autoSave();
+		if (!entity.hasComponent<Component::Sprite>()) {
+			std::string filepath = Platform::openFileDialog("png");
+			entity.addComponent<Component::Sprite>(filepath, SubTextureSpecification{});
+			autoSave();
+		} else {
+			AT_CORE_WARN("Entity \"{}\" already has Sprite component!", entity.getComponent<Component::Tag>().tag);
+		}
 	}
 
 	if (ImGui::MenuItem("Script")) {
-		AT_CORE_WARN("Cannot add Script component: Default constructor isn't implemented yet");
-		autoSave();
+		if (!entity.hasComponent<Component::Script>()) {
+			AT_CORE_WARN("Cannot add Script component: Default constructor isn't implemented yet");
+			autoSave();
+		} else {
+			AT_CORE_WARN("Entity \"{}\" already has Script component!", entity.getComponent<Component::Tag>().tag);
+		}
 	}
 }
 
