@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Atlas/Project/Project.h"
-#include "Atlas/ImGui/EditorWidgets.h"
 
-#include <imgui/imgui.h>
 #include <memory>
 
 namespace Atlas {
@@ -14,39 +12,10 @@ class ProjectPanel {
 
 	void setOnSceneSelected(SceneSelectedCallback callback) { m_onSceneSelected = callback; }
 
-	void onImGuiRender() {
-		m_activeProject = ProjectManager::getActiveProject();
+	void onImGuiRender();
 
-		ImGui::Begin("Project");
-		EditorWidgets::DrawPanelAccentBar(EditorWidgets::PanelAccent::Purple);
-
-		ImGuiIO io = ImGui::GetIO();
-		ImGui::PushFont(io.Fonts->Fonts[1]);
-		if (m_activeProject == nullptr) {
-			ImGui::Text("No active project");
-			ImGui::PopFont();
-			ImGui::End();
-			return;
-		}
-		
-		std::string projName = m_activeProject->getName();
-		ImGui::Text("%s", projName.c_str());
-		ImGui::PopFont();
-
-		for (auto s : m_activeProject->getData().scene_filepaths) {
-			std::string displayName = std::filesystem::path(s).stem().string();
-
-			bool isSelected = m_selectionContext && ProjectManager::toAbsolutePath(s) == m_selectionContext->getPath();
-
-			if (ImGui::Selectable(displayName.c_str(), isSelected)) {
-				auto scene = ProjectManager::loadScene(ProjectManager::toAbsolutePath(s));
-				m_selectionContext = scene;
-				m_onSceneSelected(scene);
-			}
-		}
-
-		ImGui::End();
-	}
+  private:
+	bool drawSceneNode(std::string scene_path);
 
   private:
 	std::shared_ptr<Project> m_activeProject;
