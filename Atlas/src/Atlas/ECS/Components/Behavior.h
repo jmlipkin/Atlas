@@ -55,6 +55,8 @@ class Behavior {
 	virtual void onUpdate(DeltaTime dt) {}
 	virtual void onEvent(Event& event) {}
 
+	static void generateNewScript(const std::string& path);
+
   protected:
 	template <typename T>
 	void expose(const std::string& name, T& value) {

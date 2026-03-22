@@ -54,9 +54,14 @@ void ProjectManager::attachScenetoProject(std::shared_ptr<Scene> scene) {
 void ProjectManager::createNewProject(const std::string& filepath, const std::string& name) {
 	std::string absoluteProjectPath = (std::filesystem::path(filepath) / name).string();
 	std::filesystem::create_directory(absoluteProjectPath);
-	std::filesystem::create_directory(absoluteProjectPath + "/scenes");
+	std::filesystem::create_directory(absoluteProjectPath + "/project/scenes");
 	std::filesystem::create_directory(absoluteProjectPath + "/assets");
-	s_activeProject = std::make_shared<Project>(absoluteProjectPath, ProjectData{name});
+	std::filesystem::create_directory(absoluteProjectPath + "/src");
+
+	ProjectData projData{name};
+	projData.src_directory = absoluteProjectPath + "/src";
+	s_activeProject = std::make_shared<Project>(absoluteProjectPath + "/project", projData);
+	
 	Serializer::serializeProject(s_activeProject);
 }
 
@@ -99,6 +104,8 @@ std::shared_ptr<Scene> ProjectManager::loadProject(const std::string& filepath, 
 	Serializer::deserializeProject(s_activeProject);
 
 	std::shared_ptr<Scene> loadedScene = nullptr;
+
+	s_activeProject->setScripts(Serializer::loadScriptManifest(s_activeProject));
 
 	if (useStartupScene) {
 		loadedScene = loadScene(toAbsolutePath(s_activeProject->getData().startup_scene));

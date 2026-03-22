@@ -10,7 +10,7 @@ class MacOSPlatform : public Platform {
 	virtual std::string getAppSupportPathImpl() override;
 
 	virtual std::string openFileDialogImpl(const std::string& filter) override;
-	virtual std::string saveFileDialogImpl(const std::string& filter) override;
+	virtual std::string saveFileDialogImpl(const std::string& filter, const std::string& defaultDir) override;
 	virtual int showConfirmDialogImpl(const std::string &message, const std::string &confirm, const std::string &deny, const std::string& cancel) override;
 };
 }  // namespace Atlas

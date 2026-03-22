@@ -61,13 +61,18 @@ std::string MacOSPlatform::openFileDialogImpl(const std::string& filter) {
 	return "";
 }
 
-std::string MacOSPlatform::saveFileDialogImpl(const std::string& filter) {
+std::string MacOSPlatform::saveFileDialogImpl(const std::string& filter, const std::string& defaultDir) {
 	NSSavePanel* panel = [NSSavePanel savePanel];
 
 	if (!filter.empty()) {
 		NSString* ext  = [NSString stringWithUTF8String:filter.c_str()];
 		UTType*	  type = [UTType typeWithFilenameExtension:ext];
 		[panel setAllowedContentTypes:@[ type ]];
+	}
+
+	if (!defaultDir.empty()) {
+		NSString* dir = [NSString stringWithUTF8String:defaultDir.c_str()];
+		[panel setDirectoryURL:[NSURL fileURLWithPath:dir isDirectory:YES]];
 	}
 
 	if ([panel runModal] == NSModalResponseOK) {

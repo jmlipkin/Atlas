@@ -179,6 +179,15 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 						ProjectManager::saveScene(m_scene);
 					}
 				}
+				if (ImGui::Button("Create New Script")) {
+					std::string defaultDir = "";
+					if (ProjectManager::getActiveProject()) {
+						defaultDir = ProjectManager::getActiveProject()->getData().src_directory;
+					}
+					std::string path = Platform::saveFileDialog("h", defaultDir);
+					Behavior::generateNewScript(path);
+					// Platform::openFile(path);
+				}
 				ImGui::EndCombo();
 			}
 		} else {

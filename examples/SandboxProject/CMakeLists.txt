@@ -16,6 +16,8 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 # Configure as macOS app bundle, copy Atlas resources and game assets
 atlas_configure_bundle(${TARGET_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/assets")
 
+atlas_generate_script_registry(${TARGET_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/project")
+
 # Copy project files into bundle
 if(APPLE)
     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
