@@ -188,7 +188,8 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 
 	if (ImGui::MenuItem("Script")) {
 		if (!entity.hasComponent<Component::Script>()) {
-			AT_CORE_WARN("Cannot add Script component: Default constructor isn't implemented yet");
+			entity.addComponent<Component::Script>();
+			AT_CORE_DEBUG("Priority: {}", (int)entity.getComponent<Component::Script>().priority);
 			autoSave();
 		} else {
 			AT_CORE_WARN("Entity \"{}\" already has Script component!", entity.getComponent<Component::Tag>().tag);

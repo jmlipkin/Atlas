@@ -1,17 +1,14 @@
 #pragma once
 
-#include "Atlas/ECS/Components/Behavior.h"
+#include "Atlas/Core/ScriptPriority.h"
 
 #include <string>
 #include <unordered_map>
+#include <functional>
 
 namespace Atlas {
 
-enum ScriptPriority {
-	Early  = 0,
-	Normal = 1,
-	Late   = 2
-};
+class Behavior;
 
 class ScriptRegistry {
   public:
@@ -25,9 +22,14 @@ class ScriptRegistry {
 	static ScriptPriority getPriority(const std::string& name);
 	static int			  getPriorityIndex(const std::string& name);
 
+    static std::vector<std::string> getRegisteredNames();
+
   private:
-	static std::array<std::unordered_map<std::string, ScriptFactory>, 3>
-		s_registry;
+	using Registry = std::array<std::unordered_map<std::string, ScriptFactory>, 3>;
+	static Registry& getRegistry() {
+		static Registry s_registry;	 // constructed on first use
+		return s_registry;
+	}
 };
 
 }  // namespace Atlas

@@ -3,6 +3,7 @@
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/Events/Event.h"
 #include "Atlas/Core/Time.h"
+#include "Atlas/Core/ScriptPriority.h"
 
 #include <memory>
 #include <unordered_map>
@@ -12,34 +13,37 @@
 
 namespace Atlas {
 
+enum class BehaviorPropertyType {
+	BOOL,
+	CHAR,
+	STRING,
+	INT,
+	FLOAT,
+	VEC2,
+	VEC3,
+	VEC4,
+	MAT4
+
+};
+
+template <typename T>
+BehaviorPropertyType propertyTypeFor();
+
 class Behavior {
   public:
-	typedef enum class PropertyType {
-		BOOL,
-		CHAR,
-		STRING,
-		INT,
-		FLOAT,
-		VEC2,
-		VEC3,
-		VEC4,
-		MAT4
-
-	} PropertyType;
-
 	struct Property {
-		std::string	 name;
-		void*		 valuePtr;
-		PropertyType type;
+		std::string			 name;
+		void*				 valuePtr;
+		BehaviorPropertyType type;
 	};
 
   public:
 	virtual ~Behavior() = default;
 
-	virtual std::string getTypeName() const { return "Unregistered behavior type"; }
-	
+	virtual std::string getTypeName() const { return "UnknownBehavior"; }
+
 	void setEntity(Entity entity) { m_entity = entity; }
-	
+
 	virtual void exposeProperties() {}
 	const auto&	 getProperties() { return m_properties; }
 
@@ -68,39 +72,44 @@ namespace Component {
 
 struct Script {
 	std::unique_ptr<Behavior> instance = nullptr;
+	ScriptPriority			  priority = ScriptPriority::Normal;
 };
 
 }  // namespace Component
 
+}  // namespace Atlas
+
+#include "Atlas/Core/ScriptRegistry.h"
+
+namespace Atlas {
+
 template <typename T>
 void Entity::addScript() {
-	auto& script	= addComponent<Atlas::Component::Script>();
+	auto& script	= addComponent<Component::Script>();
 	script.instance = std::make_unique<T>();
 	script.instance->setEntity(*this);
 	script.instance->onCreate();
 	script.instance->exposeProperties();
+	script.priority = ScriptRegistry::getPriority(script.instance->getTypeName());
 }
 
-template <typename T>
-Behavior::PropertyType propertyTypeFor();
-
 template <>
-inline Behavior::PropertyType propertyTypeFor<bool>() { return Behavior::PropertyType::BOOL; }
+inline BehaviorPropertyType propertyTypeFor<bool>() { return BehaviorPropertyType::BOOL; }
 template <>
-inline Behavior::PropertyType propertyTypeFor<char>() { return Behavior::PropertyType::CHAR; }
+inline BehaviorPropertyType propertyTypeFor<char>() { return BehaviorPropertyType::CHAR; }
 template <>
-inline Behavior::PropertyType propertyTypeFor<std::string>() { return Behavior::PropertyType::STRING; }
+inline BehaviorPropertyType propertyTypeFor<std::string>() { return BehaviorPropertyType::STRING; }
 template <>
-inline Behavior::PropertyType propertyTypeFor<int>() { return Behavior::PropertyType::INT; }
+inline BehaviorPropertyType propertyTypeFor<int>() { return BehaviorPropertyType::INT; }
 template <>
-inline Behavior::PropertyType propertyTypeFor<float>() { return Behavior::PropertyType::FLOAT; }
+inline BehaviorPropertyType propertyTypeFor<float>() { return BehaviorPropertyType::FLOAT; }
 template <>
-inline Behavior::PropertyType propertyTypeFor<glm::vec2>() { return Behavior::PropertyType::VEC2; }
+inline BehaviorPropertyType propertyTypeFor<glm::vec2>() { return BehaviorPropertyType::VEC2; }
 template <>
-inline Behavior::PropertyType propertyTypeFor<glm::vec3>() { return Behavior::PropertyType::VEC3; }
+inline BehaviorPropertyType propertyTypeFor<glm::vec3>() { return BehaviorPropertyType::VEC3; }
 template <>
-inline Behavior::PropertyType propertyTypeFor<glm::vec4>() { return Behavior::PropertyType::VEC4; }
+inline BehaviorPropertyType propertyTypeFor<glm::vec4>() { return BehaviorPropertyType::VEC4; }
 template <>
-inline Behavior::PropertyType propertyTypeFor<glm::mat4>() { return Behavior::PropertyType::MAT4; }
+inline BehaviorPropertyType propertyTypeFor<glm::mat4>() { return BehaviorPropertyType::MAT4; }
 
 }  // namespace Atlas

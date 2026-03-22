@@ -3,6 +3,7 @@
 #include "AnimationClipPanel.h"
 
 #include "Atlas/ECS/Entities/Entity.h"
+#include "Atlas/ECS/Components/Behavior.h"
 #include "Atlas/ImGui/EditorWidgets.h"
 
 #include <imgui/imgui.h>
@@ -70,6 +71,8 @@ class PropertiesPanel {
 	void drawComponents(Entity& entity);
 
 	void drawClipLabel(std::string& clip, SelectionType type);
+
+	void drawScriptProperties(Behavior& behavior);
 
   private:
 	std::shared_ptr<Scene> m_scene;

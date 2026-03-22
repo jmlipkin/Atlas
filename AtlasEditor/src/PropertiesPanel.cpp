@@ -2,10 +2,12 @@
 #include "PropertiesPanel.h"
 
 #include "Atlas/Core/Platform.h"
+#include "Atlas/Core/ScriptRegistry.h"
 #include "Atlas/Project/Project.h"
 #include "Atlas/ImGui/EditorWidgets.h"
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Animation.h"
+#include "Atlas/ECS/Components/Behavior.h"
 
 #include <imgui/imgui.h>
 
@@ -85,7 +87,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 		bool changed = false;
 
 		float columnWidth = 85.0f;
-		float valueWidth = 50.0f;
+		float valueWidth  = 50.0f;
 		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size (tiles)", specs.sizeInTiles, 0, 0, columnWidth, valueWidth);
 		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Grid Size", specs.tileSize, 0, 0, columnWidth, valueWidth);
 
@@ -150,6 +152,27 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 				m_animationEditorShouldOpen = false;
 				m_animationEditor.open(&component, m_selectedClip, m_scene);
 			}
+		}
+	});
+	drawComponent<Component::Script>("Script", entity, [this, &entity](auto& component) {
+		if (!component.instance) {
+			auto names = ScriptRegistry::getRegisteredNames();
+			if (ImGui::BeginCombo("##scriptpicker", "Select Script...")) {
+				for (auto& name : names) {
+					if (ImGui::Selectable(name.c_str())) {
+						component.instance = ScriptRegistry::create(name);
+						component.priority = ScriptRegistry::getPriority(name);
+						component.instance->setEntity(entity);
+						component.instance->onCreate();
+						component.instance->exposeProperties();
+						ProjectManager::saveScene(m_scene);
+					}
+				}
+				ImGui::EndCombo();
+			}
+		} else {
+			ImGui::Text("%s", component.instance->getTypeName().c_str());
+			drawScriptProperties(*component.instance.get());
 		}
 	});
 }
@@ -237,6 +260,13 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 
 	if (clipDeleted) {
 		m_clipToDelete = clip;
+	}
+}
+
+void PropertiesPanel::drawScriptProperties(Behavior& behavior) {
+	auto& properties = behavior.getProperties();
+	for(auto& [name, property] : properties) {
+		ImGui::Text("%s", name.c_str());
 	}
 }
 

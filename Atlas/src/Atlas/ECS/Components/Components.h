@@ -29,7 +29,7 @@ struct Transform {
 };
 
 struct Sprite {
-	std::string texturePath;
+	std::string				texturePath;
 	SubTextureSpecification specs;
 
 	Sprite() = default;

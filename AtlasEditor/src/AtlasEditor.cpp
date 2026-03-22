@@ -3,6 +3,8 @@
 #include "Atlas/Core/Application.h"
 #include "EditorLayer.h"
 
+#include "TestScript.h"
+
 namespace Atlas {
 
 class AtlasEditorApp : public Application {
@@ -13,7 +15,7 @@ class AtlasEditorApp : public Application {
 	}
 
 	~AtlasEditorApp() {
-        popLayer(m_layer);
+		popLayer(m_layer);
 	}
 
   private:

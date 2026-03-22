@@ -82,3 +82,23 @@
 #define BIT(x) (1 << x)
 
 #define AT_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+#define AT_REGISTER_SCRIPT(Type)      	                   \
+	namespace {     									   \
+	const bool _registered_##Type = []() {                 \
+		Atlas::ScriptRegistry::registerScript(#Type, 	   \
+			[]() { return std::make_unique<Type>(); }, 	   \
+			Atlas::ScriptPriority::Normal);			       \
+		return true;          						       \
+	}();                   								   \
+	}
+
+#define AT_REGISTER_SCRIPT_PRIORITY(Type, Priority)        \
+	namespace {                                            \
+	const bool _registered_##Type = []() {                 \
+		Atlas::ScriptRegistry::registerScript(#Type, 	   \
+			[]() { return std::make_unique<Type>(); },     \
+			Priority);								       \
+		return true;                                       \
+	}();                                                   \
+	}

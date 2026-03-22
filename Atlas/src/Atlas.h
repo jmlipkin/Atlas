@@ -23,6 +23,7 @@
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
+#include "Atlas/ECS/Components/Behavior.h"
 #include "Atlas/ECS/Systems/Systems.h"
 
 // ---- Entry Point ----------------------

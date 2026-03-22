@@ -31,7 +31,9 @@ void Scene::onUpdate(DeltaTime dt) {
 	{
 		auto view = m_registry.view<Component::Script>();
 		for (auto entity : view) {
-			Component::Script& script = view.get<Component::Script>(entity);
+			if (!m_registry.valid(entity)) continue;
+			auto& script = m_registry.get<Component::Script>(entity);
+			if (!script.instance) continue;	 // guard against null instance
 			script.instance->onUpdate(dt);
 		}
 	}

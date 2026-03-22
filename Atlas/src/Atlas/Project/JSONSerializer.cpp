@@ -101,7 +101,9 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			e["Sprite"] = s;
 		}
 		if (entity.hasComponent<Component::Script>()) {
-			e["Script"] = entity.getComponent<Component::Script>().instance->getTypeName();
+			if (entity.getComponent<Component::Script>().instance != nullptr) {
+				e["Script"] = entity.getComponent<Component::Script>().instance->getTypeName();
+			}
 		}
 		if (entity.hasComponent<Component::Animations>()) {
 			json a;
@@ -188,8 +190,19 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 			entity.addComponent<Component::Sprite>(texPath, sub.getSpecs());
 		}
 		if (e.contains("Script")) {
-			AT_CORE_WARN("Script '{}' on entity '{}' not deserialized - script serialization not yet implemented",
-						 e["Script"].get<std::string>(), e["Name"].get<std::string>());
+			std::string scriptName = e["Script"].get<std::string>();
+			auto		instance   = ScriptRegistry::create(scriptName);
+			if (instance) {
+				auto& script	= entity.addComponent<Component::Script>();
+				script.instance = std::move(instance);
+				script.priority = ScriptRegistry::getPriority(scriptName);
+				script.instance->setEntity(entity);
+				script.instance->onCreate();
+				script.instance->exposeProperties();
+			} else {
+				AT_CORE_WARN("Script '{}' on entity '{}' not found in registry — skipping",
+							 scriptName, e["Tag"].get<std::string>());
+			}
 		}
 		if (e.contains("Animations")) {
 			Component::Animations& animations = entity.addComponent<Component::Animations>();
