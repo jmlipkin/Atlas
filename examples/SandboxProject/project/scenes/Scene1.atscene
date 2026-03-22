@@ -2,40 +2,6 @@
   "Name": "Scene1",
   "Entities": [
     {
-      "UUID": 18031357280409163922,
-      "Tag": "Board",
-      "Transform": {
-        "Position": [
-          -14.0,
-          -15.5,
-          1.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          28.0,
-          31.0
-        ]
-      },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Tile Size": [
-          8.0,
-          8.0
-        ],
-        "Size (in Tiles)": [
-          28.0,
-          31.0
-        ],
-        "Index": [
-          0,
-          0
-        ]
-      },
-      "Animations": {
-        "Clips": []
-      }
-    },
-    {
       "UUID": 14970872023506877474,
       "Tag": "Player",
       "Transform": {
@@ -66,9 +32,55 @@
         ]
       },
       "Script": "TestScript",
+      "Priority": 1,
+      "Properties": [
+        {
+          "Name": "Name",
+          "Type": 2,
+          "Value": "Renamed property"
+        },
+        {
+          "Name": "Active",
+          "Type": 0,
+          "Value": false
+        },
+        {
+          "Name": "Speed",
+          "Type": 4,
+          "Value": -63.0
+        }
+      ],
       "Animations": {
-        "Active Clip": "Dying",
+        "Active Clip": "MoveRight",
         "Clips": [
+          {
+            "Name": "MoveRight",
+            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+            "Frame Rate": 30.0,
+            "Should loop": true,
+            "Tile Size": [
+              8.0,
+              8.0
+            ],
+            "Size (in Tiles)": [
+              2,
+              2
+            ],
+            "Frames": [
+              [
+                28,
+                0
+              ],
+              [
+                30,
+                0
+              ],
+              [
+                32,
+                0
+              ]
+            ]
+          },
           {
             "Name": "Dying",
             "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
@@ -132,36 +144,42 @@
                 0
               ]
             ]
-          },
-          {
-            "Name": "MoveRight",
-            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-            "Frame Rate": 30.0,
-            "Should loop": true,
-            "Tile Size": [
-              8.0,
-              8.0
-            ],
-            "Size (in Tiles)": [
-              2,
-              2
-            ],
-            "Frames": [
-              [
-                28,
-                0
-              ],
-              [
-                30,
-                0
-              ],
-              [
-                32,
-                0
-              ]
-            ]
           }
         ]
+      }
+    },
+    {
+      "UUID": 18031357280409163922,
+      "Tag": "Board",
+      "Transform": {
+        "Position": [
+          -14.0,
+          -15.5,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          28.0,
+          31.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Tile Size": [
+          8.0,
+          8.0
+        ],
+        "Size (in Tiles)": [
+          28.0,
+          31.0
+        ],
+        "Index": [
+          0,
+          0
+        ]
+      },
+      "Animations": {
+        "Clips": []
       }
     }
   ]

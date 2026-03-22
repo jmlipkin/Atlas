@@ -102,7 +102,62 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 		}
 		if (entity.hasComponent<Component::Script>()) {
 			if (entity.getComponent<Component::Script>().instance != nullptr) {
-				e["Script"] = entity.getComponent<Component::Script>().instance->getTypeName();
+				Behavior& behavior = *entity.getComponent<Component::Script>().instance.get();
+				e["Script"]		   = behavior.getTypeName();
+				e["Priority"]	   = (int)entity.getComponent<Component::Script>().priority;
+				json props;
+				for (auto& [name, property] : behavior.getProperties()) {
+					json prop;
+					prop["Name"] = name;
+					prop["Type"] = (int)property.type;
+
+					switch (property.type) {
+						case BehaviorPropertyType::BOOL:
+							prop["Value"] = *static_cast<bool*>(property.valuePtr);
+							break;
+						case BehaviorPropertyType::INT:
+							prop["Value"] = *static_cast<int*>(property.valuePtr);
+							break;
+						case BehaviorPropertyType::FLOAT:
+							prop["Value"] = *static_cast<float*>(property.valuePtr);
+							break;
+						case BehaviorPropertyType::STRING:
+							prop["Value"] = *static_cast<std::string*>(property.valuePtr);
+							break;
+						case BehaviorPropertyType::VEC2: {
+							auto& v		  = *static_cast<glm::vec2*>(property.valuePtr);
+							prop["Value"] = {v.x, v.y};
+							break;
+						}
+						case BehaviorPropertyType::VEC3: {
+							auto& v		  = *static_cast<glm::vec3*>(property.valuePtr);
+							prop["Value"] = {v.x, v.y, v.z};
+							break;
+						}
+						case BehaviorPropertyType::VEC4: {
+							auto& v		  = *static_cast<glm::vec4*>(property.valuePtr);
+							prop["Value"] = {v.x, v.y, v.z, v.w};
+							break;
+						}
+						case BehaviorPropertyType::MAT4: {
+							auto& m	  = *static_cast<glm::mat4*>(property.valuePtr);
+							json  mat = json::array();
+							for (int i = 0; i < 4; i++)
+								for (int j = 0; j < 4; j++)
+									mat.push_back(m[i][j]);
+							prop["Value"] = mat;
+							break;
+						}
+						case BehaviorPropertyType::CHAR:
+							prop["Value"] = *static_cast<char*>(property.valuePtr);
+							break;
+						default:
+							AT_CORE_WARN("Unknown property type for '{}'", name);
+							break;
+					}
+					props.push_back(prop);
+				}
+				e["Properties"] = props;
 			}
 		}
 		if (entity.hasComponent<Component::Animations>()) {
@@ -199,6 +254,64 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 				script.instance->setEntity(entity);
 				script.instance->onCreate();
 				script.instance->exposeProperties();
+
+				if (e.contains("Properties")) {
+					auto& properties = script.instance->getProperties();
+					for (auto& prop : e["Properties"]) {
+						std::string name = prop["Name"].get<std::string>();
+						if (!properties.contains(name)) continue;
+
+						auto&				 property = properties[name];
+						BehaviorPropertyType type	  = (BehaviorPropertyType)prop["Type"].get<int>();
+
+						switch (type) {
+							case BehaviorPropertyType::BOOL:
+								*static_cast<bool*>(property.valuePtr) = prop["Value"].get<bool>();
+								break;
+							case BehaviorPropertyType::INT:
+								*static_cast<int*>(property.valuePtr) = prop["Value"].get<int>();
+								break;
+							case BehaviorPropertyType::FLOAT:
+								*static_cast<float*>(property.valuePtr) = prop["Value"].get<float>();
+								break;
+							case BehaviorPropertyType::STRING:
+								*static_cast<std::string*>(property.valuePtr) = prop["Value"].get<std::string>();
+								break;
+							case BehaviorPropertyType::VEC2:
+								*static_cast<glm::vec2*>(property.valuePtr) = {
+									prop["Value"][0].get<float>(),
+									prop["Value"][1].get<float>()};
+								break;
+							case BehaviorPropertyType::VEC3:
+								*static_cast<glm::vec3*>(property.valuePtr) = {
+									prop["Value"][0].get<float>(),
+									prop["Value"][1].get<float>(),
+									prop["Value"][2].get<float>()};
+								break;
+							case BehaviorPropertyType::VEC4:
+								*static_cast<glm::vec4*>(property.valuePtr) = {
+									prop["Value"][0].get<float>(),
+									prop["Value"][1].get<float>(),
+									prop["Value"][2].get<float>(),
+									prop["Value"][3].get<float>()};
+								break;
+							case BehaviorPropertyType::CHAR:
+								*static_cast<char*>(property.valuePtr) = prop["Value"].get<std::string>()[0];
+								break;
+							case BehaviorPropertyType::MAT4: {
+								auto& m = *static_cast<glm::mat4*>(property.valuePtr);
+								int	  k = 0;
+								for (int i = 0; i < 4; i++)
+									for (int j = 0; j < 4; j++)
+										m[i][j] = prop["Value"][k++].get<float>();
+								break;
+							}
+							default:
+								AT_CORE_WARN("Unknown property type for '{}'", name);
+								break;
+						}
+					}
+				}
 			} else {
 				AT_CORE_WARN("Script '{}' on entity '{}' not found in registry — skipping",
 							 scriptName, e["Tag"].get<std::string>());

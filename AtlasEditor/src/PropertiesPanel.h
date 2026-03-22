@@ -73,6 +73,7 @@ class PropertiesPanel {
 	void drawClipLabel(std::string& clip, SelectionType type);
 
 	void drawScriptProperties(Behavior& behavior);
+	void drawScriptProperty(Behavior::Property& property);
 
   private:
 	std::shared_ptr<Scene> m_scene;

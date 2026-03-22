@@ -46,11 +46,16 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 	auto& UUID = entity.getComponent<Component::UUID>().id;
 	ImGui::Text("UUID: 0x%016llX", (uint64_t)UUID);
 
+	ImVec2 componentSpacer = {0, 16.0f * EditorWidgets::displayScale};
+
 	drawComponent<Component::Transform>("Transform", entity, [this](auto& component) {
 		float columnWidth = 85.0f;
 		float valueWidth  = 120.0f;
 		EditorWidgets::drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, columnWidth, valueWidth, true);
 	});
+
+	ImGui::Dummy(componentSpacer);
+
 	drawComponent<Component::Sprite>("Sprite", entity, [this](auto& component) {
 		SubTextureSpecification& specs	  = component.specs;
 		const std::string&		 filepath = ProjectManager::toRelativePath(component.texturePath);
@@ -100,6 +105,9 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			ProjectManager::saveScene(m_scene);
 		}
 	});
+
+	ImGui::Dummy(componentSpacer);
+
 	drawComponent<Component::Animations>("Animations", entity, [this](auto& component) {
 		if (ImGui::Button("Add clip")) {
 			AnimationClip clip;
@@ -154,6 +162,9 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			}
 		}
 	});
+
+	ImGui::Dummy(componentSpacer);
+
 	drawComponent<Component::Script>("Script", entity, [this, &entity](auto& component) {
 		if (!component.instance) {
 			auto names = ScriptRegistry::getRegisteredNames();
@@ -171,7 +182,8 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 				ImGui::EndCombo();
 			}
 		} else {
-			ImGui::Text("%s", component.instance->getTypeName().c_str());
+			ImGui::Text("Active Script: %s", component.instance->getTypeName().c_str());
+			ImGui::Dummy(ImVec2(0, 4.0f));
 			drawScriptProperties(*component.instance.get());
 		}
 	});
@@ -265,8 +277,76 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 
 void PropertiesPanel::drawScriptProperties(Behavior& behavior) {
 	auto& properties = behavior.getProperties();
-	for(auto& [name, property] : properties) {
-		ImGui::Text("%s", name.c_str());
+	for (auto& [name, property] : properties) {
+		float maxWidth = 85.0f;
+
+		ImGui::PushID((name + property.name).c_str());
+
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, maxWidth);
+
+		std::string label = name;
+		if (ImGui::CalcTextSize(name.c_str()).x > maxWidth) {
+			while (!label.empty() &&
+				   ImGui::CalcTextSize((label + "...").c_str()).x > maxWidth) {
+				label.pop_back();
+			}
+			label = label + "...";
+		}
+
+		ImGui::Text("%s", label.c_str());
+		if (ImGui::IsItemHovered()) {
+			ImGui::SetTooltip("%s", name.c_str());
+		}
+
+		ImGui::NextColumn();
+
+		drawScriptProperty(property);
+
+		ImGui::Columns(1);
+		ImGui::PopID();
+	}
+}
+
+void PropertiesPanel::drawScriptProperty(Behavior::Property& property) {
+	bool changed = false;
+	switch (property.type) {
+		case BehaviorPropertyType::BOOL: {
+			changed = ImGui::Checkbox(("##" + property.name).c_str(), (bool*)property.valuePtr);
+			break;
+		}
+		case BehaviorPropertyType::CHAR: {
+			break;
+		}
+		case BehaviorPropertyType::STRING: {
+			changed = ImGui::InputText(("##" + property.name).c_str(), (std::string*)property.valuePtr);
+			break;
+		}
+		case BehaviorPropertyType::INT: {
+			changed = ImGui::DragInt(("##" + property.name).c_str(), (int*)property.valuePtr);
+			break;
+		}
+		case BehaviorPropertyType::FLOAT: {
+			changed = ImGui::DragFloat(("##" + property.name).c_str(), (float*)property.valuePtr);
+			break;
+		}
+		case BehaviorPropertyType::VEC2: {
+			changed = EditorWidgets::drawVec2Control(("##" + property.name).c_str(), *(glm::vec2*)property.valuePtr, 0, 0, 0);
+			break;
+		}
+		case BehaviorPropertyType::VEC3: {
+			changed = EditorWidgets::drawVec3Control(("##" + property.name).c_str(), *(glm::vec3*)property.valuePtr, 0, 0, 0, 0);
+			break;
+		}
+		case BehaviorPropertyType::VEC4: {
+			break;
+		}
+		case BehaviorPropertyType::MAT4: {
+			break;
+		}
+	}
+	if (changed) {
+		ProjectManager::saveScene(m_scene);
 	}
 }
 

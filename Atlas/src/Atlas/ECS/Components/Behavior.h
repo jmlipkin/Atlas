@@ -23,7 +23,6 @@ enum class BehaviorPropertyType {
 	VEC3,
 	VEC4,
 	MAT4
-
 };
 
 template <typename T>
@@ -45,7 +44,8 @@ class Behavior {
 	void setEntity(Entity entity) { m_entity = entity; }
 
 	virtual void exposeProperties() {}
-	const auto&	 getProperties() { return m_properties; }
+	const auto&	 getProperties() const { return m_properties; }
+	auto&		 getProperties() { return m_properties; }
 
 	template <typename T>
 	T& getComponent() { return m_entity.getComponent<T>(); }
