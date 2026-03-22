@@ -53,10 +53,12 @@ class ProjectManager {
 	static void saveProjectAs(const std::string& filepath, const std::string& name);
 	static void saveProject();
 
+	static std::shared_ptr<Scene> loadBundledProject();
+
 	// Returns the first active scene
 	// TODO: determine internally which scene is the correct scene
 	// based on run mode 
-	static std::shared_ptr<Scene> loadProject(const std::string& filepath);
+	static std::shared_ptr<Scene> loadProject(const std::string& filepath, bool useStartupScene = false);
 	static void closeProject(bool shouldSave);
 
 	static std::shared_ptr<Project> getActiveProject() { return s_activeProject; }

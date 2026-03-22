@@ -1,5 +1,6 @@
 #include <Atlas.h>
 
+#include "Atlas/Core/Application.h"
 #include "EditorLayer.h"
 
 namespace Atlas {
@@ -7,6 +8,7 @@ namespace Atlas {
 class AtlasEditorApp : public Application {
   public:
 	AtlasEditorApp() : Application(WindowProperties{"Atlas Editor"}) {
+		Application::setRunMode(RunMode::BUILD);
 		pushLayer(m_layer = new EditorLayer());
 	}
 

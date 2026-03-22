@@ -2,11 +2,15 @@
 #include "Application.h"
 
 #include "Atlas/Core/Log.h"
+#include "Atlas/Core/RunMode.h"
+#include "Atlas/Core/RuntimeLayer.h"
 #include "Atlas/Events/ApplicationEvent.h"
 #include "Atlas/ImGui/ImGuiLayer.h"
+#include "Atlas/Renderer/Framebuffer.h"
 #include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Renderer/Renderer.h"
 #include "Atlas/Project/Serializer.h"
+
 namespace Atlas {
 
 Application* Application::s_instance = nullptr;
@@ -24,17 +28,31 @@ Application::Application(const WindowProperties& winProps) {
 	Serializer::init();
 
 	AT_CORE_INFO("Engine initialization complete!");
-
-	m_ImGuiLayer = new ImGuiLayer;
-	m_layerStack.pushOverlay(m_ImGuiLayer);
-
-	m_sceneFrameBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), false, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.00f, 0.0f, 0.0f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
-	m_swapchainBuf = Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
 }
 
 Application::~Application() {
 	Renderer::shutdown();
 	m_layerStack.popOverlay(m_ImGuiLayer);
+}
+
+void Application::setRunMode(RunMode mode) {
+	m_runMode = mode;
+
+	FramebufferSpecifications sceneSpecs = {m_context->getWidth(), m_context->getHeight(), false, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.00f, 0.0f, 0.0f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}};
+
+	if (mode == RunMode::PLAY) {
+		sceneSpecs.isSwapChainTarget = true;
+		m_sceneFrameBuf			  = Framebuffer::create(sceneSpecs);
+
+		m_runtimeLayer = new RuntimeLayer;
+		m_layerStack.pushLayer(m_runtimeLayer);
+	} else {
+		m_sceneFrameBuf = Framebuffer::create(sceneSpecs);
+		m_swapchainBuf	= Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
+
+		m_ImGuiLayer = new ImGuiLayer;
+		m_layerStack.pushOverlay(m_ImGuiLayer);
+	}
 }
 
 void Application::run() {
@@ -55,16 +73,19 @@ void Application::run() {
 
 		RenderCommand::endPass();
 
-		RenderCommand::beginPass(m_swapchainBuf);
-		m_ImGuiLayer->begin();
-		if (!m_isMinimized) {
-			for (Layer* l : m_layerStack) {
-				l->onImGuiRender();
+		if (m_runMode != RunMode::PLAY) {
+			RenderCommand::beginPass(m_swapchainBuf);
+			m_ImGuiLayer->begin();
+			if (!m_isMinimized) {
+				for (Layer* l : m_layerStack) {
+					l->onImGuiRender();
+				}
 			}
-		}
-		m_ImGuiLayer->end();
+			m_ImGuiLayer->end();
 
-		RenderCommand::endPass();
+			RenderCommand::endPass();
+		}
+
 		RenderCommand::endFrame();
 	}
 }

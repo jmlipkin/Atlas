@@ -1,8 +1,7 @@
 #include "atpch.h"
 #include "Project.h"
-#include <filesystem>
-#include <memory>
 
+#include "Atlas/Core/Platform.h"
 #include "Atlas/Project/Serializer.h"
 #include "Atlas/Scene/Scene.h"
 
@@ -75,15 +74,40 @@ std::shared_ptr<Scene> ProjectManager::createNewScene(const std::string& filepat
 	return scene;
 }
 
-std::shared_ptr<Scene> ProjectManager::loadProject(const std::string& filepath) {
+std::shared_ptr<Scene> ProjectManager::loadBundledProject() {
+	std::string projectDir = Platform::getResourcesPath() + "/project";
+
+	// Find the .atproj file in the Project directory
+	std::string projectFile;
+	for (const auto& entry : std::filesystem::directory_iterator(projectDir)) {
+		if (entry.path().extension() == ".atproj") {
+			projectFile = entry.path().string();
+			break;
+		}
+	}
+
+
+	AT_CORE_ASSERT(!projectFile.empty(), "Could not find .atproj file in {}", projectDir);
+	return loadProject(projectFile, true);
+}
+
+std::shared_ptr<Scene> ProjectManager::loadProject(const std::string& filepath, bool useStartupScene) {
 	std::string directory = std::filesystem::path(filepath).parent_path().string();
 	std::string name	  = std::filesystem::path(filepath).stem().string();
 	s_activeProject		  = std::make_shared<Project>(directory, ProjectData{name});
+
+	AT_CORE_ASSERT(s_activeProject, "Could not load project");
 	Serializer::deserializeProject(s_activeProject);
-	if (!s_activeProject->getData().last_active_scene.empty()) {
-		s_activeScene = loadScene(toAbsolutePath(s_activeProject->getData().last_active_scene));
+
+	std::shared_ptr<Scene> loadedScene = nullptr;
+
+	if (useStartupScene) {
+		loadedScene = loadScene(toAbsolutePath(s_activeProject->getData().startup_scene));
+	} else {
+		loadedScene = loadScene(toAbsolutePath(s_activeProject->getData().last_active_scene));
 	}
-	return s_activeScene;
+	AT_CORE_ASSERT(loadedScene, "Could not load first scene");
+	return loadedScene;
 }
 
 void ProjectManager::saveProjectAs(const std::string& filepath, const std::string& name) {
