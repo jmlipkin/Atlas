@@ -183,8 +183,22 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			}
 		} else {
 			ImGui::Text("Active Script: %s", component.instance->getTypeName().c_str());
+			ImGui::SameLine();
+
+			float changeButtonWidth = 62.0f;
+			float padding			= 4.0f;
+			float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - padding * 2.0f;
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - padding);
+
+			bool changing = false;
+			if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0))) {
+				component.instance = nullptr;
+				changing		   = true;
+			}
+			ImGui::Separator();
 			ImGui::Dummy(ImVec2(0, 4.0f));
-			drawScriptProperties(*component.instance.get());
+
+			if (!changing) drawScriptProperties(*component.instance.get());
 		}
 	});
 }

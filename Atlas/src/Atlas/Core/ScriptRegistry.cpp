@@ -20,7 +20,6 @@ std::unique_ptr<Behavior> ScriptRegistry::create(const std::string& name) {
 			return it->second();
 		}
 	}
-	AT_CORE_WARN("ScriptRegistry: '{}' not found", name);
 	return nullptr;
 }
 
