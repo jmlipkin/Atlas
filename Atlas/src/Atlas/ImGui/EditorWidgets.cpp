@@ -98,7 +98,7 @@ ImU32 EditorWidgets::getAccentColor(PanelAccent color) {
 		case PanelAccent::Blue:
 			return ImGui::ColorConvertFloat4ToU32(steelBluePanelAccent);
 		case PanelAccent::Green:
-			return ImGui::ColorConvertFloat4ToU32(steelBluePanelAccent);
+			return ImGui::ColorConvertFloat4ToU32(greenPanelAccent);
 		case PanelAccent::Purple:
 			return ImGui::ColorConvertFloat4ToU32(purplePanelAccent);
 	}

@@ -86,7 +86,6 @@ std::shared_ptr<Scene> ProjectManager::loadBundledProject() {
 		}
 	}
 
-
 	AT_CORE_ASSERT(!projectFile.empty(), "Could not find .atproj file in {}", projectDir);
 	return loadProject(projectFile, true);
 }
@@ -151,7 +150,9 @@ void ProjectManager::closeProject(bool shouldSave) {
 void ProjectManager::setActiveScene(std::shared_ptr<Scene> scene) {
 	s_activeScene = scene;
 	if (s_activeProject && scene) {
-		s_activeProject->getData().last_active_scene = toRelativePath(scene->getPath());
+		if (std::filesystem::path(scene->getPath()).is_absolute()) {
+			s_activeProject->getData().last_active_scene = toRelativePath(scene->getPath());
+		}
 	}
 	s_isDirty = true;
 }

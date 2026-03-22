@@ -1,5 +1,5 @@
-#include "MacOSMenuBar.h"
 #include "atpch.h"
+#include "MacOSMenuBar.h"
 
 #include "Atlas/Core/Platform.h"
 #include "Atlas/Project/Project.h"
@@ -22,6 +22,11 @@
 @property(nonatomic, assign) Atlas::MenuBar::NewEntityCallback	  onNewEntity;
 @property(nonatomic, assign) Atlas::MenuBar::AddComponentCallback onAddComponent;
 
+@property(nonatomic, assign) Atlas::MenuBar::PreviewCallback onPreview;
+
+@property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onValidateProjectRequired;
+@property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onValidateSceneRequired;
+
 - (void)newProject:(id)sender;
 - (void)newScene:(id)sender;
 - (void)openProject:(id)sender;
@@ -33,6 +38,7 @@
 
 - (void)addEntity:(id)sender;
 - (void)addComponent:(id)sender;
+- (void)onPreview:(id)sender;
 
 - (BOOL)validateMenuItem:(NSMenuItem*)menuItem;
 
@@ -116,7 +122,26 @@
 	if (self.onAddComponent) self.onAddComponent();
 }
 
+- (void)onPreview:(id)sender {
+	if (self.onPreview) self.onPreview();
+}
+
 - (BOOL)validateMenuItem:(NSMenuItem*)menuItem {
+	SEL action = menuItem.action;
+
+	if (action == @selector(saveScene:) ||
+		action == @selector(saveProject:) ||
+		action == @selector(saveProjectAs:) ||
+		action == @selector(newScene:) ||
+		action == @selector(preview:)) {
+		return self.onValidateSceneRequired ? self.onValidateSceneRequired() : NO;
+	}
+
+	if (action == @selector(closeProject:) ||
+		action == @selector(saveProject:)) {
+		return self.onValidateProjectRequired ? self.onValidateProjectRequired() : NO;
+	}
+
 	return YES;
 }
 
@@ -162,6 +187,11 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	delegate.onNewEntity	= m_onNewEntity;
 	delegate.onAddComponent = m_onAddComponent;
 
+	delegate.onPreview = m_onPreview;
+	
+	delegate.onValidateSceneRequired = m_onSceneValidation;
+	delegate.onValidateProjectRequired = m_onProjectValidation;
+
 	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"New Project" action:@selector(newProject:) keyEquivalent:@"N"];
 	[newProject setTarget:delegate];
 	[fileMenu addItem:newProject];
@@ -200,6 +230,12 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	NSMenuItem* closeProject = [[NSMenuItem alloc] initWithTitle:@"Close Project" action:@selector(closeProject:) keyEquivalent:@"W"];
 	[closeProject setTarget:delegate];
 	[fileMenu addItem:closeProject];
+
+	[fileMenu addItem:[NSMenuItem separatorItem]];
+
+	NSMenuItem* preview = [[NSMenuItem alloc] initWithTitle:@"Preview" action:@selector(onPreview:) keyEquivalent:@"p"];
+	[preview setTarget:delegate];
+	[fileMenu addItem:preview];
 
 	[fileMenuItem setSubmenu:fileMenu];
 

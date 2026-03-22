@@ -2,6 +2,7 @@
 
 #include "Atlas/Core/Application.h"
 #include "Atlas/Core/Layer.h"
+#include "Atlas/Core/Platform.h"
 #include "Atlas/Core/Time.h"
 
 #include "Atlas/Events/Event.h"
@@ -16,14 +17,20 @@ namespace Atlas {
 
 class RuntimeLayer : public Layer {
   public:
-	RuntimeLayer() : Layer("Runtime Layer"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()) {
+	RuntimeLayer(bool preview = false) : Layer("Runtime Layer"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()), m_previewLayer(preview) {
 		m_cameraController.setZoomLevel(25.0f);
 	}
 
 	virtual void setScene(std::shared_ptr<Scene> scene) { m_activeScene = scene; }
-	
+
 	virtual void onAttach() override {
-		auto scene = ProjectManager::loadBundledProject();
+		std::shared_ptr<Scene> scene;
+		if (m_previewLayer) {
+			scene = ProjectManager::loadScene(Platform::getAppSupportPath() + "/preview.atscene");
+		} else {
+			scene = ProjectManager::loadBundledProject();
+		}
+
 		if (scene) {
 			m_activeScene = scene;
 			ProjectManager::setActiveScene(scene);
@@ -40,11 +47,14 @@ class RuntimeLayer : public Layer {
 
 	virtual void onDetach() override { m_activeScene = nullptr; }
 
-	virtual void onEvent(Event& event) override {}
+	virtual void onEvent(Event& event) override {
+		m_activeScene->dispatchEvent(event);
+	}
 
   private:
 	std::shared_ptr<Scene>		 m_activeScene;
 	OrthographicCameraController m_cameraController;
+	bool						 m_previewLayer;
 };
 
 }  // namespace Atlas

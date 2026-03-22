@@ -40,18 +40,26 @@ void Application::setRunMode(RunMode mode) {
 
 	FramebufferSpecifications sceneSpecs = {m_context->getWidth(), m_context->getHeight(), false, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.00f, 0.0f, 0.0f, 1.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}};
 
-	if (mode == RunMode::PLAY) {
-		sceneSpecs.isSwapChainTarget = true;
-		m_sceneFrameBuf			  = Framebuffer::create(sceneSpecs);
+	switch (mode) {
+		case RunMode::BUILD: {
+			m_sceneFrameBuf = Framebuffer::create(sceneSpecs);
+			m_swapchainBuf	= Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
 
-		m_runtimeLayer = new RuntimeLayer;
-		m_layerStack.pushLayer(m_runtimeLayer);
-	} else {
-		m_sceneFrameBuf = Framebuffer::create(sceneSpecs);
-		m_swapchainBuf	= Framebuffer::create({m_context->getWidth(), m_context->getHeight(), true, true, 4, {{FramebufferPixelFormat::RGBA8, glm::vec4(0.0f)}}, {FramebufferPixelFormat::DEPTH32FLOAT, glm::vec4(0.0f)}});
+			m_ImGuiLayer = new ImGuiLayer;
+			m_layerStack.pushOverlay(m_ImGuiLayer);
+			break;
+		}
+		case RunMode::PLAY: {
+			sceneSpecs.isSwapChainTarget = true;
+			m_sceneFrameBuf				 = Framebuffer::create(sceneSpecs);
 
-		m_ImGuiLayer = new ImGuiLayer;
-		m_layerStack.pushOverlay(m_ImGuiLayer);
+			m_runtimeLayer = new RuntimeLayer;
+			m_layerStack.pushLayer(m_runtimeLayer);
+			break;
+		}
+		default:
+			AT_CORE_WARN("Other run modes not set");
+			break;
 	}
 }
 

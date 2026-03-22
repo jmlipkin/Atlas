@@ -19,6 +19,10 @@ class MenuBar {
 	using NewEntityCallback	   = std::function<void()>;
 	using AddComponentCallback = std::function<void()>;
 
+	using PreviewCallback = std::function<void()>;
+
+	using ValidationCallback = std::function<bool()>;
+
 	virtual ~MenuBar() = default;
 
 	// Takes path to project file
@@ -31,6 +35,11 @@ class MenuBar {
 
 	void setOnNewEntity(NewEntityCallback callback) { m_onNewEntity = callback; }
 	void setOnAddComponent(AddComponentCallback callback) { m_onAddComponent = callback; }
+
+	void setOnPreview(PreviewCallback callback) { m_onPreview = callback; }
+
+	void setOnValidateSceneRequired(ValidationCallback callback) { m_onSceneValidation = callback; }
+	void setOnValidateProjectRequired(ValidationCallback callback) { m_onProjectValidation = callback; }
 
 	virtual void					generateMenuBar(const std::string& title) = 0;
 	static std::shared_ptr<MenuBar> create();
@@ -45,6 +54,11 @@ class MenuBar {
 
 	NewEntityCallback	 m_onNewEntity;
 	AddComponentCallback m_onAddComponent;
+
+	PreviewCallback m_onPreview;
+
+	ValidationCallback m_onSceneValidation;
+	ValidationCallback m_onProjectValidation;
 };
 
 }  // namespace Atlas

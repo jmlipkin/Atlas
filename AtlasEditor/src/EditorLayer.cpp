@@ -51,6 +51,21 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 			m_hierarchyPanel->addComponent();
 	});
 
+	m_menuBar->setOnPreview([this]() {
+		ProjectManager::saveScene(m_activeScene, Platform::getAppSupportPath() + "/preview.atscene");
+		m_previewLayer = std::make_unique<RuntimeLayer>(true);
+		m_previewLayer->onAttach();
+		m_previewActive = true;
+	});
+
+	m_menuBar->setOnValidateProjectRequired([this]() {
+		return ProjectManager::getActiveProject() != nullptr;
+	});
+
+	m_menuBar->setOnValidateSceneRequired([this]() {
+		return m_activeScene != nullptr && std::filesystem::path(m_activeScene->getPath()).is_absolute();
+	});
+
 	m_menuBar->generateMenuBar("Atlas Editor");
 	m_cameraController.setZoomLevel(25.0f);
 
@@ -75,10 +90,15 @@ void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
 
 void EditorLayer::onUpdate(DeltaTime dt) {
 	// TODO: Fix camera controller to act differently according to game mode
-	// m_cameraController.onUpdate(dt);
-	Renderer::beginScene(m_cameraController.getCamera());
-	if (m_activeScene != nullptr) m_activeScene->onUpdate(dt);
-	Renderer::endScene();
+
+	if (m_previewActive) {
+		m_previewLayer->onUpdate(dt);
+	} else {
+		Renderer::beginScene(m_cameraController.getCamera());
+		if (m_activeScene != nullptr)
+			m_activeScene->onUpdate(dt);
+		Renderer::endScene();
+	}
 }
 
 void EditorLayer::onEvent(Event& event) {
@@ -121,6 +141,36 @@ void EditorLayer::onImGuiRender() {
 	}
 #endif
 
+	if (m_previewActive) {
+		// Don't use SetNextWindowPos/Size — let it dock naturally
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::Begin("Preview", nullptr,
+					 ImGuiWindowFlags_NoScrollbar |
+						 ImGuiWindowFlags_NoScrollWithMouse |
+						 ImGuiWindowFlags_NoDocking);
+		ImGui::PopStyleVar();
+
+		EditorWidgets::DrawPanelAccentBar(EditorWidgets::PanelAccent::Green);
+
+		if (ImGui::Button("Stop Preview")) {
+			m_previewActive = false;
+			m_previewLayer	= nullptr;
+			std::filesystem::remove(Platform::getAppSupportPath() + "/preview.atscene");
+		}
+
+		ImVec2 previewSize = ImGui::GetContentRegionAvail();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 3.0f * EditorWidgets::displayScale);
+		previewSize.x -= 3.0f * EditorWidgets::displayScale;
+		void* texture = Application::get().getFramebuffer()->getColorTexture(0);
+		ImGui::Image(texture, previewSize);
+
+		ImGui::End();
+
+		ImGui::End();  // Dockspace
+		return;
+	}
+
+	// Normal editor UI
 	m_logger.onImGuiRender();
 	m_projectPanel->onImGuiRender();
 	m_hierarchyPanel->onImGuiRender();
@@ -130,7 +180,8 @@ void EditorLayer::onImGuiRender() {
 	EditorWidgets::DrawPanelAccentBar(EditorWidgets::PanelAccent::Purple);
 	ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 	if (m_viewportSize != *((glm::vec2*)&viewportSize)) {
-		Application::get().getFramebuffer()->onResize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+		Application::get().getFramebuffer()->onResize(
+			(uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
 		m_viewportSize = {viewportSize.x, viewportSize.y};
 		m_cameraController.onResize(viewportSize.x, viewportSize.y);
 	}
@@ -139,7 +190,7 @@ void EditorLayer::onImGuiRender() {
 	ImGui::End();
 	ImGui::PopStyleVar();
 
-	ImGui::End();
+	ImGui::End();  // Dockspace
 }
 
 void EditorLayer::loadConfig() {

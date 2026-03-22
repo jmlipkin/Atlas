@@ -3,6 +3,7 @@
 #include <Atlas.h>
 
 #include "Atlas/Core/MenuBar.h"
+#include "Atlas/Core/RuntimeLayer.h"
 #include "Atlas/Renderer/OrthographicCameraController.h"
 #include "Atlas/Scene/Scene.h"
 
@@ -45,6 +46,10 @@ class EditorLayer : public Layer {
 	std::shared_ptr<Scene> m_activeScene;
 
 	EditorConfig m_config;
+
+	bool m_previewActive = false;
+	std::unique_ptr<RuntimeLayer> m_previewLayer;
+	ImVec2 m_previewSize = {0, 0};
 };
 
 }  // namespace Atlas
