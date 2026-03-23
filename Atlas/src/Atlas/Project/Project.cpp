@@ -2,8 +2,10 @@
 #include "Project.h"
 
 #include "Atlas/Core/Platform.h"
+#include "Atlas/Core/ScriptRegistry.h"
 #include "Atlas/Project/Serializer.h"
 #include "Atlas/Scene/Scene.h"
+#include "Atlas/ECS/Components/Behavior.h"
 
 namespace Atlas {
 
@@ -151,6 +153,14 @@ void ProjectManager::closeProject(bool shouldSave) {
 	if (shouldSave && s_activeProject) {
 		saveProject();
 	}
+
+	if (s_activeScene) {
+		auto view = s_activeScene->getRegistry().view<Component::Script>();
+		for (auto entity : view) {
+			view.get<Component::Script>(entity).instance = nullptr;
+		}
+	}
+
 	unloadScriptLibrary();
 
 	s_activeProject = nullptr;
@@ -158,8 +168,18 @@ void ProjectManager::closeProject(bool shouldSave) {
 }
 
 void ProjectManager::loadScriptLibrary() {
-	if (s_scriptLibHandle)
+	if (s_scriptLibHandle) {
+		if (s_activeScene) {
+			auto view = s_activeScene->getRegistry().view<Component::Script>();
+			for (auto entity : view) {
+				view.get<Component::Script>(entity).instance = nullptr;
+			}
+		}
+
+		ScriptRegistry::clear();
+
 		unloadScriptLibrary();
+	}
 
 	std::string libPath = s_activeProject->getDirectory() + "/GameScripts.dylib";
 
@@ -174,6 +194,8 @@ void ProjectManager::loadScriptLibrary() {
 		AT_CORE_ERROR("Failed to load script library: {}", AT_LIBRARY_ERROR());
 		return;
 	}
+
+	Serializer::loadScriptManifest(s_activeProject);
 }
 
 void ProjectManager::unloadScriptLibrary() {

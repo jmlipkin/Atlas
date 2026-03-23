@@ -19,6 +19,8 @@ class SceneHierarchyPanel {
 
 	const Entity& getSelectionContext() const { return m_selectionContext; }
 
+	void setOnNewScript(PropertiesPanel::NewScriptCallback callback) { m_propertiesPanel.setOnNewScriptCallback(callback); }
+
   private:
 	void drawEntityNode(Entity& entity);
 	void drawComponentPicker(Entity& entity);

@@ -2,6 +2,7 @@
 
 #include <Atlas.h>
 
+#include "AtlasPaths.h"
 #include "Atlas/Core/MenuBar.h"
 #include "Atlas/Core/RuntimeLayer.h"
 #include "Atlas/Renderer/OrthographicCameraController.h"
@@ -16,6 +17,7 @@ namespace Atlas {
 struct EditorConfig {
 	std::string last_open_project = "";
 	std::string last_open_scene	  = "";
+	std::string build_directory	  = ATLAS_DEFAULT_BUILD_DIR;
 };
 
 class EditorLayer : public Layer {
@@ -31,8 +33,11 @@ class EditorLayer : public Layer {
 	virtual void onImGuiRender() override;
 
   private:
+	void drawFooter();
+
 	virtual void loadConfig();
 	virtual void saveConfig();
+	virtual void buildScripts();
 
   private:
 	std::shared_ptr<MenuBar> m_menuBar;
@@ -47,9 +52,20 @@ class EditorLayer : public Layer {
 
 	EditorConfig m_config;
 
-	bool m_previewActive = false;
+	bool						  m_previewActive = false;
 	std::unique_ptr<RuntimeLayer> m_previewLayer;
-	ImVec2 m_previewSize = {0, 0};
+	ImVec2						  m_previewSize = {0, 0};
+
+	float m_footerHeight;
+	bool m_isBuilding = false;
+	std::string m_buildStatus;
+	float m_buildProgress = 0.0f;
+	bool m_buildFailed = false;
+	float m_buildStatusTimer = 0.0f;
+
+	bool m_pendingScriptAssignment;
+	Entity m_pendingScriptEntity;
+	std::string m_pendingScriptName;
 };
 
 }  // namespace Atlas

@@ -48,7 +48,7 @@ if(DEFINED SRC_DIR AND DEFINED OUTPUT_FILE)
             string(APPEND SCRIPT_NAMES_JSON "\n    \"${NAME}\"")
             set(FIRST FALSE)
         endforeach()
-        string(APPEND SCRIPT_NAMES_JSON "\n  ]\n}")
+        string(APPEND SCRIPT_NAMES_JSON "\n  ],\n  \"Target\": \"${TARGET_NAME}Scripts\"\n}")
         file(WRITE "${PROJECT_DIR}/Project/scripts.manifest" "${SCRIPT_NAMES_JSON}")
     endif()
 
@@ -77,6 +77,7 @@ function(atlas_generate_script_registry TARGET_NAME SRC_DIR PROJECT_DIR)
             -DSRC_DIR=${SRC_DIR}
             -DOUTPUT_FILE=${OUTPUT_FILE}
             -DPROJECT_DIR=${PROJECT_DIR}
+            -DTARGET_NAME=${TARGET_NAME}
             -P ${RUNNER}
     )
 
@@ -86,6 +87,7 @@ function(atlas_generate_script_registry TARGET_NAME SRC_DIR PROJECT_DIR)
             -DSRC_DIR=${SRC_DIR}
             -DOUTPUT_FILE=${OUTPUT_FILE}
             -DPROJECT_DIR=${PROJECT_DIR}
+            -DTARGET_NAME=${TARGET_NAME}
             -P ${RUNNER}
         COMMENT "Scanning for Atlas scripts in ${SRC_DIR}"
     )

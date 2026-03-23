@@ -65,15 +65,17 @@
           0
         ]
       },
-      "Script": "MyTest",
-      "Priority": 1,
-      "Properties": [
-        {
-          "Name": "My Variable ",
-          "Type": 4,
-          "Value": 0.0
-        }
-      ],
+      "Script": {
+        "Name": "HelloTess",
+        "Priority": 1,
+        "Properties": [
+          {
+            "Name": "My Variable ",
+            "Type": 4,
+            "Value": 0.0
+          }
+        ]
+      },
       "Animations": {
         "Active Clip": "MoveRight",
         "Clips": [

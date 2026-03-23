@@ -185,8 +185,16 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 						defaultDir = ProjectManager::getActiveProject()->getData().src_directory;
 					}
 					std::string path = Platform::saveFileDialog("h", defaultDir);
-					Behavior::generateNewScript(path);
-					// Platform::openFile(path);
+
+					if (!path.empty()) {
+						std::string className = std::filesystem::path(path).stem().string();
+						Behavior::generateNewScript(path);
+						Platform::openFile(path);
+
+						if (m_onNewScript) {
+							m_onNewScript(entity, className);
+						}
+					}
 				}
 				ImGui::EndCombo();
 			}

@@ -13,6 +13,8 @@ namespace Atlas {
 
 class PropertiesPanel {
   public:
+	using NewScriptCallback = std::function<void(Entity, const std::string& scriptName)>;
+
 	PropertiesPanel(std::shared_ptr<Scene> scene) : m_scene(scene) {}
 	~PropertiesPanel() = default;
 
@@ -21,6 +23,8 @@ class PropertiesPanel {
 		m_scene = scene;
 		m_animationEditor.close();
 	}
+
+	void setOnNewScriptCallback(NewScriptCallback callback) { m_onNewScript = callback; }
 
   private:
 	enum class SelectionType { None,
@@ -91,6 +95,8 @@ class PropertiesPanel {
 	std::string m_renameBuffer;
 	int			m_focusRenameCursor	 = 0;
 	bool		m_justFinishedRename = false;
+
+	NewScriptCallback m_onNewScript;
 };
 
 }  // namespace Atlas

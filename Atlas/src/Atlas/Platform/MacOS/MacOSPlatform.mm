@@ -1,6 +1,7 @@
 #include "atpch.h"
 #include "MacOSPlatform.h"
 
+#include "AtlasPaths.h"
 #include "Atlas/Core/Platform.h"
 
 #include <AppKit/AppKit.h>
@@ -92,6 +93,83 @@ int MacOSPlatform::showConfirmDialogImpl(const std::string& message, const std::
 
 	NSModalResponse response = [alert runModal];
 	return (int)response;
+}
+
+void MacOSPlatform::buildScriptLibraryImpl(const std::string& buildDir, const std::string& target, Platform::BuildOutputCallback onOutput, Platform::BuildCompleteCallback onComplete) {
+	NSTask* task = [[NSTask alloc] init];
+	[task setLaunchPath:[NSString stringWithUTF8String:ATLAS_CMAKE_PATH]];
+	[task setArguments:@[
+		@"--build", [NSString stringWithUTF8String:buildDir.c_str()],
+		@"--target", [NSString stringWithUTF8String:target.c_str()]
+	]];
+
+	NSPipe* outputPipe = [NSPipe pipe];
+	NSPipe* errorPipe  = [NSPipe pipe];
+	[task setStandardOutput:outputPipe];
+	[task setStandardError:errorPipe];
+
+	NSFileHandle* outHandle = [outputPipe fileHandleForReading];
+	NSFileHandle* errHandle = [errorPipe fileHandleForReading];
+
+	[[NSNotificationCenter defaultCenter]
+		addObserverForName:NSFileHandleDataAvailableNotification
+					object:outHandle
+					 queue:[NSOperationQueue mainQueue]
+				usingBlock:^(NSNotification* note) {
+				  NSData* data = [outHandle availableData];
+				  if (data.length > 0) {
+					  std::string line(
+						  (const char*)data.bytes, data.length);
+					  onOutput(line);
+					  [outHandle waitForDataInBackgroundAndNotify];
+				  }
+				}];
+
+	[[NSNotificationCenter defaultCenter]
+		addObserverForName:NSFileHandleDataAvailableNotification
+					object:errHandle
+					 queue:[NSOperationQueue mainQueue]
+				usingBlock:^(NSNotification* note) {
+				  NSData* data = [errHandle availableData];
+				  if (data.length > 0) {
+					  std::string line(
+						  (const char*)data.bytes, data.length);
+					  onOutput(line);
+					  [errHandle waitForDataInBackgroundAndNotify];
+				  }
+				}];
+
+	[outHandle waitForDataInBackgroundAndNotify];
+	[errHandle waitForDataInBackgroundAndNotify];
+
+	[task setTerminationHandler:^(NSTask* t) {
+	  bool success = (t.terminationStatus == 0);
+	  dispatch_async(dispatch_get_main_queue(), ^{
+		onComplete(success);
+	  });
+	}];
+
+	NSError* error = nil;
+	[task launchAndReturnError:&error];
+	if (error) {
+		onOutput("Failed to launch cmake: " +
+				 std::string([[error localizedDescription] UTF8String]));
+		onComplete(false);
+	}
+}
+
+void MacOSPlatform::openFileImpl(const std::string& filepath) {
+	// Get the shared NSWorkspace instance
+	NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
+
+	// Open the file using the default application
+	BOOL success = [workspace openURL:[NSURL fileURLWithPath:[NSString stringWithUTF8String:filepath.c_str()]]];
+
+	if (success) {
+		NSLog(@"File opened successfully with its default application.");
+	} else {
+		NSLog(@"Could not open file.");
+	}
 }
 
 }  // namespace Atlas

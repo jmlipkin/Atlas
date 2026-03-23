@@ -23,9 +23,11 @@
 @property(nonatomic, assign) Atlas::MenuBar::AddComponentCallback onAddComponent;
 
 @property(nonatomic, assign) Atlas::MenuBar::PreviewCallback onPreview;
+@property(nonatomic, assign) Atlas::MenuBar::BuildCallback onBuild;
 
 @property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onValidateProjectRequired;
 @property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onValidateSceneRequired;
+@property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onValidateBuildAvailable;
 
 - (void)newProject:(id)sender;
 - (void)newScene:(id)sender;
@@ -39,6 +41,8 @@
 - (void)addEntity:(id)sender;
 - (void)addComponent:(id)sender;
 - (void)onPreview:(id)sender;
+
+- (void)build:(id)sender;
 
 - (BOOL)validateMenuItem:(NSMenuItem*)menuItem;
 
@@ -126,8 +130,16 @@
 	if (self.onPreview) self.onPreview();
 }
 
+- (void)build:(id)sender {
+	if (self.onBuild) self.onBuild();
+}
+
 - (BOOL)validateMenuItem:(NSMenuItem*)menuItem {
 	SEL action = menuItem.action;
+
+	if (action == @selector(build:)) {
+		return self.onValidateBuildAvailable ? self.onValidateBuildAvailable() : NO;
+	}
 
 	if (action == @selector(saveScene:) ||
 		action == @selector(saveProject:) ||
@@ -188,9 +200,11 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	delegate.onAddComponent = m_onAddComponent;
 
 	delegate.onPreview = m_onPreview;
-	
-	delegate.onValidateSceneRequired = m_onSceneValidation;
+	delegate.onBuild = m_onBuild;
+
+	delegate.onValidateSceneRequired   = m_onSceneValidation;
 	delegate.onValidateProjectRequired = m_onProjectValidation;
+	delegate.onValidateBuildAvailable = m_onBuildAvailable;
 
 	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"New Project" action:@selector(newProject:) keyEquivalent:@"N"];
 	[newProject setTarget:delegate];
@@ -202,7 +216,7 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 
 	[fileMenu addItem:[NSMenuItem separatorItem]];
 
-	NSMenuItem* openProject = [[NSMenuItem alloc] initWithTitle:@"Open Project" action:@selector(openProject:) keyEquivalent:@"O"];
+	NSMenuItem* openProject = [[NSMenuItem alloc] initWithTitle:@"Open Project" action:@selector(openProject:) keyEquivalent:@"o"];
 	[openProject setTarget:delegate];
 	[fileMenu addItem:openProject];
 
@@ -252,6 +266,12 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	NSMenuItem* addComponent = [[NSMenuItem alloc] initWithTitle:@"Add Component" action:@selector(addComponent:) keyEquivalent:@"a"];
 	[addComponent setTarget:delegate];
 	[editMenu addItem:addComponent];
+
+	[editMenu addItem: [NSMenuItem separatorItem]];
+
+	NSMenuItem* build = [[NSMenuItem alloc] initWithTitle:@"Build" action:@selector(build:) keyEquivalent:@"b"];
+	[build setTarget:delegate];
+	[editMenu addItem:build];
 
 	[editMenuItem setSubmenu:editMenu];
 }

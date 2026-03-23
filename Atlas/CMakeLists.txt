@@ -2,6 +2,9 @@ set(TARGET_NAME "Atlas")
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 
+set(ATLAS_ROOT_DIR "${CMAKE_SOURCE_DIR}")
+set(ATLAS_CMAKE_COMMAND "${CMAKE_COMMAND}")
+
 include(FetchContent)
 
 # -----------------------------------------------------------------------------
@@ -214,6 +217,10 @@ configure_file(
     "${CMAKE_CURRENT_BINARY_DIR}/generated/Version.h"
 )
 
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Atlas/Core/AtlasPaths.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/generated/AtlasPaths.h"
+)
 # -----------------------------------------------------------------------------
 # Linked libraries
 #

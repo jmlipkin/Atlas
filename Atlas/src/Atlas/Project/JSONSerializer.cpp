@@ -102,9 +102,11 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 		}
 		if (entity.hasComponent<Component::Script>()) {
 			if (entity.getComponent<Component::Script>().instance != nullptr) {
-				Behavior& behavior = *entity.getComponent<Component::Script>().instance.get();
-				e["Script"]		   = behavior.getTypeName();
-				e["Priority"]	   = (int)entity.getComponent<Component::Script>().priority;
+				json s;
+				Component::Script& script = entity.getComponent<Component::Script>();
+				Behavior& behavior = *script.instance.get();
+				s["Name"]		   = script.name;
+				s["Priority"]	   = (int)script.priority;
 				json props;
 				for (auto& [name, property] : behavior.getProperties()) {
 					json prop;
@@ -157,7 +159,8 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 					}
 					props.push_back(prop);
 				}
-				e["Properties"] = props;
+				s["Properties"] = props;
+				e["Script"] = s;
 			}
 		}
 		if (entity.hasComponent<Component::Animations>()) {
@@ -245,10 +248,11 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 			entity.addComponent<Component::Sprite>(texPath, sub.getSpecs());
 		}
 		if (e.contains("Script")) {
-			std::string scriptName = e["Script"].get<std::string>();
+			std::string scriptName = e["Script"]["Name"];
 			auto		instance   = ScriptRegistry::create(scriptName);
 			if (instance) {
 				auto& script	= entity.addComponent<Component::Script>();
+				script.name = e["Script"]["Name"];
 				script.instance = std::move(instance);
 				script.priority = ScriptRegistry::getPriority(scriptName);
 				script.instance->setEntity(entity);
@@ -342,6 +346,27 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 
 				animations.clips[clip.name] = clip;
 			}
+		}
+	}
+}
+
+void JSONSerializer::loadScriptManifest(std::shared_ptr<Project> project) {
+	std::string manifestPath = project->getDirectory() + "/scripts.manifest";
+	if (!std::filesystem::exists(manifestPath)) {
+		AT_CORE_WARN("No scripts.manifest found at {}", manifestPath);
+		return;
+	}
+
+	std::ifstream file(manifestPath);
+	json		  root = json::parse(file);
+	file.close();
+
+	if (root.contains("Target")) {
+		project->getData().scripts_target = root["Target"].get<std::string>();
+	}
+
+	if (root.contains("Scripts")) {
+		for (auto& name : root["Scripts"]) {
 		}
 	}
 }

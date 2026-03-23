@@ -4,9 +4,9 @@
 
 namespace Atlas {
 
-class MyTest : public Atlas::Behavior {
+class HelloTess : public Atlas::Behavior {
 public:
-    AT_BEHAVIOR(MyTest)
+    AT_BEHAVIOR(HelloTess)
 
     virtual void onCreate() override {}
     virtual void onDestroy() override {}
@@ -25,6 +25,6 @@ private:
 float example_variable;
 };
 
-AT_REGISTER_SCRIPT(MyTest)
+AT_REGISTER_SCRIPT(HelloTess)
 
 }  // namespace Atlas

@@ -13,6 +13,24 @@ void ScriptRegistry::registerScript(const std::string& name, ScriptFactory facto
 	getRegistry()[(int)priority][name] = std::move(factory);
 }
 
+bool ScriptRegistry::reinstantiateScript(Component::Script& script, Entity entity) {
+	if (script.name.empty() || !isRegistered(script.name))
+		return false;
+
+	script.instance = create(script.name);
+	script.priority = getPriority(script.name);
+	script.instance->setEntity(entity);
+	script.instance->onCreate();
+	script.instance->exposeProperties();
+	return true;
+}
+
+void ScriptRegistry::clear() {
+	for (auto& bucket : getRegistry()) {
+		bucket.clear();
+	}
+}
+
 std::unique_ptr<Behavior> ScriptRegistry::create(const std::string& name) {
 	for (auto& map : getRegistry()) {
 		auto it = map.find(name);
@@ -55,13 +73,13 @@ int ScriptRegistry::getPriorityIndex(const std::string& name) {
 }
 
 std::vector<std::string> ScriptRegistry::getRegisteredNames() {
-    std::vector<std::string> names;
+	std::vector<std::string> names;
 	for (const auto& map : getRegistry()) {
-		for(const auto& [name, factory] : map) {
-            names.push_back(name);
-        }
+		for (const auto& [name, factory] : map) {
+			names.push_back(name);
+		}
 	}
-    return names;
+	return names;
 }
 
 }  // namespace Atlas

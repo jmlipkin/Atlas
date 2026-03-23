@@ -15,13 +15,15 @@ struct ProjectData {
 	inline static const char* atlas_version	 = AT_VERSION;
 
 	std::string name;
+
 	std::string src_directory = "";
+	std::string scripts_target;
 
 	std::vector<std::string> scene_filepaths;
 	std::string				 startup_scene;
 	std::string				 last_active_scene = "";
 
-	ProjectData(std::string Name = "UnnamedProject", std::string load_scene = "") : name(Name), startup_scene(load_scene) {
+	ProjectData(std::string Name = "UnnamedProject", std::string load_scene = "") : name(Name), startup_scene(load_scene), scripts_target(name + "Scripts") {
 		if (!load_scene.empty()) {
 			scene_filepaths.push_back(load_scene);
 		}
@@ -38,7 +40,7 @@ class Project {
 
 	void setScripts(const std::vector<std::string>& scripts) { m_scripts = scripts; }
 
-	std::vector<std::string>& getScripts() { return m_scripts; }
+	std::vector<std::string>&		getScripts() { return m_scripts; }
 	const std::vector<std::string>& getScripts() const { return m_scripts; }
 
 	std::string& getDirectory() { return m_directory; }
@@ -81,6 +83,9 @@ class ProjectManager {
 	static bool		   isDirty() { return s_isDirty; }
 	static std::string toRelativePath(const std::string& absolutePath);
 	static std::string toAbsolutePath(const std::string& relativePath);
+
+  private:
+	static void loadScriptManifest();
 
   private:
 	static std::shared_ptr<Project> s_activeProject;

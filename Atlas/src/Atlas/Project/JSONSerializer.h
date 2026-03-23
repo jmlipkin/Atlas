@@ -12,6 +12,8 @@ class JSONSerializer : public SerializerAPI {
 
 	virtual void serializeScene(const std::shared_ptr<Scene>& scene) override;
 	virtual void deserializeScene(std::shared_ptr<Scene> scene) override;
+
+	virtual void loadScriptManifest(std::shared_ptr<Project> project) override;
 };
 
 }  // namespace Atlas

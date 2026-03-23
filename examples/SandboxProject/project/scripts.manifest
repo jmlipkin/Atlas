@@ -1,6 +1,6 @@
 {
   "Scripts": [
-    "HelloTess",
-    "MyTest"
-  ]
+    "HelloTess"
+  ],
+  "Target": "SandboxAppScripts"
 }

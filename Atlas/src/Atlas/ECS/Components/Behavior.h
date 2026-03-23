@@ -73,6 +73,7 @@ class Behavior {
 namespace Component {
 
 struct Script {
+	std::string				  name;
 	std::unique_ptr<Behavior> instance = nullptr;
 	ScriptPriority			  priority = ScriptPriority::Normal;
 };
@@ -93,6 +94,7 @@ void Entity::addScript() {
 	script.instance->onCreate();
 	script.instance->exposeProperties();
 	script.priority = ScriptRegistry::getPriority(script.instance->getTypeName());
+	script.name = script.instance->getTypeName();
 }
 
 template <>

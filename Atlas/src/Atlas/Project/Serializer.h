@@ -15,6 +15,8 @@ class SerializerAPI {
 
 	virtual void serializeScene(const std::shared_ptr<Scene>& scene) = 0;
 	virtual void deserializeScene(std::shared_ptr<Scene> scene)		 = 0;
+
+	virtual void loadScriptManifest(std::shared_ptr<Project> project) = 0;
 };
 
 class Serializer {
@@ -26,6 +28,8 @@ class Serializer {
 
 	static void serializeScene(const std::shared_ptr<Scene>& scene) { s_serializerAPI->serializeScene(scene); }
 	static void deserializeScene(std::shared_ptr<Scene> scene) { s_serializerAPI->deserializeScene(scene); }
+
+	static void loadScriptManifest(std::shared_ptr<Project> project) { s_serializerAPI->loadScriptManifest(project); }
 
 	static void init();
 
