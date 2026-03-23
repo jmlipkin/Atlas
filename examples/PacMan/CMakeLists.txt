@@ -11,6 +11,9 @@ add_executable(${TARGET_NAME} ${PACMAN_SOURCES})
 set_target_properties(${TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER "com.atlas.pacman"
     MACOSX_BUNDLE_BUNDLE_NAME    "PacMan"
+
+    BUILD_RPATH "${CMAKE_CURRENT_BINARY_DIR}/bin"
+    INSTALL_RPATH "@executable_path/../Frameworks"
 )
 
 target_include_directories(${TARGET_NAME} 

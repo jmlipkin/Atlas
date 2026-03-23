@@ -105,8 +105,6 @@ std::shared_ptr<Scene> ProjectManager::loadProject(const std::string& filepath, 
 
 	std::shared_ptr<Scene> loadedScene = nullptr;
 
-	s_activeProject->setScripts(Serializer::loadScriptManifest(s_activeProject));
-
 	if (useStartupScene) {
 		loadedScene = loadScene(toAbsolutePath(s_activeProject->getData().startup_scene));
 	} else {

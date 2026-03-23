@@ -12,6 +12,10 @@ set_target_properties(${TARGET_NAME} PROPERTIES
     OUTPUT_NAME "Atlas Editor"
     MACOSX_BUNDLE_GUI_IDENTIFIER "com.atlas.editor"
     MACOSX_BUNDLE_BUNDLE_NAME    "Atlas Editor"
+
+    BUILD_RPATH "${CMAKE_CURRENT_BINARY_DIR}/bin;${CMAKE_BINARY_DIR}/lib"
+    INSTALL_RPATH "@executable_path/../Frameworks"
+    BUILD_WITH_INSTALL_RPATH TRUE
 )
 
 atlas_configure_bundle(${TARGET_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/assets")

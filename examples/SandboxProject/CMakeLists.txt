@@ -11,6 +11,9 @@ add_executable(${TARGET_NAME} ${PACMAN_SOURCES})
 set_target_properties(${TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER "com.atlas.pacman"
     MACOSX_BUNDLE_BUNDLE_NAME    "PacMan"
+
+    BUILD_RPATH "${CMAKE_CURRENT_BINARY_DIR}/bin"
+    INSTALL_RPATH "@executable_path/../Frameworks"
 )
 
 # Configure as macOS app bundle, copy Atlas resources and game assets

@@ -81,6 +81,16 @@
 
 #define BIT(x) (1 << x)
 
+#ifdef AT_PLATFORM_WINDOWS
+    #ifdef ATLAS_BUILD_DLL
+        #define ATLAS_API __declspec(dllexport)
+    #else
+        #define ATLAS_API __declspec(dllimport)
+    #endif
+#else
+    #define ATLAS_API __attribute__((visibility("default")))
+#endif
+
 #define AT_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
 #define AT_REGISTER_SCRIPT(Type)      	                   \

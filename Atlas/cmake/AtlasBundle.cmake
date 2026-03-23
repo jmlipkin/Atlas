@@ -16,6 +16,19 @@ function(atlas_configure_bundle TARGET)
 
     set_target_properties(${TARGET} PROPERTIES MACOSX_BUNDLE TRUE)
 
+    add_custom_target(${TARGET}_copy_frameworks ALL
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            "$<TARGET_BUNDLE_CONTENT_DIR:${TARGET}>/Frameworks"
+        COMMAND ${CMAKE_COMMAND} -E copy
+            "$<TARGET_FILE:Atlas>"
+            "$<TARGET_BUNDLE_CONTENT_DIR:${TARGET}>/Frameworks/libAtlas.dylib"
+        COMMAND ${CMAKE_COMMAND} -E copy
+            "$<TARGET_FILE:glad>"
+            "$<TARGET_BUNDLE_CONTENT_DIR:${TARGET}>/Frameworks/libglad.dylib"
+        COMMENT "Copying frameworks into ${TARGET} bundle"
+    )
+    add_dependencies(${TARGET} ${TARGET}_copy_frameworks)
+
     # Copy Metal shader library
     add_custom_command(TARGET ${TARGET} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory

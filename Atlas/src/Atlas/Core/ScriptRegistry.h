@@ -10,7 +10,7 @@ namespace Atlas {
 
 class Behavior;
 
-class ScriptRegistry {
+class ATLAS_API ScriptRegistry {
   public:
 	using ScriptFactory = std::function<std::unique_ptr<Behavior>()>;
 
