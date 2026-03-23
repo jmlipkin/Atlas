@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Atlas/Core/Base.h"
 #include "Atlas/Project/Serializer.h"
+
 #include "Version.h"
 
 #include <memory>
@@ -70,6 +72,9 @@ class ProjectManager {
 	static std::shared_ptr<Scene> loadProject(const std::string& filepath, bool useStartupScene = false);
 	static void					  closeProject(bool shouldSave);
 
+	static void loadScriptLibrary();
+	static void unloadScriptLibrary();
+
 	static std::shared_ptr<Project> getActiveProject() { return s_activeProject; }
 	static void						setActiveScene(std::shared_ptr<Scene> scene);
 
@@ -81,6 +86,8 @@ class ProjectManager {
 	static std::shared_ptr<Project> s_activeProject;
 	static std::shared_ptr<Scene>	s_activeScene;
 	static bool						s_isDirty;
+
+	static AT_LIBRARY_HANDLE s_scriptLibHandle;
 };
 
 }  // namespace Atlas

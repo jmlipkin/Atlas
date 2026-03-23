@@ -65,23 +65,13 @@
           0
         ]
       },
-      "Script": "TestScript",
+      "Script": "MyTest",
       "Priority": 1,
       "Properties": [
         {
-          "Name": "Name",
-          "Type": 2,
-          "Value": "test property"
-        },
-        {
-          "Name": "Active",
-          "Type": 0,
-          "Value": true
-        },
-        {
-          "Name": "Speed",
+          "Name": "My Variable ",
           "Type": 4,
-          "Value": 10.0
+          "Value": 0.0
         }
       ],
       "Animations": {

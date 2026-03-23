@@ -2,7 +2,6 @@
   "Atlas Version": "0.0.1",
   "AtlasProject Version": 1,
   "Name": "SandboxProject",
-  "Source Directory": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/src",
   "Startup Scene": "scenes/Scene1.atscene",
   "Last Active Scene": "scenes/Scene1.atscene",
   "Scenes": [

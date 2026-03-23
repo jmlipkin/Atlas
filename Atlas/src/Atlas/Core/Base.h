@@ -112,3 +112,17 @@
 		return true;                                       \
 	}();                                                   \
 	}
+
+#if defined(AT_PLATFORM_MACOS) || defined(AT_PLATFORM_LINUX)
+    #include <dlfcn.h>
+    #define AT_LOAD_LIBRARY(path)     dlopen((path), RTLD_NOW | RTLD_GLOBAL)
+    #define AT_UNLOAD_LIBRARY(handle) dlclose(handle)
+    #define AT_LIBRARY_ERROR()        dlerror()
+    #define AT_LIBRARY_HANDLE         void*
+#elif defined(AT_PLATFORM_WINDOWS)
+    #include <windows.h>
+    #define AT_LOAD_LIBRARY(path)     LoadLibraryA(path)
+    #define AT_UNLOAD_LIBRARY(handle) FreeLibrary((HMODULE)(handle))
+    #define AT_LIBRARY_ERROR()        std::to_string(GetLastError()).c_str()
+    #define AT_LIBRARY_HANDLE         HMODULE
+#endif

@@ -7,9 +7,10 @@
 
 namespace Atlas {
 
-std::shared_ptr<Project> ProjectManager::s_activeProject = nullptr;
-std::shared_ptr<Scene>	 ProjectManager::s_activeScene	 = nullptr;
-bool					 ProjectManager::s_isDirty		 = false;
+std::shared_ptr<Project> ProjectManager::s_activeProject   = nullptr;
+std::shared_ptr<Scene>	 ProjectManager::s_activeScene	   = nullptr;
+bool					 ProjectManager::s_isDirty		   = false;
+AT_LIBRARY_HANDLE		 ProjectManager::s_scriptLibHandle = nullptr;
 
 void ProjectManager::saveScene(std::shared_ptr<Scene> scene, const std::string& explicitPath) {
 	if (!explicitPath.empty()) {
@@ -60,8 +61,8 @@ void ProjectManager::createNewProject(const std::string& filepath, const std::st
 
 	ProjectData projData{name};
 	projData.src_directory = absoluteProjectPath + "/src";
-	s_activeProject = std::make_shared<Project>(absoluteProjectPath + "/project", projData);
-	
+	s_activeProject		   = std::make_shared<Project>(absoluteProjectPath + "/project", projData);
+
 	Serializer::serializeProject(s_activeProject);
 }
 
@@ -102,6 +103,8 @@ std::shared_ptr<Scene> ProjectManager::loadProject(const std::string& filepath, 
 
 	AT_CORE_ASSERT(s_activeProject, "Could not load project");
 	Serializer::deserializeProject(s_activeProject);
+
+	loadScriptLibrary();
 
 	std::shared_ptr<Scene> loadedScene = nullptr;
 
@@ -148,8 +151,36 @@ void ProjectManager::closeProject(bool shouldSave) {
 	if (shouldSave && s_activeProject) {
 		saveProject();
 	}
+	unloadScriptLibrary();
+
 	s_activeProject = nullptr;
 	s_activeScene	= nullptr;
+}
+
+void ProjectManager::loadScriptLibrary() {
+	if (s_scriptLibHandle)
+		unloadScriptLibrary();
+
+	std::string libPath = s_activeProject->getDirectory() + "/GameScripts.dylib";
+
+	if (!std::filesystem::exists(libPath)) {
+		AT_CORE_WARN("No script library found at {}", libPath);
+		return;
+	}
+
+	s_scriptLibHandle = AT_LOAD_LIBRARY(libPath.c_str());
+
+	if (!s_scriptLibHandle) {
+		AT_CORE_ERROR("Failed to load script library: {}", AT_LIBRARY_ERROR());
+		return;
+	}
+}
+
+void ProjectManager::unloadScriptLibrary() {
+	if (s_scriptLibHandle) {
+		AT_UNLOAD_LIBRARY(s_scriptLibHandle);
+		s_scriptLibHandle = nullptr;
+	}
 }
 
 void ProjectManager::setActiveScene(std::shared_ptr<Scene> scene) {

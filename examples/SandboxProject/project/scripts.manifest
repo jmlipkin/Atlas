@@ -1,4 +1,6 @@
 {
   "Scripts": [
+    "HelloTess",
+    "MyTest"
   ]
 }
