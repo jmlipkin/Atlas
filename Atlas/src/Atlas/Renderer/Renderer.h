@@ -23,6 +23,14 @@ class Renderer {
 	static void beginImGui();
 	static void submitImGui();
 
+	static void drawLine(glm::vec2 a, glm::vec2 b, glm::vec4 color, float thickness = 1.0f);
+	static void drawLine(glm::vec2 a, glm::vec2 b, float depth, glm::vec4 color, float thickness = 1.0f);
+
+	static void drawRectangle(glm::vec2 position, glm::vec2 size, glm::vec4 color, float thickness);
+	static void drawRectangle(glm::vec2 position, glm::vec2 size, float depth, glm::vec4 color, float thickness);
+
+	static void drawCircle(glm::vec2 centerPosition, float radius, float depth, glm::vec4 color, float thickness = 1.0f, int segments = 128);
+
 	static void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 	static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
 	static void drawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture);
@@ -51,9 +59,9 @@ class Renderer {
 	static void startNewBatch();
 	static void flush();
 
-	static void switchPipeline(std::shared_ptr<Pipeline> pipeline, std::shared_ptr<UniformBuffer> uniforms);
+	static void		switchPipeline(std::shared_ptr<Pipeline> pipeline, std::shared_ptr<UniformBuffer> uniforms);
 	static uint32_t getTextureIndex(const std::shared_ptr<Texture>& texture);
-	static void submitQuad(const glm::mat4& transform, const glm::vec4& color, uint32_t texIndex, const glm::vec2 texCoords[4]);
+	static void		submitQuad(const glm::mat4& transform, const glm::vec4& color, uint32_t texIndex, const glm::vec2 texCoords[4]);
 };
 
 }  // namespace Atlas

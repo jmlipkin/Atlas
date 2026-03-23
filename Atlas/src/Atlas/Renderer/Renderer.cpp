@@ -9,6 +9,7 @@
 #include "Atlas/Renderer/Buffer.h"
 #include "Atlas/Renderer/Texture.h"
 #include "Atlas/Renderer/SubTexture.h"
+#include "glm/detail/func_geometric.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -258,6 +259,56 @@ void Renderer::submitImGui() {
 	AT_PROFILE_FUNCTION();
 
 	RenderCommand::drawImGui();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Primitives
+//
+///////////////////////////////////////////////////////////////////////////////
+
+void Renderer::drawLine(glm::vec2 a, glm::vec2 b, glm::vec4 color, float thickness) {
+	drawLine(a, b, 0.0f, color, thickness);
+}
+
+void Renderer::drawLine(glm::vec2 a, glm::vec2 b, float depth, glm::vec4 color, float thickness) {
+	float length = glm::length(b - a);
+
+	glm::vec2 size{length, thickness};
+	glm::vec2 position{std::min(a.x, b.x), std::min(a.y, b.y)};
+	float	  angle	   = atan2f(b.y - a.y, b.x - a.x);
+	glm::vec2 midpoint = (a + b) * 0.5f;
+
+	glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(midpoint, depth)) * glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(-length * 0.5f, -thickness * 0.5f, 0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(size, 1.0f));
+
+	drawQuad(transform, color);
+}
+
+void Renderer::drawRectangle(glm::vec2 position, glm::vec2 size, glm::vec4 color, float thickness) {
+	drawRectangle(position, size, 0.0f, color, thickness);
+}
+
+void Renderer::drawRectangle(glm::vec2 position, glm::vec2 size, float depth, glm::vec4 color, float thickness) {
+	glm::vec2 top_left{position};
+	glm::vec2 top_right{position.x + size.x, position.y};
+	glm::vec2 bottom_left{position.x, position.y + size.y};
+	glm::vec2 bottom_right{position.x + size.x, position.y + size.y};
+
+	drawLine(top_left, top_right, depth, color, thickness);
+	drawLine(top_left, bottom_left, depth, color, thickness);
+	drawLine(top_right, bottom_right, depth, color, thickness);
+	drawLine(bottom_left, bottom_right, depth, color, thickness);
+}
+
+void Renderer::drawCircle(glm::vec2 centerPosition, float radius, float depth, glm::vec4 color, float thickness, int segments) {
+	glm::vec2 previous{centerPosition.x + radius, centerPosition.y};
+	float	  angle = 0;
+	for (int i = 0; i < segments; i++) {
+		angle += 2 * M_PI / (float)segments;
+		glm::vec2 point{radius * (cos(angle) + centerPosition.x), radius * (sin(angle) + centerPosition.y)};
+		drawLine(point, previous, depth, color, thickness);
+		previous = point;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
