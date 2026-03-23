@@ -14,23 +14,35 @@ bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float 
 
 	ImGui::PushID(label);
 
+	float  lineHeight = ImGui::GetFrameHeight();
+	ImVec2 buttonSize = {lineHeight, lineHeight};
+
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(0, columnWidth);
+
+	if (vertical) {
+		float totalHeight = 3.0f * lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
+	} else {
+		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
+	}
 	ImGui::Text("%s", label);
+
 	ImGui::NextColumn();
 
 	ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
-
-	float lineHeight = ImGui::GetFrameHeight();
-	ImVec2 buttonSize = {lineHeight, lineHeight};
 
 	// X
 	ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::steelBlue);
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::steelBlueLight);
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::steelBlueActive);
 	ImGui::PushFont(boldFont);
-	if (ImGui::Button("X", buttonSize)) values.x = resetX;
+	if (ImGui::Button("X", buttonSize)) {
+		values.x = resetX;
+		changed	 = true;
+	}
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 	ImGui::SameLine();
@@ -47,7 +59,10 @@ bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float 
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::greenLight);
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::greenActive);
 	ImGui::PushFont(boldFont);
-	if (ImGui::Button("Y", buttonSize)) values.y = resetY;
+	if (ImGui::Button("Y", buttonSize)) {
+		values.y = resetY;
+		changed	 = true;
+	}
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 	ImGui::SameLine();
@@ -64,7 +79,10 @@ bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float 
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::purpleLight);
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::purpleActive);
 	ImGui::PushFont(boldFont);
-	if (ImGui::Button("Z", buttonSize)) values.z = resetZ;
+	if (ImGui::Button("Z", buttonSize)) {
+		values.z = resetZ;
+		changed	 = true;
+	}
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 	ImGui::SameLine();

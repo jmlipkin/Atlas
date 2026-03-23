@@ -40,7 +40,7 @@
       "Tag": "Player",
       "Transform": {
         "Position": [
-          -0.8999999761581421,
+          99.86798095703125,
           7.0,
           2.0
         ],
@@ -66,13 +66,13 @@
         ]
       },
       "Script": {
-        "Name": "HelloTess",
+        "Name": "",
         "Priority": 1,
         "Properties": [
           {
-            "Name": "My Variable ",
+            "Name": "Speed",
             "Type": 4,
-            "Value": 0.0
+            "Value": 10.0
           }
         ]
       },

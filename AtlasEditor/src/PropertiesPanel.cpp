@@ -8,6 +8,7 @@
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
+#include "Atlas/ECS/Systems/Systems.h"
 
 #include <imgui/imgui.h>
 
@@ -48,10 +49,46 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 	ImVec2 componentSpacer = {0, 16.0f * EditorWidgets::displayScale};
 
-	drawComponent<Component::Transform>("Transform", entity, [this](auto& component) {
+	drawComponent<Component::Transform>("Transform", entity, [this, &entity](auto& component) {
 		float columnWidth = 85.0f;
-		float valueWidth  = 120.0f;
-		EditorWidgets::drawVec3Control("Position", component.position, 0.0f, 0.0f, 1.0f, columnWidth, valueWidth, true);
+		float valueWidth  = 50.0f;
+
+		glm::vec2 position = {component.position.x, component.position.y};
+		if (EditorWidgets::drawVec2Control<glm::vec2>("Position", position, 0.0f, 0.0f, columnWidth, valueWidth)) {
+			component.position = {position, component.position.z};
+		}
+
+		glm::vec2 origin = System::Transformation::getCenter2D(entity);
+		if (EditorWidgets::drawVec2Control<glm::vec2>("Origin", origin, 0.0f, 0.0f, columnWidth, valueWidth)) {
+			System::Transformation::setCenter(entity, {origin.x, origin.y});
+		}
+
+		ImGui::Dummy(ImVec2(0, 4.0f * EditorWidgets::displayScale));
+
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, columnWidth);
+		ImGui::Text("Depth");
+		ImGui::NextColumn();
+
+		ImGuiIO io		   = ImGui::GetIO();
+		ImFont* boldFont   = io.Fonts->Fonts[0];
+		float	lineHeight = ImGui::GetFrameHeight();
+		ImVec2	buttonSize = {lineHeight, lineHeight};
+
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
+		ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::purple);
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::purpleLight);
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::purpleActive);
+		ImGui::PushFont(boldFont);
+		if (ImGui::Button("Z", buttonSize)) component.position.z = 1.0f;
+		ImGui::PopFont();
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine();
+		ImGui::PushItemWidth(valueWidth);
+		ImGui::DragFloat("##Z", &component.position.z, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth();
+		ImGui::PopStyleVar();
+		ImGui::Columns(1);
 	});
 
 	ImGui::Dummy(componentSpacer);

@@ -90,23 +90,35 @@ class EditorWidgets {
 
 		ImGui::PushID(label);
 
+		float  lineHeight = ImGui::GetFrameHeight();
+		ImVec2 buttonSize = {lineHeight, lineHeight};
+
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(0, columnWidth);
+
+		if (vertical) {
+			float totalHeight = 3.0f * lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
+		} else {
+			float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
+		}
 		ImGui::Text("%s", label);
+
 		ImGui::NextColumn();
 
-		ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
+		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
-
-		float lineHeight = ImGui::GetFrameHeight();
-		ImVec2 buttonSize = {lineHeight, lineHeight};
 
 		// X
 		ImGui::PushStyleColor(ImGuiCol_Button, steelBlue);
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, steelBlueLight);
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, steelBlueActive);
 		ImGui::PushFont(boldFont);
-		if (ImGui::Button("X", buttonSize)) values.x = resetX;
+		if (ImGui::Button("X", buttonSize)) {
+			values.x = resetX;
+			changed	 = true;
+		}
 		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
@@ -127,7 +139,10 @@ class EditorWidgets {
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, greenLight);
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, greenActive);
 		ImGui::PushFont(boldFont);
-		if (ImGui::Button("Y", buttonSize)) values.y = resetY;
+		if (ImGui::Button("Y", buttonSize)) {
+			values.y = resetY;
+			changed	 = true;
+		}
 		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();

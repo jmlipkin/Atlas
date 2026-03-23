@@ -9,6 +9,35 @@
 
 namespace Atlas::System {
 
+struct Transformation {
+	static glm::vec3 getCenter(Entity& entity) {
+		AT_CORE_ASSERT(entity.hasComponent<Component::Transform>() && entity.hasComponent<Component::Sprite>(), "Entity must have a transform and sprite component in order to get center");
+
+		Component::Transform t		= entity.getComponent<Component::Transform>();
+		Component::Sprite	 sprite = entity.getComponent<Component::Sprite>();
+		return {t.position.x + (0.5f * t.size.x), t.position.y + (0.5f * t.size.y), t.position.z};
+	}
+	static glm::vec2 getCenter2D(Entity& entity) {
+		AT_CORE_ASSERT(entity.hasComponent<Component::Transform>() && entity.hasComponent<Component::Sprite>(), "Entity must have a transform and sprite component in order to get center");
+
+		Component::Transform t		= entity.getComponent<Component::Transform>();
+		Component::Sprite	 sprite = entity.getComponent<Component::Sprite>();
+		return {t.position.x + (0.5f * t.size.x), t.position.y + (0.5f * t.size.y)};
+	}
+
+	static void setCenter(Entity& entity, glm::vec2 position) {
+		if (!entity.hasComponent<Component::Sprite>() || !entity.hasComponent<Component::Transform>()) {
+			return;
+		}
+
+		Component::Transform& transform = entity.getComponent<Component::Transform>();
+		Component::Sprite&	  sprite	= entity.getComponent<Component::Sprite>();
+
+		glm::vec2 topleft  = position - (0.5f * transform.size);
+		transform.position = glm::vec3(topleft, transform.position.z);
+	}
+};
+
 struct Animation {
 	static void updateFrames(Registry& registry, Atlas::DeltaTime dt) {
 		auto view = registry.view<Component::Sprite, Component::Animations>();
