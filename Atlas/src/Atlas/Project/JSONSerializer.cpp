@@ -8,6 +8,7 @@
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
+#include "Atlas/ECS/Components/Collision.h"
 
 #include <json/include/nlohmann/json.hpp>
 
@@ -102,11 +103,11 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 		}
 		if (entity.hasComponent<Component::Script>()) {
 			if (entity.getComponent<Component::Script>().instance != nullptr) {
-				json s;
-				Component::Script& script = entity.getComponent<Component::Script>();
-				Behavior& behavior = *script.instance.get();
-				s["Name"]		   = script.name;
-				s["Priority"]	   = (int)script.priority;
+				json			   s;
+				Component::Script& script	= entity.getComponent<Component::Script>();
+				Behavior&		   behavior = *script.instance.get();
+				s["Name"]					= script.name;
+				s["Priority"]				= (int)script.priority;
 				json props;
 				for (auto& [name, property] : behavior.getProperties()) {
 					json prop;
@@ -160,8 +161,34 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 					props.push_back(prop);
 				}
 				s["Properties"] = props;
-				e["Script"] = s;
+				e["Script"]		= s;
 			}
+		}
+		if (entity.hasComponent<Component::Collider>()) {
+			json c;
+
+			Component::Collider& collider = entity.getComponent<Component::Collider>();
+			c["Shape"]					  = (int)collider.shape;
+			c["Offset"]					  = {collider.offset.x, collider.offset.y};
+
+			if (collider.shape == ColliderShape::AABB) {
+				c["Size"] = {collider.size.AABB.x, collider.size.AABB.y};
+			} else {
+				c["Size"] = {collider.size.radius};
+			}
+			c["Trigger"]	= collider.isTrigger;
+			c["Layer Mask"] = collider.layerMask;
+
+			e["Collider"] = c;
+		}
+		if (entity.hasComponent<Component::RigidBody>()) {
+			json				  rb;
+			Component::RigidBody& body = entity.getComponent<Component::RigidBody>();
+			rb["Velocity"]			   = {body.velocity.x, body.velocity.y};
+			rb["Static"]			   = body.isStatic;
+			rb["Response Type"]		   = (int)body.responseType;
+
+			e["RigidBody"] = rb;
 		}
 		if (entity.hasComponent<Component::Animations>()) {
 			json a;
@@ -252,7 +279,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 			auto		instance   = ScriptRegistry::create(scriptName);
 			if (instance) {
 				auto& script	= entity.addComponent<Component::Script>();
-				script.name = e["Script"]["Name"];
+				script.name		= e["Script"]["Name"];
 				script.instance = std::move(instance);
 				script.priority = ScriptRegistry::getPriority(scriptName);
 				script.instance->setEntity(entity);
@@ -320,6 +347,34 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 				AT_CORE_WARN("Script '{}' on entity '{}' not found in registry — skipping",
 							 scriptName, e["Tag"].get<std::string>());
 			}
+		}
+		if (e.contains("Collider")) {
+			Component::Collider& collider = entity.addComponent<Component::Collider>();
+
+			json c = e["Collider"];
+
+			collider.shape	  = c["Shape"];
+			collider.offset.x = c["Offset"][0];
+			collider.offset.y = c["Offset"][1];
+
+			if (collider.shape == ColliderShape::AABB) {
+				collider.size.AABB.x = c["Size"][0];
+				collider.size.AABB.y = c["Size"][1];
+			} else {
+				collider.size.radius = c["Size"];
+			}
+			collider.isTrigger = c["Trigger"];
+			collider.layerMask = c["Layer Mask"];
+		}
+		if (e.contains("RigidBody")) {
+			Component::RigidBody& body = entity.addComponent<Component::RigidBody>();
+
+			json rb = e["RigidBody"];
+
+			body.velocity.x	  = rb["Velocity"][0];
+			body.velocity.y	  = rb["Velocity"][1];
+			body.isStatic	  = rb["Static"];
+			body.responseType = rb["Response Type"];
 		}
 		if (e.contains("Animations")) {
 			Component::Animations& animations = entity.addComponent<Component::Animations>();

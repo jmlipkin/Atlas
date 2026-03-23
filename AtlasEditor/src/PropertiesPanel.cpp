@@ -8,6 +8,7 @@
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
+#include "Atlas/ECS/Components/Collision.h"
 #include "Atlas/ECS/Systems/Systems.h"
 
 #include <imgui/imgui.h>
@@ -141,6 +142,18 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			component.recalculateCoordinates();
 			ProjectManager::saveScene(m_scene);
 		}
+	});
+
+	ImGui::Dummy(componentSpacer);
+
+	drawComponent<Component::Collider>("Collider", entity, [this](auto& component) {
+
+	});
+
+	ImGui::Dummy(componentSpacer);
+
+	drawComponent<Component::RigidBody>("RigidBody", entity, [this](auto& component) {
+
 	});
 
 	ImGui::Dummy(componentSpacer);

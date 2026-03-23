@@ -10,6 +10,7 @@
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
+#include "Atlas/ECS/Components/Collision.h"
 
 namespace Atlas {
 
@@ -176,6 +177,15 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 		}
 	}
 
+	if (ImGui::MenuItem("Collider")) {
+		if (!entity.hasComponent<Component::Collider>()) {
+			entity.addComponent<Component::Collider>();
+			autoSave();
+		} else {
+			AT_CORE_WARN("Entity \"{}\" already has Collider component!", entity.getComponent<Component::Tag>().tag);
+		}
+	}
+
 	if (ImGui::MenuItem("Sprite")) {
 		if (!entity.hasComponent<Component::Sprite>()) {
 			std::string filepath = Platform::openFileDialog("png");
@@ -183,6 +193,15 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 			autoSave();
 		} else {
 			AT_CORE_WARN("Entity \"{}\" already has Sprite component!", entity.getComponent<Component::Tag>().tag);
+		}
+	}
+
+	if (ImGui::MenuItem("RigidBody")) {
+		if (!entity.hasComponent<Component::RigidBody>()) {
+			entity.addComponent<Component::RigidBody>();
+			autoSave();
+		} else {
+			AT_CORE_WARN("Entity \"{}\" already has RigidBody component!", entity.getComponent<Component::Tag>().tag);
 		}
 	}
 

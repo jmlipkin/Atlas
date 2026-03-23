@@ -11,6 +11,12 @@
 #include "Atlas/Core/MouseButtonCodes.h"
 #include "Atlas/Core/Font.h"
 
+#include "Atlas/Events/Event.h"
+#include "Atlas/Events/ApplicationEvent.h"
+#include "Atlas/Events/KeyEvent.h"
+#include "Atlas/Events/MouseEvent.h"
+#include "Atlas/Events/UserEvent.h"
+
 #include "Atlas/Renderer/Renderer.h"
 #include "Atlas/Renderer/OrthographicCameraController.h"
 #include "Atlas/Renderer/Texture.h"
