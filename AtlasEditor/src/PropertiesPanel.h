@@ -24,6 +24,7 @@ class PropertiesPanel {
 		m_animationEditor.close();
 	}
 
+	bool showSelectedCollider() const { return m_showCollider; }
 	void setOnNewScriptCallback(NewScriptCallback callback) { m_onNewScript = callback; }
 
   private:
@@ -95,6 +96,8 @@ class PropertiesPanel {
 	std::string m_renameBuffer;
 	int			m_focusRenameCursor	 = 0;
 	bool		m_justFinishedRename = false;
+
+	bool m_showCollider = true;
 
 	NewScriptCallback m_onNewScript;
 };

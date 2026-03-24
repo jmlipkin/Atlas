@@ -66,14 +66,17 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 		ImGui::Dummy(ImVec2(0, 4.0f * EditorWidgets::displayScale));
 
+		float lineHeight  = ImGui::GetFrameHeight();
+		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(0, columnWidth);
+		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
 		ImGui::Text("Depth");
 		ImGui::NextColumn();
 
 		ImGuiIO io		   = ImGui::GetIO();
 		ImFont* boldFont   = io.Fonts->Fonts[0];
-		float	lineHeight = ImGui::GetFrameHeight();
 		ImVec2	buttonSize = {lineHeight, lineHeight};
 
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
@@ -146,14 +149,113 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 	ImGui::Dummy(componentSpacer);
 
-	drawComponent<Component::Collider>("Collider", entity, [this](auto& component) {
+	drawComponent<Component::Collider>("Collider", entity, [this, &entity](auto& component) {
+		ImGui::Checkbox("Show Debug", &m_showCollider);
 
+		bool  changed	  = false;
+		float columnWidth = 85.0f;
+		float valueWidth  = 50.0f;
+
+		float lineHeight  = ImGui::GetFrameHeight();
+		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+
+		changed |= ImGui::Checkbox("Trigger", &component.isTrigger);
+
+		ImGui::PushID(("##" + entity.getUUID().toString() + "Shape").c_str());
+
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, columnWidth);
+		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
+		ImGui::Text("Shape");
+		ImGui::NextColumn();
+
+		ImGui::PushItemWidth(columnWidth);
+		static const char* items[] = {"AABB", "Circle"};
+		int				   value   = (int)component.shape;
+		if (ImGui::Combo("##Shape", &value, items, IM_ARRAYSIZE(items))) {
+			component.shape = (ColliderShape)value;
+			changed			= true;
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::Columns(1);
+
+		ImGui::PopID();
+		ImGui::PushID(("##" + entity.getUUID().toString() + "Size").c_str());
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Offset", component.offset, 0, 0, columnWidth, valueWidth, false);
+		if (component.shape == ColliderShape::AABB) {
+			changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size", component.size.AABB, 0, 0, columnWidth, valueWidth);
+		} else {
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, columnWidth);
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
+			ImGui::Text("Radius");
+			ImGui::NextColumn();
+			ImGuiIO io		   = ImGui::GetIO();
+			ImFont* boldFont   = io.Fonts->Fonts[0];
+			ImVec2	buttonSize = {lineHeight, lineHeight};
+
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
+			ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::purple);
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::purpleLight);
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::purpleActive);
+			ImGui::PushFont(boldFont);
+			if (ImGui::Button("R", buttonSize)) component.size.radius = 1.0f;
+			ImGui::PopFont();
+			ImGui::PopStyleColor(3);
+			ImGui::SameLine();
+			ImGui::PushItemWidth(valueWidth);
+			ImGui::DragFloat("##Z", &component.size.radius, 0.1f, 0.0f, 0.0f, "%.2f");
+			ImGui::PopItemWidth();
+			ImGui::PopStyleVar();
+			ImGui::Columns(1);
+		}
+
+		ImGui::PopID();
+
+		if (changed) {
+			ProjectManager::saveScene(m_scene);
+		}
 	});
 
 	ImGui::Dummy(componentSpacer);
 
-	drawComponent<Component::RigidBody>("RigidBody", entity, [this](auto& component) {
+	drawComponent<Component::RigidBody>("RigidBody", entity, [this, &entity](auto& component) {
+		bool  changed	  = false;
+		float columnWidth = 85.0f;
+		float valueWidth  = 50.0f;
 
+		float lineHeight  = ImGui::GetFrameHeight();
+		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+
+		changed |= ImGui::Checkbox("Static", &component.isStatic);
+
+		ImGui::PushID(("##" + entity.getUUID().toString() + "Shape").c_str());
+
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, 120);
+		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
+		ImGui::Text("Response Type");
+		ImGui::NextColumn();
+
+		ImGui::PushItemWidth(columnWidth);
+		static const char* items[] = {"None", "Discrete"};
+		int				   value   = (int)component.responseType;
+		if (ImGui::Combo("##ResponseType", &value, items, IM_ARRAYSIZE(items))) {
+			component.responseType = (CollisionResponse)value;
+			changed				   = true;
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::Columns(1);
+
+		ImGui::PopID();
+
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Velocity", component.velocity, 0, 0, columnWidth, valueWidth);
+
+		if(changed) {
+			ProjectManager::saveScene(m_scene);
+		}
 	});
 
 	ImGui::Dummy(componentSpacer);

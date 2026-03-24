@@ -3,12 +3,15 @@
 
 #include "ProjectPanel.h"
 #include "SceneHierarchyPanel.h"
+#include "CollisionDebug.h"
 
 #include "Atlas/Core/Application.h"
 #include "Atlas/Core/Platform.h"
 #include "Atlas/Core/MenuBar.h"
 #include "Atlas/Core/Time.h"
 #include "Atlas/Project/Project.h"
+
+#include "Atlas/ECS/Components/Collision.h"
 
 #include "Atlas/ImGui/EditorWidgets.h"
 
@@ -119,6 +122,16 @@ void EditorLayer::onUpdate(DeltaTime dt) {
 		Renderer::beginScene(m_cameraController.getCamera());
 		if (m_activeScene != nullptr)
 			m_activeScene->onUpdate(dt);
+
+		if(m_showAllColliders) {
+			CollisionDebug::drawColliders(m_activeScene);
+		}
+		Entity& selected = m_hierarchyPanel->getSelectionContext();
+		if(selected && selected.hasComponent<Component::Collider>()) {
+			if(m_hierarchyPanel->showSelectedCollider()) {
+				CollisionDebug::drawCollider(selected);
+			}
+		}
 		Renderer::endScene();
 	}
 }

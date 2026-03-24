@@ -17,7 +17,10 @@ class SceneHierarchyPanel {
 	void addEmptyEntity();
 	void addComponent() { m_openComponentPicker = true; }
 
+	Entity&		  getSelectionContext() { return m_selectionContext; }
 	const Entity& getSelectionContext() const { return m_selectionContext; }
+
+	bool showSelectedCollider() const { return m_propertiesPanel.showSelectedCollider(); }
 
 	void setOnNewScript(PropertiesPanel::NewScriptCallback callback) { m_propertiesPanel.setOnNewScriptCallback(callback); }
 

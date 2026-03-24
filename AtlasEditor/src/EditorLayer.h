@@ -66,6 +66,8 @@ class EditorLayer : public Layer {
 	bool m_pendingScriptAssignment;
 	Entity m_pendingScriptEntity;
 	std::string m_pendingScriptName;
+
+	bool m_showAllColliders = false;
 };
 
 }  // namespace Atlas

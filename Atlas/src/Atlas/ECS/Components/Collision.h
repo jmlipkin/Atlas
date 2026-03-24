@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
+
+#include <string>
 #include <cstdint>
 
 namespace Atlas {
@@ -28,6 +30,8 @@ struct Collider {
 	ColliderSize  size;
 	bool		  isTrigger;
 	uint32_t	  layerMask;
+
+	std::string shapeString() const { return (shape == ColliderShape::AABB) ? "AABB" : "Circle"; }
 };
 
 struct RigidBody {

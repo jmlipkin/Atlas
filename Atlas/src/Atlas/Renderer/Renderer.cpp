@@ -305,7 +305,7 @@ void Renderer::drawCircle(glm::vec2 centerPosition, float radius, float depth, g
 	float	  angle = 0;
 	for (int i = 0; i < segments; i++) {
 		angle += 2 * M_PI / (float)segments;
-		glm::vec2 point{radius * (cos(angle) + centerPosition.x), radius * (sin(angle) + centerPosition.y)};
+		glm::vec2 point{centerPosition.x + radius * cos(angle), centerPosition.y + radius * sin(angle)};
 		drawLine(point, previous, depth, color, thickness);
 		previous = point;
 	}
