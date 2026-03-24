@@ -8,7 +8,7 @@
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
-#include "Atlas/ECS/Components/Collision.h"
+#include "Atlas/ECS/Components/Collider.h"
 #include "Atlas/ECS/Systems/Systems.h"
 
 #include <imgui/imgui.h>

@@ -8,7 +8,7 @@
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
-#include "Atlas/ECS/Components/Collision.h"
+#include "Atlas/ECS/Components/Collider.h"
 
 #include <json/include/nlohmann/json.hpp>
 
@@ -361,7 +361,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 				collider.size.AABB.x = c["Size"][0];
 				collider.size.AABB.y = c["Size"][1];
 			} else {
-				collider.size.radius = c["Size"];
+				collider.size.radius = c["Size"][0];
 			}
 			collider.isTrigger = c["Trigger"];
 			collider.layerMask = c["Layer Mask"];

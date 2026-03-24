@@ -21,7 +21,12 @@ class RuntimeLayer : public Layer {
 		m_cameraController.setZoomLevel(25.0f);
 	}
 
-	virtual void setScene(std::shared_ptr<Scene> scene) { m_activeScene = scene; }
+	virtual void setScene(std::shared_ptr<Scene> scene) {
+		m_activeScene = scene;
+		scene->setEventCallback([](Event& e) {
+			Application::get().onEvent(e);
+		});
+	}
 
 	virtual void onAttach() override {
 		std::shared_ptr<Scene> scene;
@@ -33,7 +38,8 @@ class RuntimeLayer : public Layer {
 
 		if (scene) {
 			m_activeScene = scene;
-			ProjectManager::setActiveScene(scene);
+			if (!m_previewLayer)
+				ProjectManager::setActiveScene(scene);
 		} else {
 			AT_CORE_ERROR("RuntimeLayer: Failed to load bundled project");
 		}
@@ -48,7 +54,7 @@ class RuntimeLayer : public Layer {
 	virtual void onDetach() override { m_activeScene = nullptr; }
 
 	virtual void onEvent(Event& event) override {
-		m_activeScene->dispatchEvent(event);
+		m_activeScene->onEvent(event);
 	}
 
   private:

@@ -14,6 +14,8 @@ using json = nlohmann::ordered_json;
 
 class Scene {
   public:
+	using EventCallbackFn = std::function<void(Event&)>;
+
 	Scene(const std::string& name);
 	virtual ~Scene() = default;
 
@@ -23,9 +25,12 @@ class Scene {
 	Entity	  createEntity(const std::string& name, UUID id = UUID{});
 	Registry& getRegistry() { return m_registry; }
 
-	// Renamed so that derived classes can call onEvent()
-	void dispatchEvent(Event& event);
+	void onEvent(Event& event);
 	void onUpdate(DeltaTime dt);
+
+	void setEventCallback(const EventCallbackFn& callback) { m_eventCallback = callback; }
+
+	void dispatchEvent(Event& event) { m_eventCallback(event); }
 
 	std::string& getName() { return m_name; }
 	std::string& getPath() { return m_filepath; }
@@ -34,7 +39,7 @@ class Scene {
 	virtual void onPreRender(DeltaTime dt) {}
 	virtual void onRender(DeltaTime dt) {}
 	virtual void onPostRender(DeltaTime dt) {}
-	virtual void onEvent(Event& event) {}
+	virtual void onEventCustom(Event& event) {}
 
   protected:
 	Registry m_registry;
@@ -42,6 +47,8 @@ class Scene {
 
 	std::string m_name;
 	std::string m_filepath;
+
+	EventCallbackFn m_eventCallback;
 };
 
 }  // namespace Atlas

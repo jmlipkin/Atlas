@@ -10,7 +10,7 @@
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
-#include "Atlas/ECS/Components/Collision.h"
+#include "Atlas/ECS/Components/Collider.h"
 
 namespace Atlas {
 

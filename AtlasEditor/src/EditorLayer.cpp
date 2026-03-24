@@ -11,7 +11,7 @@
 #include "Atlas/Core/Time.h"
 #include "Atlas/Project/Project.h"
 
-#include "Atlas/ECS/Components/Collision.h"
+#include "Atlas/ECS/Components/Collider.h"
 
 #include "Atlas/ImGui/EditorWidgets.h"
 
@@ -89,8 +89,8 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 	m_hierarchyPanel = new SceneHierarchyPanel(nullptr);
 	m_hierarchyPanel->setOnNewScript([this](Entity entity, const std::string& name) {
 		m_pendingScriptAssignment = true;
-		m_pendingScriptEntity = entity;
-		m_pendingScriptName = name;
+		m_pendingScriptEntity	  = entity;
+		m_pendingScriptName		  = name;
 		buildScripts();
 	});
 
@@ -106,6 +106,9 @@ void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
 			m_config.last_open_scene = scene->getPath();
 		}
 	}
+	scene->setEventCallback([this](Event& e) {
+		Application::get().onEvent(e);
+	});
 }
 
 void EditorLayer::onUpdate(DeltaTime dt) {
@@ -123,12 +126,12 @@ void EditorLayer::onUpdate(DeltaTime dt) {
 		if (m_activeScene != nullptr)
 			m_activeScene->onUpdate(dt);
 
-		if(m_showAllColliders) {
+		if (m_showAllColliders) {
 			CollisionDebug::drawColliders(m_activeScene);
 		}
 		Entity& selected = m_hierarchyPanel->getSelectionContext();
-		if(selected && selected.hasComponent<Component::Collider>()) {
-			if(m_hierarchyPanel->showSelectedCollider()) {
+		if (selected && selected.hasComponent<Component::Collider>()) {
+			if (m_hierarchyPanel->showSelectedCollider()) {
 				CollisionDebug::drawCollider(selected);
 			}
 		}
@@ -138,7 +141,7 @@ void EditorLayer::onUpdate(DeltaTime dt) {
 
 void EditorLayer::onEvent(Event& event) {
 	m_cameraController.onEvent(event);
-	if (m_activeScene != nullptr) m_activeScene->dispatchEvent(event);
+	if (m_activeScene != nullptr) m_activeScene->onEvent(event);
 }
 
 void EditorLayer::onImGuiRender() {
@@ -304,8 +307,14 @@ void EditorLayer::drawFooter() {
 	float buttonPadding = (m_footerHeight - buttonHeight) * 0.5f;
 	ImGui::SameLine();
 	ImGui::SetCursorPosY(buttonPadding);
-
+	
 	ImGui::BeginDisabled(!ProjectManager::getActiveProject());
+	
+	if(ImGui::Button("Toggle Collider View")) {
+		m_showAllColliders = !m_showAllColliders;
+	}
+	ImGui::SameLine();
+	ImGui::SetCursorPosY(buttonPadding);
 	if (ImGui::Button("Build")) {
 		buildScripts();
 	}

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Atlas.h>
-#include "Atlas/ECS/Components/Components.h"
 
 namespace Atlas {
 

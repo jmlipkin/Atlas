@@ -1,6 +1,5 @@
 #include "atpch.h"
 #include "Scene.h"
-#include <memory>
 
 #include "Atlas/Core/Time.h"
 #include "Atlas/Renderer/Renderer.h"
@@ -10,6 +9,7 @@
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
 #include "Atlas/ECS/Systems/Systems.h"
+#include "Atlas/ECS/Systems/Collision.h"
 
 namespace Atlas {
 
@@ -37,6 +37,8 @@ void Scene::onUpdate(DeltaTime dt) {
 			script.instance->onUpdate(dt);
 		}
 	}
+
+	System::Collision::update(dt, *this);
 
 	System::Animation::updateFrames(m_registry, dt);
 	{
@@ -87,8 +89,15 @@ void Scene::onUpdate(DeltaTime dt) {
 	onPostRender(dt);
 }
 
-void Scene::dispatchEvent(Event& event) {
-	onEvent(event);
+void Scene::onEvent(Event& event) {
+	onEventCustom(event);
+
+	auto view = m_registry.view<Component::Script>();
+	for (auto entity : view) {
+		auto& script = view.get<Component::Script>(entity);
+		if (script.instance)
+			script.instance->onEvent(event);
+	}
 }
 
 }  // namespace Atlas

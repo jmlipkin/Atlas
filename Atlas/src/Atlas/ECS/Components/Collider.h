@@ -29,7 +29,7 @@ struct Collider {
 	glm::vec2	  offset;
 	ColliderSize  size;
 	bool		  isTrigger;
-	uint32_t	  layerMask;
+	uint32_t	  layerMask = 0xFFFFFFFF;
 
 	std::string shapeString() const { return (shape == ColliderShape::AABB) ? "AABB" : "Circle"; }
 };
