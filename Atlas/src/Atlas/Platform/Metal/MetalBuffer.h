@@ -2,7 +2,7 @@
 
 #include "Atlas/Renderer/Buffer.h"
 
-#include "MetalContext.h"
+#include <metal-cpp/Metal.hpp>
 
 namespace Atlas {
 
@@ -25,6 +25,7 @@ namespace Atlas {
         MetalIndexBuffer(uint32_t* indices, uint32_t count);
         virtual ~MetalIndexBuffer() = default;
 
+        virtual void setData(const void* data, uint32_t count) override;
         virtual uint32_t getCount() const override { return m_indexCount; }
 
         virtual MTL::Buffer* getBuffer() const { return m_buffer; }

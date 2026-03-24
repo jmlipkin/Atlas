@@ -152,7 +152,8 @@ class IndexBuffer {
    public:
     virtual ~IndexBuffer() = default;
 
+    virtual void setData(const void* data, uint32_t count) = 0;
     virtual uint32_t getCount() const = 0;
-    static std::shared_ptr<IndexBuffer> create(uint32_t* indices, uint32_t size);
+    static std::shared_ptr<IndexBuffer> create(uint32_t* indices, uint32_t count);
 };
 }  // namespace Atlas

@@ -78,29 +78,19 @@ if(APPLE)
 
     add_custom_target(shader_library
         COMMAND xcrun -sdk macosx metal
-            -o ${CMAKE_CURRENT_BINARY_DIR}/triangle.ir
-            -c ${ATLAS_METAL_SRC}/triangle.metal
-        COMMAND xcrun -sdk macosx metal
-            -o ${CMAKE_CURRENT_BINARY_DIR}/quad.ir
-            -c ${ATLAS_METAL_SRC}/quad.metal
+            -o ${CMAKE_CURRENT_BINARY_DIR}/polygon.ir
+            -c ${ATLAS_METAL_SRC}/polygon.metal
         COMMAND xcrun -sdk macosx metal
             -o ${CMAKE_CURRENT_BINARY_DIR}/text.ir
             -c ${ATLAS_METAL_SRC}/text.metal
-        COMMAND xcrun -sdk macosx metal
-            -o ${CMAKE_CURRENT_BINARY_DIR}/point.ir
-            -c ${ATLAS_METAL_SRC}/point.metal
 
         COMMAND xcrun -sdk macosx metallib
             -o "${ATLAS_METALLIB_OUTPUT}"
-            "${CMAKE_CURRENT_BINARY_DIR}/triangle.ir"
-            "${CMAKE_CURRENT_BINARY_DIR}/quad.ir"
+            "${CMAKE_CURRENT_BINARY_DIR}/polygon.ir"
             "${CMAKE_CURRENT_BINARY_DIR}/text.ir"
-            "${CMAKE_CURRENT_BINARY_DIR}/point.ir"
         SOURCES
-            "${ATLAS_METAL_SRC}/triangle.metal"
-            "${ATLAS_METAL_SRC}/quad.metal"
+            "${ATLAS_METAL_SRC}/polygon.metal"
             "${ATLAS_METAL_SRC}/text.metal"
-            "${ATLAS_METAL_SRC}/point.metal"
     )
     add_dependencies(${TARGET_NAME} shader_library)
 

@@ -24,6 +24,7 @@ namespace Atlas {
         OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
         virtual ~OpenGLIndexBuffer();
 
+        virtual void setData(const void *data, uint32_t count) override {}
         virtual uint32_t getCount() const override { return m_indexCount; }
 
     private:

@@ -23,7 +23,7 @@ struct TextureArray {
     array<texture2d<float, access::sample>, 32> textures [[texture(0)]];
 };
 
-vertex VertexOut quadVertexShader(VertexIn in [[stage_in]], constant Uniforms* u [[buffer(1)]]) {
+vertex VertexOut polygonVertexShader(VertexIn in [[stage_in]], constant Uniforms* u [[buffer(1)]]) {
     VertexOut out;
     out.position = u->u_viewProjection * float4(in.a_position, 1.0);
     out.color = in.a_color;
@@ -32,7 +32,7 @@ vertex VertexOut quadVertexShader(VertexIn in [[stage_in]], constant Uniforms* u
     return out;
 }
 
-fragment float4 quadFragmentShader(VertexOut in [[stage_in]], TextureArray textures, constant Uniforms* u [[buffer(1)]]) {
+fragment float4 polygonFragmentShader(VertexOut in [[stage_in]], TextureArray textures, constant Uniforms* u [[buffer(1)]]) {
     constexpr sampler textureSampler (mag_filter::nearest, min_filter::linear);
     float4 colorSample = textures.textures[in.texIndex].sample(textureSampler, in.texCoord);
 
