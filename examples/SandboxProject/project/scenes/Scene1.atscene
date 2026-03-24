@@ -31,17 +31,6 @@
           0
         ]
       },
-      "Script": {
-        "Name": "",
-        "Priority": 1,
-        "Properties": [
-          {
-            "Name": "Speed",
-            "Type": 4,
-            "Value": 10.0
-          }
-        ]
-      },
       "Collider": {
         "Shape": 1,
         "Offset": [

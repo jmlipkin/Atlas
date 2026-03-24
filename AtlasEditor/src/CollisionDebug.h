@@ -41,6 +41,10 @@ class CollisionDebug {
 					{t.position.x + c.offset.x + (t.size.x * 0.5f),
 					 t.position.y + c.offset.y + (t.size.y * 0.5f)},
 					c.size.radius, t.position.z + 1.0f, color, 1.0f / 8.0f);
+				if (System::Collision::currentlyColliding.contains((entt::entity(entity)))) {
+					Renderer::drawFilledCircle({t.position.x + c.offset.x + (t.size.x * 0.5f),
+					 t.position.y + c.offset.y + (t.size.y * 0.5f), t.position.z + 1.0f}, c.size.radius, {color.r, color.g, color.b, 0.4f});
+				}
 				break;
 			default:
 				AT_CORE_ERROR("Unknown collider shape");
