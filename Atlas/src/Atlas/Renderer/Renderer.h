@@ -30,6 +30,8 @@ class Renderer {
 	static void drawRectangle(glm::vec2 position, glm::vec2 size, float depth, glm::vec4 color, float thickness);
 
 	static void drawCircle(glm::vec2 centerPosition, float radius, float depth, glm::vec4 color, float thickness = 1.0f, int segments = 128);
+	static void drawFilledCircle(const glm::vec2& center, float radius, const glm::vec4& color = glm::vec4(1.0f), int segments = 128);
+	static void drawFilledCircle(const glm::vec3& center, float radius, const glm::vec4& color = glm::vec4(1.0f), int segments = 128);
 
 	static void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 	static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);

@@ -140,16 +140,16 @@ void Renderer::init(GraphicsContext& context) {
 	s_data.vertexBuffer		= VertexBuffer::create(s_data.maxVertexCount * sizeof(Vertex));
 
 	s_data.indexBufferBase = new uint32_t[s_data.maxIndexCount];
-	s_data.indexBuffer = IndexBuffer::create(s_data.indexBufferBase, s_data.maxIndexCount);
+	s_data.indexBuffer	   = IndexBuffer::create(s_data.indexBufferBase, s_data.maxIndexCount);
 
 	// Quad pipeline
 	PipelineSpecification polygonPipelineSpecs;
-	polygonPipelineSpecs.name	 = "Polygon Pipeline";
+	polygonPipelineSpecs.name	= "Polygon Pipeline";
 	polygonPipelineSpecs.shader = AssetManager::get<Shader>("Polygon Shader");
 	polygonPipelineSpecs.layout = BufferLayout({{"a_position", ShaderDataType::Float3},
-											 {"a_color", ShaderDataType::Float4},
-											 {"a_texIndex", ShaderDataType::Uint},
-											 {"a_texCoord", ShaderDataType::Float2}});
+												{"a_color", ShaderDataType::Float4},
+												{"a_texIndex", ShaderDataType::Uint},
+												{"a_texCoord", ShaderDataType::Float2}});
 
 	s_data.polygonUniforms = UniformBuffer::create(
 		polygonPipelineSpecs, {{"u_viewProjection", 0, glm::mat4(1.0f)}},
@@ -199,7 +199,7 @@ void Renderer::beginScene(const OrthographicCamera& camera) {
 	s_data.polygonUniforms->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
 	s_data.textUniforms->setMat4("u_viewProjection", camera.getViewProjectionMatrix());
 
-	s_data.vertexPtr = s_data.vertexBufferBase;
+	s_data.vertexPtr	 = s_data.vertexBufferBase;
 	s_data.batchStartPtr = s_data.vertexBufferBase;
 
 	s_data.indexPtr = s_data.indexBufferBase;
@@ -324,9 +324,60 @@ void Renderer::drawCircle(glm::vec2 centerPosition, float radius, float depth, g
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Solid-color Quads
+// Solid-color Polygons
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+void Renderer::drawFilledCircle(const glm::vec2& position, float radius, const glm::vec4& color, int segments) {
+	drawFilledCircle(glm::vec3{position, 0}, radius, color, segments);
+}
+
+void Renderer::drawFilledCircle(const glm::vec3& position, float radius, const glm::vec4& color, int segments) {
+	switchPipeline(s_data.polygonPipeline, s_data.polygonUniforms);
+
+	glm::vec2 texCoords[4] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+	uint32_t  texIndex	   = 0;
+	glm::mat4 transform	   = glm::translate(glm::mat4(1.0f), position);
+
+	if (segments < 3) return;
+
+	uint32_t baseVertex = s_data.vertexCount;
+
+	// center vertex
+	s_data.vertexPtr->position = position;
+	s_data.vertexPtr->color	   = color;
+	s_data.vertexPtr->texIndex = 0;
+	s_data.vertexPtr->texCoord = {0, 0};
+	s_data.vertexPtr++;
+
+	// outer ring
+	for (uint32_t i = 0; i <= segments; i++) {
+		float angle = (float)i / (float)segments * 2.0f * M_PI;
+
+		glm::vec3 p = {
+			position.x + cos(angle) * radius,
+			position.y + sin(angle) * radius,
+			position.z};
+
+		s_data.vertexPtr->position = p;
+		s_data.vertexPtr->color	   = color;
+		s_data.vertexPtr->texIndex = 0;
+		s_data.vertexPtr->texCoord = {0, 0};
+		s_data.vertexPtr++;
+	}
+
+	// indices (triangle fan)
+	for (uint32_t i = 0; i < segments; i++) {
+		s_data.indexPtr[0] = baseVertex;
+		s_data.indexPtr[1] = baseVertex + i + 1;
+		s_data.indexPtr[2] = baseVertex + i + 2;
+
+		s_data.indexPtr += 3;
+		s_data.indexCount += 3;
+	}
+
+	s_data.vertexCount += (segments + 2);
+}
 
 void Renderer::drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color) {
 	drawQuad(glm::vec3(position, 0.0f), size, color);
