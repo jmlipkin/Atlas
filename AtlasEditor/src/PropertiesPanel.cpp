@@ -328,6 +328,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 						component.instance->setEntity(entity);
 						component.instance->onCreate();
 						component.instance->exposeProperties();
+						component.name = name;
 						ProjectManager::saveScene(m_scene);
 					}
 				}

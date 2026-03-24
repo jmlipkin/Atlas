@@ -32,7 +32,7 @@ class Entity {
 	template <typename T>
 	bool hasComponent();
 
-	// Defined in Script.h
+	// Defined in Behavior.h
 	template <typename T>
 	void addScript();
 
