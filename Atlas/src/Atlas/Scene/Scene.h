@@ -30,7 +30,10 @@ class Scene {
 
 	void setEventCallback(const EventCallbackFn& callback) { m_eventCallback = callback; }
 
-	void dispatchEvent(Event& event) { m_eventCallback(event); }
+	void dispatchEvent(Event& event) {
+		AT_CORE_ASSERT(m_eventCallback, "Scene event callback is not set!");
+		m_eventCallback(event);
+	}
 
 	std::string& getName() { return m_name; }
 	std::string& getPath() { return m_filepath; }

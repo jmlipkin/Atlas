@@ -16,6 +16,14 @@ class CollisionEvent : public UserEvent {
 
 	CollisionEvent(Entity entityA, Entity entityB, glm::vec2 collisionNormal, float depth, bool isTrigger);
 
+	Entity& getEntityA() { return m_entityA; }
+	Entity& getEntityB() { return m_entityB; }
+
+	glm::vec2 getNormal() { return m_normal; }
+	float	  getDepth() { return m_depth; }
+
+	bool isTrigger() { return m_isTrigger; }
+
 	EVENT_CLASS_TYPE(COLLISION);
 
   private:

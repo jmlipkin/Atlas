@@ -10,6 +10,7 @@ class ProjectPanel {
   public:
 	using SceneSelectedCallback = std::function<void(std::shared_ptr<Scene>)>;
 
+	void initializeContext(std::shared_ptr<Scene> scene) { m_selectionContext = scene; }
 	void setOnSceneSelected(SceneSelectedCallback callback) { m_onSceneSelected = callback; }
 
 	void onImGuiRender();

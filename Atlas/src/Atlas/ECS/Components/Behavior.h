@@ -42,6 +42,7 @@ class Behavior {
 	virtual std::string getTypeName() const { return "UnknownBehavior"; }
 
 	void setEntity(Entity entity) { m_entity = entity; }
+	Entity getEntity() { return m_entity; }
 
 	virtual void exposeProperties() {}
 	const auto&	 getProperties() const { return m_properties; }

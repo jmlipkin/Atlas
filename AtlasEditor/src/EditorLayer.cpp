@@ -25,6 +25,7 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 
 	m_menuBar->setOnProjectChanged([this](std::string filepath) {
 		m_config.last_open_project = filepath;
+		m_projectPanel->initializeContext(m_activeScene);
 	});
 
 	m_menuBar->setOnSceneSaved([this]() {
@@ -249,6 +250,7 @@ void EditorLayer::loadConfig() {
 	if (root.contains("Last Opened Project")) {
 		auto scene = ProjectManager::loadProject(root["Last Opened Project"]);
 		setScene(scene);
+		m_projectPanel->initializeContext(scene);
 	} else if (root.contains("Last Opened Scene") && !root["Last Opened Scene"].get<std::string>().empty()) {
 		auto scene = ProjectManager::loadScene(root["Last Opened Scene"].get<std::string>());
 		setScene(scene);

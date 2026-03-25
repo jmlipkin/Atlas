@@ -37,9 +37,10 @@ class RuntimeLayer : public Layer {
 		}
 
 		if (scene) {
-			m_activeScene = scene;
-			if (!m_previewLayer)
+			setScene(scene);
+			if (!m_previewLayer) {
 				ProjectManager::setActiveScene(scene);
+			}
 		} else {
 			AT_CORE_ERROR("RuntimeLayer: Failed to load bundled project");
 		}

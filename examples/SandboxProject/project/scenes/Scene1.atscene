@@ -6,8 +6,8 @@
       "Tag": "Player",
       "Transform": {
         "Position": [
-          16.90999984741211,
-          14.549232482910156,
+          10.861034393310547,
+          16.878437042236328,
           2.0
         ],
         "Rotation": 0.0,
@@ -31,6 +31,17 @@
           0
         ]
       },
+      "Script": {
+        "Name": "Player",
+        "Priority": 1,
+        "Properties": [
+          {
+            "Name": "Speed",
+            "Type": 4,
+            "Value": 8.0
+          }
+        ]
+      },
       "Collider": {
         "Shape": 1,
         "Offset": [
@@ -44,7 +55,7 @@
         "Layer Mask": 4294967295
       },
       "Animations": {
-        "Active Clip": "MoveRight",
+        "Active Clip": "Dying",
         "Clips": [
           {
             "Name": "MoveRight",
