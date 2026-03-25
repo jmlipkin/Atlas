@@ -56,11 +56,46 @@ void Collision::update(DeltaTime dt, Scene& scene) {
 				CollisionEvent event(entityA, entityB, collision->normal, collision->depth, cA.isTrigger || cB.isTrigger);
 				scene.dispatchEvent(event);
 
+				if (!event.isTrigger()) {
+					resolveCollision(entityA, entityB, collision.value());
+				}
+
 				currentlyColliding.insert(entityA);
 				currentlyColliding.insert(entityB);
 			}
 		}
 	}
+}
+
+void Collision::resolveCollision(Entity& entityA, Entity& entityB, CollisionManifold manifold) {
+	if (!entityA.hasComponent<Component::RigidBody>() || !entityB.hasComponent<Component::RigidBody>()) {
+		return;
+	}
+
+	Component::RigidBody& rbA = entityA.getComponent<Component::RigidBody>();
+	Component::RigidBody& rbB = entityB.getComponent<Component::RigidBody>();
+
+	if (rbA.responseType == CollisionResponse::NONE && rbB.responseType == CollisionResponse::NONE) {
+		return;
+	}
+
+	Component::Collider& cA = entityA.getComponent<Component::Collider>();
+	Component::Collider& cB = entityB.getComponent<Component::Collider>();
+
+	glm::vec3& posA = entityA.getComponent<Component::Transform>().position;
+	glm::vec3& posB = entityB.getComponent<Component::Transform>().position;
+
+	int		  numStatics = 2 - ((int)rbA.isStatic + (int)rbB.isStatic);
+	glm::vec2 reflection = manifold.normal * manifold.depth;
+
+	glm::vec2 aChange = (rbA.isStatic) ? glm::vec2(0) : reflection / (float)numStatics;
+	glm::vec2 bChange = (rbB.isStatic) ? glm::vec2(0) : reflection / (float)numStatics;
+
+	rbA.velocity -= glm::dot(rbA.velocity, manifold.normal) * manifold.normal;
+	rbB.velocity -= glm::dot(rbB.velocity, manifold.normal) * manifold.normal;
+
+	posA = {aChange.x + posA.x, aChange.y + posA.y, posA.z};
+	posB = {-bChange.x + posB.x, -bChange.y + posB.y, posB.z};
 }
 
 std::optional<CollisionManifold> Collision::compareAABBtoAABB(Component::Collider& cA, Component::Collider& cB, Component::Transform& tA, Component::Transform& tB) {
@@ -125,11 +160,6 @@ std::optional<CollisionManifold> Collision::compareCircletoCircle(Component::Col
 	glm::vec2 diff	 = centerA - centerB;
 	float	  distSq = glm::dot(diff, diff);
 	float	  radSum = cA.size.radius + cB.size.radius;
-
-	// AT_CORE_DEBUG("centerA={},{} centerB={},{} distSq={} radSum={}",
-	// 			  centerA.x, centerA.y, centerB.x, centerB.y, distSq, radSum);
-	// AT_CORE_DEBUG("posB={},{} sizeB={},{}",
-	// 			  tB.position.x, tB.position.y, tB.size.x, tB.size.y);
 
 	if (distSq >= radSum * radSum) {
 		return std::nullopt;

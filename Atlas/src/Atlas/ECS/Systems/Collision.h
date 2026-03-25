@@ -48,6 +48,7 @@ class Collision {
 	static void update(DeltaTime dt, Scene& scene);
 
   private:
+	static void resolveCollision(Entity& entityA, Entity& entityB, CollisionManifold manifold);
 	static std::optional<CollisionManifold> compareAABBtoAABB(Component::Collider& cA, Component::Collider& cB, Component::Transform& tA, Component::Transform& tB);
 	static std::optional<CollisionManifold> compareAABBtoCircle(Component::Collider& cAABB, Component::Transform& tAABB, Component::Collider& cCircle, Component::Transform& tCircle);
 	static std::optional<CollisionManifold> compareCircletoCircle(Component::Collider& cA, Component::Collider& cB, Component::Transform& tA, Component::Transform& tB);

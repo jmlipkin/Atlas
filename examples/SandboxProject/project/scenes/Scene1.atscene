@@ -6,8 +6,8 @@
       "Tag": "Player",
       "Transform": {
         "Position": [
-          10.861034393310547,
-          16.878437042236328,
+          15.986520767211914,
+          7.702254772186279,
           2.0
         ],
         "Rotation": 0.0,
@@ -53,6 +53,14 @@
         ],
         "Trigger": false,
         "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": false,
+        "Response Type": 1
       },
       "Animations": {
         "Active Clip": "Dying",
@@ -157,7 +165,7 @@
       "Tag": "Board",
       "Transform": {
         "Position": [
-          -14.0,
+          -16.553993225097656,
           -15.5,
           1.0
         ],
@@ -194,6 +202,14 @@
         ],
         "Trigger": false,
         "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
       },
       "Animations": {
         "Clips": []
