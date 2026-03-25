@@ -42,6 +42,11 @@ struct Sprite {
 		SubTexture sub(texturePath, ProjectManager::getActiveProject()->getData().tileSize, specs.index, specs.sizeInTiles);
 		specs.coordinates = sub.getSpecs().coordinates;
 	}
+	void recalculateCoordinates(int tileSize) {
+		if (texturePath.empty()) return;
+		SubTexture sub(texturePath, tileSize, specs.index, specs.sizeInTiles);
+		specs.coordinates = sub.getSpecs().coordinates;
+	}
 };
 
 }  // namespace Atlas::Component

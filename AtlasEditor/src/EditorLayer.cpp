@@ -26,6 +26,7 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 	m_menuBar->setOnProjectChanged([this](std::string filepath) {
 		m_config.last_open_project = filepath;
 		m_projectPanel->initializeContext(m_activeScene);
+		m_projectSettings.setProject();
 	});
 
 	m_menuBar->setOnSceneSaved([this]() {
@@ -34,6 +35,7 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 
 	m_menuBar->setOnSceneLoaded([this](std::shared_ptr<Scene> scene) {
 		setScene(scene);
+		m_projectSettings.setActiveScene(scene);
 	});
 
 	m_menuBar->setOnNewScene([this](std::shared_ptr<Scene> scene) {
@@ -43,6 +45,7 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 	m_menuBar->setOnProjectClosed([this]() {
 		setScene(std::make_shared<Scene>("New Scene"));
 		m_config.last_open_project = "";
+		m_projectSettings.setProject();
 	});
 
 	m_menuBar->setOnNewEntity([this]() {
@@ -112,6 +115,7 @@ void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
 	scene->setEventCallback([this](Event& e) {
 		Application::get().onEvent(e);
 	});
+	m_projectSettings.setActiveScene(scene);
 }
 
 void EditorLayer::onUpdate(DeltaTime dt) {
@@ -211,6 +215,9 @@ void EditorLayer::onImGuiRender() {
 		drawFooter();
 		return;
 	}
+
+	if (m_settingsActive)
+		m_projectSettings.onImGuiRender(m_settingsActive);
 
 	// Normal editor UI
 	m_logger.onImGuiRender();
@@ -314,6 +321,12 @@ void EditorLayer::drawFooter() {
 
 	ImGui::BeginDisabled(!ProjectManager::getActiveProject());
 
+	if (ImGui::Button("Settings")) {
+		m_projectSettings.setProject();
+		m_settingsActive = true;
+	}
+	ImGui::SameLine();
+	ImGui::SetCursorPosY(buttonPadding);
 	if (ImGui::Button("Toggle Collider View")) {
 		m_showAllColliders = !m_showAllColliders;
 	}

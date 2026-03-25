@@ -9,6 +9,7 @@
 #include "Atlas/Scene/Scene.h"
 
 #include "ProjectPanel.h"
+#include "ProjectSettingsPanel.h"
 #include "SceneHierarchyPanel.h"
 #include "LoggingPanel.h"
 
@@ -68,6 +69,9 @@ class EditorLayer : public Layer {
 	std::string m_pendingScriptName;
 
 	bool m_showAllColliders = false;
+
+	ProjectSettingsPanel m_projectSettings;
+	bool m_settingsActive = false;
 };
 
 }  // namespace Atlas

@@ -100,4 +100,13 @@ void Scene::onEvent(Event& event) {
 	}
 }
 
+void Scene::onTileSizeChanged() {
+	auto spriteView = m_registry.view<Component::Sprite>();
+	for (auto entity : spriteView) {
+		auto& sprite = m_registry.get<Component::Sprite>(entity);
+		if (sprite.texturePath.empty()) continue;
+		sprite.recalculateCoordinates(m_tileSize);
+	}
+}
+
 }  // namespace Atlas

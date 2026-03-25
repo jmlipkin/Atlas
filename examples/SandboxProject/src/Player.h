@@ -48,7 +48,7 @@ class Player : public Atlas::Behavior {
 
   private:
 	bool onCollision(CollisionEvent& event) {
-		if (!m_dyingPlayed && (m_entity == event.getEntityA() || m_entity == event.getEntityB())) {
+		if ((m_entity == event.getEntityA() || m_entity == event.getEntityB())) {
 
             auto& clips = getComponent<Component::Animations>().clips;
 			AnimationClip& dying = clips["Dying"];

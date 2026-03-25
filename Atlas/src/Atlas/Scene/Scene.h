@@ -28,8 +28,11 @@ class Scene {
 	void onEvent(Event& event);
 	void onUpdate(DeltaTime dt);
 
-	void setTileSize(int tileSize) { m_tileSize = tileSize; }
-	int	 getTileSize() const { return m_tileSize; }
+	void setTileSize(int tileSize) {
+		m_tileSize = tileSize;
+		onTileSizeChanged();
+	}
+	int getTileSize() const { return m_tileSize; }
 
 	void setEventCallback(const EventCallbackFn& callback) { m_eventCallback = callback; }
 
@@ -56,6 +59,9 @@ class Scene {
 	int			m_tileSize;
 
 	EventCallbackFn m_eventCallback;
+
+  private:
+	void onTileSizeChanged();
 };
 
 }  // namespace Atlas
