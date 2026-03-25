@@ -23,6 +23,9 @@ struct ProjectData {
 	std::string				 startup_scene;
 	std::string				 last_active_scene = "";
 
+	int tileSize = 16;
+	int pixelsPerUnit = 16;
+
 	ProjectData(std::string Name = "UnnamedProject", std::string load_scene = "") : name(Name), startup_scene(load_scene), scripts_target(name + "Scripts") {
 		if (!load_scene.empty()) {
 			scene_filepaths.push_back(load_scene);

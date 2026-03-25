@@ -25,14 +25,13 @@ struct TextureCoordinates {
 struct SubTextureSpecification {
 	TextureCoordinates coordinates;
 	glm::vec2		   sizeInTiles;
-	glm::vec2		   tileSize;
 	glm::ivec2		   index;
 };
 
 class SubTexture {
   public:
 	SubTexture(std::string texturePath, SubTextureSpecification specs);
-	SubTexture(std::string texturePath, glm::vec2 tileSize, glm::ivec2 index, glm::vec2 size_in_tiles = glm::vec2(1.0f));
+	SubTexture(std::string texturePath, int tileSize, glm::ivec2 index, glm::vec2 size_in_tiles = glm::vec2(1.0f));
 	virtual ~SubTexture() = default;
 
 	const std::string		  getTexturePath() const { return m_texturePath; }

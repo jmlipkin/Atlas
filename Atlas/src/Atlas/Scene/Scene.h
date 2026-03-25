@@ -28,6 +28,9 @@ class Scene {
 	void onEvent(Event& event);
 	void onUpdate(DeltaTime dt);
 
+	void setTileSize(int tileSize) { m_tileSize = tileSize; }
+	int	 getTileSize() const { return m_tileSize; }
+
 	void setEventCallback(const EventCallbackFn& callback) { m_eventCallback = callback; }
 
 	void dispatchEvent(Event& event) {
@@ -50,6 +53,7 @@ class Scene {
 
 	std::string m_name;
 	std::string m_filepath;
+	int			m_tileSize;
 
 	EventCallbackFn m_eventCallback;
 };

@@ -106,6 +106,8 @@ void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
 		if (std::filesystem::path(scene->getPath()).is_absolute()) {
 			m_config.last_open_scene = scene->getPath();
 		}
+	} else if (scene) {
+		scene->setTileSize(ProjectManager::getActiveProject()->getData().tileSize);
 	}
 	scene->setEventCallback([this](Event& e) {
 		Application::get().onEvent(e);
@@ -309,10 +311,10 @@ void EditorLayer::drawFooter() {
 	float buttonPadding = (m_footerHeight - buttonHeight) * 0.5f;
 	ImGui::SameLine();
 	ImGui::SetCursorPosY(buttonPadding);
-	
+
 	ImGui::BeginDisabled(!ProjectManager::getActiveProject());
-	
-	if(ImGui::Button("Toggle Collider View")) {
+
+	if (ImGui::Button("Toggle Collider View")) {
 		m_showAllColliders = !m_showAllColliders;
 	}
 	ImGui::SameLine();

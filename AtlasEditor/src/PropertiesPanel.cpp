@@ -50,7 +50,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 	ImVec2 componentSpacer = {0, 16.0f * EditorWidgets::displayScale};
 
-	drawComponent<Component::Transform>("Transform", entity, [this, &entity](auto& component) {
+	drawComponent<Component::Transform>("Transform", entity, [this, &entity, componentSpacer](auto& component) {
 		float columnWidth = 85.0f;
 		float valueWidth  = 50.0f;
 
@@ -59,11 +59,13 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			component.position = {position, component.position.z};
 		}
 
-		glm::vec2 origin = System::Transformation::getCenter2D(entity);
-		if (EditorWidgets::drawVec2Control<glm::vec2>("Origin", origin, 0.0f, 0.0f, columnWidth, valueWidth)) {
-			System::Transformation::setCenter(entity, {origin.x, origin.y});
+		if (entity.hasComponent<Component::Sprite>()) {
+			glm::vec2 origin = System::Transformation::getCenter2D(entity);
+			if (EditorWidgets::drawVec2Control<glm::vec2>("Origin", origin, 0.0f, 0.0f, columnWidth, valueWidth)) {
+				System::Transformation::setCenter(entity, {origin.x, origin.y});
+			}
 		}
-
+		
 		ImGui::Dummy(ImVec2(0, 4.0f * EditorWidgets::displayScale));
 
 		float lineHeight  = ImGui::GetFrameHeight();
@@ -93,11 +95,10 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 		ImGui::PopItemWidth();
 		ImGui::PopStyleVar();
 		ImGui::Columns(1);
+		ImGui::Dummy(componentSpacer);
 	});
 
-	ImGui::Dummy(componentSpacer);
-
-	drawComponent<Component::Sprite>("Sprite", entity, [this](auto& component) {
+	drawComponent<Component::Sprite>("Sprite", entity, [this, componentSpacer](auto& component) {
 		SubTextureSpecification& specs	  = component.specs;
 		const std::string&		 filepath = ProjectManager::toRelativePath(component.texturePath);
 
@@ -134,8 +135,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 		float columnWidth = 85.0f;
 		float valueWidth  = 50.0f;
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size (tiles)", specs.sizeInTiles, 0, 0, columnWidth, valueWidth);
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Grid Size", specs.tileSize, 0, 0, columnWidth, valueWidth);
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size", specs.sizeInTiles, 0, 0, columnWidth, valueWidth);
 
 		changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Index", specs.index, 0, 0, columnWidth, valueWidth);
 
@@ -145,11 +145,10 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			component.recalculateCoordinates();
 			ProjectManager::saveScene(m_scene);
 		}
+		ImGui::Dummy(componentSpacer);
 	});
 
-	ImGui::Dummy(componentSpacer);
-
-	drawComponent<Component::Collider>("Collider", entity, [this, &entity](auto& component) {
+	drawComponent<Component::Collider>("Collider", entity, [this, &entity, componentSpacer](auto& component) {
 		ImGui::Checkbox("Show Debug", &m_showCollider);
 
 		bool  changed	  = false;
@@ -216,11 +215,10 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 		if (changed) {
 			ProjectManager::saveScene(m_scene);
 		}
+		ImGui::Dummy(componentSpacer);
 	});
 
-	ImGui::Dummy(componentSpacer);
-
-	drawComponent<Component::RigidBody>("RigidBody", entity, [this, &entity](auto& component) {
+	drawComponent<Component::RigidBody>("RigidBody", entity, [this, &entity, componentSpacer](auto& component) {
 		bool  changed	  = false;
 		float columnWidth = 85.0f;
 		float valueWidth  = 50.0f;
@@ -253,14 +251,13 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Velocity", component.velocity, 0, 0, columnWidth, valueWidth);
 
-		if(changed) {
+		if (changed) {
 			ProjectManager::saveScene(m_scene);
 		}
+		ImGui::Dummy(componentSpacer);
 	});
 
-	ImGui::Dummy(componentSpacer);
-
-	drawComponent<Component::Animations>("Animations", entity, [this](auto& component) {
+	drawComponent<Component::Animations>("Animations", entity, [this, componentSpacer](auto& component) {
 		if (ImGui::Button("Add clip")) {
 			AnimationClip clip;
 			if (!component.clips.contains("Unnamed animation")) {
@@ -313,9 +310,8 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 				m_animationEditor.open(&component, m_selectedClip, m_scene);
 			}
 		}
+		ImGui::Dummy(componentSpacer);
 	});
-
-	ImGui::Dummy(componentSpacer);
 
 	drawComponent<Component::Script>("Script", entity, [this, &entity](auto& component) {
 		if (!component.instance) {

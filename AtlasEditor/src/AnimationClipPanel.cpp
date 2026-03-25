@@ -94,8 +94,7 @@ void AnimationClipPanel::onImGuiRender() {
 
 	float columnWidth = 100.0f;
 	float valueWidth = 50.0f;
-	changed |= EditorWidgets::drawVec2Control<glm::vec2>("Tile Size", clip.tileSize, 0, 0, columnWidth, valueWidth);
-	changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Size in Tiles", clip.sizeInTiles, 0, 0, columnWidth, valueWidth);
+	changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Size", clip.sizeInTiles, 0, 0, columnWidth, valueWidth);
 
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(0, columnWidth);
@@ -310,7 +309,7 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 
 			float imageOffsetX = (cellWidth - imageWidth) * 0.5f;
 			ImGui::SetCursorPosX(imageOffsetX);
-			drawFrame({clip.texturePath, clip.tileSize, clip.frames[i].index, clip.sizeInTiles});
+			drawFrame({clip.texturePath, m_scene->getTileSize(), clip.frames[i].index, clip.sizeInTiles});
 			ImGui::Dummy(ImVec2(0, 2.0 * displayScale));
 
 			float controlOffsetX = (cellWidth - controlWidth) * 0.5f;
@@ -331,7 +330,7 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 		}
 
 		ImGui::SetCursorPos(framePos);
-		drawFrame({clip.texturePath, clip.tileSize, clip.frames[i].index, clip.sizeInTiles});
+		drawFrame({clip.texturePath, m_scene->getTileSize(), clip.frames[i].index, clip.sizeInTiles});
 		ImGui::Dummy(ImVec2(0, 2 * displayScale));	 // Spacer
 
 		float controlOffsetX = (cellWidth - controlWidth) * 0.5f - 2;
@@ -362,7 +361,7 @@ void AnimationClipPanel::drawFrame(SubTexture texture) {
 	void*					data	  = AssetManager::get<Texture>(texture.getTexturePath())->getData();
 	SubTextureSpecification specs	  = texture.getSpecs();
 	ImVec2					max		  = ImVec2(37.5, 37.5);
-	ImVec2					size	  = {specs.sizeInTiles.x * specs.tileSize.x, specs.sizeInTiles.y * specs.tileSize.y};
+	ImVec2					size	  = {specs.sizeInTiles.x * m_scene->getTileSize(), specs.sizeInTiles.y * m_scene->getTileSize()};
 	float					targetAR  = size.x / size.y;
 	float					currentAR = max.x / max.y;
 

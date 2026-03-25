@@ -20,6 +20,7 @@ void SceneHierarchyPanel::setScene(std::shared_ptr<Scene> scene) {
 	m_renameTarget	   = {};
 	m_propertiesPanel.setScene(scene);
 }
+
 void SceneHierarchyPanel::addEmptyEntity() {
 	Entity newEntity = m_scene->createEntity("New Entity");
 	autoSave();
@@ -46,8 +47,9 @@ void SceneHierarchyPanel::onImGuiRender() {
 	Registry& registry = m_scene->getRegistry();
 	auto	  view	   = registry.view<Component::Tag>();
 	for (entt::entity entity : view) {
-		Entity e{entity, m_scene.get()};
-		ImGui::PushID(e.getComponent<Component::UUID>().id);
+		Entity	 e{entity, m_scene.get()};
+		uint64_t uuid = e.getUUID();
+		ImGui::PushID(&uuid);
 		drawEntityNode(e);
 		ImGui::PopID();
 	}

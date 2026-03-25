@@ -33,6 +33,12 @@ void JSONSerializer::serializeProject(const std::shared_ptr<Project>& project) {
 
 	root["Scenes"] = project->getData().scene_filepaths;
 
+	json world;
+	world["Tile Size"]		 = project->getData().tileSize;
+	world["Pixels Per Unit"] = project->getData().pixelsPerUnit;
+
+	root["World"] = world;
+
 	file << root.dump(2);
 	file.close();
 }
@@ -53,6 +59,9 @@ void JSONSerializer::deserializeProject(std::shared_ptr<Project> project) {
 	project->getName()					 = root["Name"];
 	project->getData().startup_scene	 = root["Startup Scene"];
 	project->getData().last_active_scene = root["Last Active Scene"];
+
+	project->getData().tileSize		 = root["World"]["Tile Size"];
+	project->getData().pixelsPerUnit = root["World"]["Pixels Per Unit"];
 
 	project->getData().scene_filepaths = root["Scenes"].get<std::vector<std::string>>();
 }
@@ -95,8 +104,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 
 			std::string texPath	 = sprite.texturePath;
 			s["Texture"]		 = texPath;
-			s["Tile Size"]		 = {specs.tileSize.x, specs.tileSize.y};
-			s["Size (in Tiles)"] = {specs.sizeInTiles.x, specs.sizeInTiles.y};
+			s["Size"] = {specs.sizeInTiles.x, specs.sizeInTiles.y};
 			s["Index"]			 = {specs.index.x, specs.index.y};
 
 			e["Sprite"] = s;
@@ -205,8 +213,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 				c["Texture"]		 = clip.texturePath;
 				c["Frame Rate"]		 = clip.frameRate;
 				c["Should loop"]	 = clip.shouldLoop;
-				c["Tile Size"]		 = {clip.tileSize.x, clip.tileSize.y};
-				c["Size (in Tiles)"] = {clip.sizeInTiles.x, clip.sizeInTiles.y};
+				c["Size"] = {clip.sizeInTiles.x, clip.sizeInTiles.y};
 
 				json f = json::array();
 				for (const auto& frame : clip.frames) {
@@ -268,10 +275,9 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 			std::string texPath = ProjectManager::toAbsolutePath(e["Sprite"]["Texture"]);
 			AssetManager::loadTexture(texPath);
 			glm::ivec2 index	   = {e["Sprite"]["Index"][0], e["Sprite"]["Index"][1]};
-			glm::vec2  tileSize	   = {e["Sprite"]["Tile Size"][0], e["Sprite"]["Tile Size"][1]};
-			glm::vec2  sizeInTiles = {e["Sprite"]["Size (in Tiles)"][0], e["Sprite"]["Size (in Tiles)"][1]};
+			glm::vec2  sizeInTiles = {e["Sprite"]["Size"][0], e["Sprite"]["Size"][1]};
 
-			SubTexture sub(texPath, tileSize, index, sizeInTiles);
+			SubTexture sub(texPath, ProjectManager::getActiveProject()->getData().tileSize, index, sizeInTiles);
 			entity.addComponent<Component::Sprite>(texPath, sub.getSpecs());
 		}
 		if (e.contains("Script")) {
@@ -390,8 +396,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 				clip.texturePath = ProjectManager::toAbsolutePath(c["Texture"]);
 				clip.frameRate	 = c["Frame Rate"];
 				clip.shouldLoop	 = c["Should loop"];
-				clip.tileSize	 = {c["Tile Size"][0], c["Tile Size"][1]};
-				clip.sizeInTiles = {c["Size (in Tiles)"][0], c["Size (in Tiles)"][1]};
+				clip.sizeInTiles = {c["Size"][0], c["Size"][1]};
 
 				for (const auto& f : c["Frames"]) {
 					AnimationFrame frame;

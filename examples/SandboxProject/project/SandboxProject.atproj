@@ -7,5 +7,9 @@
   "Scenes": [
     "scenes/Scene1.atscene",
     "scenes/Scene2.atscene"
-  ]
+  ],
+  "World": {
+    "Tile Size": 8,
+    "Pixels Per Unit": 8
+  }
 }

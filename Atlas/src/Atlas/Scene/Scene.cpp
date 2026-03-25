@@ -69,7 +69,7 @@ void Scene::onUpdate(DeltaTime dt) {
 
 			AnimationClip& clip = anim.clips[anim.activeClip];
 			if (clip.playing && !clip.frames.empty()) {
-				SubTexture		  frame(clip.texturePath, clip.tileSize, clip.frames[clip.currentFrame].index, clip.sizeInTiles);
+				SubTexture		  frame(clip.texturePath, m_tileSize, clip.frames[clip.currentFrame].index, clip.sizeInTiles);
 				Component::Sprite sprite(clip.texturePath, frame.getSpecs());
 				if (sprite.texturePath.empty())
 					continue;

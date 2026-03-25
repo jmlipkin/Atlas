@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Atlas/Core/UUID.h"
+#include "Atlas/Project/Project.h"
 #include "Atlas/Renderer/SubTexture.h"
 
 #include <glm/glm.hpp>
@@ -38,7 +39,7 @@ struct Sprite {
 
 	void recalculateCoordinates() {
 		if (texturePath.empty()) return;
-		SubTexture sub(texturePath, specs.tileSize, specs.index, specs.sizeInTiles);
+		SubTexture sub(texturePath, ProjectManager::getActiveProject()->getData().tileSize, specs.index, specs.sizeInTiles);
 		specs.coordinates = sub.getSpecs().coordinates;
 	}
 };

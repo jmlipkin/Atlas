@@ -85,6 +85,11 @@ void Collision::resolveCollision(Entity& entityA, Entity& entityB, CollisionMani
 	glm::vec3& posA = entityA.getComponent<Component::Transform>().position;
 	glm::vec3& posB = entityB.getComponent<Component::Transform>().position;
 
+	glm::vec2 delta = glm::vec2(posA) - glm::vec2(posB);
+	if(glm::dot(delta, manifold.normal) < 0.0f) {
+		manifold.normal = -manifold.normal;
+	}
+
 	int		  numStatics = 2 - ((int)rbA.isStatic + (int)rbB.isStatic);
 	glm::vec2 reflection = manifold.normal * manifold.depth;
 

@@ -2,12 +2,190 @@
   "Name": "Scene1",
   "Entities": [
     {
+      "UUID": 15253827749003107492,
+      "Tag": "Bottom Right Wall",
+      "Transform": {
+        "Position": [
+          13.5,
+          0.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          10.0,
+          15.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 18384245754671989583,
+      "Tag": "Bottom Left Wall",
+      "Transform": {
+        "Position": [
+          -23.5,
+          3.427267074584961e-07,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          10.0,
+          15.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 11791751655222929567,
+      "Tag": "Bottom Wall",
+      "Transform": {
+        "Position": [
+          -14.100000381469727,
+          15.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          28.0,
+          12.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 13822624337285133992,
+      "Tag": "Top Right Wall",
+      "Transform": {
+        "Position": [
+          13.5,
+          -15.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          10.0,
+          13.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 18031357280409163922,
+      "Tag": "Board",
+      "Transform": {
+        "Position": [
+          -14.0,
+          -15.5,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          28.0,
+          31.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          28.0,
+          31.0
+        ],
+        "Index": [
+          0,
+          0
+        ]
+      },
+      "Animations": {
+        "Clips": []
+      }
+    },
+    {
       "UUID": 14970872023506877474,
       "Tag": "Player",
       "Transform": {
         "Position": [
-          15.986520767211914,
-          7.702254772186279,
+          -1.0,
+          7.0,
           2.0
         ],
         "Rotation": 0.0,
@@ -18,11 +196,7 @@
       },
       "Sprite": {
         "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Tile Size": [
-          8.0,
-          8.0
-        ],
-        "Size (in Tiles)": [
+        "Size": [
           2.0,
           2.0
         ],
@@ -70,11 +244,7 @@
             "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
             "Frame Rate": 30.0,
             "Should loop": true,
-            "Tile Size": [
-              8.0,
-              8.0
-            ],
-            "Size (in Tiles)": [
+            "Size": [
               2,
               2
             ],
@@ -98,11 +268,7 @@
             "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
             "Frame Rate": 15.0,
             "Should loop": false,
-            "Tile Size": [
-              8.0,
-              8.0
-            ],
-            "Size (in Tiles)": [
+            "Size": [
               2,
               2
             ],
@@ -161,33 +327,18 @@
       }
     },
     {
-      "UUID": 18031357280409163922,
-      "Tag": "Board",
+      "UUID": 6847472901539222484,
+      "Tag": "Top Left Wall",
       "Transform": {
         "Position": [
-          -16.553993225097656,
-          -15.5,
+          -23.5,
+          -15.0,
           1.0
         ],
         "Rotation": 0.0,
         "Size": [
-          28.0,
-          31.0
-        ]
-      },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Tile Size": [
-          8.0,
-          8.0
-        ],
-        "Size (in Tiles)": [
-          28.0,
-          31.0
-        ],
-        "Index": [
-          0,
-          0
+          1.0,
+          1.0
         ]
       },
       "Collider": {
@@ -197,8 +348,8 @@
           0.0
         ],
         "Size": [
-          28.0,
-          31.0
+          10.0,
+          13.0
         ],
         "Trigger": false,
         "Layer Mask": 4294967295
@@ -210,9 +361,43 @@
         ],
         "Static": true,
         "Response Type": 0
+      }
+    },
+    {
+      "UUID": 13645769869862282831,
+      "Tag": "Top Wall",
+      "Transform": {
+        "Position": [
+          -14.0,
+          -27.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
       },
-      "Animations": {
-        "Clips": []
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          28.0,
+          12.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 1
       }
     }
   ]

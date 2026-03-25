@@ -16,7 +16,6 @@ struct AnimationClip {
 	std::string name;
 
 	std::string texturePath;
-	glm::vec2	tileSize;
 	glm::ivec2	sizeInTiles;
 
 	bool  shouldLoop = false;
