@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Atlas/Scene/Scene.h"
+#include "Atlas/Renderer/Tileset.h"
 
 #include <glm/glm.hpp>
 
@@ -16,6 +17,9 @@ class SerializerAPI {
 	virtual void serializeScene(const std::shared_ptr<Scene>& scene) = 0;
 	virtual void deserializeScene(std::shared_ptr<Scene> scene)		 = 0;
 
+	virtual void serializeTileset(const std::shared_ptr<Tileset>& tileset) = 0;
+	virtual void deserializeTileset(std::shared_ptr<Tileset> tileset)	   = 0;
+
 	virtual void loadScriptManifest(std::shared_ptr<Project> project) = 0;
 };
 
@@ -28,6 +32,9 @@ class Serializer {
 
 	static void serializeScene(const std::shared_ptr<Scene>& scene) { s_serializerAPI->serializeScene(scene); }
 	static void deserializeScene(std::shared_ptr<Scene> scene) { s_serializerAPI->deserializeScene(scene); }
+
+	static void serializeTileset(const std::shared_ptr<Tileset>& tileset) { s_serializerAPI->serializeTileset(tileset); }
+	static void deserializeTileset(std::shared_ptr<Tileset> tileset) { s_serializerAPI->deserializeTileset(tileset); }
 
 	static void loadScriptManifest(std::shared_ptr<Project> project) { s_serializerAPI->loadScriptManifest(project); }
 

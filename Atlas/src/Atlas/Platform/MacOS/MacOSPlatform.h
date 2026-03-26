@@ -11,6 +11,7 @@ class MacOSPlatform : public Platform {
 
 	virtual std::string openFileDialogImpl(const std::string& filter) override;
 	virtual std::string saveFileDialogImpl(const std::string& filter, const std::string& defaultDir) override;
+	virtual std::vector<std::string> getFileListImpl(const std::string& directory, const std::string& filter) override;
 	virtual int			showConfirmDialogImpl(const std::string& message, const std::string& confirm, const std::string& deny, const std::string& cancel) override;
 
 	virtual void buildScriptLibraryImpl(const std::string& buildDir, const std::string& target, BuildOutputCallback onOutput, BuildCompleteCallback onComplete) override;

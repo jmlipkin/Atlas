@@ -6,6 +6,7 @@
 #include "Atlas/Project/Project.h"
 #include "Atlas/ImGui/EditorWidgets.h"
 #include "Atlas/ECS/Entities/Entity.h"
+#include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Components/Behavior.h"
 #include "Atlas/ECS/Components/Collider.h"
@@ -65,7 +66,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 				System::Transformation::setCenter(entity, {origin.x, origin.y});
 			}
 		}
-		
+
 		ImGui::Dummy(ImVec2(0, 4.0f * EditorWidgets::displayScale));
 
 		float lineHeight  = ImGui::GetFrameHeight();
@@ -145,6 +146,97 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			component.recalculateCoordinates();
 			ProjectManager::saveScene(m_scene);
 		}
+		ImGui::Dummy(componentSpacer);
+	});
+
+	drawComponent<Component::Tilemap>("Tile Map", entity, [this, &entity, componentSpacer](auto& component) {
+		bool  changed	  = false;
+		float columnWidth = 85.0f;
+		float valueWidth  = 50.0f;
+
+		float lineHeight  = ImGui::GetFrameHeight();
+		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+
+		if (component.tileset.empty()) {
+			if (m_firstOpenedTilemap) {
+				auto names = Platform::getFileList(ProjectManager::getActiveProject()->getDirectory(), ".attileset");
+				for (auto& name : names) {
+					name = std::filesystem::path(ProjectManager::toRelativePath(name)).stem().string();
+				}
+				m_availableTilesets	 = names;
+				m_firstOpenedTilemap = false;
+			}
+			if (ImGui::BeginCombo("##tilesetpicker", "Select Tileset...")) {
+				for (auto& tileset : m_availableTilesets) {
+					if (ImGui::Selectable(tileset.c_str())) {
+						component.tileset = tileset;
+						ProjectManager::saveScene(m_scene);
+						changed = true;
+					}
+				}
+				if (ImGui::Button("Create New Tileset")) {
+					std::string defaultDir = "";
+					if (ProjectManager::getActiveProject()) {
+						defaultDir = ProjectManager::getActiveProject()->getData().src_directory;
+					}
+					std::string path = Platform::saveFileDialog("attileset", defaultDir);
+
+					if (!path.empty()) {
+						std::string tilesetName = std::filesystem::path(path).stem().string();
+						ProjectManager::createTileset(path, tilesetName);
+						component.tileset = std::filesystem::path(ProjectManager::toRelativePath(path)).stem();
+						changed			  = true;
+					}
+				}
+				ImGui::EndCombo();
+			}
+		} else {
+			ImGui::Text("Tileset: %s", component.tileset.c_str());
+			ImGui::SameLine();
+
+			float changeButtonWidth = 62.0f;
+			float padding			= 4.0f;
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - padding);
+
+			bool changing = false;
+			if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0))) {
+				component.tileset	 = {};
+				m_firstOpenedTilemap = true;
+				changing			 = true;
+			}
+			ImGui::Separator();
+			ImGui::Dummy(ImVec2(0, 4.0f));
+
+			glm::ivec2 size = component.size;
+			EditorWidgets::drawVec2Control<glm::ivec2>("Size", size, 0, 0, columnWidth, valueWidth, false);
+
+			if (size != component.size && size.x >= 0 && size.y >= 0) {
+				component.resize(size);
+				changed = true;
+			}
+
+			ImGui::PushID(("##" + entity.getUUID().toString() + "layer").c_str());
+
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, columnWidth);
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
+			ImGui::Text("Layer");
+			ImGui::NextColumn();
+			ImGui::SetColumnWidth(1, 40.0f * EditorWidgets::displayScale);
+
+			changed |= ImGui::DragInt("", &component.layer);
+
+			ImGui::Columns(1);
+
+			ImGui::Checkbox("Debug Overlay", &component.showOverlay);
+
+			ImGui::PopID();
+		}
+
+		if (changed) {
+			ProjectManager::saveScene(m_scene);
+		}
+
 		ImGui::Dummy(componentSpacer);
 	});
 

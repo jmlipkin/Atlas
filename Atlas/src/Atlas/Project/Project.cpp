@@ -58,6 +58,7 @@ void ProjectManager::createNewProject(const std::string& filepath, const std::st
 	std::string absoluteProjectPath = (std::filesystem::path(filepath) / name).string();
 	std::filesystem::create_directory(absoluteProjectPath);
 	std::filesystem::create_directory(absoluteProjectPath + "/project/scenes");
+	std::filesystem::create_directory(absoluteProjectPath + "/project/tilesets");
 	std::filesystem::create_directory(absoluteProjectPath + "/assets");
 	std::filesystem::create_directory(absoluteProjectPath + "/src");
 
@@ -203,6 +204,26 @@ void ProjectManager::unloadScriptLibrary() {
 		AT_UNLOAD_LIBRARY(s_scriptLibHandle);
 		s_scriptLibHandle = nullptr;
 	}
+}
+
+std::shared_ptr<Tileset> ProjectManager::createTileset(const std::string& filepath, const std::string& name) {
+	std::shared_ptr<Tileset> tileset = std::make_shared<Tileset>(name, filepath);
+	tileset->setPath(filepath);
+
+	Serializer::serializeTileset(tileset);
+
+	return tileset;
+}
+
+std::shared_ptr<Tileset> ProjectManager::loadTileset(const std::string& filepath) {
+	std::string name = std::filesystem::path(filepath).filename().stem().string();
+
+	std::shared_ptr<Tileset> tileset = std::make_shared<Tileset>(name, filepath);
+
+	tileset->setPath(filepath);
+	Serializer::deserializeTileset(tileset);
+
+	return tileset;
 }
 
 void ProjectManager::setActiveScene(std::shared_ptr<Scene> scene) {

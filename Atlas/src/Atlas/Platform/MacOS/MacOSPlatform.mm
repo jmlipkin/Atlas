@@ -82,6 +82,16 @@ std::string MacOSPlatform::saveFileDialogImpl(const std::string& filter, const s
 	return "";
 }
 
+std::vector<std::string> MacOSPlatform::getFileListImpl(const std::string& directory, const std::string& filter) {
+	std::vector<std::string> files;
+	for (const auto& entry : std::filesystem::recursive_directory_iterator(directory)) {
+		if (entry.path().extension() == filter) {
+			files.push_back(entry.path().string());
+		}
+	}
+	return files;
+}
+
 int MacOSPlatform::showConfirmDialogImpl(const std::string& message, const std::string& confirm, const std::string& deny, const std::string& cancel) {
 	NSAlert* alert = [[NSAlert alloc] init];
 	[alert setMessageText:[NSString stringWithUTF8String:message.c_str()]];

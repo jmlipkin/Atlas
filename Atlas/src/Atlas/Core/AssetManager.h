@@ -5,6 +5,7 @@
 
 #include "Atlas/Renderer/Shader.h"
 #include "Atlas/Renderer/Texture.h"
+#include "Atlas/Renderer/Tileset.h"
 
 #include <unordered_map>
 
@@ -12,9 +13,10 @@ namespace Atlas {
 
 class AssetManager {
   public:
-	static std::shared_ptr<Font> loadFont(const std::string& name, const std::string& filepath, uint32_t fontSizePx = 128);
-	static std::shared_ptr<Shader> loadShader(const std::string& name, const std::string& vertexFunction, const std::string& fragmentFunction);
+	static std::shared_ptr<Font>	loadFont(const std::string& name, const std::string& filepath, uint32_t fontSizePx = 128);
+	static std::shared_ptr<Shader>	loadShader(const std::string& name, const std::string& vertexFunction, const std::string& fragmentFunction);
 	static std::shared_ptr<Texture> loadTexture(const std::string& filepath);
+	static std::shared_ptr<Tileset> loadTileset(const std::string& name, const std::string& filepath);
 
 	template <typename T>
 	static std::shared_ptr<T> get(const std::string& key) {
@@ -46,6 +48,11 @@ template <>
 inline std::unordered_map<std::string, std::shared_ptr<Texture>>& AssetManager::getCache<Texture>() {
 	static std::unordered_map<std::string, std::shared_ptr<Texture>> s;
 	return s;
+}
+template <>
+inline std::unordered_map<std::string, std::shared_ptr<Tileset>>& AssetManager::getCache<Tileset>() {
+	static std::unordered_map<std::string, std::shared_ptr<Tileset>> t;
+	return t;
 }
 
 }  // namespace Atlas

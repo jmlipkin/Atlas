@@ -27,6 +27,8 @@ class PropertiesPanel {
 	bool showSelectedCollider() const { return m_showCollider; }
 	void setOnNewScriptCallback(NewScriptCallback callback) { m_onNewScript = callback; }
 
+	void setTilemapOpenState(bool state) { m_firstOpenedTilemap = state; }
+
   private:
 	enum class SelectionType { None,
 							   AnimationClip,
@@ -100,6 +102,9 @@ class PropertiesPanel {
 	bool m_showCollider = true;
 
 	NewScriptCallback m_onNewScript;
+
+	std::vector<std::string> m_availableTilesets;
+	bool					 m_firstOpenedTilemap = false;
 };
 
 }  // namespace Atlas

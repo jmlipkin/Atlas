@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Atlas/Project/Serializer.h"
-#include "Atlas/Scene/Scene.h"
 
 namespace Atlas {
 
@@ -12,6 +11,9 @@ class JSONSerializer : public SerializerAPI {
 
 	virtual void serializeScene(const std::shared_ptr<Scene>& scene) override;
 	virtual void deserializeScene(std::shared_ptr<Scene> scene) override;
+
+	virtual void serializeTileset(const std::shared_ptr<Tileset>& tileset) override;
+	virtual void deserializeTileset(std::shared_ptr<Tileset> tileset) override;
 
 	virtual void loadScriptManifest(std::shared_ptr<Project> project) override;
 };

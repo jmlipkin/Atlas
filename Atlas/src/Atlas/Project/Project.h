@@ -80,6 +80,9 @@ class ProjectManager {
 	static void loadScriptLibrary();
 	static void unloadScriptLibrary();
 
+	static std::shared_ptr<Tileset> createTileset(const std::string& filepath, const std::string& name);
+	static std::shared_ptr<Tileset> loadTileset(const std::string& filepath);
+
 	static std::shared_ptr<Project> getActiveProject() { return s_activeProject; }
 	static void						setActiveScene(std::shared_ptr<Scene> scene);
 

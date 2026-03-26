@@ -215,6 +215,16 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 			AT_CORE_WARN("Entity \"{}\" already has Script component!", entity.getComponent<Component::Tag>().tag);
 		}
 	}
+
+	if (ImGui::MenuItem("Tile Map")) {
+		if (!entity.hasComponent<Component::Tilemap>()) {
+			entity.addComponent<Component::Tilemap>();
+			m_propertiesPanel.setTilemapOpenState(true);
+			autoSave();
+		} else {
+			AT_CORE_WARN("Entity \"{}\" already has Tilemap component!", entity.getComponent<Component::Tag>().tag);
+		}
+	}
 }
 
 void SceneHierarchyPanel::autoSave() {

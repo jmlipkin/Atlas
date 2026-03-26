@@ -4,6 +4,7 @@
 #include "Atlas/Core/AssetManager.h"
 #include "Atlas/Project/Project.h"
 #include "Atlas/Renderer/SubTexture.h"
+#include "Atlas/Renderer/Tileset.h"
 
 #include "Atlas/ECS/Components/Components.h"
 #include "Atlas/ECS/Components/Animation.h"
@@ -102,10 +103,10 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			Component::Sprite&		 sprite = entity.getComponent<Component::Sprite>();
 			SubTextureSpecification& specs	= sprite.specs;
 
-			std::string texPath	 = sprite.texturePath;
-			s["Texture"]		 = texPath;
-			s["Size"] = {specs.sizeInTiles.x, specs.sizeInTiles.y};
-			s["Index"]			 = {specs.index.x, specs.index.y};
+			std::string texPath = sprite.texturePath;
+			s["Texture"]		= texPath;
+			s["Size"]			= {specs.sizeInTiles.x, specs.sizeInTiles.y};
+			s["Index"]			= {specs.index.x, specs.index.y};
 
 			e["Sprite"] = s;
 		}
@@ -209,11 +210,11 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			json clipsArray = json::array();
 			for (const auto& [clipName, clip] : animations.clips) {
 				json c;
-				c["Name"]			 = clipName;
-				c["Texture"]		 = clip.texturePath;
-				c["Frame Rate"]		 = clip.frameRate;
-				c["Should loop"]	 = clip.shouldLoop;
-				c["Size"] = {clip.sizeInTiles.x, clip.sizeInTiles.y};
+				c["Name"]		 = clipName;
+				c["Texture"]	 = clip.texturePath;
+				c["Frame Rate"]	 = clip.frameRate;
+				c["Should loop"] = clip.shouldLoop;
+				c["Size"]		 = {clip.sizeInTiles.x, clip.sizeInTiles.y};
 
 				json f = json::array();
 				for (const auto& frame : clip.frames) {
@@ -225,6 +226,17 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			}
 			a["Clips"]		= clipsArray;
 			e["Animations"] = a;
+		}
+		if (entity.hasComponent<Component::Tilemap>()) {
+			Component::Tilemap& tilemap = entity.getComponent<Component::Tilemap>();
+
+			json t;
+			t["Tileset"] = tilemap.tileset;
+			t["Size"]	 = {tilemap.size.x, tilemap.size.y};
+			t["Layer"]	 = tilemap.layer;
+			t["Grid"]	 = tilemap.grid;
+
+			e["Tilemap"] = t;
 		}
 		entities.push_back(e);
 	}
@@ -407,6 +419,77 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 				animations.clips[clip.name] = clip;
 			}
 		}
+
+		if (e.contains("Tilemap")) {
+			Component::Tilemap& tilemap = entity.addComponent<Component::Tilemap>();
+
+			json t			= e["Tilemap"];
+			tilemap.tileset = t["Tileset"];
+			tilemap.size	= glm::ivec2(t["Size"][0], t["Size"][1]);
+			tilemap.layer	= t["Layer"];
+			tilemap.grid	= t["Grid"].get<std::vector<uint32_t>>();
+		}
+	}
+}
+
+void JSONSerializer::serializeTileset(const std::shared_ptr<Tileset>& tileset) {
+	std::filesystem::create_directories(std::filesystem::path(tileset->getPath()).parent_path());
+
+	std::ofstream file(tileset->getPath());
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for writing!", tileset->getPath());
+
+	json ts;
+
+	ts["Name"]	  = tileset->getName();
+	auto& tilemap = tileset->getTileset();
+
+	if (tilemap.empty()) {
+		file << ts.dump(2);
+		file.close();
+		return;
+	}
+
+	json tiles;
+	for (auto& [index, tile] : tilemap) {
+		json t;
+		t["Index"]		= index;
+		t["Texture"]	= tile.texturePath;
+		t["Size"]		= {tile.sizeInTiles.x, tile.sizeInTiles.y};
+		t["Grid Index"] = {tile.gridIndex.x, tile.gridIndex.y};
+		t["Solid"]		= tile.isSolid;
+
+		tiles.push_back(t);
+	}
+
+	ts["Tiles"] = tiles;
+	file << ts.dump(2);
+
+	file.close();
+}
+
+void JSONSerializer::deserializeTileset(std::shared_ptr<Tileset> tileset) {
+	std::ifstream file(tileset->getPath());
+	AT_CORE_ASSERT(file.is_open(), "Could not open file \"{}\" for reading!", tileset->getPath());
+
+	json ts = json::parse(file);
+	file.close();
+
+	tileset->setName(ts["Name"]);
+	auto& map = tileset->getTileset();
+
+	if (!ts.contains("Tiles")) {
+		return;
+	}
+
+	for (auto& t : ts["Tiles"]) {
+		TileDefinition tdef;
+
+		tdef.texturePath = t["Texture"];
+		tdef.sizeInTiles = glm::ivec2(t["Size"][0], t["Size"][1]);
+		tdef.gridIndex	 = glm::ivec2(t["Grid Index"][0], t["Grid Index"][1]);
+		tdef.isSolid	 = t["Solid"];
+
+		map[t["Index"]] = tdef;
 	}
 }
 
