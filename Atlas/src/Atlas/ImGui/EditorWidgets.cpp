@@ -6,6 +6,103 @@ namespace Atlas {
 
 float EditorWidgets::displayScale = 1.0f;
 
+void EditorWidgets::drawLabel(const char* label, float columnWidth) {
+	ImGui::TableSetColumnIndex(0);
+	float textWidth = ImGui::CalcTextSize(label).x;
+	float columnEnd = ImGui::GetCursorPosX() + columnWidth - ImGui::GetStyle().ItemSpacing.x;
+	ImGui::SetCursorPosX(columnEnd - textWidth);
+	ImGui::AlignTextToFramePadding();
+	ImGui::Text("%s", label);
+	ImGui::TableSetColumnIndex(1);
+}
+
+bool EditorWidgets::drawIntControl(const char* label, int& value, const char* resetLabel, float columnWidth, float valueWidth, int resetValue) {
+	bool changed = false;
+	ImGui::PushID(label);
+	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
+		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
+		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth * displayScale);
+		ImGui::TableNextRow();
+		drawLabel(label, columnWidth * displayScale);
+		float lineHeight = ImGui::GetFrameHeight();
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
+		ImGui::PushStyleColor(ImGuiCol_Button, purple);
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, purpleLight);
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, purpleActive);
+		if (ImGui::Button(resetLabel, ImVec2(lineHeight, lineHeight))) {
+			value	= resetValue;
+			changed = true;
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(valueWidth * displayScale - lineHeight);
+		changed |= ImGui::DragInt("##v", &value);
+		ImGui::PopStyleVar();
+		ImGui::EndTable();
+	}
+	ImGui::PopID();
+	return changed;
+}
+
+bool EditorWidgets::drawFloatControl(const char* label, float& value, const char* resetLabel, float columnWidth, float valueWidth, float resetValue, float speed) {
+	bool changed = false;
+	ImGui::PushID(label);
+	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
+		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
+		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth * displayScale);
+		ImGui::TableNextRow();
+		drawLabel(label, columnWidth * displayScale);
+		float lineHeight = ImGui::GetFrameHeight();
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
+		ImGui::PushStyleColor(ImGuiCol_Button, purple);
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, purpleLight);
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, purpleActive);
+		if (ImGui::Button(resetLabel, ImVec2(lineHeight, lineHeight))) {
+			value	= resetValue;
+			changed = true;
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(-1);
+		changed |= ImGui::DragFloat("##v", &value, speed, 0.0f, 0.0f, "%.2f");
+		ImGui::PopStyleVar();
+		ImGui::EndTable();
+	}
+	ImGui::PopID();
+	return changed;
+}
+
+bool EditorWidgets::drawCheckbox(const char* label, bool& value, float columnWidth) {
+	bool changed = false;
+	ImGui::PushID(label);
+	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
+		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
+		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthStretch);
+		ImGui::TableNextRow();
+		drawLabel(label, columnWidth * displayScale);
+		changed = ImGui::Checkbox("##v", &value);
+		ImGui::EndTable();
+	}
+	ImGui::PopID();
+	return changed;
+}
+
+bool EditorWidgets::drawCombo(const char* label, const char** items, int count, int& value, float columnWidth, float valueWidth) {
+	bool changed = false;
+	ImGui::PushID(label);
+	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
+		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
+		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth * displayScale);
+		ImGui::TableNextRow();
+		drawLabel(label, columnWidth * displayScale);
+		ImGui::SetNextItemWidth(-1);
+		changed = ImGui::Combo("##v", &value, items, count);
+		ImGui::EndTable();
+	}
+	ImGui::PopID();
+	return changed;
+}
+
 bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float resetX, float resetY, float resetZ, float columnWidth, float valueWidth, bool vertical) {
 	ImGuiIO io		 = ImGui::GetIO();
 	ImFont* boldFont = io.Fonts->Fonts[0];

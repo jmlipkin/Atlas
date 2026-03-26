@@ -80,7 +80,7 @@ class PropertiesPanel {
 	void drawClipLabel(std::string& clip, SelectionType type);
 
 	void drawScriptProperties(Behavior& behavior);
-	void drawScriptProperty(Behavior::Property& property);
+	void drawScriptProperty(const char* label, Behavior::Property& property);
 
   private:
 	std::shared_ptr<Scene> m_scene;
@@ -104,7 +104,8 @@ class PropertiesPanel {
 	NewScriptCallback m_onNewScript;
 
 	std::vector<std::string> m_availableTilesets;
-	bool					 m_firstOpenedTilemap = false;
+	bool					 m_firstOpenedTilemap	   = false;
+	bool					 m_tilemapEditorShouldOpen = false;
 };
 
 }  // namespace Atlas

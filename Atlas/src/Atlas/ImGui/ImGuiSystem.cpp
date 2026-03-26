@@ -143,7 +143,7 @@ void ImGuiSystem::setupImGuiStyle(ImGuiStyle& style)
     // Tables
     c[ImGuiCol_TableHeaderBg]        = EditorWidgets::bg0;
     c[ImGuiCol_TableBorderStrong]    = EditorWidgets::border;
-    c[ImGuiCol_TableBorderLight]     = EditorWidgets::borderDim;
+    c[ImGuiCol_TableBorderLight]     = EditorWidgets::border;
     c[ImGuiCol_TableRowBg]           = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
     c[ImGuiCol_TableRowBgAlt]        = ImVec4(1.0f, 1.0f, 1.0f, 0.038f);
  

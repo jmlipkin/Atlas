@@ -73,99 +73,73 @@ class EditorWidgets {
 	//    ImGui::End();
 	static void DrawPanelAccentBar(PanelAccent color, bool onlyWhenFocused = true);
 
+	static void drawLabel(const char* label, float columnWidth);
+	static bool drawCheckbox(const char* label, bool& value, float columnWidth = 85.0f);
+	static bool drawIntControl(const char* label, int& value, const char* resetLabel = "R", float columnWidth = 85.0f, float valueWidth = 120.0f, int resetValue = 0);
+	static bool drawFloatControl(const char* label, float& value, const char* resetLabel = "R", float columnWidth = 85.0f, float valueWidth = 100.0f, float resetValue = 0.0f, float speed = 0.1f);
+	static bool drawCombo(const char* label, const char** items, int count, int& value, float columnWidth = 85.0f, float valueWidth = 120.0f);
+	static bool drawVec3Control(const char* label, glm::vec3& values, float columnWidth = 100.0f, float valueWidth = 100.0f, float resetX = 0.f, float resetY = 0.0f, float resetZ = 0.0f, bool vertical = false);
+
 	template <typename T>
-	static bool drawVec2Control(const char* label, T& values, typename T::value_type resetX = 0, typename T::value_type resetY = 0, float columnWidth = 100.0f, float valueWidth = 100.0f, bool vertical = false) {
-		ImGuiIO io		 = ImGui::GetIO();
-		ImFont* boldFont = io.Fonts->Fonts[0];
-
-		// No label, so disable separator
-		bool showSeparator = strcmp(label, "");
-		if (!showSeparator) {
-			ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(0, 0, 0, 0));
-			ImGui::PushStyleColor(ImGuiCol_SeparatorActive, ImVec4(0, 0, 0, 0));
-			ImGui::PushStyleColor(ImGuiCol_SeparatorHovered, ImVec4(0, 0, 0, 0));
-		}
-
-		bool changed = false;
+	static bool drawVec2Control(const char* label, T& values, float columnWidth = 100.0f, float valueWidth = 100.0f, typename T::value_type resetX = 0, typename T::value_type resetY = 0, bool vertical = false) {
+		bool  changed	 = false;
+		float buttonSize = ImGui::GetFrameHeight();
+		float spacing	 = ImGui::GetStyle().ItemInnerSpacing.x;
+		float pairWidth	 = buttonSize + (valueWidth * displayScale);
+		float totalWidth = vertical ? pairWidth : (pairWidth * 2.0f + spacing);
 
 		ImGui::PushID(label);
-
-		float  lineHeight = ImGui::GetFrameHeight();
-		ImVec2 buttonSize = {lineHeight, lineHeight};
-
-		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, columnWidth);
-
-		if (vertical) {
-			float totalHeight = 3.0f * lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
-		} else {
-			float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
-		}
-		ImGui::Text("%s", label);
-
-		ImGui::NextColumn();
-
-		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
-
-		// X
-		ImGui::PushStyleColor(ImGuiCol_Button, steelBlue);
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, steelBlueLight);
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, steelBlueActive);
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("X", buttonSize)) {
-			values.x = resetX;
-			changed	 = true;
-		}
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(valueWidth);
-		if constexpr (std::is_same_v<T, glm::ivec2>) {
-			changed |= ImGui::DragInt("##X", &values.x, 1, 0, 0, "%d");
-		} else {
-			changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
-		}
-		ImGui::PopItemWidth();
-		ImGui::PopItemWidth();
-
-		if (!vertical)
-			ImGui::SameLine();
-
-		// Y
-		ImGui::PushStyleColor(ImGuiCol_Button, green);
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, greenLight);
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, greenActive);
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("Y", buttonSize)) {
-			values.y = resetY;
-			changed	 = true;
-		}
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(valueWidth);
-		if constexpr (std::is_same_v<T, glm::ivec2>) {
-			changed |= ImGui::DragInt("##Y", &values.y, 1, 0, 0, "%d");
-		} else {
-			changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
-		}
-		ImGui::PopItemWidth();
-		ImGui::PopItemWidth();
-
-		ImGui::PopStyleVar();
-		ImGui::Columns(1);
-		ImGui::PopID();
-
-		if (!showSeparator)
+		if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
+			ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, totalWidth);
+			ImGui::TableNextRow();
+			drawLabel(label, columnWidth * displayScale);
+			float lineHeight = ImGui::GetFrameHeight();
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
+			ImGui::PushStyleColor(ImGuiCol_Button, steelBlue);
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, steelBlueLight);
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, steelBlueActive);
+			if (ImGui::Button("X", ImVec2(lineHeight, lineHeight))) {
+				values.x = resetX;
+				changed	 = true;
+			}
 			ImGui::PopStyleColor(3);
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(valueWidth * displayScale - lineHeight);
+			if constexpr (std::is_same_v<T, glm::ivec2>) {
+				changed |= ImGui::DragInt("##X", &values.x, 1, 0, 0, "%d");
+			} else {
+				changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
+			}
 
+			if (vertical) {
+				ImGui::Dummy(ImVec2(0.0f, ImGui::GetStyle().ItemSpacing.y));
+			} else {
+				ImGui::SameLine();
+			}
+
+			ImGui::PushStyleColor(ImGuiCol_Button, green);
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, greenLight);
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, greenActive);
+			if (ImGui::Button("Y", ImVec2(lineHeight, lineHeight))) {
+				values.y = resetY;
+				changed	 = true;
+			}
+			ImGui::PopStyleColor(3);
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(valueWidth * displayScale - lineHeight);
+			if constexpr (std::is_same_v<T, glm::ivec2>) {
+				changed |= ImGui::DragInt("##Y", &values.y, 1, 0, 0, "%d");
+			} else {
+				changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
+			}
+
+			ImGui::PopStyleVar();
+			ImGui::EndTable();
+		}
+		ImGui::PopID();
 		return changed;
 	}
-
-	static bool drawVec3Control(const char* label, glm::vec3& values, float resetX = 0.f, float resetY = 0.0f, float resetZ = 0.0f, float columnWidth = 100.0f, float valueWidth = 100.0f, bool vertical = false);
 
   private:
 	static ImU32 getAccentColor(PanelAccent color);

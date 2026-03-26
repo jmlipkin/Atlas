@@ -43,7 +43,9 @@ class Player : public Atlas::Behavior {
 		// Add any variables that you want visible in the editor here using the
 		// expose() function.
 		// Usage: expose(<variable name>, <value>);
+		expose("Dying played", m_dyingPlayed);
 		expose("Speed", m_speed);
+		expose("Score", m_score);
 	}
 
   private:
@@ -65,6 +67,7 @@ class Player : public Atlas::Behavior {
 	Entity m_entity;
 	// add member variables here
 	float m_speed = 8.0f;
+	int m_score = 0;
 
 	bool m_dyingPlayed = false;
 };

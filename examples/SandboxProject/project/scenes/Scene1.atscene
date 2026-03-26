@@ -2,86 +2,12 @@
   "Name": "Scene1",
   "Entities": [
     {
-      "UUID": 15253827749003107492,
-      "Tag": "Bottom Right Wall",
+      "UUID": 13645769869862282831,
+      "Tag": "Top Wall",
       "Transform": {
         "Position": [
-          13.5,
-          0.0,
-          1.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          1.0,
-          1.0
-        ]
-      },
-      "Collider": {
-        "Shape": 0,
-        "Offset": [
-          0.0,
-          0.0
-        ],
-        "Size": [
-          10.0,
-          15.0
-        ],
-        "Trigger": false,
-        "Layer Mask": 4294967295
-      },
-      "RigidBody": {
-        "Velocity": [
-          0.0,
-          0.0
-        ],
-        "Static": true,
-        "Response Type": 0
-      }
-    },
-    {
-      "UUID": 18384245754671989583,
-      "Tag": "Bottom Left Wall",
-      "Transform": {
-        "Position": [
-          -23.5,
-          3.427267074584961e-07,
-          1.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          1.0,
-          1.0
-        ]
-      },
-      "Collider": {
-        "Shape": 0,
-        "Offset": [
-          0.0,
-          0.0
-        ],
-        "Size": [
-          10.0,
-          15.0
-        ],
-        "Trigger": false,
-        "Layer Mask": 4294967295
-      },
-      "RigidBody": {
-        "Velocity": [
-          0.0,
-          0.0
-        ],
-        "Static": true,
-        "Response Type": 0
-      }
-    },
-    {
-      "UUID": 11791751655222929567,
-      "Tag": "Bottom Wall",
-      "Transform": {
-        "Position": [
-          -14.100000381469727,
-          15.0,
+          -14.0,
+          -27.0,
           1.0
         ],
         "Rotation": 0.0,
@@ -109,15 +35,15 @@
           0.0
         ],
         "Static": true,
-        "Response Type": 0
+        "Response Type": 1
       }
     },
     {
-      "UUID": 13822624337285133992,
-      "Tag": "Top Right Wall",
+      "UUID": 6847472901539222484,
+      "Tag": "Top Left Wall",
       "Transform": {
         "Position": [
-          13.5,
+          -23.5,
           -15.0,
           1.0
         ],
@@ -150,51 +76,12 @@
       }
     },
     {
-      "UUID": 18031357280409163922,
-      "Tag": "Board",
-      "Transform": {
-        "Position": [
-          -14.0,
-          -15.5,
-          1.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          28.0,
-          31.0
-        ]
-      },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Size": [
-          28.0,
-          31.0
-        ],
-        "Index": [
-          0,
-          0
-        ]
-      },
-      "Animations": {
-        "Clips": []
-      },
-      "Tilemap": {
-        "Tileset": "PacManBoard",
-        "Size": [
-          0,
-          0
-        ],
-        "Layer": 0,
-        "Grid": []
-      }
-    },
-    {
       "UUID": 14970872023506877474,
       "Tag": "Player",
       "Transform": {
         "Position": [
           -15.483039855957031,
-          -2.0,
+          -1.9999995231628418,
           2.0
         ],
         "Rotation": 0.0,
@@ -219,9 +106,19 @@
         "Priority": 1,
         "Properties": [
           {
+            "Name": "Score",
+            "Type": 3,
+            "Value": 0
+          },
+          {
             "Name": "Speed",
             "Type": 4,
             "Value": 8.0
+          },
+          {
+            "Name": "Dying played",
+            "Type": 0,
+            "Value": false
           }
         ]
       },
@@ -249,30 +146,6 @@
       "Animations": {
         "Active Clip": "Dying",
         "Clips": [
-          {
-            "Name": "MoveRight",
-            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-            "Frame Rate": 30.0,
-            "Should loop": true,
-            "Size": [
-              2,
-              2
-            ],
-            "Frames": [
-              [
-                28,
-                0
-              ],
-              [
-                30,
-                0
-              ],
-              [
-                32,
-                0
-              ]
-            ]
-          },
           {
             "Name": "Dying",
             "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
@@ -332,16 +205,79 @@
                 0
               ]
             ]
+          },
+          {
+            "Name": "MoveRight",
+            "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+            "Frame Rate": 30.0,
+            "Should loop": true,
+            "Size": [
+              2,
+              2
+            ],
+            "Frames": [
+              [
+                28,
+                0
+              ],
+              [
+                30,
+                0
+              ],
+              [
+                32,
+                0
+              ]
+            ]
           }
         ]
       }
     },
     {
-      "UUID": 6847472901539222484,
-      "Tag": "Top Left Wall",
+      "UUID": 18031357280409163922,
+      "Tag": "Board",
       "Transform": {
         "Position": [
-          -23.5,
+          -14.0,
+          -15.5,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          28.0,
+          31.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          28.0,
+          31.0
+        ],
+        "Index": [
+          0,
+          0
+        ]
+      },
+      "Animations": {
+        "Clips": []
+      },
+      "Tilemap": {
+        "Tileset": "PacManBoard",
+        "Size": [
+          0,
+          0
+        ],
+        "Layer": 0,
+        "Grid": []
+      }
+    },
+    {
+      "UUID": 13822624337285133992,
+      "Tag": "Top Right Wall",
+      "Transform": {
+        "Position": [
+          13.5,
           -15.0,
           1.0
         ],
@@ -374,12 +310,12 @@
       }
     },
     {
-      "UUID": 13645769869862282831,
-      "Tag": "Top Wall",
+      "UUID": 11791751655222929567,
+      "Tag": "Bottom Wall",
       "Transform": {
         "Position": [
-          -14.0,
-          -27.0,
+          -14.100000381469727,
+          15.0,
           1.0
         ],
         "Rotation": 0.0,
@@ -407,7 +343,81 @@
           0.0
         ],
         "Static": true,
-        "Response Type": 1
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 18384245754671989583,
+      "Tag": "Bottom Left Wall",
+      "Transform": {
+        "Position": [
+          -23.5,
+          3.427267074584961e-07,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          10.0,
+          15.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 15253827749003107492,
+      "Tag": "Bottom Right Wall",
+      "Transform": {
+        "Position": [
+          13.5,
+          0.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          10.0,
+          15.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
       }
     }
   ]

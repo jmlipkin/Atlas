@@ -38,9 +38,8 @@ void PropertiesPanel::onImGuiRender(Entity& selection) {
 	}
 
 	m_animationEditor.onImGuiRender();
-	if (m_selectionType == SelectionType::AnimationClip && m_animationEditor.isClipNameChanged()) {
+	if (m_selectionType == SelectionType::AnimationClip && m_animationEditor.isClipNameChanged())
 		m_selectedClip = m_animationEditor.getClipName();
-	}
 
 	ImGui::End();
 }
@@ -49,320 +48,198 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 	auto& UUID = entity.getComponent<Component::UUID>().id;
 	ImGui::Text("UUID: 0x%016llX", (uint64_t)UUID);
 
-	ImVec2 componentSpacer = {0, 16.0f * EditorWidgets::displayScale};
+	const float	 columnWidth	 = 100.0f;
+	const float	 valueWidth		 = 85.0f;
+	const ImVec2 componentSpacer = {0, 16.0f * EditorWidgets::displayScale};
+	const ImVec2 padding4		 = {0, 4.0f * EditorWidgets::displayScale};
 
-	drawComponent<Component::Transform>("Transform", entity, [this, &entity, componentSpacer](auto& component) {
-		float columnWidth = 85.0f;
-		float valueWidth  = 50.0f;
-
+	// -------------------------------------------------------------------------
+	drawComponent<Component::Transform>("Transform", entity, [this, &entity, componentSpacer, padding4, columnWidth, valueWidth](auto& component) {
 		glm::vec2 position = {component.position.x, component.position.y};
-		if (EditorWidgets::drawVec2Control<glm::vec2>("Position", position, 0.0f, 0.0f, columnWidth, valueWidth)) {
+		if (EditorWidgets::drawVec2Control<glm::vec2>("Position", position, columnWidth, valueWidth, 0, 0, true))
 			component.position = {position, component.position.z};
-		}
 
 		if (entity.hasComponent<Component::Sprite>()) {
 			glm::vec2 origin = System::Transformation::getCenter2D(entity);
-			if (EditorWidgets::drawVec2Control<glm::vec2>("Origin", origin, 0.0f, 0.0f, columnWidth, valueWidth)) {
+			if (EditorWidgets::drawVec2Control<glm::vec2>("Origin", origin, columnWidth, valueWidth))
 				System::Transformation::setCenter(entity, {origin.x, origin.y});
-			}
 		}
 
-		ImGui::Dummy(ImVec2(0, 4.0f * EditorWidgets::displayScale));
-
-		float lineHeight  = ImGui::GetFrameHeight();
-		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
-
-		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, columnWidth);
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
-		ImGui::Text("Depth");
-		ImGui::NextColumn();
-
-		ImGuiIO io		   = ImGui::GetIO();
-		ImFont* boldFont   = io.Fonts->Fonts[0];
-		ImVec2	buttonSize = {lineHeight, lineHeight};
-
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
-		ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::purple);
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::purpleLight);
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::purpleActive);
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("Z", buttonSize)) component.position.z = 1.0f;
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(valueWidth);
-		ImGui::DragFloat("##Z", &component.position.z, 0.1f, 0.0f, 0.0f, "%.2f");
-		ImGui::PopItemWidth();
-		ImGui::PopStyleVar();
-		ImGui::Columns(1);
+		EditorWidgets::drawFloatControl("Depth", component.position.z, "D", columnWidth, valueWidth, 1.0f);
 		ImGui::Dummy(componentSpacer);
 	});
 
-	drawComponent<Component::Sprite>("Sprite", entity, [this, componentSpacer](auto& component) {
+	// -------------------------------------------------------------------------
+	drawComponent<Component::Sprite>("Sprite", entity, [this, componentSpacer, padding4, columnWidth, valueWidth](auto& component) {
 		SubTextureSpecification& specs	  = component.specs;
 		const std::string&		 filepath = ProjectManager::toRelativePath(component.texturePath);
 
-		float changeButtonWidth = 62.0f;
-		float padding			= 4.0f;
-		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - padding * 2.0f;
+		float changeButtonWidth = 62.0f * EditorWidgets::displayScale;
+		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - 8.0f * EditorWidgets::displayScale;
 
 		std::string displayPath = filepath.empty() ? "No texture" : filepath;
 		if (!filepath.empty() && ImGui::CalcTextSize(filepath.c_str()).x > maxWidth) {
 			std::string truncated = std::filesystem::path(filepath).filename().string();
-			while (!truncated.empty() &&
-				   ImGui::CalcTextSize((truncated + "...").c_str()).x > maxWidth) {
+			while (!truncated.empty() && ImGui::CalcTextSize((truncated + "...").c_str()).x > maxWidth)
 				truncated.pop_back();
-			}
 			displayPath = truncated + "...";
 		}
 
 		ImGui::Text("%s", displayPath.c_str());
-		if (ImGui::IsItemHovered() && !filepath.empty()) {
+		if (ImGui::IsItemHovered() && !filepath.empty())
 			ImGui::SetTooltip("%s", filepath.c_str());
-		}
 
 		ImGui::SameLine();
-
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - padding);
-
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f * EditorWidgets::displayScale);
 		if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0))) {
 			component.texturePath = Platform::openFileDialog("png");
 			ProjectManager::saveScene(m_scene);
 		}
-		ImGui::Dummy(ImVec2(0, padding));
+
+		ImGui::Dummy(padding4);
 
 		bool changed = false;
-
-		float columnWidth = 85.0f;
-		float valueWidth  = 50.0f;
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size", specs.sizeInTiles, 0, 0, columnWidth, valueWidth);
-
-		changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Index", specs.index, 0, 0, columnWidth, valueWidth);
-
-		ImGui::Dummy(ImVec2(0, padding));
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size", specs.sizeInTiles, columnWidth, valueWidth, 1, 1);
+		changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Index", specs.index, columnWidth, valueWidth);
 
 		if (changed) {
 			component.recalculateCoordinates();
 			ProjectManager::saveScene(m_scene);
 		}
+
 		ImGui::Dummy(componentSpacer);
 	});
 
-	drawComponent<Component::Tilemap>("Tile Map", entity, [this, &entity, componentSpacer](auto& component) {
-		bool  changed	  = false;
-		float columnWidth = 85.0f;
-		float valueWidth  = 50.0f;
-
-		float lineHeight  = ImGui::GetFrameHeight();
-		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+	// -------------------------------------------------------------------------
+	drawComponent<Component::Tilemap>("Tile Map", entity, [this, &entity, componentSpacer, padding4, columnWidth, valueWidth](auto& component) {
+		bool changed = false;
 
 		if (component.tileset.empty()) {
 			if (m_firstOpenedTilemap) {
 				auto names = Platform::getFileList(ProjectManager::getActiveProject()->getDirectory(), ".attileset");
-				for (auto& name : names) {
+				for (auto& name : names)
 					name = std::filesystem::path(ProjectManager::toRelativePath(name)).stem().string();
-				}
 				m_availableTilesets	 = names;
 				m_firstOpenedTilemap = false;
 			}
+
 			if (ImGui::BeginCombo("##tilesetpicker", "Select Tileset...")) {
 				for (auto& tileset : m_availableTilesets) {
 					if (ImGui::Selectable(tileset.c_str())) {
 						component.tileset = tileset;
-						ProjectManager::saveScene(m_scene);
-						changed = true;
+						changed			  = true;
 					}
 				}
 				if (ImGui::Button("Create New Tileset")) {
-					std::string defaultDir = "";
-					if (ProjectManager::getActiveProject()) {
-						defaultDir = ProjectManager::getActiveProject()->getData().src_directory;
-					}
-					std::string path = Platform::saveFileDialog("attileset", defaultDir);
-
+					std::string defaultDir = ProjectManager::getActiveProject() ? ProjectManager::getActiveProject()->getData().src_directory : "";
+					std::string path	   = Platform::saveFileDialog("attileset", defaultDir);
 					if (!path.empty()) {
-						std::string tilesetName = std::filesystem::path(path).stem().string();
-						ProjectManager::createTileset(path, tilesetName);
-						component.tileset = std::filesystem::path(ProjectManager::toRelativePath(path)).stem();
+						ProjectManager::createTileset(path, std::filesystem::path(path).stem().string());
+						component.tileset = std::filesystem::path(ProjectManager::toRelativePath(path)).stem().string();
 						changed			  = true;
 					}
 				}
 				ImGui::EndCombo();
 			}
 		} else {
+			float changeButtonWidth = 62.0f * EditorWidgets::displayScale;
 			ImGui::Text("Tileset: %s", component.tileset.c_str());
 			ImGui::SameLine();
-
-			float changeButtonWidth = 62.0f;
-			float padding			= 4.0f;
-			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - padding);
-
-			bool changing = false;
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f * EditorWidgets::displayScale);
 			if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0))) {
 				component.tileset	 = {};
 				m_firstOpenedTilemap = true;
-				changing			 = true;
 			}
+
 			ImGui::Separator();
-			ImGui::Dummy(ImVec2(0, 4.0f));
+			ImGui::Dummy(padding4);
 
 			glm::ivec2 size = component.size;
-			EditorWidgets::drawVec2Control<glm::ivec2>("Size", size, 0, 0, columnWidth, valueWidth, false);
-
-			if (size != component.size && size.x >= 0 && size.y >= 0) {
-				component.resize(size);
-				changed = true;
+			if (EditorWidgets::drawVec2Control<glm::ivec2>("Size", size, columnWidth, valueWidth)) {
+				if (size.x >= 1 && size.y >= 1) {
+					component.resize(size);
+					changed = true;
+				}
 			}
 
-			ImGui::PushID(("##" + entity.getUUID().toString() + "layer").c_str());
+			changed |= EditorWidgets::drawIntControl("Layer", component.layer, "L", columnWidth, valueWidth);
+			changed |= EditorWidgets::drawCheckbox("Debug Overlay", component.showOverlay, columnWidth);
 
-			ImGui::Columns(2);
-			ImGui::SetColumnWidth(0, columnWidth);
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
-			ImGui::Text("Layer");
-			ImGui::NextColumn();
-			ImGui::SetColumnWidth(1, 40.0f * EditorWidgets::displayScale);
-
-			changed |= ImGui::DragInt("", &component.layer);
-
-			ImGui::Columns(1);
-
-			ImGui::Checkbox("Debug Overlay", &component.showOverlay);
-
-			ImGui::PopID();
+			ImGui::Dummy(padding4);
+			if (ImGui::Button("Open Tilemap Editor"))
+				m_tilemapEditorShouldOpen = true;
 		}
 
-		if (changed) {
+		if (changed)
 			ProjectManager::saveScene(m_scene);
-		}
 
 		ImGui::Dummy(componentSpacer);
 	});
 
-	drawComponent<Component::Collider>("Collider", entity, [this, &entity, componentSpacer](auto& component) {
-		ImGui::Checkbox("Show Debug", &m_showCollider);
+	// -------------------------------------------------------------------------
+	drawComponent<Component::Collider>("Collider", entity, [this, &entity, componentSpacer, columnWidth, valueWidth](auto& component) {
+		bool changed = false;
 
-		bool  changed	  = false;
-		float columnWidth = 85.0f;
-		float valueWidth  = 50.0f;
+		changed |= EditorWidgets::drawCheckbox("Show Debug", m_showCollider, columnWidth);
+		changed |= EditorWidgets::drawCheckbox("Trigger", component.isTrigger, columnWidth);
 
-		float lineHeight  = ImGui::GetFrameHeight();
-		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
-
-		changed |= ImGui::Checkbox("Trigger", &component.isTrigger);
-
-		ImGui::PushID(("##" + entity.getUUID().toString() + "Shape").c_str());
-
-		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, columnWidth);
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
-		ImGui::Text("Shape");
-		ImGui::NextColumn();
-
-		ImGui::PushItemWidth(columnWidth);
-		static const char* items[] = {"AABB", "Circle"};
-		int				   value   = (int)component.shape;
-		if (ImGui::Combo("##Shape", &value, items, IM_ARRAYSIZE(items))) {
-			component.shape = (ColliderShape)value;
+		static const char* shapeItems[] = {"AABB", "Circle"};
+		int				   shapeValue	= (int)component.shape;
+		if (EditorWidgets::drawCombo("Shape", shapeItems, 2, shapeValue, columnWidth, columnWidth)) {
+			component.shape = (ColliderShape)shapeValue;
 			changed			= true;
 		}
-		ImGui::PopItemWidth();
 
-		ImGui::Columns(1);
+		EditorWidgets::drawVec2Control<glm::vec2>("Offset", component.offset, columnWidth, valueWidth);
 
-		ImGui::PopID();
-		ImGui::PushID(("##" + entity.getUUID().toString() + "Size").c_str());
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Offset", component.offset, 0, 0, columnWidth, valueWidth, false);
 		if (component.shape == ColliderShape::AABB) {
-			changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size", component.size.AABB, 0, 0, columnWidth, valueWidth);
+			changed |= EditorWidgets::drawVec2Control<glm::vec2>("Size", component.size.AABB, columnWidth, valueWidth);
 		} else {
-			ImGui::Columns(2);
-			ImGui::SetColumnWidth(0, columnWidth);
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
-			ImGui::Text("Radius");
-			ImGui::NextColumn();
-			ImGuiIO io		   = ImGui::GetIO();
-			ImFont* boldFont   = io.Fonts->Fonts[0];
-			ImVec2	buttonSize = {lineHeight, lineHeight};
-
-			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
-			ImGui::PushStyleColor(ImGuiCol_Button, EditorWidgets::purple);
-			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, EditorWidgets::purpleLight);
-			ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::purpleActive);
-			ImGui::PushFont(boldFont);
-			if (ImGui::Button("R", buttonSize)) component.size.radius = 1.0f;
-			ImGui::PopFont();
-			ImGui::PopStyleColor(3);
-			ImGui::SameLine();
-			ImGui::PushItemWidth(valueWidth);
-			ImGui::DragFloat("##Z", &component.size.radius, 0.1f, 0.0f, 0.0f, "%.2f");
-			ImGui::PopItemWidth();
-			ImGui::PopStyleVar();
-			ImGui::Columns(1);
+			changed |= EditorWidgets::drawFloatControl("Radius", component.size.radius, "R", 1.0f, 0.1f, columnWidth);
 		}
 
-		ImGui::PopID();
-
-		if (changed) {
+		if (changed)
 			ProjectManager::saveScene(m_scene);
-		}
+
 		ImGui::Dummy(componentSpacer);
 	});
 
-	drawComponent<Component::RigidBody>("RigidBody", entity, [this, &entity, componentSpacer](auto& component) {
-		bool  changed	  = false;
-		float columnWidth = 85.0f;
-		float valueWidth  = 50.0f;
+	// -------------------------------------------------------------------------
+	drawComponent<Component::RigidBody>("RigidBody", entity, [this, &entity, componentSpacer, columnWidth, valueWidth](auto& component) {
+		bool changed = false;
 
-		float lineHeight  = ImGui::GetFrameHeight();
-		float totalHeight = lineHeight + 2.0f * ImGui::GetStyle().ItemSpacing.y;
+		changed |= EditorWidgets::drawCheckbox("Static", component.isStatic, columnWidth);
 
-		changed |= ImGui::Checkbox("Static", &component.isStatic);
-
-		ImGui::PushID(("##" + entity.getUUID().toString() + "Shape").c_str());
-
-		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, 120);
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (totalHeight - lineHeight) * 0.5f);
-		ImGui::Text("Response Type");
-		ImGui::NextColumn();
-
-		ImGui::PushItemWidth(columnWidth);
-		static const char* items[] = {"None", "Discrete"};
-		int				   value   = (int)component.responseType;
-		if (ImGui::Combo("##ResponseType", &value, items, IM_ARRAYSIZE(items))) {
-			component.responseType = (CollisionResponse)value;
+		static const char* responseItems[] = {"None", "Discrete"};
+		int				   responseValue   = (int)component.responseType;
+		if (EditorWidgets::drawCombo("Response Type", responseItems, 2, responseValue, columnWidth, columnWidth)) {
+			component.responseType = (CollisionResponse)responseValue;
 			changed				   = true;
 		}
-		ImGui::PopItemWidth();
 
-		ImGui::Columns(1);
+		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Velocity", component.velocity, columnWidth, valueWidth);
 
-		ImGui::PopID();
-
-		changed |= EditorWidgets::drawVec2Control<glm::vec2>("Velocity", component.velocity, 0, 0, columnWidth, valueWidth);
-
-		if (changed) {
+		if (changed)
 			ProjectManager::saveScene(m_scene);
-		}
+
 		ImGui::Dummy(componentSpacer);
 	});
 
+	// -------------------------------------------------------------------------
 	drawComponent<Component::Animations>("Animations", entity, [this, componentSpacer](auto& component) {
-		if (ImGui::Button("Add clip")) {
-			AnimationClip clip;
+		if (ImGui::Button("Add Clip")) {
 			if (!component.clips.contains("Unnamed animation")) {
-				component.clips["Unnamed animation"] = clip;
+				component.clips["Unnamed animation"] = AnimationClip{};
 				m_selectedClip						 = "Unnamed animation";
 				m_renameTarget						 = "Unnamed animation";
 				m_selectionType						 = SelectionType::AnimationClip;
 				m_focusRenameCursor					 = 2;
 				ProjectManager::saveScene(m_scene);
 			} else {
-				AT_CORE_WARN("Clips cannot shared the same name!\n\t\tSolution: Provide a name for clip: \"Unnamed animation\"");
+				AT_CORE_WARN("Clips cannot share the same name. Rename \"Unnamed animation\" first.");
 			}
 		}
+
 		if (component.clips.empty()) {
 			ImGui::Text("No clips exist!");
 		}
@@ -370,14 +247,13 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 		for (auto& [clipName, clip] : component.clips) {
 			std::string editableName = clipName;
 			drawClipLabel(editableName, SelectionType::AnimationClip);
+
 			if (!m_renamedClip.empty() && clipName == m_selectedClip && !component.clips.contains(m_renamedClip)) {
 				auto node  = component.clips.extract(clipName);
 				node.key() = m_renamedClip;
 				component.clips.insert(std::move(node));
-
-				if (component.activeClip == clipName) {
+				if (component.activeClip == clipName)
 					component.activeClip = m_renamedClip;
-				}
 				m_selectedClip = m_renamedClip;
 				m_animationEditor.setClipName(m_renamedClip);
 				m_renamedClip = {};
@@ -386,12 +262,10 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			}
 
 			if (!m_clipToDelete.empty()) {
-				if (component.clips.contains(m_clipToDelete)) {
+				if (component.clips.contains(m_clipToDelete))
 					component.clips.erase(m_clipToDelete);
-				}
-				if (m_selectedClip == m_clipToDelete) {
+				if (m_selectedClip == m_clipToDelete)
 					m_selectedClip = {};
-				}
 				m_clipToDelete = {};
 				ProjectManager::saveScene(m_scene);
 				break;
@@ -421,42 +295,31 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 					}
 				}
 				if (ImGui::Button("Create New Script")) {
-					std::string defaultDir = "";
-					if (ProjectManager::getActiveProject()) {
-						defaultDir = ProjectManager::getActiveProject()->getData().src_directory;
-					}
-					std::string path = Platform::saveFileDialog("h", defaultDir);
-
+					std::string defaultDir = ProjectManager::getActiveProject() ? ProjectManager::getActiveProject()->getData().src_directory : "";
+					std::string path	   = Platform::saveFileDialog("h", defaultDir);
 					if (!path.empty()) {
 						std::string className = std::filesystem::path(path).stem().string();
 						Behavior::generateNewScript(path);
 						Platform::openFile(path);
-
-						if (m_onNewScript) {
+						if (m_onNewScript)
 							m_onNewScript(entity, className);
-						}
 					}
 				}
 				ImGui::EndCombo();
 			}
 		} else {
+			float changeButtonWidth = 62.0f * EditorWidgets::displayScale;
 			ImGui::Text("Active Script: %s", component.instance->getTypeName().c_str());
 			ImGui::SameLine();
-
-			float changeButtonWidth = 62.0f;
-			float padding			= 4.0f;
-			float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - padding * 2.0f;
-			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - padding);
-
-			bool changing = false;
-			if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0))) {
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f * EditorWidgets::displayScale);
+			if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0)))
 				component.instance = nullptr;
-				changing		   = true;
-			}
-			ImGui::Separator();
-			ImGui::Dummy(ImVec2(0, 4.0f));
 
-			if (!changing) drawScriptProperties(*component.instance.get());
+			ImGui::Separator();
+			ImGui::Dummy(ImVec2(0, 4.0f * EditorWidgets::displayScale));
+
+			if (component.instance)
+				drawScriptProperties(*component.instance);
 		}
 	});
 }
@@ -469,21 +332,18 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 		tree_flags |= ImGuiTreeNodeFlags_Selected;
 		m_selectionType = type;
 
-		bool panelFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
-		if (!panelFocused) {
+		if (!ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows)) {
 			wasDimmed = true;
-			// Dimmed selection color when panel is inactive
 			ImGui::PushStyleColor(ImGuiCol_HeaderActive, EditorWidgets::green);
-			ImGui::PushStyleColor(ImGuiCol_Header, EditorWidgets::greenSub);  // greenSub dimmed
+			ImGui::PushStyleColor(ImGuiCol_Header, EditorWidgets::greenSub);
 			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(EditorWidgets::greenSub.x, EditorWidgets::greenSub.y, EditorWidgets::greenSub.z, EditorWidgets::greenSub.w * 0.5f));
 		}
 	}
 
 	bool opened = false;
 	if (clip == m_renameTarget) {
-		if (m_focusRenameCursor == 2) {
+		if (m_focusRenameCursor == 2)
 			m_renameBuffer = clip;
-		}
 		if (m_focusRenameCursor > 0) {
 			ImGui::SetKeyboardFocusHere();
 			m_focusRenameCursor--;
@@ -505,121 +365,84 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 
 	if (wasDimmed) ImGui::PopStyleColor(3);
 
-	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
-		m_renameTarget		= clip;
-		m_focusRenameCursor = 2;
-	}
-
-	if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0)) {
-		m_selectedClip	= clip;
-		m_selectionType = type;
-		if (type == SelectionType::AnimationClip) {
-			m_animationEditorShouldOpen = true;
+	if (ImGui::IsItemHovered()) {
+		if (ImGui::IsMouseDoubleClicked(0)) {
+			m_renameTarget		= clip;
+			m_focusRenameCursor = 2;
+		}
+		if (ImGui::IsMouseClicked(0)) {
+			m_selectedClip				= clip;
+			m_selectionType				= type;
+			m_animationEditorShouldOpen = (type == SelectionType::AnimationClip);
 		}
 	}
 
-	if (ImGui::IsItemClicked()) {
+	if (ImGui::IsItemClicked())
 		m_selectedClip = clip;
-	}
 
 	if (clip == m_renameTarget && ImGui::IsItemDeactivated()) {
 		m_renameTarget = {};
 		ProjectManager::saveScene(m_scene);
 	}
 
-	bool clipDeleted = false;
 	if (ImGui::BeginPopupContextItem()) {
 		if (ImGui::MenuItem("Rename")) {
 			m_renameTarget		= clip;
 			m_focusRenameCursor = 2;
 		}
 		if (ImGui::MenuItem("Delete"))
-			clipDeleted = true;
+			m_clipToDelete = clip;
 		ImGui::EndPopup();
 	}
 
-	if (opened) {
+	if (opened)
 		ImGui::TreePop();
-	}
-
-	if (clipDeleted) {
-		m_clipToDelete = clip;
-	}
 }
 
 void PropertiesPanel::drawScriptProperties(Behavior& behavior) {
-	auto& properties = behavior.getProperties();
-	for (auto& [name, property] : properties) {
-		float maxWidth = 85.0f;
+	auto&		properties	= behavior.getProperties();
+	const float columnWidth = 100.0f;
 
+	for (auto& [name, property] : properties) {
 		ImGui::PushID((name + property.name).c_str());
 
-		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, maxWidth);
+		drawScriptProperty(name.c_str(), property);
 
-		std::string label = name;
-		if (ImGui::CalcTextSize(name.c_str()).x > maxWidth) {
-			while (!label.empty() &&
-				   ImGui::CalcTextSize((label + "...").c_str()).x > maxWidth) {
-				label.pop_back();
-			}
-			label = label + "...";
-		}
-
-		ImGui::Text("%s", label.c_str());
-		if (ImGui::IsItemHovered()) {
-			ImGui::SetTooltip("%s", name.c_str());
-		}
-
-		ImGui::NextColumn();
-
-		drawScriptProperty(property);
-
-		ImGui::Columns(1);
 		ImGui::PopID();
 	}
 }
 
-void PropertiesPanel::drawScriptProperty(Behavior::Property& property) {
+void PropertiesPanel::drawScriptProperty(const char* label, Behavior::Property& property) {
 	bool changed = false;
+	ImGui::SetNextItemWidth(-1);
 	switch (property.type) {
 		case BehaviorPropertyType::BOOL: {
-			changed = ImGui::Checkbox(("##" + property.name).c_str(), (bool*)property.valuePtr);
-			break;
-		}
-		case BehaviorPropertyType::CHAR: {
+			changed = EditorWidgets::drawCheckbox(label, *(bool*)property.valuePtr);
 			break;
 		}
 		case BehaviorPropertyType::STRING: {
-			changed = ImGui::InputText(("##" + property.name).c_str(), (std::string*)property.valuePtr);
+			changed = ImGui::InputText(label, (std::string*)property.valuePtr);
 			break;
 		}
 		case BehaviorPropertyType::INT: {
-			changed = ImGui::DragInt(("##" + property.name).c_str(), (int*)property.valuePtr);
+			changed = EditorWidgets::drawIntControl(label, *(int*)property.valuePtr);
 			break;
 		}
 		case BehaviorPropertyType::FLOAT: {
-			changed = ImGui::DragFloat(("##" + property.name).c_str(), (float*)property.valuePtr);
+			changed = EditorWidgets::drawFloatControl(label, *(float*)property.valuePtr);
 			break;
 		}
 		case BehaviorPropertyType::VEC2: {
-			changed = EditorWidgets::drawVec2Control(("##" + property.name).c_str(), *(glm::vec2*)property.valuePtr, 0, 0, 0);
-			break;
-		}
+			changed = EditorWidgets::drawVec2Control(label, *(glm::vec2*)property.valuePtr);
+		} break;
 		case BehaviorPropertyType::VEC3: {
-			changed = EditorWidgets::drawVec3Control(("##" + property.name).c_str(), *(glm::vec3*)property.valuePtr, 0, 0, 0, 0);
+			changed = EditorWidgets::drawVec3Control(label, *(glm::vec3*)property.valuePtr);
+		} break;
+		default:
 			break;
-		}
-		case BehaviorPropertyType::VEC4: {
-			break;
-		}
-		case BehaviorPropertyType::MAT4: {
-			break;
-		}
 	}
-	if (changed) {
+	if (changed)
 		ProjectManager::saveScene(m_scene);
-	}
 }
 
 }  // namespace Atlas
