@@ -20,6 +20,8 @@ class Entity {
 
 	UUID getUUID() const { return m_atlasID; }
 
+	inline const std::string& name() { return getComponent<Component::Tag>().tag; };
+
 	template <typename T, typename... Args>
 	T& addComponent(Args&&... args);
 

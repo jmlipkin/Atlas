@@ -88,7 +88,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			e["UUID"] = (uint64_t)entity.getComponent<Component::UUID>().id;
 		}
 		if (entity.hasComponent<Component::Tag>()) {
-			e["Tag"] = entity.getComponent<Component::Tag>().tag;
+			e["Tag"] = entity.name();
 		}
 		if (entity.hasComponent<Component::Transform>()) {
 			Component::Transform& transform = entity.getComponent<Component::Transform>();

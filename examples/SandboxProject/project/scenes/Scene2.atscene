@@ -18,11 +18,7 @@
       },
       "Sprite": {
         "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Tile Size": [
-          8.0,
-          8.0
-        ],
-        "Size (in Tiles)": [
+        "Size": [
           56.0,
           31.0
         ],

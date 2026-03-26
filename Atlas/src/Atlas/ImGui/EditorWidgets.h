@@ -85,15 +85,15 @@ class EditorWidgets {
 		bool  changed	 = false;
 		float buttonSize = ImGui::GetFrameHeight();
 		float spacing	 = ImGui::GetStyle().ItemInnerSpacing.x;
-		float pairWidth	 = buttonSize + (valueWidth * displayScale);
+		float pairWidth	 = buttonSize + (valueWidth /* * displayScale */);
 		float totalWidth = vertical ? pairWidth : (pairWidth * 2.0f + spacing);
 
 		ImGui::PushID(label);
 		if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-			ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
+			ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
 			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, totalWidth);
 			ImGui::TableNextRow();
-			drawLabel(label, columnWidth * displayScale);
+			drawLabel(label, columnWidth /* * displayScale */);
 			float lineHeight = ImGui::GetFrameHeight();
 			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
 			ImGui::PushStyleColor(ImGuiCol_Button, steelBlue);
@@ -105,7 +105,7 @@ class EditorWidgets {
 			}
 			ImGui::PopStyleColor(3);
 			ImGui::SameLine();
-			ImGui::SetNextItemWidth(valueWidth * displayScale - lineHeight);
+			ImGui::SetNextItemWidth(valueWidth /* * displayScale */ - lineHeight);
 			if constexpr (std::is_same_v<T, glm::ivec2>) {
 				changed |= ImGui::DragInt("##X", &values.x, 1, 0, 0, "%d");
 			} else {
@@ -127,7 +127,7 @@ class EditorWidgets {
 			}
 			ImGui::PopStyleColor(3);
 			ImGui::SameLine();
-			ImGui::SetNextItemWidth(valueWidth * displayScale - lineHeight);
+			ImGui::SetNextItemWidth(valueWidth /* * displayScale */ - lineHeight);
 			if constexpr (std::is_same_v<T, glm::ivec2>) {
 				changed |= ImGui::DragInt("##Y", &values.y, 1, 0, 0, "%d");
 			} else {

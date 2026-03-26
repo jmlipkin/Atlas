@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AnimationClipPanel.h"
+#include "TilemapEditorPanel.h"
 
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Behavior.h"
@@ -104,8 +105,9 @@ class PropertiesPanel {
 	NewScriptCallback m_onNewScript;
 
 	std::vector<std::string> m_availableTilesets;
-	bool					 m_firstOpenedTilemap	   = false;
-	bool					 m_tilemapEditorShouldOpen = false;
+	TilemapEditorPanel		 m_tilemapEditorPanel;
+
+	bool m_firstOpenedTilemap = false;
 };
 
 }  // namespace Atlas

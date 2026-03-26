@@ -37,6 +37,8 @@ void PropertiesPanel::onImGuiRender(Entity& selection) {
 		m_focusRenameCursor = 2;
 	}
 
+	m_tilemapEditorPanel.onImGuiRender();
+
 	m_animationEditor.onImGuiRender();
 	if (m_selectionType == SelectionType::AnimationClip && m_animationEditor.isClipNameChanged())
 		m_selectedClip = m_animationEditor.getClipName();
@@ -167,7 +169,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 			ImGui::Dummy(padding4);
 			if (ImGui::Button("Open Tilemap Editor"))
-				m_tilemapEditorShouldOpen = true;
+				m_tilemapEditorPanel.open(&component, &entity);
 		}
 
 		if (changed)

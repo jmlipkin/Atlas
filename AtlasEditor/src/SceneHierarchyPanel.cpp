@@ -175,7 +175,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 			entity.addComponent<Component::Animations>();
 			autoSave();
 		} else {
-			AT_CORE_WARN("Entity \"{}\" already has Animations component!", entity.getComponent<Component::Tag>().tag);
+			AT_CORE_WARN("Entity \"{}\" already has Animations component!", entity.name());
 		}
 	}
 
@@ -184,7 +184,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 			entity.addComponent<Component::Collider>();
 			autoSave();
 		} else {
-			AT_CORE_WARN("Entity \"{}\" already has Collider component!", entity.getComponent<Component::Tag>().tag);
+			AT_CORE_WARN("Entity \"{}\" already has Collider component!", entity.name());
 		}
 	}
 
@@ -194,7 +194,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 			entity.addComponent<Component::Sprite>(filepath, SubTextureSpecification{});
 			autoSave();
 		} else {
-			AT_CORE_WARN("Entity \"{}\" already has Sprite component!", entity.getComponent<Component::Tag>().tag);
+			AT_CORE_WARN("Entity \"{}\" already has Sprite component!", entity.name());
 		}
 	}
 
@@ -203,7 +203,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 			entity.addComponent<Component::RigidBody>();
 			autoSave();
 		} else {
-			AT_CORE_WARN("Entity \"{}\" already has RigidBody component!", entity.getComponent<Component::Tag>().tag);
+			AT_CORE_WARN("Entity \"{}\" already has RigidBody component!", entity.name());
 		}
 	}
 
@@ -212,7 +212,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 			entity.addComponent<Component::Script>();
 			autoSave();
 		} else {
-			AT_CORE_WARN("Entity \"{}\" already has Script component!", entity.getComponent<Component::Tag>().tag);
+			AT_CORE_WARN("Entity \"{}\" already has Script component!", entity.name());
 		}
 	}
 
@@ -222,7 +222,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 			m_propertiesPanel.setTilemapOpenState(true);
 			autoSave();
 		} else {
-			AT_CORE_WARN("Entity \"{}\" already has Tilemap component!", entity.getComponent<Component::Tag>().tag);
+			AT_CORE_WARN("Entity \"{}\" already has Tilemap component!", entity.name());
 		}
 	}
 }

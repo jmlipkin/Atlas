@@ -20,10 +20,10 @@ bool EditorWidgets::drawIntControl(const char* label, int& value, const char* re
 	bool changed = false;
 	ImGui::PushID(label);
 	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
-		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth * displayScale);
+		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
+		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth /* * displayScale */);
 		ImGui::TableNextRow();
-		drawLabel(label, columnWidth * displayScale);
+		drawLabel(label, columnWidth /* * displayScale */);
 		float lineHeight = ImGui::GetFrameHeight();
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
 		ImGui::PushStyleColor(ImGuiCol_Button, purple);
@@ -35,7 +35,7 @@ bool EditorWidgets::drawIntControl(const char* label, int& value, const char* re
 		}
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
-		ImGui::SetNextItemWidth(valueWidth * displayScale - lineHeight);
+		ImGui::SetNextItemWidth(valueWidth /* * displayScale */ - lineHeight);
 		changed |= ImGui::DragInt("##v", &value);
 		ImGui::PopStyleVar();
 		ImGui::EndTable();
@@ -48,10 +48,10 @@ bool EditorWidgets::drawFloatControl(const char* label, float& value, const char
 	bool changed = false;
 	ImGui::PushID(label);
 	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
-		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth * displayScale);
+		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
+		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth /* * displayScale */);
 		ImGui::TableNextRow();
-		drawLabel(label, columnWidth * displayScale);
+		drawLabel(label, columnWidth /* * displayScale */);
 		float lineHeight = ImGui::GetFrameHeight();
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
 		ImGui::PushStyleColor(ImGuiCol_Button, purple);
@@ -76,10 +76,10 @@ bool EditorWidgets::drawCheckbox(const char* label, bool& value, float columnWid
 	bool changed = false;
 	ImGui::PushID(label);
 	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
+		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
 		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthStretch);
 		ImGui::TableNextRow();
-		drawLabel(label, columnWidth * displayScale);
+		drawLabel(label, columnWidth /* * displayScale */);
 		changed = ImGui::Checkbox("##v", &value);
 		ImGui::EndTable();
 	}
@@ -91,10 +91,10 @@ bool EditorWidgets::drawCombo(const char* label, const char** items, int count, 
 	bool changed = false;
 	ImGui::PushID(label);
 	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth * displayScale);
-		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth * displayScale);
+		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
+		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth /* * displayScale */);
 		ImGui::TableNextRow();
-		drawLabel(label, columnWidth * displayScale);
+		drawLabel(label, columnWidth /* * displayScale */);
 		ImGui::SetNextItemWidth(-1);
 		changed = ImGui::Combo("##v", &value, items, count);
 		ImGui::EndTable();
@@ -204,7 +204,7 @@ void EditorWidgets::DrawPanelAccentBar(PanelAccent color, bool onlyWhenFocused) 
 	ImVec2		sz	= ImGui::GetWindowSize();
 	dl->AddRectFilled(
 		ImVec2(pos.x, pos.y),
-		ImVec2(pos.x + 1.5f * displayScale, pos.y + sz.y),
+		ImVec2(pos.x + 1.5f /* * displayScale */, pos.y + sz.y),
 		getAccentColor(color));
 }
 
