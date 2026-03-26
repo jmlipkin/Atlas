@@ -1,3 +1,4 @@
 {
-  "Name": "PacManBoard"
+  "Name": "PacManBoard",
+  "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png"
 }

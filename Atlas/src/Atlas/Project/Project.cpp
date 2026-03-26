@@ -2,6 +2,7 @@
 #include "Project.h"
 
 #include "Atlas/Core/Platform.h"
+#include "Atlas/Core/AssetManager.h"
 #include "Atlas/Core/ScriptRegistry.h"
 #include "Atlas/Project/Serializer.h"
 #include "Atlas/Scene/Scene.h"
@@ -216,14 +217,16 @@ std::shared_ptr<Tileset> ProjectManager::createTileset(const std::string& filepa
 }
 
 std::shared_ptr<Tileset> ProjectManager::loadTileset(const std::string& filepath) {
-	std::string name = std::filesystem::path(filepath).filename().stem().string();
+	std::string name = std::filesystem::path(filepath).stem().string();
 
-	std::shared_ptr<Tileset> tileset = std::make_shared<Tileset>(name, filepath);
-
-	tileset->setPath(filepath);
+	std::shared_ptr<Tileset> tileset = AssetManager::loadTileset(name, filepath);
 	Serializer::deserializeTileset(tileset);
 
 	return tileset;
+}
+
+void ProjectManager::saveTileset(std::shared_ptr<Tileset> tileset) {
+	Serializer::serializeTileset(tileset);
 }
 
 void ProjectManager::setActiveScene(std::shared_ptr<Scene> scene) {

@@ -23,7 +23,7 @@ struct ProjectData {
 	std::string				 startup_scene;
 	std::string				 last_active_scene = "";
 
-	int tileSize = 16;
+	int tileSize	  = 16;
 	int pixelsPerUnit = 16;
 
 	ProjectData(std::string Name = "UnnamedProject", std::string load_scene = "") : name(Name), startup_scene(load_scene), scripts_target(name + "Scripts") {
@@ -82,6 +82,11 @@ class ProjectManager {
 
 	static std::shared_ptr<Tileset> createTileset(const std::string& filepath, const std::string& name);
 	static std::shared_ptr<Tileset> loadTileset(const std::string& filepath);
+	static void saveTileset(std::shared_ptr<Tileset> tileset);
+
+	static std::string tilesetPath(const std::string& name) {
+		return getActiveProject()->getDirectory() + "/tilesets/" + name + ".attileset";
+	}
 
 	static std::shared_ptr<Project> getActiveProject() { return s_activeProject; }
 	static void						setActiveScene(std::shared_ptr<Scene> scene);

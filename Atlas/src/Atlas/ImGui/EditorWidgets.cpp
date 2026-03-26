@@ -6,6 +6,31 @@ namespace Atlas {
 
 float EditorWidgets::displayScale = 1.0f;
 
+void EditorWidgets::drawImageWithAspectRatio(void* data, float aspectRatio, bool centered) {
+	ImVec2 contentRegionAvail = ImGui::GetContentRegionAvail();
+
+	float contentRegionAspectRatio = contentRegionAvail.x / contentRegionAvail.y;
+
+	ImVec2 finalSize;
+	if (contentRegionAspectRatio > aspectRatio) {
+		finalSize.y = contentRegionAvail.y;
+		finalSize.x = finalSize.y * aspectRatio;
+	} else {
+		finalSize.x = contentRegionAvail.x;
+		finalSize.y = finalSize.x / aspectRatio;
+	}
+
+	if (centered) {
+		ImVec2 cursor_pos = ImGui::GetCursorPos();
+		ImVec2 padding;
+		padding.x = (contentRegionAvail.x - finalSize.x) * 0.5f;
+		padding.y = (contentRegionAvail.y - finalSize.y) * 0.5f;
+		ImGui::SetCursorPos(ImVec2(cursor_pos.x + padding.x, cursor_pos.y + padding.y));
+	}
+
+	ImGui::Image(data, finalSize);
+}
+
 void EditorWidgets::drawLabel(const char* label, float columnWidth) {
 	ImGui::TableSetColumnIndex(0);
 	float textWidth = ImGui::CalcTextSize(label).x;

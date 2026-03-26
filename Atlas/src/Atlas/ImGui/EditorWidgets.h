@@ -73,6 +73,8 @@ class EditorWidgets {
 	//    ImGui::End();
 	static void DrawPanelAccentBar(PanelAccent color, bool onlyWhenFocused = true);
 
+	static void drawImageWithAspectRatio(void* data, float aspectRatio, bool centered = false);
+
 	static void drawLabel(const char* label, float columnWidth);
 	static bool drawCheckbox(const char* label, bool& value, float columnWidth = 85.0f);
 	static bool drawIntControl(const char* label, int& value, const char* resetLabel = "R", float columnWidth = 85.0f, float valueWidth = 120.0f, int resetValue = 0);

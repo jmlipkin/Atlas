@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Atlas/Core/Log.h"
+#include "TilesetEditorPanel.h"
+
 #include "Atlas/Core/AssetManager.h"
+#include "Atlas/Project/Project.h"
 #include "Atlas/Renderer/Tileset.h"
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Components.h"
@@ -9,15 +11,20 @@
 #include "Atlas/ImGui/EditorWidgets.h"
 #include "imgui/imgui.h"
 
+#include <memory>
+
 namespace Atlas {
 
 class TilemapEditorPanel {
   public:
-	void open(Component::Tilemap* tilemap, Entity* entity) {
+	void open(Component::Tilemap* tilemap, std::shared_ptr<Scene> scene, Entity* entity) {
+		m_scene	  = scene;
 		m_entity  = entity;
 		m_tilemap = tilemap;
-		m_tileset = AssetManager::get<Tileset>(tilemap->tileset);
 		m_isOpen  = true;
+
+		std::string path = ProjectManager::tilesetPath(tilemap->tileset);
+		m_tileset = ProjectManager::loadTileset(path);
 	}
 
 	void onImGuiRender() {
@@ -30,6 +37,8 @@ class TilemapEditorPanel {
 
 		ImGui::End();
 		ImGui::PopStyleVar();
+
+		m_tilesetPanel.onImGuiRender();
 	}
 
 	void drawTilemapHeader() {
@@ -47,13 +56,14 @@ class TilemapEditorPanel {
 
 		float buttonHeight	= ImGui::GetFrameHeight();
 		float buttonPadding = (headerHeight - buttonHeight) * 0.5f;
-        ImGui::SameLine();
+		ImGui::SameLine();
 		ImGui::SetCursorPosY(buttonPadding);
 
 		ImGui::BeginDisabled(!ProjectManager::getActiveProject());
 
 		if (ImGui::Button("Edit Tileset")) {
-			AT_CORE_WARN("Cannot edit tilesets yet");
+			std::shared_ptr<Tileset> tileset = AssetManager::get<Tileset>(m_tilemap->tileset);
+			m_tilesetPanel.open(tileset, m_scene);
 		}
 
 		ImGui::EndDisabled();
@@ -64,10 +74,13 @@ class TilemapEditorPanel {
 	}
 
   private:
+	std::shared_ptr<Scene>	 m_scene;
 	Entity*					 m_entity;
 	Component::Tilemap*		 m_tilemap;
 	std::shared_ptr<Tileset> m_tileset;
 	bool					 m_isOpen;
+
+	TilesetEditorPanel m_tilesetPanel;
 };
 
 }  // namespace Atlas

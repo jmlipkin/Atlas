@@ -443,6 +443,8 @@ void JSONSerializer::serializeTileset(const std::shared_ptr<Tileset>& tileset) {
 	ts["Name"]	  = tileset->getName();
 	auto& tilemap = tileset->getTileset();
 
+	ts["Texture"] = tileset->getTexture();
+
 	if (tilemap.empty()) {
 		file << ts.dump(2);
 		file.close();
@@ -453,7 +455,6 @@ void JSONSerializer::serializeTileset(const std::shared_ptr<Tileset>& tileset) {
 	for (auto& [index, tile] : tilemap) {
 		json t;
 		t["Index"]		= index;
-		t["Texture"]	= tile.texturePath;
 		t["Size"]		= {tile.sizeInTiles.x, tile.sizeInTiles.y};
 		t["Grid Index"] = {tile.gridIndex.x, tile.gridIndex.y};
 		t["Solid"]		= tile.isSolid;
@@ -477,6 +478,12 @@ void JSONSerializer::deserializeTileset(std::shared_ptr<Tileset> tileset) {
 	tileset->setName(ts["Name"]);
 	auto& map = tileset->getTileset();
 
+	if (ts.contains("Texture")) {
+		std::string texPath = ProjectManager::toAbsolutePath(ts["Texture"]);
+		AssetManager::loadTexture(texPath);
+		tileset->setTexture(texPath);
+	}
+
 	if (!ts.contains("Tiles")) {
 		return;
 	}
@@ -484,7 +491,6 @@ void JSONSerializer::deserializeTileset(std::shared_ptr<Tileset> tileset) {
 	for (auto& t : ts["Tiles"]) {
 		TileDefinition tdef;
 
-		tdef.texturePath = t["Texture"];
 		tdef.sizeInTiles = glm::ivec2(t["Size"][0], t["Size"][1]);
 		tdef.gridIndex	 = glm::ivec2(t["Grid Index"][0], t["Grid Index"][1]);
 		tdef.isSolid	 = t["Solid"];

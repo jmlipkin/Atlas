@@ -202,11 +202,10 @@ void EditorLayer::onImGuiRender() {
 			std::filesystem::remove(Platform::getAppSupportPath() + "/preview.atscene");
 		}
 
-		ImVec2 previewSize = ImGui::GetContentRegionAvail();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 3.0f * EditorWidgets::displayScale);
-		previewSize.x -= 3.0f * EditorWidgets::displayScale;
-		void* texture = Application::get().getFramebuffer()->getColorTexture(0);
-		ImGui::Image(texture, previewSize);
+		std::shared_ptr<Framebuffer> fb = Application::get().getFramebuffer();
+		void* texture = fb->getColorTexture(0);
+		float aspectRatio = (float)fb->getWidth() / (float)fb->getHeight();
+		EditorWidgets::drawImageWithAspectRatio(texture, aspectRatio);
 
 		ImGui::End();
 

@@ -169,7 +169,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 			ImGui::Dummy(padding4);
 			if (ImGui::Button("Open Tilemap Editor"))
-				m_tilemapEditorPanel.open(&component, &entity);
+				m_tilemapEditorPanel.open(&component, m_scene, &entity);
 		}
 
 		if (changed)

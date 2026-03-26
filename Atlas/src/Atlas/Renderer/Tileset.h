@@ -8,7 +8,6 @@
 namespace Atlas {
 
 struct TileDefinition {
-	std::string texturePath;
 	glm::ivec2	gridIndex;	  // position in the spritesheet
 	glm::ivec2	sizeInTiles;  // usually {1,1} for most tiles
 	bool		isSolid;
@@ -22,15 +21,18 @@ class Tileset {
 
 	void setName(const std::string& name) { m_name = name; }
 	void setPath(const std::string& path) { m_filepath = path; }
-
+	void setTexture(const std::string& texturePath) { m_texturePath = texturePath; }
+	
 	std::string getName() const { return m_name; }
 	std::string getPath() const { return m_filepath; }
+	std::string getTexture() const { return m_texturePath; }
 
   private:
 	std::unordered_map<int, TileDefinition> m_tileset;
 
 	std::string m_name;
 	std::string m_filepath;
+	std::string m_texturePath;
 };
 
 }  // namespace Atlas
