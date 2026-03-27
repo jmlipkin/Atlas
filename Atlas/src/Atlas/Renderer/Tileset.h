@@ -8,9 +8,9 @@
 namespace Atlas {
 
 struct TileDefinition {
-	glm::ivec2	gridIndex;	  // position in the spritesheet
-	glm::ivec2	sizeInTiles;  // usually {1,1} for most tiles
-	bool		isSolid;
+	glm::ivec2 gridIndex;	 // position in the spritesheet
+	glm::ivec2 sizeInTiles;	 // usually {1,1} for most tiles
+	bool	   isSolid;
 };
 
 class Tileset {
@@ -22,7 +22,12 @@ class Tileset {
 	void setName(const std::string& name) { m_name = name; }
 	void setPath(const std::string& path) { m_filepath = path; }
 	void setTexture(const std::string& texturePath) { m_texturePath = texturePath; }
-	
+
+	void setTile(int index, TileDefinition def) { m_tileset[index] = def; }
+	void removeTile(int index) {
+		if (m_tileset.contains(index)) m_tileset.erase(index);
+	}
+
 	std::string getName() const { return m_name; }
 	std::string getPath() const { return m_filepath; }
 	std::string getTexture() const { return m_texturePath; }

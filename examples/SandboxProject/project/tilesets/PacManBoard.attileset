@@ -1,4 +1,354 @@
 {
   "Name": "PacManBoard",
-  "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png"
+  "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+  "Tiles": [
+    {
+      "Index": 1427,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        27,
+        25
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 1371,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        27,
+        24
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 1400,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        0,
+        25
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 682,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        10,
+        12
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 27,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        27,
+        0
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 685,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        13,
+        12
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 1344,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        0,
+        24
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 733,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        5,
+        13
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 56,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        0,
+        1
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 526,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        22,
+        9
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 509,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        5,
+        9
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 226,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        2,
+        4
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 689,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        17,
+        12
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 229,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        5,
+        4
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 913,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        17,
+        16
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 114,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        2,
+        2
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 117,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        5,
+        2
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 83,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        27,
+        1
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 1681,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        1,
+        30
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 750,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        22,
+        13
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 14,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        14,
+        0
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 1,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        1,
+        0
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 1680,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        0,
+        30
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 115,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        3,
+        2
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 0,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        0,
+        0
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 69,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        13,
+        1
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 1707,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        27,
+        30
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 906,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        10,
+        16
+      ],
+      "Solid": true
+    },
+    {
+      "Index": 13,
+      "Size": [
+        1,
+        1
+      ],
+      "Grid Index": [
+        13,
+        0
+      ],
+      "Solid": true
+    }
+  ]
 }
