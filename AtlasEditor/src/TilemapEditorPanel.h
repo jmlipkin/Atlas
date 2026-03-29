@@ -23,8 +23,19 @@ class TilemapEditorPanel {
 		m_tilemap = tilemap;
 		m_isOpen  = true;
 
+		m_zoom				= 1.0f;
+		m_panOffset			= {0.0f, 0.0f};
+		m_selectedTileIndex = -1;
+		m_isPanning			= false;
+
 		std::string path = ProjectManager::tilesetPath(tilemap->tileset);
-		m_tileset = ProjectManager::loadTileset(path);
+		m_tileset		 = ProjectManager::loadTileset(path);
+
+		if (m_tileset && !m_tileset->getTexture().empty())
+			m_texture = AssetManager::loadTexture(m_tileset->getTexture());
+		else
+			m_texture = nullptr;
+		m_tileSize = ProjectManager::getActiveProject()->getData().tileSize;
 	}
 
 	void onImGuiRender() {
@@ -34,6 +45,16 @@ class TilemapEditorPanel {
 		ImGui::Begin("Tilemap Editor", &m_isOpen);
 
 		drawTilemapHeader();
+
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(0, 0, 0, 255));
+		ImGui::BeginChild("Canvas", ImGui::GetContentRegionAvail());
+		ImGui::PopStyleColor();
+
+		ImGui::Text("Child?");
+
+		float cellSize = m_tileSize * m_zoom * EditorWidgets::displayScale;
+
+		ImGui::EndChild();
 
 		ImGui::End();
 		ImGui::PopStyleVar();
@@ -78,9 +99,16 @@ class TilemapEditorPanel {
 	Entity*					 m_entity;
 	Component::Tilemap*		 m_tilemap;
 	std::shared_ptr<Tileset> m_tileset;
+	int						 m_tileSize;
 	bool					 m_isOpen;
+	std::shared_ptr<Texture> m_texture;
 
 	TilesetEditorPanel m_tilesetPanel;
+
+	float  m_zoom			   = 1.0f;
+	ImVec2 m_panOffset		   = {0, 0};
+	int	   m_selectedTileIndex = -1;
+	bool   m_isPanning		   = false;
 };
 
 }  // namespace Atlas

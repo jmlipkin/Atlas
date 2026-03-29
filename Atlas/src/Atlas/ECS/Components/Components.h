@@ -27,13 +27,13 @@ struct Tilemap {
 
 	bool showOverlay;
 
-	std::vector<uint32_t> grid;
+	std::vector<int> grid;
 
 	uint32_t getTile(uint32_t x, uint32_t y) { return grid[x * size.x + y]; }
 	uint32_t setTile(uint32_t x, uint32_t y, uint32_t index) { return grid[x * size.x + y] = index; }
 
 	void resize(glm::ivec2 newSize) {
-		std::vector<uint32_t> newGrid(newSize.x * newSize.y, 0);
+		std::vector<int> newGrid(newSize.x * newSize.y, -1);
 
 		int copyWidth  = std::min(size.x, newSize.x);
 		int copyHeight = std::min(size.y, newSize.y);

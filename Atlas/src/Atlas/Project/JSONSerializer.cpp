@@ -427,7 +427,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 			tilemap.tileset = t["Tileset"];
 			tilemap.size	= glm::ivec2(t["Size"][0], t["Size"][1]);
 			tilemap.layer	= t["Layer"];
-			tilemap.grid	= t["Grid"].get<std::vector<uint32_t>>();
+			tilemap.grid	= t["Grid"].get<std::vector<int>>();
 		}
 	}
 }
