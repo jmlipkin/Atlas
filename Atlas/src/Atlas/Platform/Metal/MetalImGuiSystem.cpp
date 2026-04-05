@@ -23,6 +23,7 @@ void MetalImGuiSystem::initImGuiLayer() {
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
+	io.Fonts->Flags |= ImFontAtlasFlags_NoBakedLines;
 
 	static std::string iniPath = Platform::getResourcesPath() + "/imgui.ini";
 	io.IniFilename			   = iniPath.c_str();
