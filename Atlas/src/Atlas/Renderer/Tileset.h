@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Atlas/Renderer/SubTexture.h"
+
 #include <glm/glm.hpp>
 
 #include <string>
 #include <unordered_map>
-#include "Atlas/Renderer/SubTexture.h"
+#include <functional>
 
 namespace Atlas {
 
@@ -25,7 +27,11 @@ struct TileDefinition {
 
 class Tileset {
   public:
+	using TileDeletedCallback = std::function<void()>;
+
 	Tileset(const std::string& name, const std::string& filepath) : m_name(name), m_filepath(filepath) {}
+
+	void setTileDeletedCallback(TileDeletedCallback callback) { m_deletedCallback = callback; }
 
 	std::unordered_map<int, TileDefinition>& getTileset() { return m_tileset; }
 
@@ -36,11 +42,16 @@ class Tileset {
 	void setTile(int index, TileDefinition def) { m_tileset[index] = def; }
 	void removeTile(int index) {
 		if (m_tileset.contains(index)) m_tileset.erase(index);
+		m_deletedTile = index;
+		if (m_deletedCallback) m_deletedCallback();
 	}
 
 	std::string getName() const { return m_name; }
 	std::string getPath() const { return m_filepath; }
 	std::string getTexture() const { return m_texturePath; }
+
+	int	 getDeletedTile() const { return m_deletedTile; }
+	void clearTileDeleted() { m_deletedTile = -1; }
 
   private:
 	std::unordered_map<int, TileDefinition> m_tileset;
@@ -48,6 +59,9 @@ class Tileset {
 	std::string m_name;
 	std::string m_filepath;
 	std::string m_texturePath;
+
+	TileDeletedCallback m_deletedCallback;
+	int					m_deletedTile = -1;
 };
 
 }  // namespace Atlas

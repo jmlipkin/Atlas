@@ -5,6 +5,7 @@
 #include "Atlas/Renderer/SubTexture.h"
 
 #include <glm/glm.hpp>
+#include <algorithm>
 
 namespace Atlas::Component {
 
@@ -21,16 +22,16 @@ struct Tag {
 };
 
 struct Tilemap {
-	glm::ivec2	size;
+	glm::ivec2	size = {1, 1};
 	std::string tileset;
 	int			layer;
 
 	bool showOverlay;
 
-	std::vector<int> grid;
+	std::vector<int> grid = {-1, -1};
 
-	int getTile(uint32_t x, uint32_t y) { return grid[x * size.x + y]; }
-	int setTile(uint32_t x, uint32_t y, uint32_t index) { return grid[x * size.x + y] = index; }
+	int getTile(uint32_t x, uint32_t y) { return grid[y * size.x + x]; }
+	int setTile(uint32_t x, uint32_t y, uint32_t index) { return grid[y * size.x + x] = index; }
 
 	void resize(glm::ivec2 newSize) {
 		std::vector<int> newGrid(newSize.x * newSize.y, -1);
@@ -46,6 +47,10 @@ struct Tilemap {
 
 		size = newSize;
 		grid = newGrid;
+	}
+
+	void removeTile(int deletedTile) {
+		std::replace(grid.begin(), grid.end(), deletedTile, -1);
 	}
 };
 
