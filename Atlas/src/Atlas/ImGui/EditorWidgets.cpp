@@ -31,6 +31,63 @@ void EditorWidgets::drawImageWithAspectRatio(void* data, float aspectRatio, bool
 	ImGui::Image(data, finalSize);
 }
 
+bool EditorWidgets::drawFloatSlider(const char* label, float& value, float columnWidth, float valueWidth, float resetValue, float min, float max, float speed) {
+	bool changed = false;
+	ImGui::PushID(label);
+	bool			hasLabel = label[0] != '\0';
+	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
+	int				columns	 = hasLabel ? 2 : 1;
+	if (ImGui::BeginTable(label, columns, flags)) {
+		if (hasLabel) {
+			ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth);
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth);
+		} else {
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth);
+		}
+		ImGui::TableNextRow();
+		if (hasLabel) {
+			drawLabel(label, columnWidth);
+
+		} else {
+			ImGui::TableSetColumnIndex(0);
+		}
+		float lineHeight = ImGui::GetFrameHeight();
+
+		ImVec2 sliderMin   = ImGui::GetCursorScreenPos();
+		float  sliderWidth = valueWidth;
+		float  centerY	   = sliderMin.y + ImGui::GetFrameHeight() * 0.5f;
+
+		ImGui::GetWindowDrawList()->AddLine(
+			{sliderMin.x, centerY},
+			{sliderMin.x + sliderWidth, centerY},
+			ImGui::ColorConvertFloat4ToU32(EditorWidgets::border),
+			1.0f);
+
+		ImGui::SetNextItemWidth(-1);
+
+		ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, EditorWidgets::steelBlue);
+		ImGui::PushStyleColor(ImGuiCol_SliderGrab, EditorWidgets::steelBlueActive);
+		ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
+		ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0));
+		ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 6.0f * EditorWidgets::displayScale);
+		ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 0.0f);
+
+		changed |= ImGui::SliderFloat("##v", &value, min, max, "%.f");
+
+		ImGui::PopStyleVar(2);
+		ImGui::PopStyleColor(5);
+		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
+			changed = true;
+			value	= resetValue;
+		}
+
+		ImGui::EndTable();
+	}
+	ImGui::PopID();
+	return changed;
+}
+
 void EditorWidgets::drawLabel(const char* label, float columnWidth) {
 	ImGui::TableSetColumnIndex(0);
 	float textWidth = ImGui::CalcTextSize(label).x;
@@ -44,11 +101,19 @@ void EditorWidgets::drawLabel(const char* label, float columnWidth) {
 bool EditorWidgets::drawIntControl(const char* label, int& value, const char* resetLabel, float columnWidth, float valueWidth, int resetValue) {
 	bool changed = false;
 	ImGui::PushID(label);
-	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
-		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth /* * displayScale */);
+	bool			hasLabel = label[0] != '\0';
+	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
+	int				columns	 = hasLabel ? 2 : 1;
+	if (ImGui::BeginTable(label, columns, flags)) {
+		if (hasLabel) {
+			ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth);
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth);
+		} else {
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth);
+		}
 		ImGui::TableNextRow();
-		drawLabel(label, columnWidth /* * displayScale */);
+		if (hasLabel)
+			drawLabel(label, columnWidth);
 		float lineHeight = ImGui::GetFrameHeight();
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
 		ImGui::PushStyleColor(ImGuiCol_Button, purple);
@@ -72,11 +137,21 @@ bool EditorWidgets::drawIntControl(const char* label, int& value, const char* re
 bool EditorWidgets::drawFloatControl(const char* label, float& value, const char* resetLabel, float columnWidth, float valueWidth, float resetValue, float speed) {
 	bool changed = false;
 	ImGui::PushID(label);
-	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
-		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth /* * displayScale */);
+	bool			hasLabel = label[0] != '\0';
+	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
+	int				columns	 = hasLabel ? 2 : 1;
+	if (ImGui::BeginTable(label, columns, flags)) {
+		if (hasLabel) {
+			ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth);
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth);
+		} else {
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth);
+		}
 		ImGui::TableNextRow();
-		drawLabel(label, columnWidth /* * displayScale */);
+
+		if (hasLabel)
+			drawLabel(label, columnWidth);
+
 		float lineHeight = ImGui::GetFrameHeight();
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{0, 0});
 		ImGui::PushStyleColor(ImGuiCol_Button, purple);
@@ -100,11 +175,20 @@ bool EditorWidgets::drawFloatControl(const char* label, float& value, const char
 bool EditorWidgets::drawCheckbox(const char* label, bool& value, float columnWidth) {
 	bool changed = false;
 	ImGui::PushID(label);
-	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
-		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthStretch);
+	bool			hasLabel = label[0] != '\0';
+	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
+	int				columns	 = hasLabel ? 2 : 1;
+
+	if (ImGui::BeginTable(label, columns, flags)) {
+		if (hasLabel) {
+			ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth);
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthStretch);
+		} else {
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthStretch);
+		}
 		ImGui::TableNextRow();
-		drawLabel(label, columnWidth /* * displayScale */);
+		if (hasLabel)
+			drawLabel(label, columnWidth);
 		changed = ImGui::Checkbox("##v", &value);
 		ImGui::EndTable();
 	}
@@ -115,11 +199,21 @@ bool EditorWidgets::drawCheckbox(const char* label, bool& value, float columnWid
 bool EditorWidgets::drawCombo(const char* label, const char** items, int count, int& value, float columnWidth, float valueWidth) {
 	bool changed = false;
 	ImGui::PushID(label);
-	if (ImGui::BeginTable(label, 2, ImGuiTableFlags_BordersInnerV)) {
-		ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth /* * displayScale */);
-		ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth /* * displayScale */);
+
+	bool			hasLabel = label[0] != '\0';
+	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
+	int				columns	 = hasLabel ? 2 : 1;
+	if (ImGui::BeginTable(label, columns, flags)) {
+		if (hasLabel) {
+			ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, columnWidth);
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth);
+		} else {
+			ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthFixed, valueWidth);
+		}
 		ImGui::TableNextRow();
-		drawLabel(label, columnWidth /* * displayScale */);
+		if (hasLabel)
+			drawLabel(label, columnWidth);
+
 		ImGui::SetNextItemWidth(-1);
 		changed = ImGui::Combo("##v", &value, items, count);
 		ImGui::EndTable();

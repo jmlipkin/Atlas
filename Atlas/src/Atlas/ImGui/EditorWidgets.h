@@ -75,6 +75,8 @@ class EditorWidgets {
 
 	static void drawImageWithAspectRatio(void* data, float aspectRatio, bool centered = false);
 
+	static bool drawFloatSlider(const char* label, float& value, float columnWidth = 85.0f, float valueWidth = 120.0f, float resetValue = 0.0f, float min = 0.0f, float max = 1.0f, float speed = 0.1f);
+
 	static void drawLabel(const char* label, float columnWidth);
 	static bool drawCheckbox(const char* label, bool& value, float columnWidth = 85.0f);
 	static bool drawIntControl(const char* label, int& value, const char* resetLabel = "R", float columnWidth = 85.0f, float valueWidth = 120.0f, int resetValue = 0);

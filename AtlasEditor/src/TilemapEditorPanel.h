@@ -11,9 +11,88 @@
 #include "Atlas/ImGui/EditorWidgets.h"
 #include "imgui/imgui.h"
 
-#include <memory>
-
 namespace Atlas {
+
+class TilemapPalettePanel {
+  public:
+	void open(std::shared_ptr<Tileset> tileset, std::shared_ptr<Texture> texture) {
+		m_tileset = tileset;
+		m_texture = texture;
+
+		m_isOpen = true;
+	}
+
+	void onImGuiRender() {
+		if (!m_isOpen) return;
+
+		ImGui::Begin("Tilemap Palette", &m_isOpen);
+
+		EditorWidgets::drawFloatSlider("", m_thumbnailSize, 0.0f, 120.0f, 48.0f, 12.0f, 96.0f, 1.0f);
+
+		int	   tileSize = ProjectManager::getActiveProject()->getData().tileSize;
+		ImVec2 size		= {m_thumbnailSize, m_thumbnailSize};
+
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 0.0f));
+
+		float availWidth   = ImGui::GetContentRegionAvail().x;
+		float cursorStartX = ImGui::GetCursorPosX();
+		float currentX	   = cursorStartX;
+
+		for (auto& [index, tile] : m_tileset->getTileset()) {
+			float texW = (float)m_texture->getWidth();
+			float texH = (float)m_texture->getHeight();
+
+			ImGui::PushID(index);
+
+			ImVec2 uv0 = {
+				(tile.gridIndex.x * tileSize) / texW,
+				(tile.gridIndex.y * tileSize) / texH};
+			ImVec2 uv1 = {
+				((tile.gridIndex.x + tile.sizeInTiles.x) * tileSize) / texW,
+				((tile.gridIndex.y + tile.sizeInTiles.y) * tileSize) / texH};
+
+			ImGui::InvisibleButton("##tile_N", size);
+
+			if (ImGui::IsItemClicked(0)) {
+				m_selectedTileIndex = index;
+			}
+
+			ImDrawList* dl = ImGui::GetWindowDrawList();
+
+			ImVec2 tl = ImGui::GetItemRectMin();
+			ImVec2 br = ImGui::GetItemRectMax();
+			dl->AddImage(m_texture->getData(), tl, br, uv0, uv1);
+
+			ImU32 col		= (m_selectedTileIndex == index) ? ImGui::ColorConvertFloat4ToU32(EditorWidgets::steelBlueActive) : ImGui::ColorConvertFloat4ToU32(EditorWidgets::steelBlueSub);
+			float thickness = (m_selectedTileIndex == index) ? 2.5f : 1.0f;
+			dl->AddRect(tl, br, col, 0.0f, 0, thickness);
+
+			currentX += m_thumbnailSize;
+			if (currentX + m_thumbnailSize <= cursorStartX + availWidth)
+				ImGui::SameLine();
+			else
+				currentX = cursorStartX;
+
+			ImGui::PopID();
+		}
+		ImGui::PopStyleVar();
+
+		if (ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered() && ImGui::IsMouseClicked(0)) {
+			m_selectedTileIndex = -1;
+		}
+
+		ImGui::End();
+	}
+
+  private:
+	std::shared_ptr<Tileset> m_tileset;
+	std::shared_ptr<Texture> m_texture;
+
+	bool m_isOpen			 = false;
+	int	 m_selectedTileIndex = -1;
+
+	float m_thumbnailSize = 48.0f;
+};
 
 class TilemapEditorPanel {
   public:
@@ -35,7 +114,10 @@ class TilemapEditorPanel {
 			m_texture = AssetManager::loadTexture(m_tileset->getTexture());
 		else
 			m_texture = nullptr;
+
 		m_tileSize = ProjectManager::getActiveProject()->getData().tileSize;
+
+		m_palettePanel.open(m_tileset, m_texture);
 	}
 
 	void onImGuiRender() {
@@ -60,6 +142,7 @@ class TilemapEditorPanel {
 		ImGui::PopStyleVar();
 
 		m_tilesetPanel.onImGuiRender();
+		m_palettePanel.onImGuiRender();
 	}
 
 	void drawTilemapHeader() {
@@ -103,7 +186,8 @@ class TilemapEditorPanel {
 	bool					 m_isOpen;
 	std::shared_ptr<Texture> m_texture;
 
-	TilesetEditorPanel m_tilesetPanel;
+	TilesetEditorPanel	m_tilesetPanel;
+	TilemapPalettePanel m_palettePanel;
 
 	float  m_zoom			   = 1.0f;
 	ImVec2 m_panOffset		   = {0, 0};
