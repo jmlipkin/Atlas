@@ -164,28 +164,27 @@
           31.0
         ]
       },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Size": [
-          28.0,
-          31.0
-        ],
-        "Index": [
-          0,
-          0
-        ]
-      },
       "Animations": {
         "Clips": []
       },
       "Tilemap": {
         "Tileset": "PacManBoard",
         "Size": [
+          3,
+          3
+        ],
+        "Layer": 1,
+        "Grid": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0
-        ],
-        "Layer": 0,
-        "Grid": []
+        ]
       }
     },
     {
@@ -231,7 +230,7 @@
           {
             "Name": "Dying played",
             "Type": 0,
-            "Value": true
+            "Value": false
           }
         ]
       },

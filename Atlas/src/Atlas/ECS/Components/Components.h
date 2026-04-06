@@ -29,8 +29,8 @@ struct Tilemap {
 
 	std::vector<int> grid;
 
-	uint32_t getTile(uint32_t x, uint32_t y) { return grid[x * size.x + y]; }
-	uint32_t setTile(uint32_t x, uint32_t y, uint32_t index) { return grid[x * size.x + y] = index; }
+	int getTile(uint32_t x, uint32_t y) { return grid[x * size.x + y]; }
+	int setTile(uint32_t x, uint32_t y, uint32_t index) { return grid[x * size.x + y] = index; }
 
 	void resize(glm::ivec2 newSize) {
 		std::vector<int> newGrid(newSize.x * newSize.y, -1);

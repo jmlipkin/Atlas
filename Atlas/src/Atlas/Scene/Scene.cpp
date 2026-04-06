@@ -42,6 +42,18 @@ void Scene::onUpdate(DeltaTime dt) {
 
 	System::Animation::updateFrames(m_registry, dt);
 	{
+		auto view = m_registry.view<Component::Transform, Component::Tilemap>();
+		for (auto entity : view) {
+			Component::Transform transform = view.get<Component::Transform>(entity);
+
+			Component::Tilemap tilemap = view.get<Component::Tilemap>(entity);
+			if (tilemap.tileset.empty())
+				continue;
+
+			Renderer::drawTilemap(transform, tilemap);
+		}
+	}
+	{
 		auto view = m_registry.view<Component::Transform, Component::Sprite>();
 		for (auto entity : view) {
 			if (m_registry.all_of<Component::Animations>(entity)) continue;

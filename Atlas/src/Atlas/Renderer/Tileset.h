@@ -4,6 +4,7 @@
 
 #include <string>
 #include <unordered_map>
+#include "Atlas/Renderer/SubTexture.h"
 
 namespace Atlas {
 
@@ -11,6 +12,15 @@ struct TileDefinition {
 	glm::ivec2 gridIndex;	 // position in the spritesheet
 	glm::ivec2 sizeInTiles;	 // usually {1,1} for most tiles
 	bool	   isSolid;
+
+	TextureCoordinates TexCoords() const {
+		TextureCoordinates coords;
+		coords.top_left		= gridIndex;
+		coords.top_right	= {gridIndex.x + sizeInTiles.x, gridIndex.y};
+		coords.bottom_left	= {gridIndex.x, gridIndex.y + sizeInTiles.y};
+		coords.bottom_right = {gridIndex.x + sizeInTiles.x, gridIndex.y + sizeInTiles.y};
+		return coords;
+	}
 };
 
 class Tileset {

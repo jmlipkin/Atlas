@@ -9,7 +9,9 @@
 #include "Atlas/Renderer/Buffer.h"
 #include "Atlas/Renderer/Texture.h"
 #include "Atlas/Renderer/SubTexture.h"
-#include "glm/detail/func_geometric.hpp"
+#include "Atlas/Renderer/Tileset.h"
+
+#include "Atlas/Project/Project.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -469,6 +471,42 @@ void Renderer::drawSprite(Component::Transform transform, Component::Sprite spri
 	glm::vec2 texCoords[4] = {tc.bottom_left, tc.bottom_right, tc.top_right, tc.top_left};
 
 	submitQuad(trans, color, texIndex, texCoords);
+}
+
+void Renderer::drawTilemap(Component::Transform transform, Component::Tilemap tilemap) {
+	std::shared_ptr<Tileset> tileset = AssetManager::get<Tileset>(tilemap.tileset);
+	std::shared_ptr<Texture> texture = AssetManager::loadTexture(tileset->getTexture());
+
+	AT_CORE_ASSERT(ProjectManager::getActiveProject(), "Cannot render Tilemap: Active project is null");
+	int	  tileSize		= ProjectManager::getActiveProject()->getData().tileSize;
+	float worldTileSize = (float)tileSize / (float)ProjectManager::getActiveProject()->getData().pixelsPerUnit;
+
+	glm::vec2 offset{0, 0};
+
+	for (int i = 0; i < tilemap.size.y; i++) {
+		float y_incr = 0.0;
+		offset.x	 = 0;
+		for (int j = 0; j < tilemap.size.x; j++) {
+			int tileIndex = tilemap.getTile(j, i);
+
+			float x_incr = worldTileSize;
+			if (tileIndex != -1) {
+				TileDefinition tile = tileset->getTileset().at(tileIndex);
+				SubTexture	   tex{texture->getFilepath(), tileSize, tile.gridIndex, tile.sizeInTiles};
+
+				drawQuad(
+					{transform.position.x + offset.x, transform.position.y + offset.y, transform.position.z},
+					glm::vec2(tile.sizeInTiles) * worldTileSize,
+					std::make_shared<SubTexture>(tex));
+
+				x_incr = tile.sizeInTiles.x * worldTileSize;
+				if (y_incr < tile.sizeInTiles.y * worldTileSize)
+					y_incr = tile.sizeInTiles.y * worldTileSize;
+			}
+			offset.x += x_incr;
+		}
+		offset.y += y_incr;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
