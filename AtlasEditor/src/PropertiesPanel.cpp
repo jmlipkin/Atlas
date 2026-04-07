@@ -403,8 +403,7 @@ void PropertiesPanel::drawClipLabel(std::string& clip, SelectionType type) {
 }
 
 void PropertiesPanel::drawScriptProperties(Behavior& behavior) {
-	auto&		properties	= behavior.getProperties();
-	const float columnWidth = 100.0f;
+	auto& properties = behavior.getProperties();
 
 	for (auto& [name, property] : properties) {
 		ImGui::PushID((name + property.name).c_str());
@@ -417,10 +416,12 @@ void PropertiesPanel::drawScriptProperties(Behavior& behavior) {
 
 void PropertiesPanel::drawScriptProperty(const char* label, Behavior::Property& property) {
 	bool changed = false;
-	ImGui::SetNextItemWidth(-1);
+
+	const float columnWidth = 100.0f;
+	const float valueWidth = 85.0f;
 	switch (property.type) {
 		case BehaviorPropertyType::BOOL: {
-			changed = EditorWidgets::drawCheckbox(label, *(bool*)property.valuePtr);
+			changed = EditorWidgets::drawCheckbox(label, *(bool*)property.valuePtr, columnWidth);
 			break;
 		}
 		case BehaviorPropertyType::STRING: {
@@ -428,18 +429,18 @@ void PropertiesPanel::drawScriptProperty(const char* label, Behavior::Property& 
 			break;
 		}
 		case BehaviorPropertyType::INT: {
-			changed = EditorWidgets::drawIntControl(label, *(int*)property.valuePtr);
+			changed = EditorWidgets::drawIntControl(label, *(int*)property.valuePtr, "R", columnWidth, valueWidth);
 			break;
 		}
 		case BehaviorPropertyType::FLOAT: {
-			changed = EditorWidgets::drawFloatControl(label, *(float*)property.valuePtr);
+			changed = EditorWidgets::drawFloatControl(label, *(float*)property.valuePtr, "R", columnWidth, valueWidth);
 			break;
 		}
 		case BehaviorPropertyType::VEC2: {
-			changed = EditorWidgets::drawVec2Control(label, *(glm::vec2*)property.valuePtr);
+			changed = EditorWidgets::drawVec2Control(label, *(glm::vec2*)property.valuePtr, columnWidth, valueWidth);
 		} break;
 		case BehaviorPropertyType::VEC3: {
-			changed = EditorWidgets::drawVec3Control(label, *(glm::vec3*)property.valuePtr);
+			changed = EditorWidgets::drawVec3Control(label, *(glm::vec3*)property.valuePtr, columnWidth, valueWidth);
 		} break;
 		default:
 			break;
