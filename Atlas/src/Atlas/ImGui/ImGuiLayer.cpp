@@ -110,8 +110,6 @@ bool ImGuiLayer::onWindowResizeEvent(WindowResizeEvent& e) {
 bool ImGuiLayer::onDisplayChangedEvent(DisplayChangedEvent& e) {
 	m_system->rescale(e.getScale());
 
-	AT_CORE_TRACE("{}", e.toString());
-
 	return false;
 }
 

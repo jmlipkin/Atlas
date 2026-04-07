@@ -70,7 +70,7 @@ bool EditorWidgets::drawFloatSlider(const char* label, float& value, float colum
 		ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
 		ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0));
 		ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0));
-		ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 6.0f * EditorWidgets::displayScale);
+		ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 6.0f);
 		ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 0.0f);
 
 		changed |= ImGui::SliderFloat("##v", &value, min, max, "%.f");
@@ -323,7 +323,7 @@ void EditorWidgets::DrawPanelAccentBar(PanelAccent color, bool onlyWhenFocused) 
 	ImVec2		sz	= ImGui::GetWindowSize();
 	dl->AddRectFilled(
 		ImVec2(pos.x, pos.y),
-		ImVec2(pos.x + 1.5f /* * displayScale */, pos.y + sz.y),
+		ImVec2(pos.x + 1.5f * displayScale, pos.y + sz.y),
 		getAccentColor(color));
 }
 

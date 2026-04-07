@@ -58,7 +58,6 @@ void MetalImGuiSystem::initImGuiLayer() {
 	ImGui::StyleColorsDark();
 
 	setupImGuiStyle(ImGui::GetStyle());
-	ImGui::GetStyle().ScaleAllSizes(scale);
 	ImGui::GetIO().FontGlobalScale = 1.0 / scale;
 	EditorWidgets::displayScale	   = scale;
 
@@ -91,7 +90,6 @@ void MetalImGuiSystem::rescale(float newScale) {
 
 	ImGui::GetStyle() = ImGuiStyle{};
 	setupImGuiStyle(ImGui::GetStyle());
-	ImGui::GetStyle().ScaleAllSizes(newScale);
 	io.FontGlobalScale			= 1.0f / newScale;
 	EditorWidgets::displayScale = newScale;
 }

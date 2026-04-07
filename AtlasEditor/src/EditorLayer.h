@@ -40,6 +40,10 @@ class EditorLayer : public Layer {
 	virtual void saveConfig();
 	virtual void buildScripts();
 
+	inline float footerHeight() const {
+		return ImGui::GetFrameHeight() + ImGui::GetStyle().WindowPadding.y;
+	}
+
   private:
 	std::shared_ptr<MenuBar> m_menuBar;
 	SceneHierarchyPanel*	 m_hierarchyPanel;
@@ -57,21 +61,20 @@ class EditorLayer : public Layer {
 	std::unique_ptr<RuntimeLayer> m_previewLayer;
 	ImVec2						  m_previewSize = {0, 0};
 
-	float m_footerHeight;
-	bool m_isBuilding = false;
+	bool		m_isBuilding = false;
 	std::string m_buildStatus;
-	float m_buildProgress = 0.0f;
-	bool m_buildFailed = false;
-	float m_buildStatusTimer = 0.0f;
+	float		m_buildProgress	   = 0.0f;
+	bool		m_buildFailed	   = false;
+	float		m_buildStatusTimer = 0.0f;
 
-	bool m_pendingScriptAssignment;
-	Entity m_pendingScriptEntity;
+	bool		m_pendingScriptAssignment;
+	Entity		m_pendingScriptEntity;
 	std::string m_pendingScriptName;
 
 	bool m_showAllColliders = false;
 
 	ProjectSettingsPanel m_projectSettings;
-	bool m_settingsActive = false;
+	bool				 m_settingsActive = false;
 };
 
 }  // namespace Atlas

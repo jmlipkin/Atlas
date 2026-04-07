@@ -97,8 +97,6 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 		m_pendingScriptName		  = name;
 		buildScripts();
 	});
-
-	m_footerHeight = 12.0f * EditorWidgets::displayScale;
 }
 
 void EditorLayer::setScene(std::shared_ptr<Scene> scene) {
@@ -160,7 +158,7 @@ void EditorLayer::onImGuiRender() {
 
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->Pos);
-	ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, viewport->Size.y - m_footerHeight));
+	ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, viewport->Size.y - footerHeight()));
 	ImGui::SetNextWindowViewport(viewport->ID);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
@@ -294,8 +292,8 @@ void EditorLayer::saveConfig() {
 
 void EditorLayer::drawFooter() {
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
-	ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y + viewport->Size.y - m_footerHeight));
-	ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, m_footerHeight));
+	ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y + viewport->Size.y - footerHeight()));
+	ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, footerHeight()));
 	ImGui::SetNextWindowViewport(viewport->ID);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
@@ -310,12 +308,12 @@ void EditorLayer::drawFooter() {
 
 	// Vertically center content
 	float textHeight	  = ImGui::GetTextLineHeight();
-	float verticalPadding = (m_footerHeight - textHeight) * 0.5f;
+	float verticalPadding = (footerHeight() - textHeight) * 0.5f;
 	ImGui::SetCursorPosY(verticalPadding);
 	ImGui::Text("Atlas Editor");
 
 	float buttonHeight	= ImGui::GetFrameHeight();
-	float buttonPadding = (m_footerHeight - buttonHeight) * 0.5f;
+	float buttonPadding = (footerHeight() - buttonHeight) * 0.5f;
 	ImGui::SameLine();
 	ImGui::SetCursorPosY(buttonPadding);
 
@@ -342,11 +340,11 @@ void EditorLayer::drawFooter() {
 
 		ImGui::SameLine();
 		float windowY = ImGui::GetWindowPos().y;
-		float centerY = windowY + (m_footerHeight - barHeight) * 0.5f;
+		float centerY = windowY + (footerHeight() - barHeight) * 0.5f;
 
 		ImGui::SetCursorScreenPos(ImVec2(ImGui::GetCursorScreenPos().x, centerY));
 		ImGui::PushStyleColor(ImGuiCol_PlotHistogram, EditorWidgets::steelBlue);
-		ImGui::ProgressBar(m_buildProgress, ImVec2(50.0f * EditorWidgets::displayScale, barHeight), "");
+		ImGui::ProgressBar(m_buildProgress, ImVec2(100.0f, barHeight), "");
 		ImGui::PopStyleColor();
 
 		float		textX = ImGui::GetItemRectMax().x + ImGui::GetStyle().ItemSpacing.x;
@@ -358,7 +356,7 @@ void EditorLayer::drawFooter() {
 	}
 
 	if (m_buildStatusTimer > 0.0f) {
-		float		centerY = ImGui::GetWindowPos().y + (m_footerHeight - ImGui::GetTextLineHeight()) * 0.5f;
+		float		centerY = ImGui::GetWindowPos().y + (footerHeight() - ImGui::GetTextLineHeight()) * 0.5f;
 		float		textX	= ImGui::GetItemRectMax().x + ImGui::GetStyle().ItemSpacing.x;
 		ImDrawList* dl		= ImGui::GetWindowDrawList();
 		dl->AddText(

@@ -52,8 +52,8 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 
 	const float	 columnWidth	 = 100.0f;
 	const float	 valueWidth		 = 85.0f;
-	const ImVec2 componentSpacer = {0, 16.0f * EditorWidgets::displayScale};
-	const ImVec2 padding4		 = {0, 4.0f * EditorWidgets::displayScale};
+	const ImVec2 componentSpacer = {0, 16.0f};
+	const ImVec2 padding4		 = {0, 4.0f};
 
 	// -------------------------------------------------------------------------
 	drawComponent<Component::Transform>("Transform", entity, [this, &entity, componentSpacer, padding4, columnWidth, valueWidth](auto& component) {
@@ -76,8 +76,8 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 		SubTextureSpecification& specs	  = component.specs;
 		const std::string&		 filepath = ProjectManager::toRelativePath(component.texturePath);
 
-		float changeButtonWidth = 62.0f * EditorWidgets::displayScale;
-		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - 8.0f * EditorWidgets::displayScale;
+		float changeButtonWidth = 62.0f;
+		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - 8.0f;
 
 		std::string displayPath = filepath.empty() ? "No texture" : filepath;
 		if (!filepath.empty() && ImGui::CalcTextSize(filepath.c_str()).x > maxWidth) {
@@ -92,7 +92,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			ImGui::SetTooltip("%s", filepath.c_str());
 
 		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f * EditorWidgets::displayScale);
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f);
 		if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0))) {
 			component.texturePath = Platform::openFileDialog("png");
 			ProjectManager::saveScene(m_scene);

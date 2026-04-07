@@ -194,8 +194,8 @@ class TilesetEditorPanel {
 			filepath = ProjectManager::toRelativePath(m_texture->getFilepath());
 		}
 
-		float changeButtonWidth = 62.0f * EditorWidgets::displayScale;
-		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - 8.0f * EditorWidgets::displayScale;
+		float changeButtonWidth = 62.0f;
+		float maxWidth			= ImGui::GetContentRegionAvail().x - changeButtonWidth - 8.0f;
 
 		std::string displayPath = filepath.empty() ? "No texture" : filepath;
 		if (!filepath.empty() && ImGui::CalcTextSize(filepath.c_str()).x > maxWidth) {
@@ -210,7 +210,7 @@ class TilesetEditorPanel {
 			ImGui::SetTooltip("%s", filepath.c_str());
 
 		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f * EditorWidgets::displayScale);
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f);
 		if (ImGui::Button("Change", ImVec2(changeButtonWidth, 0))) {
 			const std::string& texturePath = Platform::openFileDialog("png");
 			if (!texturePath.empty()) {

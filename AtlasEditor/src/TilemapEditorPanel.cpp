@@ -143,7 +143,7 @@ void TilemapEditorPanel::onImGuiRender() {
 }
 
 void TilemapEditorPanel::drawHeader() {
-	const float headerH = 18.0f * EditorWidgets::displayScale;
+	const float headerH = 18.0f;
 	const float frameH	= ImGui::GetFrameHeight();
 	const float btnPadY = (headerH - frameH) * 0.5f;
 
@@ -154,7 +154,7 @@ void TilemapEditorPanel::drawHeader() {
 
 	// Label
 	float textPadY = (headerH - ImGui::GetTextLineHeight()) * 0.5f;
-	ImGui::SetCursorPos({ImGui::GetCursorPosX() + 6.0f * EditorWidgets::displayScale, textPadY});
+	ImGui::SetCursorPos({ImGui::GetCursorPosX() + 6.0f, textPadY});
 	ImGui::Text("Editing Tilemap on Entity \"%s\"", m_entity->name().c_str());
 
 	ImGui::BeginDisabled(!ProjectManager::getActiveProject());

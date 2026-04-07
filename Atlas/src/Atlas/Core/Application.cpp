@@ -104,6 +104,7 @@ void Application::onEvent(Event& event) {
 	dispatcher.dispatch<WindowResizeEvent>(AT_BIND_EVENT_FN(Application::onWindowResize));
 	dispatcher.dispatch<WindowFocusEvent>(AT_BIND_EVENT_FN(Application::onWindowFocus));
 	dispatcher.dispatch<WindowLostFocusEvent>(AT_BIND_EVENT_FN(Application::onWindowLostFocus));
+	dispatcher.dispatch<DisplayChangedEvent>(AT_BIND_EVENT_FN(Application::onDisplayChanged));
 
 	for (auto it = m_layerStack.end(); it != m_layerStack.begin();) {
 		(*--it)->onEvent(event);
@@ -152,6 +153,12 @@ bool Application::onWindowFocus(WindowFocusEvent& e) {
 }
 
 bool Application::onWindowLostFocus(WindowLostFocusEvent& e) {
+	return false;
+}
+
+bool Application::onDisplayChanged(DisplayChangedEvent& e) {
+	WindowResizeEvent resizeEvent(m_window->getWidth(), m_window->getHeight());
+	onWindowResize(resizeEvent);
 	return false;
 }
 

@@ -47,6 +47,7 @@ class Application {
 	bool onWindowResize(WindowResizeEvent& e);
 	bool onWindowFocus(WindowFocusEvent& e);
 	bool onWindowLostFocus(WindowLostFocusEvent& e);
+	bool onDisplayChanged(DisplayChangedEvent& e);
 
   private:
 	std::shared_ptr<Window>			 m_window;

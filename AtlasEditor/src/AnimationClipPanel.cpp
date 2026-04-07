@@ -65,8 +65,8 @@ void AnimationClipPanel::onImGuiRender() {
 	}
 	ImGui::SameLine();
 
-	float playButtonWidth = 40 * EditorWidgets::displayScale;
-	float padding		  = 4 * EditorWidgets::displayScale;
+	float playButtonWidth = 40;
+	float padding		  = 4;
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - playButtonWidth - padding);
 	if (ImGui::Button(clip.playing ? "Stop" : "Play", ImVec2(playButtonWidth, 0))) {
 		clip.playing = !clip.playing;
@@ -210,12 +210,12 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 	float imageWidth   = 37.5;
 	float controlWidth = 75;
 
-	float scrollbarHeight = ImGui::GetStyle().ScrollbarSize + 2.0f * displayScale;
+	float scrollbarHeight = ImGui::GetStyle().ScrollbarSize + 2.0f;
 	float lineHeight	  = ImGui::GetFrameHeight();
 	float controlHeight	  = lineHeight * 2 + GImGui->Style.ItemSpacing.y;
 
-	const float stripPadX = 4 * displayScale;
-	const float stripPadY = 2 * displayScale;
+	const float stripPadX = 4.0f;
+	const float stripPadY = 2.0f;
 
 	float cellHeight  = imageWidth + (2 * displayScale) + controlHeight + stripPadY * 2;
 	float stripHeight = cellHeight + scrollbarHeight + stripPadY * 2;
