@@ -1,10 +1,10 @@
 #pragma once
 
 #include <Atlas.h>
+#include <cstdlib>
 #include "Atlas/Core/Base.h"
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Systems/Collision.h"
-#include "Atlas/ECS/Systems/Systems.h"
 #include "Atlas/Events/Event.h"
 
 namespace Atlas {
@@ -21,19 +21,45 @@ class Player : public Atlas::Behavior {
 	virtual void onUpdate(DeltaTime dt) override {
 		Component::Transform& t = getComponent<Component::Transform>();
 
+		glm::vec3 startPos = t.position;
+
+		auto& animations = getComponent<Component::Animations>();
 		if (Input::isKeyPressed(AT_KEY_A)) {
 			t.position.x -= m_speed * dt;
+
+			AnimationClip& left = animations.clips["Left"];
+			left.playing		= true;
 		}
 		if (Input::isKeyPressed(AT_KEY_D)) {
 			t.position.x += m_speed * dt;
+
+			AnimationClip& right = animations.clips["Right"];
+			right.playing		 = true;
 		}
 		if (Input::isKeyPressed(AT_KEY_W)) {
 			t.position.y -= m_speed * dt;
+
+			AnimationClip& up = animations.clips["Up"];
+			up.playing		  = true;
 		}
 		if (Input::isKeyPressed(AT_KEY_S)) {
 			t.position.y += m_speed * dt;
+
+			AnimationClip& down = animations.clips["Down"];
+			down.playing		= true;
+		}
+
+		glm::vec2 delta = t.position - startPos;
+
+		if (delta.x == 0 && delta.y == 0) {
+			animations.activeClip = "";
+		} else if (std::abs(delta.x) > std::abs(delta.y)) {
+			animations.activeClip = delta.x >= 0 ? "Right" : "Left";
+		} else {
+			animations.activeClip = delta.y >= 0 ? "Down" : "Up";
 		}
 	}
+
 	virtual void onEvent(Event& event) override {
 		EventDispatcher dispatcher(event);
 		dispatcher.dispatch<CollisionEvent>(AT_BIND_EVENT_FN(Player::onCollision));
@@ -51,14 +77,6 @@ class Player : public Atlas::Behavior {
   private:
 	bool onCollision(CollisionEvent& event) {
 		if ((m_entity == event.getEntityA() || m_entity == event.getEntityB())) {
-
-            auto& clips = getComponent<Component::Animations>().clips;
-			AnimationClip& dying = clips["Dying"];
-			if (!dying.playing) {
-				m_dyingPlayed = true;
-				dying.playing = true;
-                getComponent<Component::Animations>().activeClip = "Dying";
-			}
 		}
 		return false;
 	}
@@ -67,7 +85,7 @@ class Player : public Atlas::Behavior {
 	Entity m_entity;
 	// add member variables here
 	float m_speed = 8.0f;
-	int m_score = 0;
+	int	  m_score = 0;
 
 	bool m_dyingPlayed = false;
 };

@@ -92,20 +92,11 @@ void AnimationClipPanel::onImGuiRender() {
 		ImGui::SetTooltip("%s", relativePath.c_str());
 	}
 
-	float columnWidth = 100.0f;
-	float valueWidth = 50.0f;
-	changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Size", clip.sizeInTiles, 0, 0, columnWidth, valueWidth);
-
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, columnWidth);
-	ImGui::Text("Frame Rate");
-	ImGui::NextColumn();
-	ImGui::PushItemWidth(25 * EditorWidgets::displayScale);
-	changed |= ImGui::DragFloat("fps##framerate", &clip.frameRate, 0.1f, 0.1f, 60.0f, "%.1f");
-	ImGui::PopItemWidth();
-	ImGui::Columns(1);
-
-	changed |= ImGui::Checkbox("Loop", &clip.shouldLoop);
+	float columnWidth = 130.0f;
+	float valueWidth  = 50.0f;
+	changed |= EditorWidgets::drawCheckbox("Should Loop", clip.shouldLoop, columnWidth);
+	changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Size", clip.sizeInTiles, columnWidth, valueWidth);
+	changed |= EditorWidgets::drawFloatSlider("Frame Rate (fps)", clip.frameRate, columnWidth, valueWidth * 3, 12.0f, 0.1f, 60.0f);
 
 	ImGui::Separator();
 	ImGui::Text("Frames");
@@ -215,9 +206,9 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 
 	float displayScale = EditorWidgets::displayScale;
 
-	float cellWidth		  = 75;
-	float imageWidth	  = 37.5;
-	float controlWidth	  = 75;
+	float cellWidth	   = 75;
+	float imageWidth   = 37.5;
+	float controlWidth = 75;
 
 	float scrollbarHeight = ImGui::GetStyle().ScrollbarSize + 2.0f * displayScale;
 	float lineHeight	  = ImGui::GetFrameHeight();
@@ -226,7 +217,7 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 	const float stripPadX = 4 * displayScale;
 	const float stripPadY = 2 * displayScale;
 
-	float cellHeight  = imageWidth + (2*displayScale) + controlHeight + stripPadY * 2;
+	float cellHeight  = imageWidth + (2 * displayScale) + controlHeight + stripPadY * 2;
 	float stripHeight = cellHeight + scrollbarHeight + stripPadY * 2;
 
 	ImVec4 frameBgColor	 = ImGui::GetStyleColorVec4(ImGuiCol_ChildBg);
@@ -316,7 +307,7 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 			ImGui::SetCursorPosX(controlOffsetX);
 			ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
 			ImGui::BeginChild("##dragctrl", ImVec2(controlWidth, 0), false, ImGuiWindowFlags_NoScrollbar);
-			EditorWidgets::drawVec2Control("", clip.frames[i].index, 0, 0, 0, 40, true);
+			EditorWidgets::drawVec2Control("", clip.frames[i].index, 0, 50, 0, 0, true);
 			ImGui::EndChild();
 			ImGui::PopStyleColor();
 
@@ -331,13 +322,13 @@ bool AnimationClipPanel::drawFrameStrip(AnimationClip& clip) {
 
 		ImGui::SetCursorPos(framePos);
 		drawFrame({clip.texturePath, m_scene->getTileSize(), clip.frames[i].index, clip.sizeInTiles});
-		ImGui::Dummy(ImVec2(0, 2 * displayScale));	 // Spacer
+		ImGui::Dummy(ImVec2(0, 2 * displayScale));	// Spacer
 
 		float controlOffsetX = (cellWidth - controlWidth) * 0.5f - 2;
 		ImGui::SetCursorPosX(controlOffsetX);
 		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
 		ImGui::BeginChild("##ctrl", ImVec2(controlWidth, 0), false, ImGuiWindowFlags_NoScrollbar);
-		EditorWidgets::drawVec2Control("", clip.frames[i].index, 0, 0, 0, 40, true);
+		EditorWidgets::drawVec2Control("", clip.frames[i].index, 0, 50, 0, 0, true);
 		ImGui::EndChild();
 		ImGui::PopStyleColor();
 

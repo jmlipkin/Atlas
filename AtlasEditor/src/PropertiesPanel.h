@@ -100,7 +100,7 @@ class PropertiesPanel {
 	int			m_focusRenameCursor	 = 0;
 	bool		m_justFinishedRename = false;
 
-	bool m_showCollider = true;
+	bool m_showCollider = false;
 
 	NewScriptCallback m_onNewScript;
 
