@@ -24,13 +24,13 @@ struct Tag {
 struct Tilemap {
 	glm::ivec2	size = {1, 1};
 	std::string tileset;
-	int			layer;
+	uint32_t	layerMask = 0xFFFFFFFF;
 
 	bool showOverlay;
 
 	std::vector<int> grid = {-1, -1};
 
-	int getTile(uint32_t x, uint32_t y) { return grid[y * size.x + x]; }
+	int getTile(uint32_t x, uint32_t y) const { return grid[y * size.x + x]; }
 	int setTile(uint32_t x, uint32_t y, uint32_t index) { return grid[y * size.x + x] = index; }
 
 	void resize(glm::ivec2 newSize) {

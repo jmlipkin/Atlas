@@ -233,7 +233,7 @@ void JSONSerializer::serializeScene(const std::shared_ptr<Scene>& scene) {
 			json t;
 			t["Tileset"] = tilemap.tileset;
 			t["Size"]	 = {tilemap.size.x, tilemap.size.y};
-			t["Layer"]	 = tilemap.layer;
+			t["Layer Mask"]	 = tilemap.layerMask;
 			t["Grid"]	 = tilemap.grid;
 
 			e["Tilemap"] = t;
@@ -426,7 +426,7 @@ void JSONSerializer::deserializeScene(std::shared_ptr<Scene> scene) {
 			json t			= e["Tilemap"];
 			tilemap.tileset = t["Tileset"];
 			tilemap.size	= glm::ivec2(t["Size"][0], t["Size"][1]);
-			tilemap.layer	= t["Layer"];
+			tilemap.layerMask	= t["Layer Mask"];
 			tilemap.grid	= t["Grid"].get<std::vector<int>>();
 
 			std::shared_ptr<Tileset> tileset = ProjectManager::loadTileset(ProjectManager::tilesetPath(tilemap.tileset));

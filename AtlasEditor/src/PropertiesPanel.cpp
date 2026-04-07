@@ -164,7 +164,8 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 				}
 			}
 
-			changed |= EditorWidgets::drawIntControl("Layer", component.layer, "L", columnWidth, valueWidth);
+			// TODO: Editor ImGui system
+			// changed |= EditorWidgets::drawIntControl("Layer Mask", component.layerMask, "L", columnWidth, valueWidth);
 			changed |= EditorWidgets::drawCheckbox("Debug Overlay", component.showOverlay, columnWidth);
 
 			ImGui::Dummy(padding4);

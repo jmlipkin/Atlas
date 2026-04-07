@@ -39,6 +39,7 @@ class Tileset {
 	void setPath(const std::string& path) { m_filepath = path; }
 	void setTexture(const std::string& texturePath) { m_texturePath = texturePath; }
 
+	TileDefinition& getTile(int index) { return m_tileset.at(index); }
 	void setTile(int index, TileDefinition def) { m_tileset[index] = def; }
 	void removeTile(int index) {
 		if (m_tileset.contains(index)) m_tileset.erase(index);

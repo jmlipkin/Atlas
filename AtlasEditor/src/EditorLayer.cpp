@@ -135,6 +135,7 @@ void EditorLayer::onUpdate(DeltaTime dt) {
 
 		if (m_showAllColliders) {
 			CollisionDebug::drawColliders(m_activeScene);
+			CollisionDebug::drawTilemapColliders(m_activeScene);
 		}
 		Entity& selected = m_hierarchyPanel->getSelectionContext();
 		if (selected && selected.hasComponent<Component::Collider>()) {
@@ -202,9 +203,9 @@ void EditorLayer::onImGuiRender() {
 			std::filesystem::remove(Platform::getAppSupportPath() + "/preview.atscene");
 		}
 
-		std::shared_ptr<Framebuffer> fb = Application::get().getFramebuffer();
-		void* texture = fb->getColorTexture(0);
-		float aspectRatio = (float)fb->getWidth() / (float)fb->getHeight();
+		std::shared_ptr<Framebuffer> fb			 = Application::get().getFramebuffer();
+		void*						 texture	 = fb->getColorTexture(0);
+		float						 aspectRatio = (float)fb->getWidth() / (float)fb->getHeight();
 		EditorWidgets::drawImageWithAspectRatio(texture, aspectRatio);
 
 		ImGui::End();
