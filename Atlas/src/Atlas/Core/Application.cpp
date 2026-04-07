@@ -32,6 +32,7 @@ Application::Application(const WindowProperties& winProps) {
 
 Application::~Application() {
 	Renderer::shutdown();
+	Serializer::shutdown();
 	m_layerStack.popOverlay(m_ImGuiLayer);
 }
 

@@ -56,7 +56,7 @@ class Scene {
 
 	std::string m_name;
 	std::string m_filepath;
-	int			m_tileSize;
+	int			m_tileSize = 16;
 
 	EventCallbackFn m_eventCallback;
 

@@ -1,6 +1,9 @@
 #include "atpch.h"
 #include "TilemapEditorPanel.h"
 
+#include "Atlas/Core/AssetManager.h"
+#include "Atlas/ImGui/EditorWidgets.h"
+
 namespace Atlas {
 
 inline void tileUVs(const TileDefinition& tile, int tileSize, float texW, float texH,

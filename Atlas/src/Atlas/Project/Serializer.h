@@ -11,6 +11,8 @@ class Project;
 
 class SerializerAPI {
   public:
+	virtual ~SerializerAPI() = default;
+
 	virtual void serializeProject(const std::shared_ptr<Project>& project) = 0;
 	virtual void deserializeProject(std::shared_ptr<Project> project)	   = 0;
 
@@ -39,6 +41,7 @@ class Serializer {
 	static void loadScriptManifest(std::shared_ptr<Project> project) { s_serializerAPI->loadScriptManifest(project); }
 
 	static void init();
+	static void shutdown();
 
   private:
 	static SerializerAPI* s_serializerAPI;
