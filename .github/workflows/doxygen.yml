@@ -17,7 +17,7 @@ jobs:
       - name: Run Doxygen
         run: doxygen Doxyfile
       - name: Add .nojekyll
-        run: touch html/.nojekyll
+        run: touch docs/doxygen/html/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
