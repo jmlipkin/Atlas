@@ -19,6 +19,7 @@ class RuntimeLayer : public Layer {
 	virtual void onDetach() override { m_activeScene = nullptr; }
 
 	virtual void onEvent(Event& event) override {
+		m_cameraController.onEvent(event);
 		m_activeScene->onEvent(event);
 	}
 

@@ -14,6 +14,8 @@ RuntimeLayer::RuntimeLayer(bool preview) : Layer("Runtime Layer"), m_cameraContr
 
 void RuntimeLayer::setScene(std::shared_ptr<Scene> scene) {
 	m_activeScene = scene;
+	ProjectManager::setActiveScene(scene);
+	scene->setTileSize(ProjectManager::getActiveProject()->getData().tileSize);
 	scene->setEventCallback([](Event& e) {
 		Application::get().onEvent(e);
 	});
