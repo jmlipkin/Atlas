@@ -15,13 +15,13 @@ jobs:
       - name: Install Doxygen
         run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
       - name: Run Doxygen
-        run doxygen Doxyfile
+        run: doxygen Doxyfile
       - name: Add .nojekyll
         run: touch html/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'html'
+          path: 'docs/doxygen/html'
       - name: Deploy to GitHub pages
         id: deployment
         uses: actions/deploy-pages@v4
