@@ -87,6 +87,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			displayPath = truncated + "...";
 		}
 
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text("%s", displayPath.c_str());
 		if (ImGui::IsItemHovered() && !filepath.empty())
 			ImGui::SetTooltip("%s", filepath.c_str());
@@ -145,6 +146,7 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 			}
 		} else {
 			float changeButtonWidth = 62.0f * EditorWidgets::displayScale;
+			ImGui::AlignTextToFramePadding();
 			ImGui::Text("Tileset: %s", component.tileset.c_str());
 			ImGui::SameLine();
 			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f * EditorWidgets::displayScale);
@@ -311,7 +313,8 @@ void PropertiesPanel::drawComponents(Entity& entity) {
 				ImGui::EndCombo();
 			}
 		} else {
-			float changeButtonWidth = 62.0f * EditorWidgets::displayScale;
+			float changeButtonWidth = 62.0f;
+			ImGui::AlignTextToFramePadding();
 			ImGui::Text("Active Script: %s", component.instance->getTypeName().c_str());
 			ImGui::SameLine();
 			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - changeButtonWidth - 4.0f * EditorWidgets::displayScale);

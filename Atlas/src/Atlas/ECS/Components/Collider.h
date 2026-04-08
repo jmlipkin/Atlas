@@ -25,19 +25,19 @@ union ColliderSize {
 namespace Component {
 
 struct Collider {
-	ColliderShape shape;
-	glm::vec2	  offset;
-	ColliderSize  size;
-	bool		  isTrigger;
+	ColliderShape shape		= ColliderShape::AABB;
+	glm::vec2	  offset	= {0.0f, 0.0f};
+	ColliderSize  size		= {glm::vec2(1.0f)};
+	bool		  isTrigger = false;
 	uint32_t	  layerMask = 0xFFFFFFFF;
 
 	std::string shapeString() const { return (shape == ColliderShape::AABB) ? "AABB" : "Circle"; }
 };
 
 struct RigidBody {
-	glm::vec2		  velocity;
-	bool			  isStatic;
-	CollisionResponse responseType;
+	glm::vec2		  velocity		 = {0.0f, 0.0f};
+	bool			  isStatic		 = false;
+	CollisionResponse responseType = CollisionResponse::NONE;
 };
 
 }  // namespace Component

@@ -26,12 +26,12 @@ struct Tilemap {
 	std::string tileset;
 	uint32_t	layerMask = 0xFFFFFFFF;
 
-	bool showOverlay;
+	bool showOverlay = false;
 
 	std::vector<int> grid = {-1, -1};
 
-	int getTile(uint32_t x, uint32_t y) const { return grid[y * size.x + x]; }
-	int setTile(uint32_t x, uint32_t y, uint32_t index) { return grid[y * size.x + x] = index; }
+	int  getTile(uint32_t x, uint32_t y) const { return grid[y * size.x + x]; }
+	void setTile(uint32_t x, uint32_t y, int index) { grid[y * size.x + x] = index; }
 
 	void resize(glm::ivec2 newSize) {
 		std::vector<int> newGrid(newSize.x * newSize.y, -1);
@@ -72,7 +72,7 @@ struct Sprite {
 	Sprite(std::shared_ptr<SubTexture> sprite) : texturePath(sprite->getTexturePath()), specs(sprite->getSpecs()) {}
 
 	void recalculateCoordinates() {
-		if (texturePath.empty()) return;
+		if (texturePath.empty() || !ProjectManager::getActiveProject()) return;
 		SubTexture sub(texturePath, ProjectManager::getActiveProject()->getData().tileSize, specs.index, specs.sizeInTiles);
 		specs.coordinates = sub.getSpecs().coordinates;
 	}

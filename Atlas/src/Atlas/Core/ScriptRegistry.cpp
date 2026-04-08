@@ -59,6 +59,7 @@ ScriptPriority ScriptRegistry::getPriority(const std::string& name) {
 		priority++;
 	}
 	AT_CORE_ASSERT(false, "ScriptRegistry does not contain {}", name);
+	return ScriptPriority::Normal;
 }
 
 int ScriptRegistry::getPriorityIndex(const std::string& name) {
@@ -70,6 +71,7 @@ int ScriptRegistry::getPriorityIndex(const std::string& name) {
 		priority++;
 	}
 	AT_CORE_ASSERT(false, "ScriptRegistry does not contain {}", name);
+	return 0;
 }
 
 std::vector<std::string> ScriptRegistry::getRegisteredNames() {

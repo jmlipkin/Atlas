@@ -123,7 +123,7 @@ void Collision::checkTilemapCollisions(DeltaTime dt, Scene& scene) {
 
 			glm::vec2 localPos = glm::vec2(tCollider.position) - glm::vec2(tMap.position);
 
-			int colMin, colMax, rowMin, rowMax;
+			int colMin = 0, colMax = -1, rowMin = 0, rowMax = -1;
 
 			if (collider.shape == ColliderShape::AABB) {
 				// left edge is localPos.x, right edge is localPos.x + collider full width

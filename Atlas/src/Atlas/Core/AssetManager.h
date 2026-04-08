@@ -18,6 +18,8 @@ class AssetManager {
 	static std::shared_ptr<Texture> loadTexture(const std::string& filepath);
 	static std::shared_ptr<Tileset> loadTileset(const std::string& name, const std::string& filepath);
 
+	static void clearProjectCaches();
+
 	template <typename T>
 	static std::shared_ptr<T> get(const std::string& key) {
 		auto& cache = getCache<T>();

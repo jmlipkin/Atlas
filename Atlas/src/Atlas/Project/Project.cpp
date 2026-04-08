@@ -165,6 +165,8 @@ void ProjectManager::closeProject(bool shouldSave) {
 
 	unloadScriptLibrary();
 
+	AssetManager::clearProjectCaches();
+
 	s_activeProject = nullptr;
 	s_activeScene	= nullptr;
 }

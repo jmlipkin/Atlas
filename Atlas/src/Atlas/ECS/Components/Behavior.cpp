@@ -14,7 +14,7 @@ R"x(#pragma once
 namespace Atlas {
 
 class )x" + name + R"x( : public Atlas::Behavior {
-public:
+  public:
     AT_BEHAVIOR()x" +
                             name + R"x()
 
@@ -27,12 +27,12 @@ public:
         // Add any variables that you want visible in the editor here using the
         // expose() function.
         // Usage: expose(<variable name>, <value>);
-        expose("My Variable ", example_variable);
-}
+        expose("My Variable", example_variable);
+    }
 
-private:
-// add member variables here
-float example_variable;
+  private:
+    // add member variables here
+    float example_variable = 0.0f;
 };
 
 AT_REGISTER_SCRIPT()x" +

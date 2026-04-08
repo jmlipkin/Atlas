@@ -3,6 +3,11 @@
 
 namespace Atlas {
 
+void AssetManager::clearProjectCaches() {
+	getCache<Texture>().clear();
+	getCache<Tileset>().clear();
+}
+
 std::shared_ptr<Font> AssetManager::loadFont(const std::string& name, const std::string& filepath, uint32_t fontSizePx) {
 	auto& cache = getCache<Font>();
 	if (cache.contains(name)) {
@@ -27,9 +32,9 @@ std::shared_ptr<Texture> AssetManager::loadTexture(const std::string& filepath) 
 	return cache[filepath] = Texture::create(filepath);
 }
 
-std::shared_ptr<Tileset> AssetManager::loadTileset(const std::string &name, const std::string &filepath) {
+std::shared_ptr<Tileset> AssetManager::loadTileset(const std::string& name, const std::string& filepath) {
 	auto& cache = getCache<Tileset>();
-	if(cache.contains(name)) {
+	if (cache.contains(name)) {
 		return cache[name];
 	}
 	return cache[name] = std::make_shared<Tileset>(name, filepath);

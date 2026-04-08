@@ -4,8 +4,7 @@ namespace Atlas {
 
 enum class RunMode {
 	BUILD,
-    PREVIEW,
-    PLAY
+	PLAY
 };
 
 }

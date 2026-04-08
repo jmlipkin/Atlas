@@ -517,8 +517,8 @@ void JSONSerializer::loadScriptManifest(std::shared_ptr<Project> project) {
 	}
 
 	if (root.contains("Scripts")) {
-		for (auto& name : root["Scripts"]) {
-		}
+		// Script names are registered by the dylib at load time via AT_REGISTER_SCRIPT.
+		// This block is reserved for future manifest-driven registration.
 	}
 }
 
