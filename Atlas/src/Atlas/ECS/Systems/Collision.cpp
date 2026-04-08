@@ -63,12 +63,16 @@ void Collision::update(DeltaTime dt, Scene& scene) {
 			}
 
 			if (collision) {
-				CollisionEvent event(entityA, entityB, collision->normal, collision->depth, cA.isTrigger || cB.isTrigger);
-				scene.dispatchEvent(event);
+				bool isTrigger = cA.isTrigger || cB.isTrigger;
 
-				if (!event.isTrigger()) {
-					resolveCollision(entityA, entityB, collision.value());
+				CollisionEvent event(entityA, entityB, collision->normal, collision->depth, isTrigger);
+				scene.onEvent(event);
+
+				if (isTrigger) {
+					continue;
 				}
+
+				resolveCollision(entityA, entityB, collision.value());
 
 				currentlyColliding.insert(entityA);
 				currentlyColliding.insert(entityB);
