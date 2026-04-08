@@ -1,0 +1,87 @@
+\doxysection{Systems.\+h}
+\hypertarget{_systems_8h_source}{}\label{_systems_8h_source}\index{Atlas/src/Atlas/ECS/Systems/Systems.h@{Atlas/src/Atlas/ECS/Systems/Systems.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Time.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Registry.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Entities/Entity.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Components/Components.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Components/Animation.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }Atlas::System\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_system_1_1_transformation}{Transformation}}\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{static}\ glm::vec3\ getCenter(\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\&\ entity)\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ AT\_CORE\_ASSERT(entity.hasComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}>()\ \&\&\ entity.hasComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}>(),\ \textcolor{stringliteral}{"{}Entity\ must\ have\ a\ transform\ and\ sprite\ component\ in\ order\ to\ get\ center"{}});}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\ t\ \ \ \ \ \ =\ entity.getComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}>();}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}\ \ \ \ sprite\ =\ entity.getComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}>();}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{t.position.x\ +\ (0.5f\ *\ t.size.x),\ t.position.y\ +\ (0.5f\ *\ t.size.y),\ t.position.z\};}
+\DoxyCodeLine{00019\ \ \ \ \ \}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ glm::vec2\ getCenter2D(\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\&\ entity)\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ AT\_CORE\_ASSERT(entity.hasComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}>()\ \&\&\ entity.hasComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}>(),\ \textcolor{stringliteral}{"{}Entity\ must\ have\ a\ transform\ and\ sprite\ component\ in\ order\ to\ get\ center"{}});}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\ t\ \ \ \ \ \ =\ entity.getComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}>();}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}\ \ \ \ sprite\ =\ entity.getComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}>();}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{t.position.x\ +\ (0.5f\ *\ t.size.x),\ t.position.y\ +\ (0.5f\ *\ t.size.y)\};}
+\DoxyCodeLine{00026\ \ \ \ \ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ setCenter(\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\&\ entity,\ glm::vec2\ position)\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!entity.hasComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}>()\ ||\ !entity.hasComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}>())\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\&\ transform\ =\ entity.getComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}>();}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}\&\ \ \ \ sprite\ \ \ \ =\ entity.getComponent<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}>();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ glm::vec2\ topleft\ \ =\ position\ -\/\ (0.5f\ *\ transform.size);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ transform.position\ =\ glm::vec3(topleft,\ transform.position.z);}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_system_1_1_animation}{Animation}}\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ updateFrames(Registry\&\ registry,\ \doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Atlas::DeltaTime}}\ dt)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ view\ =\ registry.view<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}},\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_animations}{Component::Animations}}>();}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ entity\ :\ view)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}\&\ \ \ \ \ sprite\ \ \ \ =\ view.get<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}>(entity);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_animations}{Component::Animations}}\&\ animation\ =\ view.get<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_animations}{Component::Animations}}>(entity);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!animation.containsActiveClip())}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_animation_clip}{AnimationClip}}\&\ clip\ =\ animation.clips[animation.activeClip];}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!clip.playing)}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ clip.timeSinceLastFrame\ +=\ dt;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (clip.timeSinceLastFrame\ >=\ 1.0f\ /\ (clip.frameRate))\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clip.currentFrame++;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clip.timeSinceLastFrame\ =\ 0.0f;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (clip.currentFrame\ ==\ clip.frames.size())\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clip.currentFrame\ =\ 0;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!clip.shouldLoop)}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clip.playing\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_system_1_1_sprite_initializer}{SpriteInitializer}}\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ OnSpriteAttach(entt::registry\&\ registry,\ entt::entity\ entity)\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ transform\ =\ registry.get<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}>(entity);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ sprite\ \ \ \ =\ registry.get<\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}>(entity);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ transform.size\ =\ sprite.specs.sizeInTiles;}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas::System}}
+
+\end{DoxyCode}

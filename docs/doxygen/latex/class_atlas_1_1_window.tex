@@ -1,0 +1,62 @@
+\doxysection{Atlas::\+Window Class Reference}
+\hypertarget{class_atlas_1_1_window}{}\label{class_atlas_1_1_window}\index{Atlas::Window@{Atlas::Window}}
+Inheritance diagram for Atlas::\+Window:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_window}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_window_a0bfc9f4c96f47794f6d4eb4eff674242}\label{class_atlas_1_1_window_a0bfc9f4c96f47794f6d4eb4eff674242} 
+using {\bfseries Event\+Callback\+Fn} = std::\+function$<$void(\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_window_aa10a6cfceb79604496dfb54b8efbfe8d}\label{class_atlas_1_1_window_aa10a6cfceb79604496dfb54b8efbfe8d} 
+virtual void {\bfseries on\+Update} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_window_a4b54d643a54cb1dba49a02e2314d9401}\label{class_atlas_1_1_window_a4b54d643a54cb1dba49a02e2314d9401} 
+virtual void {\bfseries on\+Minimize} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_window_ac9a658e57f54c3dab6db741e77fd0b95}\label{class_atlas_1_1_window_ac9a658e57f54c3dab6db741e77fd0b95} 
+virtual void {\bfseries on\+Restore} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_window_a6e389b1b1ab601a9b82baea99d6b5319}\label{class_atlas_1_1_window_a6e389b1b1ab601a9b82baea99d6b5319} 
+virtual unsigned int {\bfseries get\+Width} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_window_ad4b19df14240b7bf53418d6673c13264}\label{class_atlas_1_1_window_ad4b19df14240b7bf53418d6673c13264} 
+virtual unsigned int {\bfseries get\+Height} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_window_a56df3c7c5e64e23e92b4b72514de3423}\label{class_atlas_1_1_window_a56df3c7c5e64e23e92b4b72514de3423} 
+virtual glm::\+uvec2 {\bfseries get\+Resolution} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_window_a651e3f6f3808d009e6ab6c31ac67bf19}\label{class_atlas_1_1_window_a651e3f6f3808d009e6ab6c31ac67bf19} 
+virtual void \texorpdfstring{$\ast$}{*} {\bfseries get\+Native\+Window} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_window_a428e4e3e2124781bf6f04b47cc99aed1}\label{class_atlas_1_1_window_a428e4e3e2124781bf6f04b47cc99aed1} 
+virtual std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Graphics\+Context}} $>$ {\bfseries get\+Graphics\+Context} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_window_a95b4ef94571b3ee998900cd848b5702a}\label{class_atlas_1_1_window_a95b4ef94571b3ee998900cd848b5702a} 
+virtual void {\bfseries set\+Event\+Callback} (const Event\+Callback\+Fn \&callback)=0
+\item 
+\Hypertarget{class_atlas_1_1_window_a28ed245f94219ecd06304cd1a9f4aee1}\label{class_atlas_1_1_window_a28ed245f94219ecd06304cd1a9f4aee1} 
+virtual void {\bfseries set\+VSync} (bool enabled)=0
+\item 
+\Hypertarget{class_atlas_1_1_window_a9c01323043c58b879ecea1e22e6e863e}\label{class_atlas_1_1_window_a9c01323043c58b879ecea1e22e6e863e} 
+virtual bool {\bfseries is\+VSync} () const =0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_window_ad50a83366f8ecd793ed059857de4be32}\label{class_atlas_1_1_window_ad50a83366f8ecd793ed059857de4be32} 
+static \doxymbox{\hyperlink{class_atlas_1_1_window}{Window}} \texorpdfstring{$\ast$}{*} {\bfseries create} (const \doxymbox{\hyperlink{struct_atlas_1_1_window_properties}{Window\+Properties}} \&properties=\doxymbox{\hyperlink{struct_atlas_1_1_window_properties}{Window\+Properties}}())
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Window.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSWindow.\+mm\end{DoxyCompactItemize}

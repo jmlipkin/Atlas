@@ -1,0 +1,38 @@
+\doxysection{Runtime\+Layer.\+h}
+\hypertarget{_runtime_layer_8h_source}{}\label{_runtime_layer_8h_source}\index{Atlas/src/Atlas/Core/RuntimeLayer.h@{Atlas/src/Atlas/Core/RuntimeLayer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Layer.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Events/Event.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/OrthographicCameraController.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Atlas/Scene/Scene.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }RuntimeLayer\ :\ \textcolor{keyword}{public}\ Layer\ \{}
+\DoxyCodeLine{00012\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ RuntimeLayer(\textcolor{keywordtype}{bool}\ preview\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setScene(std::shared\_ptr<Scene>\ scene);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onAttach()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onUpdate(\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{DeltaTime}}\ dt)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onDetach()\textcolor{keyword}{\ override\ }\{\ m\_activeScene\ =\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onEvent(\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\&\ event)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ m\_cameraController.onEvent(event);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ m\_activeScene-\/>onEvent(event);}
+\DoxyCodeLine{00024\ \ \ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027\ \ \ \ \ std::shared\_ptr<Scene>\ \ \ \ \ \ \ m\_activeScene;}
+\DoxyCodeLine{00028\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_orthographic_camera_controller}{OrthographicCameraController}}\ m\_cameraController;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_previewLayer;}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

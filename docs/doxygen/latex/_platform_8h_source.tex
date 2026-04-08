@@ -1,0 +1,50 @@
+\doxysection{Platform.\+h}
+\hypertarget{_platform_8h_source}{}\label{_platform_8h_source}\index{Atlas/src/Atlas/Core/Platform.h@{Atlas/src/Atlas/Core/Platform.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_platform}{Platform}}\ \{}
+\DoxyCodeLine{00008\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{using\ }BuildOutputCallback\ \ \ =\ std::function<void(\textcolor{keyword}{const}\ std::string\&)>;}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{using\ }BuildCompleteCallback\ =\ std::function<void(\textcolor{keywordtype}{bool})>;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::string\ getResourcesPath()\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>getResourcesPathImpl();\ \}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::string\ getExecutablePath()\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>getExecutablePathImpl();\ \}}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::string\ getAppSupportPath()\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>getAppSupportPathImpl();\ \}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::string\ openFileDialog(\textcolor{keyword}{const}\ std::string\&\ filter)\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>openFileDialogImpl(filter);\ \}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::string\ saveFileDialog(\textcolor{keyword}{const}\ std::string\&\ filter,\ \textcolor{keyword}{const}\ std::string\&\ defaultDir\ =\ \textcolor{stringliteral}{"{}"{}})\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>saveFileDialogImpl(filter,\ defaultDir);\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::vector<std::string>\ getFileList(\textcolor{keyword}{const}\ std::string\&\ directory,\ \textcolor{keyword}{const}\ std::string\&\ filter)\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>getFileListImpl(directory,\ filter);\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \ showConfirmDialog(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ confirm,\ \textcolor{keyword}{const}\ std::string\&\ deny,\ \textcolor{keyword}{const}\ std::string\&\ cancel)\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>showConfirmDialogImpl(message,\ confirm,\ deny,\ cancel);\ \}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ buildScriptLibrary(\textcolor{keyword}{const}\ std::string\&\ buildDir,\ \textcolor{keyword}{const}\ std::string\&\ target,\ BuildOutputCallback\ onOutput,\ BuildCompleteCallback\ onComplete)\ \{\ s\_instance-\/>buildScriptLibraryImpl(buildDir,\ target,\ onOutput,\ onComplete);\ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ openFile(\textcolor{keyword}{const}\ std::string\&\ filepath)\ \{\ s\_instance-\/>openFileImpl(filepath);\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getResourcesPathImpl()\ \ =\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getExecutablePathImpl()\ =\ 0;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getAppSupportPathImpl()\ =\ 0;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ openFileDialogImpl(\textcolor{keyword}{const}\ std::string\&\ filter)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ saveFileDialogImpl(\textcolor{keyword}{const}\ std::string\&\ filter,\ \textcolor{keyword}{const}\ std::string\&\ defaultDir)\ =\ 0;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ std::vector<std::string>\ getFileListImpl(\textcolor{keyword}{const}\ std::string\&\ directory,\ \textcolor{keyword}{const}\ std::string\&\ filter)\ =\ 0;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \ showConfirmDialogImpl(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ confirm,\ \textcolor{keyword}{const}\ std::string\&\ deny,\ \textcolor{keyword}{const}\ std::string\&\ cancel)\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ buildScriptLibraryImpl(\textcolor{keyword}{const}\ std::string\&\ buildDir,\ \textcolor{keyword}{const}\ std::string\&\ target,\ BuildOutputCallback\ onOutput,\ BuildCompleteCallback\ onComplete)\ =\ 0;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ openFileImpl(\textcolor{keyword}{const}\ std::string\&\ filepath)\ =\ 0;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_atlas_1_1_platform}{Platform}}*\ s\_instance;}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

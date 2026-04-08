@@ -1,0 +1,44 @@
+\doxysection{Metal\+Buffer.\+h}
+\hypertarget{_metal_buffer_8h_source}{}\label{_metal_buffer_8h_source}\index{Atlas/src/Atlas/Platform/Metal/MetalBuffer.h@{Atlas/src/Atlas/Platform/Metal/MetalBuffer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Buffer.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <metal-\/cpp/Metal.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{class\ }MetalVertexBuffer\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{VertexBuffer}}\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ \ MetalVertexBuffer(uint32\_t\ size);}
+\DoxyCodeLine{00012\ \ \ \ \ \ MetalVertexBuffer(\textcolor{keywordtype}{float}*\ vertices,\ uint32\_t\ size);}
+\DoxyCodeLine{00013\ \ \ \ \ \ \textcolor{keyword}{virtual}\ \string~MetalVertexBuffer()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setData(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ uint32\_t\ size)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \ \textcolor{keywordtype}{void}*\ getNativeBuffer()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_buffer;\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ \ MTL::Buffer*\ m\_buffer;}
+\DoxyCodeLine{00021\ \ \ \ \ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{class\ }MetalIndexBuffer\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{IndexBuffer}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ MetalIndexBuffer(uint32\_t*\ indices,\ uint32\_t\ count);}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \string~MetalIndexBuffer()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setData(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ uint32\_t\ count)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getCount()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_indexCount;\ \}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ MTL::Buffer*\ getBuffer()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_buffer;\ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00034\ \ \ \ \ \ MTL::Buffer*\ m\_buffer;}
+\DoxyCodeLine{00035\ \ \ \ \ \ uint32\_t\ m\_indexCount;}
+\DoxyCodeLine{00036\ \ \ \ \ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

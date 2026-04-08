@@ -1,0 +1,92 @@
+\doxysection{Entity.\+h}
+\hypertarget{_entity_8h_source}{}\label{_entity_8h_source}\index{Atlas/src/Atlas/ECS/Entities/Entity.h@{Atlas/src/Atlas/ECS/Entities/Entity.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/UUID.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Components/Components.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <entt/entt.hpp>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}};}
+\DoxyCodeLine{00010\ \}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }Entity\ \{}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ Entity()\ :\ m\_atlasID(UUID::null())\ \{\}}
+\DoxyCodeLine{00016\ \ \ \ \ Entity(entt::entity\ entityID,\ \doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}*\ scene)\ :\ m\_entityID(entityID),\ m\_scene(scene),\ m\_atlasID(getComponent<Component::UUID>().\textcolor{keywordtype}{id})\ \{\}}
+\DoxyCodeLine{00017\ \ \ \ \ Entity(entt::entity\ entityID,\ \doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}*\ scene,\ \doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{UUID}}\ \textcolor{keywordtype}{id})\ :\ m\_entityID(entityID),\ m\_scene(scene),\ m\_atlasID(\textcolor{keywordtype}{id})\ \{\}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ Entity(\textcolor{keyword}{const}\ Entity\&\ other)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{UUID}}\ getUUID()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_atlasID;\ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ std::string\&\ name()\ \{\ \textcolor{keywordflow}{return}\ getComponent<Component::Tag>().tag;\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00026\ \ \ \ \ T\&\ addComponent(Args\&\&...\ args);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ removeComponent();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00032\ \ \ \ \ T\&\ getComponent();}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasComponent();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Defined\ in\ Behavior.h}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ addScript();}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{operator}\ entt::entity()\ \{\ \textcolor{keywordflow}{return}\ m\_entityID;\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{operator}\ \textcolor{keyword}{const}\ entt::entity()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_entityID;\ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ Entity\&\ other)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_atlasID\ ==\ other.m\_atlasID;\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{operator}\ bool()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_atlasID\ !=\ UUID::null()\ \&\&\ m\_scene\ !=\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ TEMPORARY}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ explicit\ operator\ uint32\_t()\ \{\ return\ (uint32\_t)m\_entityID;\ \}}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00052\ \ \ \ \ entt::entity\ m\_entityID;}
+\DoxyCodeLine{00053\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}*\ \ \ \ \ \ \ m\_scene\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00054\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{UUID}}\ \ \ \ \ \ \ \ \ m\_atlasID;}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#include\ "{}Atlas/Scene/Scene.h"{}}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00064\ T\&\ Entity::addComponent(Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ AT\_CORE\_ASSERT(!hasComponent<T>(),\ \textcolor{stringliteral}{"{}Entity\ already\ has\ component!"{}});}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ m\_scene-\/>m\_registry.emplace<T>(m\_entityID,\ std::forward<Args>(args)...);}
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{void}\ Entity::removeComponent()\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ AT\_CORE\_ASSERT(hasComponent<T>(),\ \textcolor{stringliteral}{"{}Entity\ does\ not\ have\ component!"{}});}
+\DoxyCodeLine{00072\ \ \ \ \ m\_scene-\/>m\_registry.remove<T>(m\_entityID);}
+\DoxyCodeLine{00073\ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00076\ T\&\ Entity::getComponent()\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ AT\_CORE\_ASSERT(hasComponent<T>(),\ \textcolor{stringliteral}{"{}Entity\ does\ not\ have\ component!"{}});}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordflow}{return}\ m\_scene-\/>m\_registry.get<T>(m\_entityID);}
+\DoxyCodeLine{00079\ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00082\ \textcolor{keywordtype}{bool}\ Entity::hasComponent()\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ m\_scene-\/>m\_registry.any\_of<T>(m\_entityID);}
+\DoxyCodeLine{00084\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

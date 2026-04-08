@@ -1,0 +1,74 @@
+\doxysection{Tileset.\+h}
+\hypertarget{_tileset_8h_source}{}\label{_tileset_8h_source}\index{Atlas/src/Atlas/Renderer/Tileset.h@{Atlas/src/Atlas/Renderer/Tileset.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/SubTexture.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_tile_definition}{TileDefinition}}\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ glm::ivec2\ gridIndex;\ \ \ \ \textcolor{comment}{//\ position\ in\ the\ spritesheet}}
+\DoxyCodeLine{00015\ \ \ \ \ glm::ivec2\ sizeInTiles;\ \ \textcolor{comment}{//\ usually\ \{1,1\}\ for\ most\ tiles}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ isSolid;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_texture_coordinates}{TextureCoordinates}}\ TexCoords()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_texture_coordinates}{TextureCoordinates}}\ coords;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ coords.top\_left\ \ \ \ \ =\ gridIndex;}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ coords.top\_right\ \ \ \ =\ \{gridIndex.x\ +\ sizeInTiles.x,\ gridIndex.y\};}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ coords.bottom\_left\ \ =\ \{gridIndex.x,\ gridIndex.y\ +\ sizeInTiles.y\};}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ coords.bottom\_right\ =\ \{gridIndex.x\ +\ sizeInTiles.x,\ gridIndex.y\ +\ sizeInTiles.y\};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ coords;}
+\DoxyCodeLine{00025\ \ \ \ \ \}}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }Tileset\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{using\ }TileDeletedCallback\ =\ std::function<void(\textcolor{keywordtype}{int})>;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ Tileset(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ filepath)\ :\ m\_name(name),\ m\_filepath(filepath)\ \{\}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ setTileDeletedCallback(TileDeletedCallback\ callback)\ \{\ m\_deletedCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ std::unordered\_map<int,\ TileDefinition>\&\ getTileset()\ \{\ \textcolor{keywordflow}{return}\ m\_tileset;\ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ setName(\textcolor{keyword}{const}\ std::string\&\ name)\ \{\ m\_name\ =\ name;\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ setPath(\textcolor{keyword}{const}\ std::string\&\ path)\ \{\ m\_filepath\ =\ path;\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ setTexture(\textcolor{keyword}{const}\ std::string\&\ texturePath)\ \{\ m\_texturePath\ =\ texturePath;\ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_tile_definition}{TileDefinition}}\&\ getTile(\textcolor{keywordtype}{int}\ index)\ \{\ \textcolor{keywordflow}{return}\ m\_tileset.at(index);\ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ setTile(\textcolor{keywordtype}{int}\ index,\ \doxymbox{\hyperlink{struct_atlas_1_1_tile_definition}{TileDefinition}}\ def)\ \{\ m\_tileset[index]\ =\ def;\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ removeTile(\textcolor{keywordtype}{int}\ index)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_tileset.contains(index))\ m\_tileset.erase(index);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ m\_deletedTile\ =\ index;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_deletedCallback)\ m\_deletedCallback(index);}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ std::string\ getPath()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_filepath;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ std::string\ getTexture()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_texturePath;\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{int}\ \ getDeletedTile()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_deletedTile;\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ clearTileDeleted()\ \{\ m\_deletedTile\ =\ -\/1;\ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ \ \ \ \ std::unordered\_map<int,\ TileDefinition>\ m\_tileset;}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00061\ \ \ \ \ std::string\ m\_filepath;}
+\DoxyCodeLine{00062\ \ \ \ \ std::string\ m\_texturePath;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ TileDeletedCallback\ m\_deletedCallback;}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_deletedTile\ =\ -\/1;}
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

@@ -1,0 +1,104 @@
+\doxysection{Atlas::\+Renderer Class Reference}
+\hypertarget{class_atlas_1_1_renderer}{}\label{class_atlas_1_1_renderer}\index{Atlas::Renderer@{Atlas::Renderer}}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_renderer_aedb2e2d7054e855ea70198805a6b5427}\label{class_atlas_1_1_renderer_aedb2e2d7054e855ea70198805a6b5427} 
+static void {\bfseries init} (\doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Graphics\+Context}} \&context)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a66b38f3e4175aa7bb7f46401c791a05d}\label{class_atlas_1_1_renderer_a66b38f3e4175aa7bb7f46401c791a05d} 
+static void {\bfseries shutdown} ()
+\item 
+\Hypertarget{class_atlas_1_1_renderer_ab41a457db08892eb6ae4eb49d2973179}\label{class_atlas_1_1_renderer_ab41a457db08892eb6ae4eb49d2973179} 
+static void {\bfseries begin\+Scene} (const \doxymbox{\hyperlink{class_atlas_1_1_orthographic_camera}{Orthographic\+Camera}} \&camera)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_ac4faa604add8704ce8dc7ec9824bc5ca}\label{class_atlas_1_1_renderer_ac4faa604add8704ce8dc7ec9824bc5ca} 
+static void {\bfseries end\+Scene} ()
+\item 
+\Hypertarget{class_atlas_1_1_renderer_aa1fdeac484a2d56d0118e16968f68d3e}\label{class_atlas_1_1_renderer_aa1fdeac484a2d56d0118e16968f68d3e} 
+static void {\bfseries begin\+Im\+Gui} ()
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a6116e7e10166a28b1856902d78cb9d33}\label{class_atlas_1_1_renderer_a6116e7e10166a28b1856902d78cb9d33} 
+static void {\bfseries submit\+Im\+Gui} ()
+\item 
+\Hypertarget{class_atlas_1_1_renderer_ae6339ea01e032a44abf9d1aa68e03463}\label{class_atlas_1_1_renderer_ae6339ea01e032a44abf9d1aa68e03463} 
+static void {\bfseries draw\+Line} (glm::\+vec2 a, glm::\+vec2 b, glm::\+vec4 color, float thickness=1.\+0f)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a5c3f3fd6a3f7640ea359053a6060fc9f}\label{class_atlas_1_1_renderer_a5c3f3fd6a3f7640ea359053a6060fc9f} 
+static void {\bfseries draw\+Line} (glm::\+vec2 a, glm::\+vec2 b, float depth, glm::\+vec4 color, float thickness=1.\+0f)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_afd7dbe5bd6100c988582d068cbeaf68e}\label{class_atlas_1_1_renderer_afd7dbe5bd6100c988582d068cbeaf68e} 
+static void {\bfseries draw\+Rectangle} (glm::\+vec2 position, glm::\+vec2 size, glm::\+vec4 color, float thickness)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a95b4fc6f56b3eb14d3c8864871542f14}\label{class_atlas_1_1_renderer_a95b4fc6f56b3eb14d3c8864871542f14} 
+static void {\bfseries draw\+Rectangle} (glm::\+vec2 position, glm::\+vec2 size, float depth, glm::\+vec4 color, float thickness)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a84d6a4dcf79a95ff2f63839b1c23dea8}\label{class_atlas_1_1_renderer_a84d6a4dcf79a95ff2f63839b1c23dea8} 
+static void {\bfseries draw\+Circle} (glm::\+vec2 center\+Position, float radius, float depth, glm::\+vec4 color, float thickness=1.\+0f, int segments=128)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a057e2fb6f14850ba902c16592f96e160}\label{class_atlas_1_1_renderer_a057e2fb6f14850ba902c16592f96e160} 
+static void {\bfseries draw\+Filled\+Circle} (const glm::\+vec2 \&center, float radius, const glm::\+vec4 \&color=glm::\+vec4(1.\+0f), int segments=128)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_ad027e4289df28159334304e6d92e4699}\label{class_atlas_1_1_renderer_ad027e4289df28159334304e6d92e4699} 
+static void {\bfseries draw\+Filled\+Circle} (const glm::\+vec3 \&center, float radius, const glm::\+vec4 \&color=glm::\+vec4(1.\+0f), int segments=128)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a3ccfe15c1bfe4ec831692f527f5b9128}\label{class_atlas_1_1_renderer_a3ccfe15c1bfe4ec831692f527f5b9128} 
+static void {\bfseries draw\+Quad} (const glm::\+vec2 \&position, const glm::\+vec2 \&size, const glm::\+vec4 \&color)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a22e1679e2d8d5db03dc8a6739ac263f7}\label{class_atlas_1_1_renderer_a22e1679e2d8d5db03dc8a6739ac263f7} 
+static void {\bfseries draw\+Quad} (const glm::\+vec3 \&position, const glm::\+vec2 \&size, const glm::\+vec4 \&color)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a3a171226c2c586b69749677d9a270e5b}\label{class_atlas_1_1_renderer_a3a171226c2c586b69749677d9a270e5b} 
+static void {\bfseries draw\+Quad} (const glm::\+vec2 \&position, const glm::\+vec2 \&size, const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ \&texture)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a430a0ed174e01177119576358f1c1632}\label{class_atlas_1_1_renderer_a430a0ed174e01177119576358f1c1632} 
+static void {\bfseries draw\+Quad} (const glm::\+vec3 \&position, const glm::\+vec2 \&size, const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ \&texture)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a64c4f175efe4224809a2445157b25367}\label{class_atlas_1_1_renderer_a64c4f175efe4224809a2445157b25367} 
+static void {\bfseries draw\+Quad} (const glm::\+vec2 \&position, const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_sub_texture}{Sub\+Texture}} $>$ \&texture)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_ac3d0bb19e35aa30d8fd0745e3ffb4b1a}\label{class_atlas_1_1_renderer_ac3d0bb19e35aa30d8fd0745e3ffb4b1a} 
+static void {\bfseries draw\+Quad} (const glm::\+vec3 \&position, const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_sub_texture}{Sub\+Texture}} $>$ \&texture)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_aad493379041bbed25c768b9c836e5bb1}\label{class_atlas_1_1_renderer_aad493379041bbed25c768b9c836e5bb1} 
+static void {\bfseries draw\+Quad} (const glm::\+vec2 \&position, const glm::\+vec2 \&size, const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_sub_texture}{Sub\+Texture}} $>$ \&texture)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_ab97a92c528ab5bde5ecdbdfa40b0e9af}\label{class_atlas_1_1_renderer_ab97a92c528ab5bde5ecdbdfa40b0e9af} 
+static void {\bfseries draw\+Quad} (const glm::\+vec3 \&position, const glm::\+vec2 \&size, const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_sub_texture}{Sub\+Texture}} $>$ \&texture)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_ac23491e6035976200da08b20fab29bc1}\label{class_atlas_1_1_renderer_ac23491e6035976200da08b20fab29bc1} 
+static void {\bfseries draw\+Sprite} (\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::\+\+Transform}} transform, \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::\+\+Sprite}} sprite)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a755eaf5a058071a6fd91013f5d6b76b6}\label{class_atlas_1_1_renderer_a755eaf5a058071a6fd91013f5d6b76b6} 
+static void {\bfseries draw\+Tilemap} (\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::\+\+Transform}} transform, \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_tilemap}{Component::\+\+Tilemap}} tilemap)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a2761b91a00dcba5bb0a2bb76a2d76c05}\label{class_atlas_1_1_renderer_a2761b91a00dcba5bb0a2bb76a2d76c05} 
+static void {\bfseries draw\+Quad} (const glm::\+mat4 \&transform, const glm::\+vec4 \&color)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a1b15378112069084221523077c4232fc}\label{class_atlas_1_1_renderer_a1b15378112069084221523077c4232fc} 
+static void {\bfseries draw\+Quad} (const glm::\+mat4 \&transform, const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ \&texture)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a5058ce4d02cefefee3c401804babf600}\label{class_atlas_1_1_renderer_a5058ce4d02cefefee3c401804babf600} 
+static void {\bfseries draw\+Quad} (const glm::\+mat4 \&transform, const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_sub_texture}{Sub\+Texture}} $>$ \&texture)
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a739c8bb5d79f503ef4f90fce86f3d895}\label{class_atlas_1_1_renderer_a739c8bb5d79f503ef4f90fce86f3d895} 
+static void {\bfseries draw\+Text} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_font}{Font}} $>$ \&font, const std::\+string \&text, const glm::\+vec2 \&position, uint32\+\_\+t size\+Px, const glm::\+vec4 \&color=glm::\+vec4(1.\+0f))
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a174c64cd00d6463a8bce877f96777b35}\label{class_atlas_1_1_renderer_a174c64cd00d6463a8bce877f96777b35} 
+static void {\bfseries draw\+Text} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_font}{Font}} $>$ \&font, const std::\+string \&text, const glm::\+vec3 \&position, uint32\+\_\+t size\+Px, const glm::\+vec4 \&color=glm::\+vec4(1.\+0f))
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a5793c4b5bd0d71ddafaaaeeeada5bfa5}\label{class_atlas_1_1_renderer_a5793c4b5bd0d71ddafaaaeeeada5bfa5} 
+static void {\bfseries draw\+Character} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_font}{Font}} $>$ \&font, char character, const glm::\+vec2 \&position, const glm::\+vec2 \&size, const glm::\+vec4 \&color=glm::\+vec4(1.\+0f))
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a054bc599836d78d3122b6eb2be4a721b}\label{class_atlas_1_1_renderer_a054bc599836d78d3122b6eb2be4a721b} 
+static void {\bfseries draw\+Character} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_font}{Font}} $>$ \&font, char character, const glm::\+vec3 \&position, const glm::\+vec2 \&size, const glm::\+vec4 \&color=glm::\+vec4(1.\+0f))
+\item 
+\Hypertarget{class_atlas_1_1_renderer_af134e54d691329e8bf89445aeb890554}\label{class_atlas_1_1_renderer_af134e54d691329e8bf89445aeb890554} 
+static Renderer\+API::\+\+API {\bfseries get\+API} ()
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Renderer.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Renderer.\+cpp\end{DoxyCompactItemize}

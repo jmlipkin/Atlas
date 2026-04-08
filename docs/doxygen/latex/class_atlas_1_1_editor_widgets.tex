@@ -1,0 +1,140 @@
+\doxysection{Atlas::\+Editor\+Widgets Class Reference}
+\hypertarget{class_atlas_1_1_editor_widgets}{}\label{class_atlas_1_1_editor_widgets}\index{Atlas::EditorWidgets@{Atlas::EditorWidgets}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a2b41cbbcd8d0352ed15f9ef482bbf2bd}\label{class_atlas_1_1_editor_widgets_a2b41cbbcd8d0352ed15f9ef482bbf2bd} 
+enum class {\bfseries Panel\+Accent} \{ {\bfseries Green}
+, {\bfseries Purple}
+, {\bfseries Blue}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a6b6c2997c7289249a57dd05a539a6604}\label{class_atlas_1_1_editor_widgets_a6b6c2997c7289249a57dd05a539a6604} 
+static void {\bfseries Draw\+Panel\+Accent\+Bar} (Panel\+Accent color, bool only\+When\+Focused=true)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ae2b4abf4fcaf23f3ba3f2a7fb90f7516}\label{class_atlas_1_1_editor_widgets_ae2b4abf4fcaf23f3ba3f2a7fb90f7516} 
+static void {\bfseries draw\+Image\+With\+Aspect\+Ratio} (void \texorpdfstring{$\ast$}{*}data, float aspect\+Ratio, bool centered=false)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_aae70518c6c0edbdcd98902096fc7e5c6}\label{class_atlas_1_1_editor_widgets_aae70518c6c0edbdcd98902096fc7e5c6} 
+static bool {\bfseries draw\+Float\+Slider} (const char \texorpdfstring{$\ast$}{*}label, float \&value, float column\+Width=85.\+0f, float value\+Width=120.\+0f, float reset\+Value=0.\+0f, float min=0.\+0f, float max=1.\+0f, float speed=0.\+1f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a943e8023d3ae4a029da6ba5e049e4f5b}\label{class_atlas_1_1_editor_widgets_a943e8023d3ae4a029da6ba5e049e4f5b} 
+static void {\bfseries draw\+Label} (const char \texorpdfstring{$\ast$}{*}label, float column\+Width)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a03756cfb5439bf7288b7abb09552a9b7}\label{class_atlas_1_1_editor_widgets_a03756cfb5439bf7288b7abb09552a9b7} 
+static bool {\bfseries draw\+Checkbox} (const char \texorpdfstring{$\ast$}{*}label, bool \&value, float column\+Width=85.\+0f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ac20512c1855da5fd98c460c212929f01}\label{class_atlas_1_1_editor_widgets_ac20512c1855da5fd98c460c212929f01} 
+static bool {\bfseries draw\+Int\+Control} (const char \texorpdfstring{$\ast$}{*}label, int \&value, const char \texorpdfstring{$\ast$}{*}reset\+Label="{}R"{}, float column\+Width=85.\+0f, float value\+Width=120.\+0f, int reset\+Value=0)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a5518607dfe97018e0932683f27e093ab}\label{class_atlas_1_1_editor_widgets_a5518607dfe97018e0932683f27e093ab} 
+static bool {\bfseries draw\+Float\+Control} (const char \texorpdfstring{$\ast$}{*}label, float \&value, const char \texorpdfstring{$\ast$}{*}reset\+Label="{}R"{}, float column\+Width=85.\+0f, float value\+Width=100.\+0f, float reset\+Value=0.\+0f, float speed=0.\+1f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a93977810c48104654c7b1cb9e3dda887}\label{class_atlas_1_1_editor_widgets_a93977810c48104654c7b1cb9e3dda887} 
+static bool {\bfseries draw\+Combo} (const char \texorpdfstring{$\ast$}{*}label, const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}items, int count, int \&value, float column\+Width=85.\+0f, float value\+Width=120.\+0f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_afb384869b4db79fe100a0b6d31ac459e}\label{class_atlas_1_1_editor_widgets_afb384869b4db79fe100a0b6d31ac459e} 
+static bool {\bfseries draw\+Vec3\+Control} (const char \texorpdfstring{$\ast$}{*}label, glm::\+vec3 \&values, float column\+Width=100.\+0f, float value\+Width=100.\+0f, float resetX=0.f, float resetY=0.\+0f, float resetZ=0.\+0f, bool vertical=false)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a34a85754158e75cba913e0e316c69815}\label{class_atlas_1_1_editor_widgets_a34a85754158e75cba913e0e316c69815} 
+{\footnotesize template$<$typename T$>$ }\\static bool {\bfseries draw\+Vec2\+Control} (const char \texorpdfstring{$\ast$}{*}label, T \&values, float column\+Width=100.\+0f, float value\+Width=100.\+0f, typename T::\+value\+\_\+type resetX=0, typename T::\+value\+\_\+type resetY=0, bool vertical=false)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a390dcaffb236e26e76e2c4b2a3555012}\label{class_atlas_1_1_editor_widgets_a390dcaffb236e26e76e2c4b2a3555012} 
+static constexpr const Im\+Vec4 {\bfseries bg0} = Im\+Vec4(0.\+114f, 0.\+122f, 0.\+141f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a29b88e8567bbcc155e6bef77131198da}\label{class_atlas_1_1_editor_widgets_a29b88e8567bbcc155e6bef77131198da} 
+static constexpr const Im\+Vec4 {\bfseries bg1} = Im\+Vec4(0.\+145f, 0.\+155f, 0.\+180f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_accde1c27230bdeee5fcebf37f9e27ab0}\label{class_atlas_1_1_editor_widgets_accde1c27230bdeee5fcebf37f9e27ab0} 
+static constexpr const Im\+Vec4 {\bfseries bg2} = Im\+Vec4(0.\+178f, 0.\+190f, 0.\+220f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ac34193a54e16a7d50dfe3a90830eb5de}\label{class_atlas_1_1_editor_widgets_ac34193a54e16a7d50dfe3a90830eb5de} 
+static constexpr const Im\+Vec4 {\bfseries bg3} = Im\+Vec4(0.\+212f, 0.\+226f, 0.\+261f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a6a00d0307b53a31da427e937008c2063}\label{class_atlas_1_1_editor_widgets_a6a00d0307b53a31da427e937008c2063} 
+static constexpr const Im\+Vec4 {\bfseries bg4} = Im\+Vec4(0.\+250f, 0.\+265f, 0.\+306f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_abc036531b4aa30dcdc39ed0bf500e962}\label{class_atlas_1_1_editor_widgets_abc036531b4aa30dcdc39ed0bf500e962} 
+static constexpr const Im\+Vec4 {\bfseries border} = Im\+Vec4(0.\+318f, 0.\+333f, 0.\+380f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a4108dcd7f5fdcd03861983010727e037}\label{class_atlas_1_1_editor_widgets_a4108dcd7f5fdcd03861983010727e037} 
+static constexpr const Im\+Vec4 {\bfseries border\+Dim} = Im\+Vec4(0.\+245f, 0.\+257f, 0.\+294f, 0.\+70f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a3868f89cb9857172180eac072983f579}\label{class_atlas_1_1_editor_widgets_a3868f89cb9857172180eac072983f579} 
+static constexpr const Im\+Vec4 {\bfseries text\+Primary} = Im\+Vec4(0.\+906f, 0.\+910f, 0.\+925f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a1c5bbaba988390a19cc546725d943bb0}\label{class_atlas_1_1_editor_widgets_a1c5bbaba988390a19cc546725d943bb0} 
+static constexpr const Im\+Vec4 {\bfseries text\+Disabled} = Im\+Vec4(0.\+370f, 0.\+382f, 0.\+415f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_aacc35f1811eb8a4902ac7dfef502e8b9}\label{class_atlas_1_1_editor_widgets_aacc35f1811eb8a4902ac7dfef502e8b9} 
+static constexpr const Im\+Vec4 {\bfseries steel\+Blue} = Im\+Vec4(0.\+416f, 0.\+675f, 0.\+925f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ad11922f40010abc333f01a1de509191c}\label{class_atlas_1_1_editor_widgets_ad11922f40010abc333f01a1de509191c} 
+static constexpr const Im\+Vec4 {\bfseries steel\+Blue\+Panel\+Accent} = Im\+Vec4(0.\+416f, 0.\+675f, 0.\+925f, 0.\+824)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a5f0d8424216cdcb6035972b8ab4d7481}\label{class_atlas_1_1_editor_widgets_a5f0d8424216cdcb6035972b8ab4d7481} 
+static constexpr const Im\+Vec4 {\bfseries steel\+Blue\+Hover} = Im\+Vec4(0.\+416f, 0.\+675f, 0.\+925f, 0.\+32f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ae851c21369cf07cfa3a2590f71893780}\label{class_atlas_1_1_editor_widgets_ae851c21369cf07cfa3a2590f71893780} 
+static constexpr const Im\+Vec4 {\bfseries steel\+Blue\+Sub} = Im\+Vec4(0.\+416f, 0.\+675f, 0.\+925f, 0.\+16f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_af7c94bdfc8d7b23858511ec945ac0610}\label{class_atlas_1_1_editor_widgets_af7c94bdfc8d7b23858511ec945ac0610} 
+static constexpr const Im\+Vec4 {\bfseries steel\+Blue\+Active} = Im\+Vec4(0.\+278f, 0.\+518f, 0.\+780f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_aa684bdeadedfdef97795a247e0ad039c}\label{class_atlas_1_1_editor_widgets_aa684bdeadedfdef97795a247e0ad039c} 
+static constexpr const Im\+Vec4 {\bfseries steel\+Blue\+Light} = Im\+Vec4(0.\+516f, 0.\+775f, 1.\+000f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a53c9031916b3f28f0187d9915b3f4f2b}\label{class_atlas_1_1_editor_widgets_a53c9031916b3f28f0187d9915b3f4f2b} 
+static constexpr const Im\+Vec4 {\bfseries green} = Im\+Vec4(0.\+243f, 0.\+788f, 0.\+416f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_addb906b17e32d9ffb7c9d52aa7ab8530}\label{class_atlas_1_1_editor_widgets_addb906b17e32d9ffb7c9d52aa7ab8530} 
+static constexpr const Im\+Vec4 {\bfseries green\+Panel\+Accent} = Im\+Vec4(0.\+243f, 0.\+788f, 0.\+416f, 0.\+863f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_af44d0b0ebb00cc9e394a4dfc63145739}\label{class_atlas_1_1_editor_widgets_af44d0b0ebb00cc9e394a4dfc63145739} 
+static constexpr const Im\+Vec4 {\bfseries green\+Hover} = Im\+Vec4(0.\+243f, 0.\+788f, 0.\+416f, 0.\+32f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_aa2407e42d76b9d00d68a6f8d0310091f}\label{class_atlas_1_1_editor_widgets_aa2407e42d76b9d00d68a6f8d0310091f} 
+static constexpr const Im\+Vec4 {\bfseries green\+Sub} = Im\+Vec4(0.\+243f, 0.\+788f, 0.\+416f, 0.\+14f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_aafb765641dfd18365a995084894ddee3}\label{class_atlas_1_1_editor_widgets_aafb765641dfd18365a995084894ddee3} 
+static constexpr const Im\+Vec4 {\bfseries green\+Active} = Im\+Vec4(0.\+169f, 0.\+588f, 0.\+302f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ab53c48d5c075f49815a71230841862a6}\label{class_atlas_1_1_editor_widgets_ab53c48d5c075f49815a71230841862a6} 
+static constexpr const Im\+Vec4 {\bfseries green\+Light} = Im\+Vec4(0.\+343f, 0.\+888f, 0.\+516f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ae9aaac16c7d7037867879cf57682a50e}\label{class_atlas_1_1_editor_widgets_ae9aaac16c7d7037867879cf57682a50e} 
+static constexpr const Im\+Vec4 {\bfseries purple} = Im\+Vec4(0.\+725f, 0.\+541f, 0.\+910f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ae41a8933eb116ca69fa56d1c73da38b6}\label{class_atlas_1_1_editor_widgets_ae41a8933eb116ca69fa56d1c73da38b6} 
+static constexpr const Im\+Vec4 {\bfseries purple\+Panel\+Accent} = Im\+Vec4(0.\+725f, 0.\+541f, 0.\+910f, 0.\+863f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a36b0da3ffe4beec4820c9ee9be08cd93}\label{class_atlas_1_1_editor_widgets_a36b0da3ffe4beec4820c9ee9be08cd93} 
+static constexpr const Im\+Vec4 {\bfseries purple\+Hover} = Im\+Vec4(0.\+725f, 0.\+541f, 0.\+910f, 0.\+32f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_ad19579a126f544a3193b068369d63ed4}\label{class_atlas_1_1_editor_widgets_ad19579a126f544a3193b068369d63ed4} 
+static constexpr const Im\+Vec4 {\bfseries purple\+Active} = Im\+Vec4(0.\+545f, 0.\+380f, 0.\+722f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a58ee7311fd81743b435646a92f899949}\label{class_atlas_1_1_editor_widgets_a58ee7311fd81743b435646a92f899949} 
+static constexpr const Im\+Vec4 {\bfseries purple\+Tab\+Bg} = Im\+Vec4(0.\+228f, 0.\+196f, 0.\+318f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a23df26c961a00247515b08bcbcf63906}\label{class_atlas_1_1_editor_widgets_a23df26c961a00247515b08bcbcf63906} 
+static constexpr const Im\+Vec4 {\bfseries purple\+Light} = Im\+Vec4(0.\+825f, 0.\+641f, 1.\+000f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_afc1b243cd5808e2376e2c0944786fadf}\label{class_atlas_1_1_editor_widgets_afc1b243cd5808e2376e2c0944786fadf} 
+static constexpr const Im\+Vec4 {\bfseries teal} = Im\+Vec4(0.\+231f, 0.\+749f, 0.\+659f, 1.\+00f)
+\item 
+\Hypertarget{class_atlas_1_1_editor_widgets_a106dff9369b1cecbbe466393eed56050}\label{class_atlas_1_1_editor_widgets_a106dff9369b1cecbbe466393eed56050} 
+static float {\bfseries display\+Scale} = 1.\+0f
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Im\+Gui/\+Editor\+Widgets.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Im\+Gui/\+Editor\+Widgets.\+cpp\end{DoxyCompactItemize}

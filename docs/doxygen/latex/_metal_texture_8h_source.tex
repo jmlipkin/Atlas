@@ -1,0 +1,46 @@
+\doxysection{Metal\+Texture.\+h}
+\hypertarget{_metal_texture_8h_source}{}\label{_metal_texture_8h_source}\index{Atlas/src/Atlas/Platform/Metal/MetalTexture.h@{Atlas/src/Atlas/Platform/Metal/MetalTexture.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <metal-\/cpp/Metal.hpp>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Texture.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }MetalTexture\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}}\ \{}
+\DoxyCodeLine{00010\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ MetalTexture(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00012\ \ \ \ \ MetalTexture(uint32\_t\ width,\ uint32\_t\ height);}
+\DoxyCodeLine{00013\ \ \ \ \ MetalTexture(\doxymbox{\hyperlink{struct_atlas_1_1_texture_specification}{TextureSpecification}}\ specs,\ \textcolor{keywordtype}{void}*\ data\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~MetalTexture()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}*\ getData()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_texture;\ \}}
+\DoxyCodeLine{00017\ \ \ \ \ MTL::Texture*\ getMTLTexture()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_texture;\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\&\ getFilepath()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_path;\ \}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ \ getFilepath()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_path;\ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setData(\textcolor{keywordtype}{void}*\ data,\ uint32\_t\ size)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}}\&\ other)\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_texture\ ==\ ((MetalTexture\&)other).m\_texture;\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getWidth()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_width;\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getHeight()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_height;\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ MTL::PixelFormat\ toMTLPixelFormat(ImageFormat\ format);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00032\ \ \ \ \ MTL::Texture*\ m\_texture;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ std::string\ m\_path;}
+\DoxyCodeLine{00035\ \ \ \ \ uint32\_t\ \ \ \ m\_width;}
+\DoxyCodeLine{00036\ \ \ \ \ uint32\_t\ \ \ \ m\_height;}
+\DoxyCodeLine{00037\ \ \ \ \ uint32\_t\ \ \ \ m\_channels;}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

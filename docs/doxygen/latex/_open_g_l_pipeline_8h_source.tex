@@ -1,0 +1,27 @@
+\doxysection{Open\+GLPipeline.\+h}
+\hypertarget{_open_g_l_pipeline_8h_source}{}\label{_open_g_l_pipeline_8h_source}\index{Atlas/src/Atlas/Platform/OpenGL/OpenGLPipeline.h@{Atlas/src/Atlas/Platform/OpenGL/OpenGLPipeline.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Buffer.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Pipeline.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }OpenGLPipeline\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}}\ \{}
+\DoxyCodeLine{00008\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ OpenGLPipeline(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_atlas_1_1_pipeline_specification}{PipelineSpecification}}\&\ specs)\ :\ m\_name(specs.name)\ \{\}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setLayout(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_buffer_layout}{BufferLayout}}\&\ layout)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ attachFramebuffer(std::shared\_ptr<Framebuffer>\ framebuffer)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ std::string\&\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{00015\ \ \ \ \ }
+\DoxyCodeLine{00016\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ attachLayout()\ \{\}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

@@ -1,0 +1,31 @@
+\doxysection{Graphics\+Context.\+h}
+\hypertarget{_graphics_context_8h_source}{}\label{_graphics_context_8h_source}\index{Atlas/src/Atlas/Renderer/GraphicsContext.h@{Atlas/src/Atlas/Renderer/GraphicsContext.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Events/ApplicationEvent.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{struct\ }GLFWwindow;}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }MTL\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }Device;}
+\DoxyCodeLine{00009\ \}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{GraphicsContext}}\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<GraphicsContext>\ create(GLFWwindow*\ window);}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ init()\ =\ 0;}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ swapBuffers()\ =\ 0;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onResize(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_window_resize_event}{WindowResizeEvent}}\&\ e)\ =\ 0;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getWidth()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getHeight()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00023\ \ \ \ \ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

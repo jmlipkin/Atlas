@@ -1,0 +1,77 @@
+\doxysection{Renderer.\+h}
+\hypertarget{_renderer_8h_source}{}\label{_renderer_8h_source}\index{Atlas/src/Atlas/Renderer/Renderer.h@{Atlas/src/Atlas/Renderer/Renderer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Font.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/GraphicsContext.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/RendererAPI.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Texture.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/SubTexture.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/OrthographicCamera.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/UniformBuffer.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Components/Components.h"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_renderer}{Renderer}}\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ init(\doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{GraphicsContext}}\&\ context);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ shutdown();}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ beginScene(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_orthographic_camera}{OrthographicCamera}}\&\ camera);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ endScene();}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ beginImGui();}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ submitImGui();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawLine(glm::vec2\ a,\ glm::vec2\ b,\ glm::vec4\ color,\ \textcolor{keywordtype}{float}\ thickness\ =\ 1.0f);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawLine(glm::vec2\ a,\ glm::vec2\ b,\ \textcolor{keywordtype}{float}\ depth,\ glm::vec4\ color,\ \textcolor{keywordtype}{float}\ thickness\ =\ 1.0f);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawRectangle(glm::vec2\ position,\ glm::vec2\ size,\ glm::vec4\ color,\ \textcolor{keywordtype}{float}\ thickness);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawRectangle(glm::vec2\ position,\ glm::vec2\ size,\ \textcolor{keywordtype}{float}\ depth,\ glm::vec4\ color,\ \textcolor{keywordtype}{float}\ thickness);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawCircle(glm::vec2\ centerPosition,\ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keywordtype}{float}\ depth,\ glm::vec4\ color,\ \textcolor{keywordtype}{float}\ thickness\ =\ 1.0f,\ \textcolor{keywordtype}{int}\ segments\ =\ 128);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawFilledCircle(\textcolor{keyword}{const}\ glm::vec2\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keyword}{const}\ glm::vec4\&\ color\ =\ glm::vec4(1.0f),\ \textcolor{keywordtype}{int}\ segments\ =\ 128);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawFilledCircle(\textcolor{keyword}{const}\ glm::vec3\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keyword}{const}\ glm::vec4\&\ color\ =\ glm::vec4(1.0f),\ \textcolor{keywordtype}{int}\ segments\ =\ 128);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::vec2\&\ position,\ \textcolor{keyword}{const}\ glm::vec2\&\ size,\ \textcolor{keyword}{const}\ glm::vec4\&\ color);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::vec3\&\ position,\ \textcolor{keyword}{const}\ glm::vec2\&\ size,\ \textcolor{keyword}{const}\ glm::vec4\&\ color);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::vec2\&\ position,\ \textcolor{keyword}{const}\ glm::vec2\&\ size,\ \textcolor{keyword}{const}\ std::shared\_ptr<Texture>\&\ texture);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::vec3\&\ position,\ \textcolor{keyword}{const}\ glm::vec2\&\ size,\ \textcolor{keyword}{const}\ std::shared\_ptr<Texture>\&\ texture);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::vec2\&\ position,\ \textcolor{keyword}{const}\ std::shared\_ptr<SubTexture>\&\ texture);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::vec3\&\ position,\ \textcolor{keyword}{const}\ std::shared\_ptr<SubTexture>\&\ texture);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::vec2\&\ position,\ \textcolor{keyword}{const}\ glm::vec2\&\ size,\ \textcolor{keyword}{const}\ std::shared\_ptr<SubTexture>\&\ texture);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::vec3\&\ position,\ \textcolor{keyword}{const}\ glm::vec2\&\ size,\ \textcolor{keyword}{const}\ std::shared\_ptr<SubTexture>\&\ texture);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawSprite(\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\ transform,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_sprite}{Component::Sprite}}\ sprite);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawTilemap(\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\ transform,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_tilemap}{Component::Tilemap}}\ tilemap);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::mat4\&\ transform,\ \textcolor{keyword}{const}\ glm::vec4\&\ color);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::mat4\&\ transform,\ \textcolor{keyword}{const}\ std::shared\_ptr<Texture>\&\ texture);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawQuad(\textcolor{keyword}{const}\ glm::mat4\&\ transform,\ \textcolor{keyword}{const}\ std::shared\_ptr<SubTexture>\&\ texture);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawText(\textcolor{keyword}{const}\ std::shared\_ptr<Font>\&\ font,\ \textcolor{keyword}{const}\ std::string\&\ text,\ \textcolor{keyword}{const}\ glm::vec2\&\ position,\ uint32\_t\ sizePx,\ \textcolor{keyword}{const}\ glm::vec4\&\ color\ =\ glm::vec4(1.0f));}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawText(\textcolor{keyword}{const}\ std::shared\_ptr<Font>\&\ font,\ \textcolor{keyword}{const}\ std::string\&\ text,\ \textcolor{keyword}{const}\ glm::vec3\&\ position,\ uint32\_t\ sizePx,\ \textcolor{keyword}{const}\ glm::vec4\&\ color\ =\ glm::vec4(1.0f));}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawCharacter(\textcolor{keyword}{const}\ std::shared\_ptr<Font>\&\ font,\ \textcolor{keywordtype}{char}\ character,\ \textcolor{keyword}{const}\ glm::vec2\&\ position,\ \textcolor{keyword}{const}\ glm::vec2\&\ size,\ \textcolor{keyword}{const}\ glm::vec4\&\ color\ =\ glm::vec4(1.0f));}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ drawCharacter(\textcolor{keyword}{const}\ std::shared\_ptr<Font>\&\ font,\ \textcolor{keywordtype}{char}\ character,\ \textcolor{keyword}{const}\ glm::vec3\&\ position,\ \textcolor{keyword}{const}\ glm::vec2\&\ size,\ \textcolor{keyword}{const}\ glm::vec4\&\ color\ =\ glm::vec4(1.0f));}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ RendererAPI::API\ getAPI()\ \{\ \textcolor{keywordflow}{return}\ RendererAPI::getAPI();\ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ startNewBatch();}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ flush();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \ \ \ \ switchPipeline(std::shared\_ptr<Pipeline>\ pipeline,\ std::shared\_ptr<UniformBuffer>\ uniforms);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ uint32\_t\ getTextureIndex(\textcolor{keyword}{const}\ std::shared\_ptr<Texture>\&\ texture);}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \ \ \ \ submitQuad(\textcolor{keyword}{const}\ glm::mat4\&\ transform,\ \textcolor{keyword}{const}\ glm::vec4\&\ color,\ uint32\_t\ texIndex,\ \textcolor{keyword}{const}\ glm::vec2\ texCoords[4]);}
+\DoxyCodeLine{00069\ \};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

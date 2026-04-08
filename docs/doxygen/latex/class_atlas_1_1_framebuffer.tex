@@ -1,0 +1,74 @@
+\doxysection{Atlas::\+Framebuffer Class Reference}
+\hypertarget{class_atlas_1_1_framebuffer}{}\label{class_atlas_1_1_framebuffer}\index{Atlas::Framebuffer@{Atlas::Framebuffer}}
+Inheritance diagram for Atlas::\+Framebuffer:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_framebuffer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a7f62729fb15399994eae34537a233789}\label{class_atlas_1_1_framebuffer_a7f62729fb15399994eae34537a233789} 
+virtual void \texorpdfstring{$\ast$}{*} {\bfseries get\+Pass\+Descriptor} (void \texorpdfstring{$\ast$}{*}drawable)=0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a071d3aebbb20ddd145dc9e1f85db5eed}\label{class_atlas_1_1_framebuffer_a071d3aebbb20ddd145dc9e1f85db5eed} 
+virtual void {\bfseries on\+Resize} (uint32\+\_\+t width, uint32\+\_\+t height)=0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a5b3d0ea606fad66d61e586f8fe1901fa}\label{class_atlas_1_1_framebuffer_a5b3d0ea606fad66d61e586f8fe1901fa} 
+virtual void {\bfseries invalidate} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a315dd376548bcdce4240e1635b29bf14}\label{class_atlas_1_1_framebuffer_a315dd376548bcdce4240e1635b29bf14} 
+virtual uint32\+\_\+t {\bfseries get\+Width} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a1ddb1652639388b78d16a0b6edce9b5e}\label{class_atlas_1_1_framebuffer_a1ddb1652639388b78d16a0b6edce9b5e} 
+virtual uint32\+\_\+t {\bfseries get\+Height} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a94058bf730b1df5d27c403ebac8d41bf}\label{class_atlas_1_1_framebuffer_a94058bf730b1df5d27c403ebac8d41bf} 
+virtual void \texorpdfstring{$\ast$}{*} {\bfseries get\+Color\+Texture} (int index)=0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a248faf03c500fa53aaea66c71ce645ee}\label{class_atlas_1_1_framebuffer_a248faf03c500fa53aaea66c71ce645ee} 
+virtual void \texorpdfstring{$\ast$}{*} {\bfseries get\+MSAATexture} (int index)=0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a477fd804a189b42fa67d75966a74002d}\label{class_atlas_1_1_framebuffer_a477fd804a189b42fa67d75966a74002d} 
+virtual void \texorpdfstring{$\ast$}{*} {\bfseries get\+Depth\+Texture} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a502a6276572df9e97bd764b7e1dbbfb5}\label{class_atlas_1_1_framebuffer_a502a6276572df9e97bd764b7e1dbbfb5} 
+virtual bool {\bfseries is\+Swap\+Chain\+Target} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a6c0bcab01d9bb3d8fa3d65a2735ab12a}\label{class_atlas_1_1_framebuffer_a6c0bcab01d9bb3d8fa3d65a2735ab12a} 
+virtual bool {\bfseries is\+Depth\+Enabled} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_abd9ebab849858f83f7937a4aaf4eb870}\label{class_atlas_1_1_framebuffer_abd9ebab849858f83f7937a4aaf4eb870} 
+virtual Framebuffer\+Pixel\+Format {\bfseries get\+Depth\+Attachment\+Pixel\+Format} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a36ce103b5245d01cca07ee61439515c7}\label{class_atlas_1_1_framebuffer_a36ce103b5245d01cca07ee61439515c7} 
+virtual Framebuffer\+Pixel\+Format {\bfseries get\+Color\+Attachment\+Pixel\+Format} (int index) const =0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a24b4afd97b6b1cc5ac85943788affd53}\label{class_atlas_1_1_framebuffer_a24b4afd97b6b1cc5ac85943788affd53} 
+virtual int {\bfseries get\+Raster\+Sample\+Count} () const =0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a38e13be64070f6ab25e31076e3fd909f}\label{class_atlas_1_1_framebuffer_a38e13be64070f6ab25e31076e3fd909f} 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$ {\bfseries create} (const \doxymbox{\hyperlink{struct_atlas_1_1_framebuffer_specifications}{Framebuffer\+Specifications}} \&specs)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a5c67f88da946cbfb8ed32827c971a5a3}\label{class_atlas_1_1_framebuffer_a5c67f88da946cbfb8ed32827c971a5a3} 
+virtual void {\bfseries create\+Color\+Texture} (int index)=0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_acc06eb9baed41fe2c931524115715301}\label{class_atlas_1_1_framebuffer_acc06eb9baed41fe2c931524115715301} 
+virtual void {\bfseries create\+MSAATexture} (int index)=0
+\item 
+\Hypertarget{class_atlas_1_1_framebuffer_a615e38e172365a90e0cbbf2ba06d9124}\label{class_atlas_1_1_framebuffer_a615e38e172365a90e0cbbf2ba06d9124} 
+virtual void {\bfseries create\+Depth\+Texture} ()=0
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Framebuffer.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Framebuffer.\+cpp\end{DoxyCompactItemize}

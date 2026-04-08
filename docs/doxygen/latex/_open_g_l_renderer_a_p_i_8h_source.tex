@@ -1,0 +1,34 @@
+\doxysection{Open\+GLRenderer\+API.\+h}
+\hypertarget{_open_g_l_renderer_a_p_i_8h_source}{}\label{_open_g_l_renderer_a_p_i_8h_source}\index{Atlas/src/Atlas/Platform/OpenGL/OpenGLRendererAPI.h@{Atlas/src/Atlas/Platform/OpenGL/OpenGLRendererAPI.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/RendererAPI.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Platform/OpenGL/OpenGLBuffer.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i}{OpenGLRendererAPI}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{RendererAPI}}\ \{}
+\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i}{\string~OpenGLRendererAPI}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setClearColor(\textcolor{keyword}{const}\ glm::vec4\&\ color)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ clear()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{comment}{//\ TODO:\ Implement}}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawIndexed(\textcolor{keyword}{const}\ std::shared\_ptr<IndexBuffer>\&\ indexBuffer)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawIndexed(\textcolor{keyword}{const}\ std::shared\_ptr<IndexBuffer>\&\ indexBuffer,\ uint32\_t\ count)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginImGui()\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawImGui()\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ bindPipeline(std::shared\_ptr<Pipeline>\ pipeline,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{UniformBuffer}}\&\ uBuffer)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ bindTexture(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}}\&\ texture,\ uint32\_t\ index)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ bindVertexBuffer(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{VertexBuffer}}\&\ buffer,\ uint32\_t\ offset,\ \textcolor{keywordtype}{int}\ index)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginFrame()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ endFrame()\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginPass(std::shared\_ptr<Framebuffer>\ framebuffer)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ endPass()\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

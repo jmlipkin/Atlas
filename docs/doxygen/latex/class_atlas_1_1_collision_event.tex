@@ -1,0 +1,65 @@
+\doxysection{Atlas::\+Collision\+Event Class Reference}
+\hypertarget{class_atlas_1_1_collision_event}{}\label{class_atlas_1_1_collision_event}\index{Atlas::CollisionEvent@{Atlas::CollisionEvent}}
+Inheritance diagram for Atlas::\+Collision\+Event:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_atlas_1_1_collision_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_collision_event_a61c59e0d5eabddb0286ad6a743430a43}\label{class_atlas_1_1_collision_event_a61c59e0d5eabddb0286ad6a743430a43} 
+{\bfseries EVENT\+\_\+\+CLASS\+\_\+\+CATEGORY} (EVENT\+\_\+\+CATEGORY\+\_\+\+USER)
+\item 
+\Hypertarget{class_atlas_1_1_collision_event_a5f513000dae39523697438943fa05062}\label{class_atlas_1_1_collision_event_a5f513000dae39523697438943fa05062} 
+{\bfseries Collision\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}} entityA, \doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}} entityB, glm::\+vec2 collision\+Normal, float depth, bool is\+Trigger)
+\item 
+\Hypertarget{class_atlas_1_1_collision_event_a98f3199b8865adc8e4c171ac75c15058}\label{class_atlas_1_1_collision_event_a98f3199b8865adc8e4c171ac75c15058} 
+\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}} \& {\bfseries get\+EntityA} ()
+\item 
+\Hypertarget{class_atlas_1_1_collision_event_a9399890d0396347681e47c0208cf2aee}\label{class_atlas_1_1_collision_event_a9399890d0396347681e47c0208cf2aee} 
+\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}} \& {\bfseries get\+EntityB} ()
+\item 
+\Hypertarget{class_atlas_1_1_collision_event_aeb8503a3f3d72aa2d21c7ef98011a483}\label{class_atlas_1_1_collision_event_aeb8503a3f3d72aa2d21c7ef98011a483} 
+glm::\+vec2 {\bfseries get\+Normal} ()
+\item 
+\Hypertarget{class_atlas_1_1_collision_event_a58b5827c82bbe8bdaa5b712678faf4ab}\label{class_atlas_1_1_collision_event_a58b5827c82bbe8bdaa5b712678faf4ab} 
+float {\bfseries get\+Depth} ()
+\item 
+\Hypertarget{class_atlas_1_1_collision_event_abfcdd09003f29aa1eb5953239cfa627d}\label{class_atlas_1_1_collision_event_abfcdd09003f29aa1eb5953239cfa627d} 
+bool {\bfseries is\+Trigger} ()
+\item 
+\Hypertarget{class_atlas_1_1_collision_event_ac31dd7fbb990e0081f22f7382e30118e}\label{class_atlas_1_1_collision_event_ac31dd7fbb990e0081f22f7382e30118e} 
+{\bfseries EVENT\+\_\+\+CLASS\+\_\+\+TYPE} (COLLISION)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_user_event}{Atlas::\+\+User\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries EVENT\+\_\+\+CLASS\+\_\+\+CATEGORY} (EVENT\+\_\+\+CATEGORY\+\_\+\+USER)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_event}{Atlas::\+\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual Event\+Type {\bfseries get\+Event\+Type} () const =0
+\item 
+virtual const char \texorpdfstring{$\ast$}{*} {\bfseries get\+Name} () const =0
+\item 
+virtual int {\bfseries get\+Category\+Flags} () const =0
+\item 
+virtual std::\+string {\bfseries to\+String} () const
+\item 
+bool {\bfseries is\+In\+Category} (Event\+Category category)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_atlas_1_1_event}{Atlas::\+\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries is\+Handled} = false
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+ECS/\+\+Systems/\+Collision.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+ECS/\+\+Systems/\+Collision.\+cpp\end{DoxyCompactItemize}

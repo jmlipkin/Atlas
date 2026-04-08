@@ -1,0 +1,159 @@
+\doxysection{Atlas::\+Mac\+OSPlatform Class Reference}
+\hypertarget{class_atlas_1_1_mac_o_s_platform}{}\label{class_atlas_1_1_mac_o_s_platform}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+Inheritance diagram for Atlas::\+Mac\+OSPlatform:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_mac_o_s_platform}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual std::\+string \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_a02fd89d6596548376c5dbfa0c7549f54}{get\+Resources\+Path\+Impl}} () override
+\item 
+virtual std::\+string \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_a0f534ced9272ad690ea233277f6818bc}{get\+Executable\+Path\+Impl}} () override
+\item 
+virtual std::\+string \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_a85e352802adf18e366f8286cfaff70fb}{get\+App\+Support\+Path\+Impl}} () override
+\item 
+virtual std::\+string \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_a67f05bc7b7260bf841d5a009160e89e5}{open\+File\+Dialog\+Impl}} (const std::\+string \&filter) override
+\item 
+virtual std::\+string \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_a12a5546b644024b2961b1751e0f08ac3}{save\+File\+Dialog\+Impl}} (const std::\+string \&filter, const std::\+string \&default\+Dir) override
+\item 
+virtual std::\+vector$<$ std::\+string $>$ \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_a140f813e214101db4f3039289504523f}{get\+File\+List\+Impl}} (const std::\+string \&directory, const std::\+string \&filter) override
+\item 
+virtual int \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_a8a6b9b3cbb0e0aa27264fb7763b261f9}{show\+Confirm\+Dialog\+Impl}} (const std::\+string \&message, const std::\+string \&confirm, const std::\+string \&deny, const std::\+string \&cancel) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_aef266dacebde2c0efb4ff3378bdfbbe6}{build\+Script\+Library\+Impl}} (const std::\+string \&build\+Dir, const std::\+string \&target, Build\+Output\+Callback on\+Output, Build\+Complete\+Callback on\+Complete) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform_a9c3105bdfe7fd30fbbf7d3a43cfef6c1}{open\+File\+Impl}} (const std::\+string \&filepath) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}}
+\begin{DoxyCompactItemize}
+\item 
+using {\bfseries Build\+Output\+Callback} = std::\+function$<$void(const std::\+string\&)$>$
+\item 
+using {\bfseries Build\+Complete\+Callback} = std::\+function$<$void(bool)$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+string {\bfseries get\+Resources\+Path} ()
+\item 
+static std::\+string {\bfseries get\+Executable\+Path} ()
+\item 
+static std::\+string {\bfseries get\+App\+Support\+Path} ()
+\item 
+static std::\+string {\bfseries open\+File\+Dialog} (const std::\+string \&filter)
+\item 
+static std::\+string {\bfseries save\+File\+Dialog} (const std::\+string \&filter, const std::\+string \&default\+Dir="{}"{})
+\item 
+static std::\+vector$<$ std::\+string $>$ {\bfseries get\+File\+List} (const std::\+string \&directory, const std::\+string \&filter)
+\item 
+static int {\bfseries show\+Confirm\+Dialog} (const std::\+string \&message, const std::\+string \&confirm, const std::\+string \&deny, const std::\+string \&cancel)
+\item 
+static void {\bfseries build\+Script\+Library} (const std::\+string \&build\+Dir, const std::\+string \&target, Build\+Output\+Callback on\+Output, Build\+Complete\+Callback on\+Complete)
+\item 
+static void {\bfseries open\+File} (const std::\+string \&filepath)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_aef266dacebde2c0efb4ff3378bdfbbe6}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!buildScriptLibraryImpl@{buildScriptLibraryImpl}}
+\index{buildScriptLibraryImpl@{buildScriptLibraryImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{buildScriptLibraryImpl()}{buildScriptLibraryImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_aef266dacebde2c0efb4ff3378bdfbbe6} 
+void Atlas::\+\+Mac\+OSPlatform::\+build\+Script\+Library\+Impl (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{build\+Dir}{, }\item[{const std::\+string \&}]{target}{, }\item[{Platform::\+\+Build\+Output\+Callback}]{on\+Output}{, }\item[{Platform::\+\+Build\+Complete\+Callback}]{on\+Complete}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_a85e352802adf18e366f8286cfaff70fb}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!getAppSupportPathImpl@{getAppSupportPathImpl}}
+\index{getAppSupportPathImpl@{getAppSupportPathImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{getAppSupportPathImpl()}{getAppSupportPathImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_a85e352802adf18e366f8286cfaff70fb} 
+std::\+string Atlas::\+\+Mac\+OSPlatform::\+get\+App\+Support\+Path\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_a0f534ced9272ad690ea233277f6818bc}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!getExecutablePathImpl@{getExecutablePathImpl}}
+\index{getExecutablePathImpl@{getExecutablePathImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{getExecutablePathImpl()}{getExecutablePathImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_a0f534ced9272ad690ea233277f6818bc} 
+std::\+string Atlas::\+\+Mac\+OSPlatform::\+get\+Executable\+Path\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_a140f813e214101db4f3039289504523f}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!getFileListImpl@{getFileListImpl}}
+\index{getFileListImpl@{getFileListImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{getFileListImpl()}{getFileListImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_a140f813e214101db4f3039289504523f} 
+std::\+vector$<$ std::\+string $>$ Atlas::\+\+Mac\+OSPlatform::\+get\+File\+List\+Impl (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{directory}{, }\item[{const std::\+string \&}]{filter}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_a02fd89d6596548376c5dbfa0c7549f54}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!getResourcesPathImpl@{getResourcesPathImpl}}
+\index{getResourcesPathImpl@{getResourcesPathImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{getResourcesPathImpl()}{getResourcesPathImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_a02fd89d6596548376c5dbfa0c7549f54} 
+std::\+string Atlas::\+\+Mac\+OSPlatform::\+get\+Resources\+Path\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_a67f05bc7b7260bf841d5a009160e89e5}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!openFileDialogImpl@{openFileDialogImpl}}
+\index{openFileDialogImpl@{openFileDialogImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{openFileDialogImpl()}{openFileDialogImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_a67f05bc7b7260bf841d5a009160e89e5} 
+std::\+string Atlas::\+\+Mac\+OSPlatform::\+open\+File\+Dialog\+Impl (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filter}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_a9c3105bdfe7fd30fbbf7d3a43cfef6c1}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!openFileImpl@{openFileImpl}}
+\index{openFileImpl@{openFileImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{openFileImpl()}{openFileImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_a9c3105bdfe7fd30fbbf7d3a43cfef6c1} 
+void Atlas::\+\+Mac\+OSPlatform::\+open\+File\+Impl (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_a12a5546b644024b2961b1751e0f08ac3}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!saveFileDialogImpl@{saveFileDialogImpl}}
+\index{saveFileDialogImpl@{saveFileDialogImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{saveFileDialogImpl()}{saveFileDialogImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_a12a5546b644024b2961b1751e0f08ac3} 
+std::\+string Atlas::\+\+Mac\+OSPlatform::\+save\+File\+Dialog\+Impl (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filter}{, }\item[{const std::\+string \&}]{default\+Dir}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_platform_a8a6b9b3cbb0e0aa27264fb7763b261f9}\index{Atlas::MacOSPlatform@{Atlas::MacOSPlatform}!showConfirmDialogImpl@{showConfirmDialogImpl}}
+\index{showConfirmDialogImpl@{showConfirmDialogImpl}!Atlas::MacOSPlatform@{Atlas::MacOSPlatform}}
+\doxysubsubsection{\texorpdfstring{showConfirmDialogImpl()}{showConfirmDialogImpl()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_platform_a8a6b9b3cbb0e0aa27264fb7763b261f9} 
+int Atlas::\+\+Mac\+OSPlatform::\+show\+Confirm\+Dialog\+Impl (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{message}{, }\item[{const std::\+string \&}]{confirm}{, }\item[{const std::\+string \&}]{deny}{, }\item[{const std::\+string \&}]{cancel}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_platform}{Atlas::\+\+Platform}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSPlatform.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSPlatform.\+mm\end{DoxyCompactItemize}

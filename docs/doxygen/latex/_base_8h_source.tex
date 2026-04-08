@@ -1,0 +1,134 @@
+\doxysection{Base.\+h}
+\hypertarget{_base_8h_source}{}\label{_base_8h_source}\index{Atlas/src/Atlas/Core/Base.h@{Atlas/src/Atlas/Core/Base.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ Platform\ detection\ using\ predefined\ macros}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{00005\ \ \ \ \ \textcolor{comment}{/*\ Windows\ x64/x86\ */}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ \_WIN64}}
+\DoxyCodeLine{00007\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Windows\ x64\ \ */}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ AT\_PLATFORM\_WINDOWS}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#error\ "{}Windows\ is\ not\ supported!"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Windows\ x86\ */}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#error\ "{}x86\ Builds\ are\ not\ supported!"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#elif\ defined(\_\_APPLE\_\_)\ ||\ defined(\_\_MACH\_\_)}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\ \ \ \ \#include\ <TargetConditionals.h>}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{/*\ TARGET\_OS\_MAC\ exists\ on\ all\ the\ platforms}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ *\ so\ we\ must\ check\ all\ of\ them\ (in\ this\ order)}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ *\ to\ ensure\ that\ we're\ running\ on\ MAC}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ *\ and\ not\ some\ other\ Apple\ platform\ */}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \ \ \#if\ TARGET\_IPHONE\_SIMULATOR\ ==\ 1}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#error\ "{}IOS\ simulator\ is\ not\ supported!"{}}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\ \ \ \ \#elif\ TARGET\_OS\_IPHONE\ ==\ 1}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ AT\_PLATFORM\_IOS}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#error\ "{}IOS\ is\ not\ supported!"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\ \ \ \ \#elif\ TARGET\_OS\_MAC\ ==\ 1}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ AT\_PLATFORM\_MACOS}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#error\ "{}Unknown\ Apple\ platform!"{}}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00030\ \textcolor{comment}{/*\ We\ also\ have\ to\ check\ \_\_ANDROID\_\_\ before\ \_\_linux\_\_}}
+\DoxyCodeLine{00031\ \textcolor{comment}{*\ since\ android\ is\ based\ on\ the\ linux\ kernel}}
+\DoxyCodeLine{00032\ \textcolor{comment}{*\ it\ has\ \_\_linux\_\_\ defined\ */}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#elif\ defined(\_\_ANDROID\_\_)}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_PLATFORM\_ANDROID}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\ \ \ \ \#error\ "{}Android\ is\ not\ supported!"{}}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#elif\ defined(\_\_linux\_\_)}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_PLATFORM\_LINUX}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ \ \ \#error\ "{}Linux\ is\ not\ supported!"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{/*\ Unknown\ compiler/platform\ */}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\ \ \ \ \#error\ "{}Unknown\ platform!"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ End\ of\ platform\ detection}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#ifdef\ AT\_DEBUG\_ENABLE}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\ \ \ \ \#if\ defined(AT\_PLATFORM\_WINDOWS)}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ AT\_DEBUG\_BREAK()\ \_\_debugbreak()}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\ \ \ \ \#elif\ defined(\_\_clang\_\_)\ ||\ defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ AT\_DEBUG\_BREAK()\ \_\_builtin\_trap()}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#include\ <cstdlib>}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ AT\_DEBUG\_BREAK()\ std::raise(SIGTRAP);}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_ENABLE\_ASSERTS}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_DEBUG\_BREAK()}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#ifdef\ AT\_ENABLE\_ASSERTS}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_INTERNAL\_ASSERT\_IMPL(logger,\ check,\ ...)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (!(check))\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ logger(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_VA\_OPT\_\_(\_\_VA\_ARGS\_\_\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_VA\_OPT\_\_(,)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}Assertion\ '\{\}'\ failed\ at\ \{\}:\{\}"{},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#check,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::filesystem::path(\_\_FILE\_\_).filename().string(),\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_LINE\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AT\_DEBUG\_BREAK();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_ASSERT(check,\ ...)\ AT\_EXPAND\_MACRO(AT\_INTERNAL\_ASSERT\_IMPL(AT\_ERROR,\ check,\ \#\#\_\_VA\_ARGS\_\_))}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_CORE\_ASSERT(check,\ ...)\ AT\_EXPAND\_MACRO(AT\_INTERNAL\_ASSERT\_IMPL(AT\_CORE\_ERROR,\ check,\ \#\#\_\_VA\_ARGS\_\_))}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_ASSERT(check,\ ...)}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_CORE\_ASSERT(check,\ ...)}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#define\ AT\_EXPAND\_MACRO(x)\ x}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#define\ AT\_STRINGIFY\_MACRO(x)\ \#x}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ BIT(x)\ (1\ <<\ x)}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#ifdef\ AT\_PLATFORM\_WINDOWS}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ ATLAS\_BUILD\_DLL}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ ATLAS\_API\ \_\_declspec(dllexport)}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ ATLAS\_API\ \_\_declspec(dllimport)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\ \ \ \ \#define\ ATLAS\_API\ \_\_attribute\_\_((visibility("{}default"{})))}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#define\ AT\_BIND\_EVENT\_FN(fn)\ std::bind(\&fn,\ this,\ std::placeholders::\_1)}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#define\ AT\_REGISTER\_SCRIPT(Type)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\ \ \ \ namespace\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\ \ \ \ const\ bool\ \_registered\_\#\#Type\ =\ []()\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ Atlas::ScriptRegistry::registerScript(\#Type,\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ []()\ \{\ return\ std::make\_unique<Type>();\ \},\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ Atlas::ScriptPriority::Normal);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ true;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\ \ \ \ \}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ AT\_REGISTER\_SCRIPT\_PRIORITY(Type,\ Priority)\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\ \ \ \ namespace\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\ \ \ \ const\ bool\ \_registered\_\#\#Type\ =\ []()\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ Atlas::ScriptRegistry::registerScript(\#Type,\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ []()\ \{\ return\ std::make\_unique<Type>();\ \},\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ Priority);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ true;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\ \ \ \ \}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#if\ defined(AT\_PLATFORM\_MACOS)\ ||\ defined(AT\_PLATFORM\_LINUX)}}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\ \ \ \ \#include\ <dlfcn.h>}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_LOAD\_LIBRARY(path)\ \ \ \ \ dlopen((path),\ RTLD\_NOW\ |\ RTLD\_GLOBAL)}}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_UNLOAD\_LIBRARY(handle)\ dlclose(handle)}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_LIBRARY\_ERROR()\ \ \ \ \ \ \ \ dlerror()}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_LIBRARY\_HANDLE\ \ \ \ \ \ \ \ \ void*}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#elif\ defined(AT\_PLATFORM\_WINDOWS)}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\ \ \ \ \#include\ <windows.h>}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_LOAD\_LIBRARY(path)\ \ \ \ \ LoadLibraryA(path)}}
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_UNLOAD\_LIBRARY(handle)\ FreeLibrary((HMODULE)(handle))}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_LIBRARY\_ERROR()\ \ \ \ \ \ \ \ std::to\_string(GetLastError()).c\_str()}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_LIBRARY\_HANDLE\ \ \ \ \ \ \ \ \ HMODULE}}
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

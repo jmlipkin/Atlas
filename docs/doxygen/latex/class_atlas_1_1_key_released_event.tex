@@ -1,0 +1,73 @@
+\doxysection{Atlas::\+Key\+Released\+Event Class Reference}
+\hypertarget{class_atlas_1_1_key_released_event}{}\label{class_atlas_1_1_key_released_event}\index{Atlas::KeyReleasedEvent@{Atlas::KeyReleasedEvent}}
+Inheritance diagram for Atlas::\+Key\+Released\+Event:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_atlas_1_1_key_released_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_key_released_event_a450556b119c2fd8f1e26435b16d7177c}\label{class_atlas_1_1_key_released_event_a450556b119c2fd8f1e26435b16d7177c} 
+{\bfseries Key\+Released\+Event} (int keycode)
+\item 
+std::\+string \doxymbox{\hyperlink{class_atlas_1_1_key_released_event_a32660e9c420b42dbcdf54071577a52ae}{to\+String}} () const override
+\item 
+\Hypertarget{class_atlas_1_1_key_released_event_a944df7acaf27b5fd93cde7715efd430a}\label{class_atlas_1_1_key_released_event_a944df7acaf27b5fd93cde7715efd430a} 
+{\bfseries EVENT\+\_\+\+CLASS\+\_\+\+TYPE} (KEY\+\_\+\+RELEASED)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_key_event}{Atlas::\+\+Key\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries get\+Key\+Code} () const
+\item 
+{\bfseries EVENT\+\_\+\+CLASS\+\_\+\+CATEGORY} (EVENT\+\_\+\+CATEGORY\+\_\+\+INPUT\texorpdfstring{$\vert$}{|}EVENT\+\_\+\+CATEGORY\+\_\+\+KEYBOARD)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_event}{Atlas::\+\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual Event\+Type {\bfseries get\+Event\+Type} () const =0
+\item 
+virtual const char \texorpdfstring{$\ast$}{*} {\bfseries get\+Name} () const =0
+\item 
+virtual int {\bfseries get\+Category\+Flags} () const =0
+\item 
+bool {\bfseries is\+In\+Category} (Event\+Category category)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_atlas_1_1_event}{Atlas::\+\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries is\+Handled} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_key_event}{Atlas::\+\+Key\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Key\+Event} (int keycode)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_atlas_1_1_key_event}{Atlas::\+\+Key\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries m\+\_\+key\+Code}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_key_released_event_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_key_released_event_a32660e9c420b42dbcdf54071577a52ae}\index{Atlas::KeyReleasedEvent@{Atlas::KeyReleasedEvent}!toString@{toString}}
+\index{toString@{toString}!Atlas::KeyReleasedEvent@{Atlas::KeyReleasedEvent}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_key_released_event_a32660e9c420b42dbcdf54071577a52ae} 
+std::\+string Atlas::\+\+Key\+Released\+Event::\+to\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_atlas_1_1_event}{Atlas::\+\+Event}}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Events/\+Key\+Event.\+h\end{DoxyCompactItemize}

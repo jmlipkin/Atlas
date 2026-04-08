@@ -1,0 +1,384 @@
+\doxysection{Key\+Codes.\+h}
+\hypertarget{_key_codes_8h_source}{}\label{_key_codes_8h_source}\index{Atlas/src/Atlas/Core/KeyCodes.h@{Atlas/src/Atlas/Core/KeyCodes.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}imgui/imgui.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ From\ glfw3.h}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ AT\_KEY\_SPACE\ \ \ \ \ \ \ \ \ \ \ \ \ \ 32}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ AT\_KEY\_APOSTROPHE\ \ \ \ \ \ \ \ \ 39\ \ }\textcolor{comment}{/*\ '\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ AT\_KEY\_COMMA\ \ \ \ \ \ \ \ \ \ \ \ \ \ 44\ \ }\textcolor{comment}{/*\ ,\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ AT\_KEY\_MINUS\ \ \ \ \ \ \ \ \ \ \ \ \ \ 45\ \ }\textcolor{comment}{/*\ -\/\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ AT\_KEY\_PERIOD\ \ \ \ \ \ \ \ \ \ \ \ \ 46\ \ }\textcolor{comment}{/*\ .\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ AT\_KEY\_SLASH\ \ \ \ \ \ \ \ \ \ \ \ \ \ 47\ \ }\textcolor{comment}{/*\ /\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ AT\_KEY\_0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 48}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ AT\_KEY\_1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 49}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ AT\_KEY\_2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 50}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ AT\_KEY\_3\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 51}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ AT\_KEY\_4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 52}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ AT\_KEY\_5\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 53}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ AT\_KEY\_6\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 54}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ AT\_KEY\_7\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 55}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ AT\_KEY\_8\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 56}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ AT\_KEY\_9\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 57}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ AT\_KEY\_SEMICOLON\ \ \ \ \ \ \ \ \ \ 59\ \ }\textcolor{comment}{/*\ ;\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ AT\_KEY\_EQUAL\ \ \ \ \ \ \ \ \ \ \ \ \ \ 61\ \ }\textcolor{comment}{/*\ =\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ AT\_KEY\_A\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 65}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ AT\_KEY\_B\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 66}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ AT\_KEY\_C\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 67}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ AT\_KEY\_D\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 68}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ AT\_KEY\_E\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 69}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 70}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ AT\_KEY\_G\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 71}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ AT\_KEY\_H\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 72}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ AT\_KEY\_I\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 73}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ AT\_KEY\_J\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 74}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ AT\_KEY\_K\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 75}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ AT\_KEY\_L\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 76}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ AT\_KEY\_M\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 77}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ AT\_KEY\_N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 78}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ AT\_KEY\_O\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 79}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ AT\_KEY\_P\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 80}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ AT\_KEY\_Q\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 81}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ AT\_KEY\_R\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 82}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ AT\_KEY\_S\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 83}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ AT\_KEY\_T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 84}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ AT\_KEY\_U\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 85}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ AT\_KEY\_V\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 86}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ AT\_KEY\_W\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 87}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ AT\_KEY\_X\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 88}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ AT\_KEY\_Y\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 89}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ AT\_KEY\_Z\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 90}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ AT\_KEY\_LEFT\_BRACKET\ \ \ \ \ \ \ 91\ \ }\textcolor{comment}{/*\ [\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ AT\_KEY\_BACKSLASH\ \ \ \ \ \ \ \ \ \ 92\ \ }\textcolor{comment}{/*\ \(\backslash\)\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ AT\_KEY\_RIGHT\_BRACKET\ \ \ \ \ \ 93\ \ }\textcolor{comment}{/*\ ]\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ AT\_KEY\_GRAVE\_ACCENT\ \ \ \ \ \ \ 96\ \ }\textcolor{comment}{/*\ \`{}\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ AT\_KEY\_WORLD\_1\ \ \ \ \ \ \ \ \ \ \ \ 161\ }\textcolor{comment}{/*\ non-\/US\ \#1\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ AT\_KEY\_WORLD\_2\ \ \ \ \ \ \ \ \ \ \ \ 162\ }\textcolor{comment}{/*\ non-\/US\ \#2\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{/*\ Function\ keys\ */}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ AT\_KEY\_ESCAPE\ \ \ \ \ \ \ \ \ \ \ \ \ 256}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ AT\_KEY\_ENTER\ \ \ \ \ \ \ \ \ \ \ \ \ \ 257}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ AT\_KEY\_TAB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 258}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ AT\_KEY\_BACKSPACE\ \ \ \ \ \ \ \ \ \ 259}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ AT\_KEY\_INSERT\ \ \ \ \ \ \ \ \ \ \ \ \ 260}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ AT\_KEY\_DELETE\ \ \ \ \ \ \ \ \ \ \ \ \ 261}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ AT\_KEY\_RIGHT\ \ \ \ \ \ \ \ \ \ \ \ \ \ 262}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ AT\_KEY\_LEFT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 263}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ AT\_KEY\_DOWN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 264}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ AT\_KEY\_UP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 265}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ AT\_KEY\_PAGE\_UP\ \ \ \ \ \ \ \ \ \ \ \ 266}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ AT\_KEY\_PAGE\_DOWN\ \ \ \ \ \ \ \ \ \ 267}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ AT\_KEY\_HOME\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 268}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ AT\_KEY\_END\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 269}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#define\ AT\_KEY\_CAPS\_LOCK\ \ \ \ \ \ \ \ \ \ 280}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ AT\_KEY\_SCROLL\_LOCK\ \ \ \ \ \ \ \ 281}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ AT\_KEY\_NUM\_LOCK\ \ \ \ \ \ \ \ \ \ \ 282}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ AT\_KEY\_PRINT\_SCREEN\ \ \ \ \ \ \ 283}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ AT\_KEY\_PAUSE\ \ \ \ \ \ \ \ \ \ \ \ \ \ 284}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 290}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 291}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F3\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 292}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 293}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F5\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 294}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F6\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 295}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F7\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 296}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F8\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 297}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F9\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 298}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F10\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 299}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F11\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 300}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F12\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 301}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F13\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 302}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F14\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 303}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F15\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 304}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F16\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 305}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F17\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 306}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F18\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 307}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F19\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 308}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F20\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 309}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F21\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 310}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F22\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 311}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F23\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 312}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F24\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 313}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#define\ AT\_KEY\_F25\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 314}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 320}}
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 321}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 322}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_3\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 323}}
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 324}}
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_5\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 325}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_6\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 326}}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_7\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 327}}
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_8\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 328}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_9\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 329}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_DECIMAL\ \ \ \ \ \ \ \ \ 330}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_DIVIDE\ \ \ \ \ \ \ \ \ \ 331}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_MULTIPLY\ \ \ \ \ \ \ \ 332}}
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_SUBTRACT\ \ \ \ \ \ \ \ 333}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_ADD\ \ \ \ \ \ \ \ \ \ \ \ \ 334}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_ENTER\ \ \ \ \ \ \ \ \ \ \ 335}}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#define\ AT\_KEY\_KP\_EQUAL\ \ \ \ \ \ \ \ \ \ \ 336}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#define\ AT\_KEY\_LEFT\_SHIFT\ \ \ \ \ \ \ \ \ 340}}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#define\ AT\_KEY\_LEFT\_CONTROL\ \ \ \ \ \ \ 341}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\#define\ AT\_KEY\_LEFT\_ALT\ \ \ \ \ \ \ \ \ \ \ 342}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#define\ AT\_KEY\_LEFT\_SUPER\ \ \ \ \ \ \ \ \ 343}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#define\ AT\_KEY\_RIGHT\_SHIFT\ \ \ \ \ \ \ \ 344}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#define\ AT\_KEY\_RIGHT\_CONTROL\ \ \ \ \ \ 345}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#define\ AT\_KEY\_RIGHT\_ALT\ \ \ \ \ \ \ \ \ \ 346}}
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\#define\ AT\_KEY\_RIGHT\_SUPER\ \ \ \ \ \ \ \ 347}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#define\ AT\_KEY\_MENU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 348}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{keyword}{static}\ ImGuiKey\ keyCodeToImGuiKey(\textcolor{keywordtype}{int}\ keycode)\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordflow}{switch}\ (keycode)\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_SPACE:}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Space;}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_APOSTROPHE:}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Apostrophe;}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_COMMA:}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Comma;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_MINUS:}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Minus;}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_PERIOD:}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Period;}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_SLASH:}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Slash;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_0:}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_0;}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_1:}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_1;}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_2:}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_2;}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_3:}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_3;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_4:}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_4;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_5:}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_5;}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_6:}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_6;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_7:}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_7;}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_8:}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_8;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_9:}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_9;}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_SEMICOLON:}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Semicolon;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_EQUAL:}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Equal;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_A:}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_A;}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_B:}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_B;}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_C:}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_C;}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_D:}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_D;}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_E:}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_E;}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F:}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F;}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_G:}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_G;}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_H:}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_H;}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_I:}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_I;}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_J:}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_J;}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_K:}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_K;}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_L:}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_L;}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_M:}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_M;}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_N:}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_N;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_O:}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_O;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_P:}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_P;}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_Q:}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Q;}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_R:}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_R;}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_S:}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_S;}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_T:}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_T;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_U:}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_U;}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_V:}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_V;}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_W:}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_W;}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_X:}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_X;}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_Y:}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Y;}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_Z:}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Z;}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_LEFT\_BRACKET:}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_LeftBracket;}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_BACKSLASH:}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Backslash;}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_RIGHT\_BRACKET:}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_RightBracket;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_GRAVE\_ACCENT:}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_GraveAccent;}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_WORLD\_1:}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_None;}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_WORLD\_2:}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_None;}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_ESCAPE:}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Escape;}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_ENTER:}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Enter;}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_TAB:}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Tab;}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_BACKSPACE:}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Backspace;}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_INSERT:}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Insert;}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_DELETE:}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Delete;}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_RIGHT:}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_RightArrow;}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_LEFT:}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_LeftArrow;}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_DOWN:}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_DownArrow;}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_UP:}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_UpArrow;}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_PAGE\_UP:}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_PageUp;}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_PAGE\_DOWN:}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_PageDown;}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_HOME:}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Home;}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_END:}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_End;}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_CAPS\_LOCK:}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_CapsLock;}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_SCROLL\_LOCK:}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_ScrollLock;}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_NUM\_LOCK:}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_NumLock;}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_PRINT\_SCREEN:}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_PrintScreen;}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_PAUSE:}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Pause;}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F1:}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F1;}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F2:}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F2;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F3:}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F3;}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F4:}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F4;}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F5:}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F5;}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F6:}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F6;}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F7:}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F7;}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F8:}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F8;}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F9:}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F9;}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F10:}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F10;}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F11:}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F11;}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F12:}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F12;}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F13:}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F13;}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F14:}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F14;}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F15:}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F15;}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F16:}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F16;}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F17:}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F17;}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F18:}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F18;}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F19:}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F19;}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F20:}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F20;}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F21:}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F21;}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F22:}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F22;}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F23:}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F23;}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F24:}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_F24;}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_F25:}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_None;}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_0:}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad0;}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_1:}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad1;}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_2:}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad2;}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_3:}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad3;}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_4:}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad4;}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_5:}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad5;}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_6:}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad6;}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_7:}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad7;}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_8:}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad8;}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_9:}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Keypad9;}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_DECIMAL:}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_KeypadDecimal;}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_DIVIDE:}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_KeypadDivide;}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_MULTIPLY:}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_KeypadMultiply;}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_SUBTRACT:}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_KeypadSubtract;}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_ADD:}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_KeypadAdd;}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_ENTER:}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_KeypadEnter;}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_KP\_EQUAL:}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_KeypadEqual;}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_LEFT\_SHIFT:}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_LeftShift;}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_LEFT\_CONTROL:}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_LeftCtrl;}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_LEFT\_ALT:}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_LeftAlt;}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_LEFT\_SUPER:}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_LeftSuper;}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_RIGHT\_SHIFT:}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_RightShift;}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_RIGHT\_CONTROL:}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_RightCtrl;}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_RIGHT\_ALT:}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_RightAlt;}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_RIGHT\_SUPER:}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_RightSuper;}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ AT\_KEY\_MENU:}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_Menu;}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \{}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ AT\_CORE\_WARN(\textcolor{stringliteral}{"{}Unknown\ keycode:\ \{0\}"{}},\ keycode);}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ImGuiKey\_None;}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00378\ \ \ \ \ \}}
+\DoxyCodeLine{00379\ \}}
+
+\end{DoxyCode}

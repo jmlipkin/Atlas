@@ -1,0 +1,50 @@
+\doxysection{Renderer\+API.\+h}
+\hypertarget{_renderer_a_p_i_8h_source}{}\label{_renderer_a_p_i_8h_source}\index{Atlas/src/Atlas/Renderer/RendererAPI.h@{Atlas/src/Atlas/Renderer/RendererAPI.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Pipeline.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Texture.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/UniformBuffer.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{RendererAPI}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{enum\ class}\ API\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ None\ =\ 0,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ OpenGL\ =\ 1,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ Metal\ =\ 2}
+\DoxyCodeLine{00017\ \ \ \ \ \};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setClearColor(\textcolor{keyword}{const}\ glm::vec4\&\ color)\ =\ 0;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ clear()\ =\ 0;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawIndexed(\textcolor{keyword}{const}\ std::shared\_ptr<IndexBuffer>\&\ indexBuffer)\ =\ 0;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawIndexed(\textcolor{keyword}{const}\ std::shared\_ptr<IndexBuffer>\&\ indexBuffer,\ uint32\_t\ count)\ =\ 0;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ virtual\ void\ drawPoint(const\ std::shared\_ptr<VertexArray>\&\ vertexArray)\ =\ 0;}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginFrame()\ =\ 0;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ endFrame()\ =\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginPass(std::shared\_ptr<Framebuffer>\ framebuffer)\ =\ 0;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ endPass()\ =\ 0;}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginImGui()\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawImGui()\ =\ 0;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ bindPipeline(std::shared\_ptr<Pipeline>\ pipeline,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{UniformBuffer}}\&\ uBuffer)\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ bindTexture(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}}\&\ texture,\ uint32\_t\ index)\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ bindVertexBuffer(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{VertexBuffer}}\&\ vBuffer,\ uint32\_t\ offset,\ \textcolor{keywordtype}{int}\ index)\ =\ 0;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ API\ getAPI()\ \{\ \textcolor{keywordflow}{return}\ s\_API;\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{static}\ API\ s\_API;}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

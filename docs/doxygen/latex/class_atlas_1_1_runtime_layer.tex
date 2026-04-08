@@ -1,0 +1,91 @@
+\doxysection{Atlas::\+Runtime\+Layer Class Reference}
+\hypertarget{class_atlas_1_1_runtime_layer}{}\label{class_atlas_1_1_runtime_layer}\index{Atlas::RuntimeLayer@{Atlas::RuntimeLayer}}
+Inheritance diagram for Atlas::\+Runtime\+Layer:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_runtime_layer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_runtime_layer_a3c3817a3b05464c61e0fe5ab004d308d}\label{class_atlas_1_1_runtime_layer_a3c3817a3b05464c61e0fe5ab004d308d} 
+{\bfseries Runtime\+Layer} (bool preview=false)
+\item 
+\Hypertarget{class_atlas_1_1_runtime_layer_a395bb2c5dfa2e55840316a2bd16cbdee}\label{class_atlas_1_1_runtime_layer_a395bb2c5dfa2e55840316a2bd16cbdee} 
+virtual void {\bfseries set\+Scene} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}} $>$ scene)
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_runtime_layer_a04be1e9223d0a4ed8f4e8ee1713c2f75}{on\+Attach}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_runtime_layer_a55d630ee3aa5307c65b9556e804dcdaf}{on\+Update}} (\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Delta\+Time}} dt) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_runtime_layer_a349161bd9f48c666640353eaf17c4f59}{on\+Detach}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_runtime_layer_acad1fcea592fa872778d15368415428e}{on\+Event}} (\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}} \&event) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Layer} (const std::\+string \&name)
+\item 
+virtual void {\bfseries on\+Im\+Gui\+Render} ()
+\item 
+const std::\+string \& {\bfseries get\+Name} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string {\bfseries m\+\_\+name}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_runtime_layer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_runtime_layer_a04be1e9223d0a4ed8f4e8ee1713c2f75}\index{Atlas::RuntimeLayer@{Atlas::RuntimeLayer}!onAttach@{onAttach}}
+\index{onAttach@{onAttach}!Atlas::RuntimeLayer@{Atlas::RuntimeLayer}}
+\doxysubsubsection{\texorpdfstring{onAttach()}{onAttach()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_runtime_layer_a04be1e9223d0a4ed8f4e8ee1713c2f75} 
+void Atlas::\+\+Runtime\+Layer::\+on\+Attach (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}.
+
+\Hypertarget{class_atlas_1_1_runtime_layer_a349161bd9f48c666640353eaf17c4f59}\index{Atlas::RuntimeLayer@{Atlas::RuntimeLayer}!onDetach@{onDetach}}
+\index{onDetach@{onDetach}!Atlas::RuntimeLayer@{Atlas::RuntimeLayer}}
+\doxysubsubsection{\texorpdfstring{onDetach()}{onDetach()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_runtime_layer_a349161bd9f48c666640353eaf17c4f59} 
+virtual void Atlas::\+\+Runtime\+Layer::\+on\+Detach (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}.
+
+\Hypertarget{class_atlas_1_1_runtime_layer_acad1fcea592fa872778d15368415428e}\index{Atlas::RuntimeLayer@{Atlas::RuntimeLayer}!onEvent@{onEvent}}
+\index{onEvent@{onEvent}!Atlas::RuntimeLayer@{Atlas::RuntimeLayer}}
+\doxysubsubsection{\texorpdfstring{onEvent()}{onEvent()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_runtime_layer_acad1fcea592fa872778d15368415428e} 
+virtual void Atlas::\+\+Runtime\+Layer::\+on\+Event (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}.
+
+\Hypertarget{class_atlas_1_1_runtime_layer_a55d630ee3aa5307c65b9556e804dcdaf}\index{Atlas::RuntimeLayer@{Atlas::RuntimeLayer}!onUpdate@{onUpdate}}
+\index{onUpdate@{onUpdate}!Atlas::RuntimeLayer@{Atlas::RuntimeLayer}}
+\doxysubsubsection{\texorpdfstring{onUpdate()}{onUpdate()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_runtime_layer_a55d630ee3aa5307c65b9556e804dcdaf} 
+void Atlas::\+\+Runtime\+Layer::\+on\+Update (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Delta\+Time}}}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Runtime\+Layer.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Runtime\+Layer.\+cpp\end{DoxyCompactItemize}

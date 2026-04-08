@@ -1,0 +1,107 @@
+\doxysection{Atlas::\+Scene Class Reference}
+\hypertarget{class_atlas_1_1_scene}{}\label{class_atlas_1_1_scene}\index{Atlas::Scene@{Atlas::Scene}}
+
+
+This is my first test.  
+
+
+
+
+{\ttfamily \+\#include $<$Scene.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_scene_ac2dc11185c211547a044f076ad7a158c}\label{class_atlas_1_1_scene_ac2dc11185c211547a044f076ad7a158c} 
+using {\bfseries Event\+Callback\+Fn} = std::\+function$<$void(\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_scene_af674d7665f6eb73d56cb54bb0bb46fad}\label{class_atlas_1_1_scene_af674d7665f6eb73d56cb54bb0bb46fad} 
+{\bfseries Scene} (const std::\+string \&name)
+\item 
+\Hypertarget{class_atlas_1_1_scene_aebedfe73031ca4245b94aa34a4f63978}\label{class_atlas_1_1_scene_aebedfe73031ca4245b94aa34a4f63978} 
+virtual void {\bfseries serialize\+Data} (json \&data)
+\item 
+\Hypertarget{class_atlas_1_1_scene_a0e32b660b39a9dddeeaa3eab74ecdd45}\label{class_atlas_1_1_scene_a0e32b660b39a9dddeeaa3eab74ecdd45} 
+virtual void {\bfseries deserialize\+Data} (const json \&data)
+\item 
+\Hypertarget{class_atlas_1_1_scene_af2ebf56173a0503f19749715c06c139c}\label{class_atlas_1_1_scene_af2ebf56173a0503f19749715c06c139c} 
+Entity {\bfseries create\+Entity} (const std::\+string \&name, \doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{UUID}} id=\doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{UUID}}\{\})
+\item 
+\Hypertarget{class_atlas_1_1_scene_a9beef2adcc939f5a80902c8c35fd26fa}\label{class_atlas_1_1_scene_a9beef2adcc939f5a80902c8c35fd26fa} 
+Registry \& {\bfseries get\+Registry} ()
+\item 
+\Hypertarget{class_atlas_1_1_scene_aac0fba9aa28ae2957d0a26d5d51caa96}\label{class_atlas_1_1_scene_aac0fba9aa28ae2957d0a26d5d51caa96} 
+void {\bfseries on\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}} \&event)
+\item 
+\Hypertarget{class_atlas_1_1_scene_af7f9e261c2eaf4ccf524511492cddf2f}\label{class_atlas_1_1_scene_af7f9e261c2eaf4ccf524511492cddf2f} 
+void {\bfseries on\+Update} (\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Delta\+Time}} dt)
+\item 
+\Hypertarget{class_atlas_1_1_scene_a7d1777e47815522dad05caaaf3e4b8da}\label{class_atlas_1_1_scene_a7d1777e47815522dad05caaaf3e4b8da} 
+void {\bfseries set\+Tile\+Size} (int tile\+Size)
+\item 
+\Hypertarget{class_atlas_1_1_scene_a86282b7de1762cb208454036b945d9da}\label{class_atlas_1_1_scene_a86282b7de1762cb208454036b945d9da} 
+int {\bfseries get\+Tile\+Size} () const
+\item 
+\Hypertarget{class_atlas_1_1_scene_ad3d339d9aecddc5832dedbbedfe06afd}\label{class_atlas_1_1_scene_ad3d339d9aecddc5832dedbbedfe06afd} 
+void {\bfseries set\+Event\+Callback} (const Event\+Callback\+Fn \&callback)
+\item 
+\Hypertarget{class_atlas_1_1_scene_a082964d58e6a6d42a739952075d981b7}\label{class_atlas_1_1_scene_a082964d58e6a6d42a739952075d981b7} 
+void {\bfseries dispatch\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}} \&event)
+\item 
+\Hypertarget{class_atlas_1_1_scene_ae6fe6fc1683c853e64a10140de85da69}\label{class_atlas_1_1_scene_ae6fe6fc1683c853e64a10140de85da69} 
+std::\+string \& {\bfseries get\+Name} ()
+\item 
+\Hypertarget{class_atlas_1_1_scene_a2870831dc0ae097ad8674f14b061ce5a}\label{class_atlas_1_1_scene_a2870831dc0ae097ad8674f14b061ce5a} 
+std::\+string \& {\bfseries get\+Path} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_scene_aee65685c0866436d78e8dd2708c74b79}\label{class_atlas_1_1_scene_aee65685c0866436d78e8dd2708c74b79} 
+virtual void {\bfseries on\+Pre\+Render} (\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Delta\+Time}} dt)
+\item 
+\Hypertarget{class_atlas_1_1_scene_a4633f37191aabe8461ae4f3b45d66888}\label{class_atlas_1_1_scene_a4633f37191aabe8461ae4f3b45d66888} 
+virtual void {\bfseries on\+Render} (\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Delta\+Time}} dt)
+\item 
+\Hypertarget{class_atlas_1_1_scene_a77f9c896b3cf3bd7f9e162e147ca0e32}\label{class_atlas_1_1_scene_a77f9c896b3cf3bd7f9e162e147ca0e32} 
+virtual void {\bfseries on\+Post\+Render} (\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Delta\+Time}} dt)
+\item 
+\Hypertarget{class_atlas_1_1_scene_a771bacabc382ca381e79d5ed365ee9f6}\label{class_atlas_1_1_scene_a771bacabc382ca381e79d5ed365ee9f6} 
+virtual void {\bfseries on\+Event\+Custom} (\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}} \&event)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_scene_aeb555a56bdc0279e730365a74f1392d1}\label{class_atlas_1_1_scene_aeb555a56bdc0279e730365a74f1392d1} 
+Registry {\bfseries m\+\_\+registry}
+\item 
+\Hypertarget{class_atlas_1_1_scene_a84ce0a01a76a81e3d4b9120e51a496fd}\label{class_atlas_1_1_scene_a84ce0a01a76a81e3d4b9120e51a496fd} 
+std::\+string {\bfseries m\+\_\+name}
+\item 
+\Hypertarget{class_atlas_1_1_scene_aaf5d1be92cdde2d533593f8069e18822}\label{class_atlas_1_1_scene_aaf5d1be92cdde2d533593f8069e18822} 
+std::\+string {\bfseries m\+\_\+filepath}
+\item 
+\Hypertarget{class_atlas_1_1_scene_af22d4bedc50a8329a7f8dca543f25e7b}\label{class_atlas_1_1_scene_af22d4bedc50a8329a7f8dca543f25e7b} 
+int {\bfseries m\+\_\+tile\+Size} = 16
+\item 
+\Hypertarget{class_atlas_1_1_scene_aa26e7c72fb03c8b8b179c25d1977eea4}\label{class_atlas_1_1_scene_aa26e7c72fb03c8b8b179c25d1977eea4} 
+Event\+Callback\+Fn {\bfseries m\+\_\+event\+Callback}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_scene_a614439ccac0344926adc4c0165d64060}\label{class_atlas_1_1_scene_a614439ccac0344926adc4c0165d64060} 
+class {\bfseries Entity}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is my first test. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Scene/\+Scene.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Scene/\+Scene.\+cpp\end{DoxyCompactItemize}

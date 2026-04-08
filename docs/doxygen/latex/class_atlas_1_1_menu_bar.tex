@@ -1,0 +1,143 @@
+\doxysection{Atlas::\+Menu\+Bar Class Reference}
+\hypertarget{class_atlas_1_1_menu_bar}{}\label{class_atlas_1_1_menu_bar}\index{Atlas::MenuBar@{Atlas::MenuBar}}
+Inheritance diagram for Atlas::\+Menu\+Bar:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_menu_bar}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a41235e91e31cf1ef68e9c48d1dc2e0b3}\label{class_atlas_1_1_menu_bar_a41235e91e31cf1ef68e9c48d1dc2e0b3} 
+using {\bfseries Project\+Changed\+Callback} = std::\+function$<$void(std::\+string)$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a500b12b50a26153a3c95debcf63385b5}\label{class_atlas_1_1_menu_bar_a500b12b50a26153a3c95debcf63385b5} 
+using {\bfseries Scene\+Loaded\+Callback} = std::\+function$<$void(std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}$>$)$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_aa017bd10b9f561df11f571ac0d3b49b7}\label{class_atlas_1_1_menu_bar_aa017bd10b9f561df11f571ac0d3b49b7} 
+using {\bfseries Scene\+Saved\+Callback} = std::\+function$<$void()$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_af925287938eed2c5461d8c7a86498a03}\label{class_atlas_1_1_menu_bar_af925287938eed2c5461d8c7a86498a03} 
+using {\bfseries Scene\+Created\+Callback} = std::\+function$<$void(std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}$>$)$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a8e2d1f343a20e322b8a5311ef06d251c}\label{class_atlas_1_1_menu_bar_a8e2d1f343a20e322b8a5311ef06d251c} 
+using {\bfseries Project\+Closed\+Callback} = std::\+function$<$void()$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_ae0f6cd91c5aaf5ae80509f224dd3692b}\label{class_atlas_1_1_menu_bar_ae0f6cd91c5aaf5ae80509f224dd3692b} 
+using {\bfseries Scene\+Closed\+Callback} = std::\+function$<$void()$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a890c73a7640d6eb2242c201b25076718}\label{class_atlas_1_1_menu_bar_a890c73a7640d6eb2242c201b25076718} 
+using {\bfseries New\+Entity\+Callback} = std::\+function$<$void()$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_af70163f07240eade53dae81a32a7091f}\label{class_atlas_1_1_menu_bar_af70163f07240eade53dae81a32a7091f} 
+using {\bfseries Add\+Component\+Callback} = std::\+function$<$void()$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a4161d04e0849d0b52ac6b5f0f0af1b3b}\label{class_atlas_1_1_menu_bar_a4161d04e0849d0b52ac6b5f0f0af1b3b} 
+using {\bfseries Preview\+Callback} = std::\+function$<$void()$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a6734345eb5977a3c2d4b4dd44b7c961e}\label{class_atlas_1_1_menu_bar_a6734345eb5977a3c2d4b4dd44b7c961e} 
+using {\bfseries Build\+Callback} = std::\+function$<$bool()$>$
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_abc2712d9e55c3ebfd7e698aba2f50a40}\label{class_atlas_1_1_menu_bar_abc2712d9e55c3ebfd7e698aba2f50a40} 
+using {\bfseries Validation\+Callback} = std::\+function$<$bool()$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a90baafaff317413d63f57aba92b82603}\label{class_atlas_1_1_menu_bar_a90baafaff317413d63f57aba92b82603} 
+void {\bfseries set\+On\+Project\+Changed} (Project\+Changed\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_ac13759d7e282d26141be384ed0c78e11}\label{class_atlas_1_1_menu_bar_ac13759d7e282d26141be384ed0c78e11} 
+void {\bfseries set\+On\+Scene\+Loaded} (Scene\+Loaded\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a50436922f5fb162fdd09251e2b9f0c4c}\label{class_atlas_1_1_menu_bar_a50436922f5fb162fdd09251e2b9f0c4c} 
+void {\bfseries set\+On\+Scene\+Saved} (Scene\+Saved\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a78b78c1897caa4ea604b569a7564c75d}\label{class_atlas_1_1_menu_bar_a78b78c1897caa4ea604b569a7564c75d} 
+void {\bfseries set\+On\+New\+Scene} (Scene\+Created\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a85925a9514c8c7c5621a746f60a0a4c9}\label{class_atlas_1_1_menu_bar_a85925a9514c8c7c5621a746f60a0a4c9} 
+void {\bfseries set\+On\+Project\+Closed} (Project\+Closed\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a1be7baa1360e18f5c0e7c2c2ecb3e330}\label{class_atlas_1_1_menu_bar_a1be7baa1360e18f5c0e7c2c2ecb3e330} 
+void {\bfseries set\+On\+Scene\+Closed} (Scene\+Closed\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a6e91a7bf21897486baab5c7fb18eabb9}\label{class_atlas_1_1_menu_bar_a6e91a7bf21897486baab5c7fb18eabb9} 
+void {\bfseries set\+On\+New\+Entity} (New\+Entity\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_aa769217a343505569d5eb1282b2034a9}\label{class_atlas_1_1_menu_bar_aa769217a343505569d5eb1282b2034a9} 
+void {\bfseries set\+On\+Add\+Component} (Add\+Component\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a36fc7069ae79f6ba63dbc742dd768404}\label{class_atlas_1_1_menu_bar_a36fc7069ae79f6ba63dbc742dd768404} 
+void {\bfseries set\+On\+Preview} (Preview\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_aff7fe142cc9116234a16ee38641ea7fe}\label{class_atlas_1_1_menu_bar_aff7fe142cc9116234a16ee38641ea7fe} 
+void {\bfseries set\+On\+Build} (Build\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a9c955fa7c393986e58bf25d009fbad57}\label{class_atlas_1_1_menu_bar_a9c955fa7c393986e58bf25d009fbad57} 
+void {\bfseries set\+On\+Validate\+Scene\+Required} (Validation\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a3be721f3cecd59b014205272fc78b8c0}\label{class_atlas_1_1_menu_bar_a3be721f3cecd59b014205272fc78b8c0} 
+void {\bfseries set\+On\+Validate\+Project\+Required} (Validation\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a8540d7025004cc2c388c622cf9ed6552}\label{class_atlas_1_1_menu_bar_a8540d7025004cc2c388c622cf9ed6552} 
+void {\bfseries set\+On\+Validate\+Build\+Available} (Validation\+Callback callback)
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a761004f4cf968de439e632afa72c1fdc}\label{class_atlas_1_1_menu_bar_a761004f4cf968de439e632afa72c1fdc} 
+virtual void {\bfseries generate\+Menu\+Bar} (const std::\+string \&title)=0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_ac58bf1176452236f047c9b5689a9af48}\label{class_atlas_1_1_menu_bar_ac58bf1176452236f047c9b5689a9af48} 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{Menu\+Bar}} $>$ {\bfseries create} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a281daeec688693262d8bec130c3997ee}\label{class_atlas_1_1_menu_bar_a281daeec688693262d8bec130c3997ee} 
+Project\+Changed\+Callback {\bfseries m\+\_\+on\+Project\+Changed}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a82fd35b965af38ad450e7dabaafa6cd4}\label{class_atlas_1_1_menu_bar_a82fd35b965af38ad450e7dabaafa6cd4} 
+Scene\+Loaded\+Callback {\bfseries m\+\_\+on\+Scene\+Loaded}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a40f5e1ca6082e3c04aa238cc1dfadaaf}\label{class_atlas_1_1_menu_bar_a40f5e1ca6082e3c04aa238cc1dfadaaf} 
+Scene\+Saved\+Callback {\bfseries m\+\_\+on\+Scene\+Saved}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_ae0d5c84c55461fcde854411d57dfdc05}\label{class_atlas_1_1_menu_bar_ae0d5c84c55461fcde854411d57dfdc05} 
+Scene\+Created\+Callback {\bfseries m\+\_\+on\+New\+Scene}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a824dfd6cfd20729ddd61aa4364e2c58e}\label{class_atlas_1_1_menu_bar_a824dfd6cfd20729ddd61aa4364e2c58e} 
+Project\+Closed\+Callback {\bfseries m\+\_\+on\+Project\+Closed}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a1321b54427d57bc7dab446030b83e613}\label{class_atlas_1_1_menu_bar_a1321b54427d57bc7dab446030b83e613} 
+Scene\+Closed\+Callback {\bfseries m\+\_\+on\+Scene\+Closed}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_ad05270d2cc08350b2b7dcb6334e1bd56}\label{class_atlas_1_1_menu_bar_ad05270d2cc08350b2b7dcb6334e1bd56} 
+New\+Entity\+Callback {\bfseries m\+\_\+on\+New\+Entity}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a4733416b4a0550806c26e26b6723481d}\label{class_atlas_1_1_menu_bar_a4733416b4a0550806c26e26b6723481d} 
+Add\+Component\+Callback {\bfseries m\+\_\+on\+Add\+Component}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_ad04373124b5d50379124f9e5555570a0}\label{class_atlas_1_1_menu_bar_ad04373124b5d50379124f9e5555570a0} 
+Preview\+Callback {\bfseries m\+\_\+on\+Preview}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_ad95cd657fc5806e7ba014b1ab3c3df31}\label{class_atlas_1_1_menu_bar_ad95cd657fc5806e7ba014b1ab3c3df31} 
+Build\+Callback {\bfseries m\+\_\+on\+Build}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a223eb88045318301099e3ec7adb12d4f}\label{class_atlas_1_1_menu_bar_a223eb88045318301099e3ec7adb12d4f} 
+Validation\+Callback {\bfseries m\+\_\+on\+Scene\+Validation}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_af5bb9816c55d2c65b96432593d9b7cf3}\label{class_atlas_1_1_menu_bar_af5bb9816c55d2c65b96432593d9b7cf3} 
+Validation\+Callback {\bfseries m\+\_\+on\+Project\+Validation}
+\item 
+\Hypertarget{class_atlas_1_1_menu_bar_a6af222ceb4b97bb2d45d4553c0255a53}\label{class_atlas_1_1_menu_bar_a6af222ceb4b97bb2d45d4553c0255a53} 
+Validation\+Callback {\bfseries m\+\_\+on\+Build\+Available}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Menu\+Bar.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Menu\+Bar.\+cpp\end{DoxyCompactItemize}

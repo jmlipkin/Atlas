@@ -1,0 +1,71 @@
+\doxysection{Im\+Gui\+Sink.\+h}
+\hypertarget{_im_gui_sink_8h_source}{}\label{_im_gui_sink_8h_source}\index{Atlas/src/Atlas/ImGui/ImGuiSink.h@{Atlas/src/Atlas/ImGui/ImGuiSink.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <spdlog/sinks/base\_sink.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_im_gui_log_message}{ImGuiLogMessage}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ spdlog::level::level\_enum\ level;}
+\DoxyCodeLine{00013\ \ \ \ \ std::string\ text;}
+\DoxyCodeLine{00014\ \ \ \ \ glm::vec4\ color;}
+\DoxyCodeLine{00015\ \};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_im_gui_sink}{ImGuiSink}}\ final\ :\ \textcolor{keyword}{public}\ spdlog::sinks::base\_sink<std::mutex>\ \{}
+\DoxyCodeLine{00018\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<ImGuiLogMessage>\&\ getMessages()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_messages;\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ clear()\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(base\_sink<std::mutex>::mutex\_);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ m\_messages.clear();}
+\DoxyCodeLine{00024\ \ \ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ scrollsToBottom()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_scrollToBottom;\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ clearScrollFlag()\ \{\ m\_scrollToBottom\ =\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ sink\_it\_(\textcolor{keyword}{const}\ spdlog::details::log\_msg\&\ msg)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ spdlog::memory\_buf\_t\ formatted;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ base\_sink<std::mutex>::formatter\_-\/>format(msg,\ formatted);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_im_gui_log_message}{ImGuiLogMessage}}\ logMsg;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ logMsg.text\ =\ fmt::to\_string(formatted);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ logMsg.level\ =\ msg.level;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ logMsg.color\ =\ computeColor(msg.level);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ m\_messages.push\_back(logMsg);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ m\_scrollToBottom\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ flush\_()\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047\ \ \ \ \ glm::vec4\ computeColor(spdlog::level::level\_enum\ level)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }LVL\ =\ spdlog::level::level\_enum;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (level)\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ LVL::trace:\ \textcolor{keywordflow}{return}\ \{1,\ 1,\ 1,\ 1\};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ LVL::debug:\ \textcolor{keywordflow}{return}\ \{0.6f,\ 0.8f,\ 1.0f,\ 1\};}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ LVL::info:\ \ \textcolor{keywordflow}{return}\ \{0.1f,\ 0.75f,\ 0.1f,\ 1\};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ LVL::warn:\ \ \textcolor{keywordflow}{return}\ \{1,\ 1,\ 0,\ 1\};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ LVL::err:\ \ \ \textcolor{keywordflow}{return}\ \{1,\ 0,\ 0,\ 1\};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ LVL::critical:\ \textcolor{keywordflow}{return}\ \{1,\ 0,\ 1,\ 1\};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{1,\ 1,\ 1,\ 1\};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00061\ \ \ \ \ std::vector<ImGuiLogMessage>\ m\_messages;}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_scrollToBottom\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00063\ \};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

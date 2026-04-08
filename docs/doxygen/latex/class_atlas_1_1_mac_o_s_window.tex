@@ -1,0 +1,168 @@
+\doxysection{Atlas::\+Mac\+OSWindow Class Reference}
+\hypertarget{class_atlas_1_1_mac_o_s_window}{}\label{class_atlas_1_1_mac_o_s_window}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+Inheritance diagram for Atlas::\+Mac\+OSWindow:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_mac_o_s_window}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_mac_o_s_window_aa774ea1a71a1ffb230b3ab2c1eb6489e}\label{class_atlas_1_1_mac_o_s_window_aa774ea1a71a1ffb230b3ab2c1eb6489e} 
+{\bfseries Mac\+OSWindow} (const \doxymbox{\hyperlink{struct_atlas_1_1_window_properties}{Window\+Properties}} \&props)
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_a922392f042253651d23978960319ea4b}{on\+Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_a6fcc1c687d54e01066bb4b79636e9c75}{on\+Minimize}} () override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_a526de2798a3d0d073d71dbc8d6b99068}{on\+Restore}} () override
+\item 
+unsigned int \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_a7a5a0e63daac0d68fcb5dc246208d6d5}{get\+Width}} () const override
+\item 
+unsigned int \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_a5b75982f1e5d917d7bcda1ecf0ab61f7}{get\+Height}} () const override
+\item 
+glm::\+uvec2 \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_aab607d2a8fc134b549548bb6bba92533}{get\+Resolution}} () const override
+\item 
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_acc821a87c6174c445e9d6fce37b33567}{get\+Native\+Window}} () const override
+\item 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Graphics\+Context}} $>$ \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_afbe4f6a6869937237fdddb421062381c}{get\+Graphics\+Context}} () const override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_add2e6e500394c80f724a55feea086637}{set\+Event\+Callback}} (const Event\+Callback\+Fn \&callback) override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_a7393416d94d2ad589099cbde512a7ba3}{set\+VSync}} (bool enabled) override
+\item 
+bool \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_window_af3ce627385a320b88f329c830a690c1c}{is\+VSync}} () const override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}}
+\begin{DoxyCompactItemize}
+\item 
+using {\bfseries Event\+Callback\+Fn} = std::\+function$<$void(\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_atlas_1_1_window}{Window}} \texorpdfstring{$\ast$}{*} {\bfseries create} (const \doxymbox{\hyperlink{struct_atlas_1_1_window_properties}{Window\+Properties}} \&properties=\doxymbox{\hyperlink{struct_atlas_1_1_window_properties}{Window\+Properties}}())
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_mac_o_s_window_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_mac_o_s_window_afbe4f6a6869937237fdddb421062381c}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!getGraphicsContext@{getGraphicsContext}}
+\index{getGraphicsContext@{getGraphicsContext}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{getGraphicsContext()}{getGraphicsContext()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_afbe4f6a6869937237fdddb421062381c} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Graphics\+Context}} $>$ Atlas::\+\+Mac\+OSWindow::\+get\+Graphics\+Context (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_a5b75982f1e5d917d7bcda1ecf0ab61f7}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_a5b75982f1e5d917d7bcda1ecf0ab61f7} 
+unsigned int Atlas::\+\+Mac\+OSWindow::\+get\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_acc821a87c6174c445e9d6fce37b33567}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!getNativeWindow@{getNativeWindow}}
+\index{getNativeWindow@{getNativeWindow}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{getNativeWindow()}{getNativeWindow()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_acc821a87c6174c445e9d6fce37b33567} 
+void \texorpdfstring{$\ast$}{*} Atlas::\+\+Mac\+OSWindow::\+get\+Native\+Window (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_aab607d2a8fc134b549548bb6bba92533}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!getResolution@{getResolution}}
+\index{getResolution@{getResolution}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{getResolution()}{getResolution()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_aab607d2a8fc134b549548bb6bba92533} 
+glm::\+uvec2 Atlas::\+\+Mac\+OSWindow::\+get\+Resolution (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_a7a5a0e63daac0d68fcb5dc246208d6d5}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!getWidth@{getWidth}}
+\index{getWidth@{getWidth}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{getWidth()}{getWidth()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_a7a5a0e63daac0d68fcb5dc246208d6d5} 
+unsigned int Atlas::\+\+Mac\+OSWindow::\+get\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_af3ce627385a320b88f329c830a690c1c}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!isVSync@{isVSync}}
+\index{isVSync@{isVSync}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{isVSync()}{isVSync()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_af3ce627385a320b88f329c830a690c1c} 
+bool Atlas::\+\+Mac\+OSWindow::\+is\+VSync (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_a6fcc1c687d54e01066bb4b79636e9c75}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!onMinimize@{onMinimize}}
+\index{onMinimize@{onMinimize}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{onMinimize()}{onMinimize()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_a6fcc1c687d54e01066bb4b79636e9c75} 
+void Atlas::\+\+Mac\+OSWindow::\+on\+Minimize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_a526de2798a3d0d073d71dbc8d6b99068}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!onRestore@{onRestore}}
+\index{onRestore@{onRestore}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{onRestore()}{onRestore()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_a526de2798a3d0d073d71dbc8d6b99068} 
+void Atlas::\+\+Mac\+OSWindow::\+on\+Restore (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_a922392f042253651d23978960319ea4b}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!onUpdate@{onUpdate}}
+\index{onUpdate@{onUpdate}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{onUpdate()}{onUpdate()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_a922392f042253651d23978960319ea4b} 
+void Atlas::\+\+Mac\+OSWindow::\+on\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_add2e6e500394c80f724a55feea086637}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!setEventCallback@{setEventCallback}}
+\index{setEventCallback@{setEventCallback}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{setEventCallback()}{setEventCallback()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_add2e6e500394c80f724a55feea086637} 
+void Atlas::\+\+Mac\+OSWindow::\+set\+Event\+Callback (\begin{DoxyParamCaption}\item[{const Event\+Callback\+Fn \&}]{callback}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+\Hypertarget{class_atlas_1_1_mac_o_s_window_a7393416d94d2ad589099cbde512a7ba3}\index{Atlas::MacOSWindow@{Atlas::MacOSWindow}!setVSync@{setVSync}}
+\index{setVSync@{setVSync}!Atlas::MacOSWindow@{Atlas::MacOSWindow}}
+\doxysubsubsection{\texorpdfstring{setVSync()}{setVSync()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_window_a7393416d94d2ad589099cbde512a7ba3} 
+void Atlas::\+\+Mac\+OSWindow::\+set\+VSync (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_window}{Atlas::\+\+Window}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSWindow.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSWindow.\+mm\end{DoxyCompactItemize}

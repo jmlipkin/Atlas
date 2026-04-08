@@ -1,0 +1,115 @@
+\doxysection{Project.\+h}
+\hypertarget{_project_8h_source}{}\label{_project_8h_source}\index{Atlas/src/Atlas/Project/Project.h@{Atlas/src/Atlas/Project/Project.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Base.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Project/Serializer.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Version.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }ProjectData\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \ \ atproj\_version\ =\ 1;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ atlas\_version\ \ =\ AT\_VERSION;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ std::string\ src\_directory\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00020\ \ \ \ \ std::string\ scripts\_target;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ std::vector<std::string>\ scene\_filepaths;}
+\DoxyCodeLine{00023\ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ \ \ \ \ startup\_scene;}
+\DoxyCodeLine{00024\ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ \ \ \ \ last\_active\_scene\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{int}\ tileSize\ \ \ \ \ \ =\ 16;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ pixelsPerUnit\ =\ 16;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ ProjectData(std::string\ Name\ =\ \textcolor{stringliteral}{"{}UnnamedProject"{}},\ std::string\ load\_scene\ =\ \textcolor{stringliteral}{"{}"{}})\ :\ name(Name),\ startup\_scene(load\_scene),\ scripts\_target(name\ +\ \textcolor{stringliteral}{"{}Scripts"{}})\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!load\_scene.empty())\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ scene\_filepaths.push\_back(load\_scene);}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00033\ \ \ \ \ \}}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{class\ }Project\ \{}
+\DoxyCodeLine{00037\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ \ \ \ \ Project(std::string\ project\_directory,\ \doxymbox{\hyperlink{struct_atlas_1_1_project_data}{ProjectData}}\ data)\ :\ m\_directory(project\_directory),\ m\_data(data)\ \{\}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ setName(\textcolor{keyword}{const}\ std::string\&\ name)\ \{\ m\_data.name\ =\ name;\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ getName()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_data.name;\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ std::string\&\ \ \ \ \ \ \ getName()\ \{\ \textcolor{keywordflow}{return}\ m\_data.name;\ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ setScripts(\textcolor{keyword}{const}\ std::vector<std::string>\&\ scripts)\ \{\ m\_scripts\ =\ scripts;\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ std::vector<std::string>\&\ \ \ \ \ \ \ getScripts()\ \{\ \textcolor{keywordflow}{return}\ m\_scripts;\ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ getScripts()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_scripts;\ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ std::string\&\ getDirectory()\ \{\ \textcolor{keywordflow}{return}\ m\_directory;\ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_project_data}{ProjectData}}\&\ getData()\ \{\ \textcolor{keywordflow}{return}\ m\_data;\ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00053\ \ \ \ \ std::string\ m\_directory;}
+\DoxyCodeLine{00054\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_project_data}{ProjectData}}\ m\_data;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ std::vector<std::string>\ m\_scripts;}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_project_manager}{ProjectManager}}\ \{}
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ saveScene(std::shared\_ptr<Scene>\ scene,\ \textcolor{keyword}{const}\ std::string\&\ explicitPath\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Scene>\ loadScene(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ attachScenetoProject(std::shared\_ptr<Scene>\ scene);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ createNewProject(\textcolor{keyword}{const}\ std::string\&\ filepath,\ \textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Scene>\ createNewScene(\textcolor{keyword}{const}\ std::string\&\ filepath,\ \textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ saveProjectAs(\textcolor{keyword}{const}\ std::string\&\ filepath,\ \textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ saveProject();}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Scene>\ loadBundledProject();}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ first\ active\ scene}}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ TODO:\ determine\ internally\ which\ scene\ is\ the\ correct\ scene}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ based\ on\ run\ mode}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Scene>\ loadProject(\textcolor{keyword}{const}\ std::string\&\ filepath,\ \textcolor{keywordtype}{bool}\ useStartupScene\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ closeProject(\textcolor{keywordtype}{bool}\ shouldSave);}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ loadScriptLibrary();}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ unloadScriptLibrary();}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Tileset>\ createTileset(\textcolor{keyword}{const}\ std::string\&\ filepath,\ \textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Tileset>\ loadTileset(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ saveTileset(std::shared\_ptr<Tileset>\ tileset);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ tilesetPath(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getActiveProject()-\/>getDirectory()\ +\ \textcolor{stringliteral}{"{}/tilesets/"{}}\ +\ name\ +\ \textcolor{stringliteral}{"{}.attileset"{}};}
+\DoxyCodeLine{00089\ \ \ \ \ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Project>\ getActiveProject()\ \{\ \textcolor{keywordflow}{return}\ s\_activeProject;\ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ setActiveScene(std::shared\_ptr<Scene>\ scene);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ isDirty()\ \{\ \textcolor{keywordflow}{return}\ s\_isDirty;\ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ toRelativePath(\textcolor{keyword}{const}\ std::string\&\ absolutePath);}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ toAbsolutePath(\textcolor{keyword}{const}\ std::string\&\ relativePath);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ loadScriptManifest();}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Project>\ s\_activeProject;}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Scene>\ \ \ s\_activeScene;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s\_isDirty;}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{static}\ AT\_LIBRARY\_HANDLE\ s\_scriptLibHandle;}
+\DoxyCodeLine{00107\ \};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

@@ -1,0 +1,111 @@
+\doxysection{Atlas::\+Metal\+Context Class Reference}
+\hypertarget{class_atlas_1_1_metal_context}{}\label{class_atlas_1_1_metal_context}\index{Atlas::MetalContext@{Atlas::MetalContext}}
+Inheritance diagram for Atlas::\+Metal\+Context:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_metal_context}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_metal_context_ab7e181f4ec832a10d39f2c17f76d280e}\label{class_atlas_1_1_metal_context_ab7e181f4ec832a10d39f2c17f76d280e} 
+{\bfseries Metal\+Context} (GLFWwindow \texorpdfstring{$\ast$}{*}window)
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_context_a4fcc05a7ef9eaa3c62f55cdd0508223b}{init}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_context_a3ee89df7e2c9d3e3896c4f10ac436af8}{swap\+Buffers}} () override
+\item 
+\Hypertarget{class_atlas_1_1_metal_context_aa7287666d55b75a808b83c495e1f4254}\label{class_atlas_1_1_metal_context_aa7287666d55b75a808b83c495e1f4254} 
+CA::\+\+Metal\+Drawable \texorpdfstring{$\ast$}{*} {\bfseries get\+Next\+Drawable} ()
+\item 
+\Hypertarget{class_atlas_1_1_metal_context_a88bb201445b8e4ce0f773067522e0bbf}\label{class_atlas_1_1_metal_context_a88bb201445b8e4ce0f773067522e0bbf} 
+CA::\+\+Metal\+Layer \texorpdfstring{$\ast$}{*} {\bfseries get\+MTLLayer} () const
+\item 
+\Hypertarget{class_atlas_1_1_metal_context_ab11ae791e82c34fd7e8dc001a65627c5}\label{class_atlas_1_1_metal_context_ab11ae791e82c34fd7e8dc001a65627c5} 
+GLFWwindow \texorpdfstring{$\ast$}{*} {\bfseries get\+GLFWwindow} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_context_a1410b5b51bc66a7c00c0bbdcf788ae31}{on\+Resize}} (const \doxymbox{\hyperlink{class_atlas_1_1_window_resize_event}{Window\+Resize\+Event}} \&e) override
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{class_atlas_1_1_metal_context_af85cf370fa5b13e8f56043967f5821e3}{get\+Width}} () const override
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{class_atlas_1_1_metal_context_a9a8175f9c15f038474cba5afa6ed30f2}{get\+Height}} () const override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_metal_context_aea59defd2b7cb30376e76857df685939}\label{class_atlas_1_1_metal_context_aea59defd2b7cb30376e76857df685939} 
+static MTL::\+\+Library \texorpdfstring{$\ast$}{*} {\bfseries set\+New\+MTLLibrary} (const std::\+string \&filepath)
+\item 
+\Hypertarget{class_atlas_1_1_metal_context_a3af41d51ebc9c86ec78fe752453c452c}\label{class_atlas_1_1_metal_context_a3af41d51ebc9c86ec78fe752453c452c} 
+static MTL::\+\+Device \texorpdfstring{$\ast$}{*} {\bfseries get\+MTLDevice} ()
+\item 
+\Hypertarget{class_atlas_1_1_metal_context_a4e247abdff82d411b8df6973a8590ff8}\label{class_atlas_1_1_metal_context_a4e247abdff82d411b8df6973a8590ff8} 
+static MTL::\+\+Library \texorpdfstring{$\ast$}{*} {\bfseries get\+MTLLibrary} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Atlas::\+\+Graphics\+Context}}}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Graphics\+Context}} $>$ {\bfseries create} (GLFWwindow \texorpdfstring{$\ast$}{*}window)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_metal_context_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_metal_context_a9a8175f9c15f038474cba5afa6ed30f2}\index{Atlas::MetalContext@{Atlas::MetalContext}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!Atlas::MetalContext@{Atlas::MetalContext}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_context_a9a8175f9c15f038474cba5afa6ed30f2} 
+virtual uint32\+\_\+t Atlas::\+\+Metal\+Context::\+get\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Atlas::\+\+Graphics\+Context}}.
+
+\Hypertarget{class_atlas_1_1_metal_context_af85cf370fa5b13e8f56043967f5821e3}\index{Atlas::MetalContext@{Atlas::MetalContext}!getWidth@{getWidth}}
+\index{getWidth@{getWidth}!Atlas::MetalContext@{Atlas::MetalContext}}
+\doxysubsubsection{\texorpdfstring{getWidth()}{getWidth()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_context_af85cf370fa5b13e8f56043967f5821e3} 
+virtual uint32\+\_\+t Atlas::\+\+Metal\+Context::\+get\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Atlas::\+\+Graphics\+Context}}.
+
+\Hypertarget{class_atlas_1_1_metal_context_a4fcc05a7ef9eaa3c62f55cdd0508223b}\index{Atlas::MetalContext@{Atlas::MetalContext}!init@{init}}
+\index{init@{init}!Atlas::MetalContext@{Atlas::MetalContext}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_context_a4fcc05a7ef9eaa3c62f55cdd0508223b} 
+void Metal\+Context::\+init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Atlas::\+\+Graphics\+Context}}.
+
+\Hypertarget{class_atlas_1_1_metal_context_a1410b5b51bc66a7c00c0bbdcf788ae31}\index{Atlas::MetalContext@{Atlas::MetalContext}!onResize@{onResize}}
+\index{onResize@{onResize}!Atlas::MetalContext@{Atlas::MetalContext}}
+\doxysubsubsection{\texorpdfstring{onResize()}{onResize()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_context_a1410b5b51bc66a7c00c0bbdcf788ae31} 
+void Metal\+Context::\+on\+Resize (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_atlas_1_1_window_resize_event}{Window\+Resize\+Event}} \&}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Atlas::\+\+Graphics\+Context}}.
+
+\Hypertarget{class_atlas_1_1_metal_context_a3ee89df7e2c9d3e3896c4f10ac436af8}\index{Atlas::MetalContext@{Atlas::MetalContext}!swapBuffers@{swapBuffers}}
+\index{swapBuffers@{swapBuffers}!Atlas::MetalContext@{Atlas::MetalContext}}
+\doxysubsubsection{\texorpdfstring{swapBuffers()}{swapBuffers()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_context_a3ee89df7e2c9d3e3896c4f10ac436af8} 
+virtual void Atlas::\+\+Metal\+Context::\+swap\+Buffers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Atlas::\+\+Graphics\+Context}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Context.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Context.\+mm\end{DoxyCompactItemize}

@@ -1,0 +1,53 @@
+\doxysection{Atlas::\+Entity Class Reference}
+\hypertarget{class_atlas_1_1_entity}{}\label{class_atlas_1_1_entity}\index{Atlas::Entity@{Atlas::Entity}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_entity_aa4b31e6bbe792f9dfa0acf23b3170392}\label{class_atlas_1_1_entity_aa4b31e6bbe792f9dfa0acf23b3170392} 
+{\bfseries Entity} (entt::\+entity entity\+ID, \doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}} \texorpdfstring{$\ast$}{*}scene)
+\item 
+\Hypertarget{class_atlas_1_1_entity_a2ad31bda16cee244955099ef39554d06}\label{class_atlas_1_1_entity_a2ad31bda16cee244955099ef39554d06} 
+{\bfseries Entity} (entt::\+entity entity\+ID, \doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}} \texorpdfstring{$\ast$}{*}scene, \doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{UUID}} id)
+\item 
+\Hypertarget{class_atlas_1_1_entity_ac6f26361b0ba7df2f68ec2da5320c16f}\label{class_atlas_1_1_entity_ac6f26361b0ba7df2f68ec2da5320c16f} 
+{\bfseries Entity} (const Entity \&other)=default
+\item 
+\Hypertarget{class_atlas_1_1_entity_ac43bf6d03ba8bfbc661d8172ca67caec}\label{class_atlas_1_1_entity_ac43bf6d03ba8bfbc661d8172ca67caec} 
+\doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{UUID}} {\bfseries get\+UUID} () const
+\item 
+\Hypertarget{class_atlas_1_1_entity_ae0db20b11b96d81fe28f9d4dc77f239b}\label{class_atlas_1_1_entity_ae0db20b11b96d81fe28f9d4dc77f239b} 
+const std::\+string \& {\bfseries name} ()
+\item 
+\Hypertarget{class_atlas_1_1_entity_a1bf443eef9cdcb0974492c972e4dfa00}\label{class_atlas_1_1_entity_a1bf443eef9cdcb0974492c972e4dfa00} 
+{\footnotesize template$<$typename T, typename... Args$>$ }\\T \& {\bfseries add\+Component} (Args \&\&... args)
+\item 
+\Hypertarget{class_atlas_1_1_entity_ad93e9c5ee10dce998589c54df83d6767}\label{class_atlas_1_1_entity_ad93e9c5ee10dce998589c54df83d6767} 
+{\footnotesize template$<$typename T$>$ }\\void {\bfseries remove\+Component} ()
+\item 
+\Hypertarget{class_atlas_1_1_entity_a65e071a2c7245104d458ec2f5879d063}\label{class_atlas_1_1_entity_a65e071a2c7245104d458ec2f5879d063} 
+{\footnotesize template$<$typename T$>$ }\\T \& {\bfseries get\+Component} ()
+\item 
+\Hypertarget{class_atlas_1_1_entity_ad4625f566be8bacbf217f95ebc170a5d}\label{class_atlas_1_1_entity_ad4625f566be8bacbf217f95ebc170a5d} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries has\+Component} ()
+\item 
+\Hypertarget{class_atlas_1_1_entity_aa4acaee3c862c67469dde28d0f9e451d}\label{class_atlas_1_1_entity_aa4acaee3c862c67469dde28d0f9e451d} 
+{\footnotesize template$<$typename T$>$ }\\void {\bfseries add\+Script} ()
+\item 
+\Hypertarget{class_atlas_1_1_entity_a8505b9cf1deee91ff813de2a7aa02cfb}\label{class_atlas_1_1_entity_a8505b9cf1deee91ff813de2a7aa02cfb} 
+{\bfseries operator entt::\+entity} ()
+\item 
+\Hypertarget{class_atlas_1_1_entity_aea2df63f09945a98ea9d081a241fc11a}\label{class_atlas_1_1_entity_aea2df63f09945a98ea9d081a241fc11a} 
+{\bfseries operator const entt::\+entity} () const
+\item 
+\Hypertarget{class_atlas_1_1_entity_a13fc158397f48615d82777b8f71533fa}\label{class_atlas_1_1_entity_a13fc158397f48615d82777b8f71533fa} 
+bool {\bfseries operator==} (const Entity \&other) const
+\item 
+\Hypertarget{class_atlas_1_1_entity_a482d1156fb872682a9641a5b71369226}\label{class_atlas_1_1_entity_a482d1156fb872682a9641a5b71369226} 
+{\bfseries operator bool} () const
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+ECS/\+\+Entities/\+Entity.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+ECS/\+\+Components/\+Behavior.\+h\end{DoxyCompactItemize}

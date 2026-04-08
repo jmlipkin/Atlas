@@ -1,0 +1,27 @@
+\doxysection{Mac\+OSPlatform.\+h}
+\hypertarget{_mac_o_s_platform_8h_source}{}\label{_mac_o_s_platform_8h_source}\index{Atlas/src/Atlas/Platform/MacOS/MacOSPlatform.h@{Atlas/src/Atlas/Platform/MacOS/MacOSPlatform.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Platform.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_platform}{MacOSPlatform}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_platform}{Platform}}\ \{}
+\DoxyCodeLine{00007\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getResourcesPathImpl()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getExecutablePathImpl()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getAppSupportPathImpl()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ openFileDialogImpl(\textcolor{keyword}{const}\ std::string\&\ filter)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ saveFileDialogImpl(\textcolor{keyword}{const}\ std::string\&\ filter,\ \textcolor{keyword}{const}\ std::string\&\ defaultDir)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ std::vector<std::string>\ getFileListImpl(\textcolor{keyword}{const}\ std::string\&\ directory,\ \textcolor{keyword}{const}\ std::string\&\ filter)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ showConfirmDialogImpl(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ confirm,\ \textcolor{keyword}{const}\ std::string\&\ deny,\ \textcolor{keyword}{const}\ std::string\&\ cancel)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ buildScriptLibraryImpl(\textcolor{keyword}{const}\ std::string\&\ buildDir,\ \textcolor{keyword}{const}\ std::string\&\ target,\ BuildOutputCallback\ onOutput,\ BuildCompleteCallback\ onComplete)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ openFileImpl(\textcolor{keyword}{const}\ std::string\&\ filepath)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

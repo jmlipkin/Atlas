@@ -1,0 +1,53 @@
+\doxysection{Atlas::\+Texture Class Reference}
+\hypertarget{class_atlas_1_1_texture}{}\label{class_atlas_1_1_texture}\index{Atlas::Texture@{Atlas::Texture}}
+Inheritance diagram for Atlas::\+Texture:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_texture}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_texture_abee6c32339b14b41a28d92f5ef02dccf}\label{class_atlas_1_1_texture_abee6c32339b14b41a28d92f5ef02dccf} 
+virtual uint32\+\_\+t {\bfseries get\+Width} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_texture_a1060d40f8e97f5afbd376e7e1dc03185}\label{class_atlas_1_1_texture_a1060d40f8e97f5afbd376e7e1dc03185} 
+virtual uint32\+\_\+t {\bfseries get\+Height} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_texture_aac9cadf8456ba7255d04abe633365bac}\label{class_atlas_1_1_texture_aac9cadf8456ba7255d04abe633365bac} 
+virtual bool {\bfseries operator==} (const \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} \&other) const =0
+\item 
+\Hypertarget{class_atlas_1_1_texture_a09e5b3ffafed9c37e68cb291ffa00d61}\label{class_atlas_1_1_texture_a09e5b3ffafed9c37e68cb291ffa00d61} 
+virtual std::\+string \& {\bfseries get\+Filepath} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_texture_a6e40b237712bc9d6bff387652f96fdd9}\label{class_atlas_1_1_texture_a6e40b237712bc9d6bff387652f96fdd9} 
+virtual std::\+string {\bfseries get\+Filepath} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_texture_a827f9520e3e2603fc1a196d1b4c33957}\label{class_atlas_1_1_texture_a827f9520e3e2603fc1a196d1b4c33957} 
+virtual void \texorpdfstring{$\ast$}{*} {\bfseries get\+Data} () const =0
+\item 
+\Hypertarget{class_atlas_1_1_texture_a1510e35a2590a061a2d6221386dc8a96}\label{class_atlas_1_1_texture_a1510e35a2590a061a2d6221386dc8a96} 
+virtual void {\bfseries set\+Data} (void \texorpdfstring{$\ast$}{*}data, uint32\+\_\+t size)=0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_texture_a2332c110323a0f00fc923b73b21c6712}\label{class_atlas_1_1_texture_a2332c110323a0f00fc923b73b21c6712} 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ {\bfseries create} (const std::\+string \&filepath)
+\item 
+\Hypertarget{class_atlas_1_1_texture_a707b0f64eb699824b549c72c12498d12}\label{class_atlas_1_1_texture_a707b0f64eb699824b549c72c12498d12} 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ {\bfseries create} (uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+\Hypertarget{class_atlas_1_1_texture_a08afe1ecf49205e8822844d679d90ca3}\label{class_atlas_1_1_texture_a08afe1ecf49205e8822844d679d90ca3} 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ {\bfseries create} (\doxymbox{\hyperlink{struct_atlas_1_1_texture_specification}{Texture\+Specification}} specs, void \texorpdfstring{$\ast$}{*}data=nullptr)
+\item 
+\Hypertarget{class_atlas_1_1_texture_a092263df23a4924dde16c76001c556a1}\label{class_atlas_1_1_texture_a092263df23a4924dde16c76001c556a1} 
+static uint32\+\_\+t {\bfseries format\+Size} (Image\+Format)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Texture.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Texture.\+cpp\end{DoxyCompactItemize}

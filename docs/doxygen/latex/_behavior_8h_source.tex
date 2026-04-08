@@ -1,0 +1,126 @@
+\doxysection{Behavior.\+h}
+\hypertarget{_behavior_8h_source}{}\label{_behavior_8h_source}\index{Atlas/src/Atlas/ECS/Components/Behavior.h@{Atlas/src/Atlas/ECS/Components/Behavior.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Entities/Entity.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Events/Event.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Time.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/ScriptPriority.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ AT\_BEHAVIOR(Type)\ \(\backslash\)}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \ \ virtual\ std::string\ getTypeName()\ const\ override\ \{\ return\ \#Type;\ \}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{enum\ class}\ BehaviorPropertyType\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ BOOL,}
+\DoxyCodeLine{00018\ \ \ \ \ CHAR,}
+\DoxyCodeLine{00019\ \ \ \ \ STRING,}
+\DoxyCodeLine{00020\ \ \ \ \ INT,}
+\DoxyCodeLine{00021\ \ \ \ \ FLOAT,}
+\DoxyCodeLine{00022\ \ \ \ \ VEC2,}
+\DoxyCodeLine{00023\ \ \ \ \ VEC3,}
+\DoxyCodeLine{00024\ \ \ \ \ VEC4,}
+\DoxyCodeLine{00025\ \ \ \ \ MAT4}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00029\ BehaviorPropertyType\ propertyTypeFor();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_behavior}{Behavior}}\ \{}
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_behavior_1_1_property}{Property}}\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ name;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ valuePtr;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ BehaviorPropertyType\ type;}
+\DoxyCodeLine{00037\ \ \ \ \ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_atlas_1_1_behavior}{\string~Behavior}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getTypeName()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}UnknownBehavior"{}};\ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ setEntity(\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\ entity)\ \{\ m\_entity\ =\ entity;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ Entity\ getEntity()\ \{\ \textcolor{keywordflow}{return}\ m\_entity;\ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ exposeProperties()\ \{\}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ \ getProperties()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_properties;\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{auto}\&\ \ \ \ \ \ \ \ getProperties()\ \{\ \textcolor{keywordflow}{return}\ m\_properties;\ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00052\ \ \ \ \ T\&\ getComponent()\ \{\ \textcolor{keywordflow}{return}\ m\_entity.getComponent<T>();\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onCreate()\ \{\}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onDestroy()\ \{\}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onUpdate(DeltaTime\ dt)\ \{\}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onEvent(Event\&\ event)\ \{\}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ generateNewScript(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ expose(\textcolor{keyword}{const}\ std::string\&\ name,\ T\&\ value)\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ m\_properties[name]\ =\ \doxymbox{\hyperlink{struct_atlas_1_1_behavior_1_1_property}{Property}}\{name,\ \&value,\ propertyTypeFor<T>()\};}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00068\ \ \ \ \ Entity\ m\_entity;}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }Scene;}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ std::unordered\_map<std::string,\ Property>\ m\_properties;}
+\DoxyCodeLine{00072\ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{namespace\ }Component\ \{}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_script}{Script}}\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name;}
+\DoxyCodeLine{00078\ \ \ \ \ std::unique\_ptr<Behavior>\ instance\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00079\ \ \ \ \ ScriptPriority\ \ \ \ \ \ \ \ \ \ \ \ priority\ =\ ScriptPriority::Normal;}
+\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \}\ \ \textcolor{comment}{//\ namespace\ Component}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/ScriptRegistry.h"{}}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00091\ \textcolor{keywordtype}{void}\ Entity::addScript()\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{auto}\&\ script\ \ \ \ =\ addComponent<Component::Script>();}
+\DoxyCodeLine{00093\ \ \ \ \ script.instance\ =\ std::make\_unique<T>();}
+\DoxyCodeLine{00094\ \ \ \ \ script.instance-\/>setEntity(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00095\ \ \ \ \ script.instance-\/>onCreate();}
+\DoxyCodeLine{00096\ \ \ \ \ script.instance-\/>exposeProperties();}
+\DoxyCodeLine{00097\ \ \ \ \ script.priority\ =\ ScriptRegistry::getPriority(script.instance-\/>getTypeName());}
+\DoxyCodeLine{00098\ \ \ \ \ script.name\ =\ script.instance-\/>getTypeName();}
+\DoxyCodeLine{00099\ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00102\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<bool>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::BOOL;\ \}}
+\DoxyCodeLine{00103\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00104\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<char>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::CHAR;\ \}}
+\DoxyCodeLine{00105\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00106\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<std::string>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::STRING;\ \}}
+\DoxyCodeLine{00107\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00108\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<int>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::INT;\ \}}
+\DoxyCodeLine{00109\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00110\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<float>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::FLOAT;\ \}}
+\DoxyCodeLine{00111\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00112\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<glm::vec2>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::VEC2;\ \}}
+\DoxyCodeLine{00113\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00114\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<glm::vec3>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::VEC3;\ \}}
+\DoxyCodeLine{00115\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00116\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<glm::vec4>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::VEC4;\ \}}
+\DoxyCodeLine{00117\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00118\ \textcolor{keyword}{inline}\ BehaviorPropertyType\ propertyTypeFor<glm::mat4>()\ \{\ \textcolor{keywordflow}{return}\ BehaviorPropertyType::MAT4;\ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

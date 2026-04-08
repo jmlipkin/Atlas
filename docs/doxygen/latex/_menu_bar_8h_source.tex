@@ -1,0 +1,75 @@
+\doxysection{Menu\+Bar.\+h}
+\hypertarget{_menu_bar_8h_source}{}\label{_menu_bar_8h_source}\index{Atlas/src/Atlas/Core/MenuBar.h@{Atlas/src/Atlas/Core/MenuBar.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_project}{Project}};}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}};}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{MenuBar}}\ \{}
+\DoxyCodeLine{00011\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{using\ }ProjectChangedCallback\ =\ std::function<void(std::string)>;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{using\ }SceneLoadedCallback\ \ \ \ =\ std::function<void(std::shared\_ptr<Scene>)>;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{using\ }SceneSavedCallback\ \ \ \ \ =\ std::function<void()>;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{using\ }SceneCreatedCallback\ \ \ =\ std::function<void(std::shared\_ptr<Scene>)>;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{using\ }ProjectClosedCallback\ \ =\ std::function<void()>;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{using\ }SceneClosedCallback\ \ \ \ =\ std::function<void()>;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{using\ }NewEntityCallback\ \ \ \ =\ std::function<void()>;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{using\ }AddComponentCallback\ =\ std::function<void()>;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{using\ }PreviewCallback\ =\ std::function<void()>;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{using\ }BuildCallback\ =\ std::function<bool()>;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{using\ }ValidationCallback\ =\ std::function<bool()>;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{\string~MenuBar}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Takes\ path\ to\ project\ file}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnProjectChanged(ProjectChangedCallback\ callback)\ \{\ m\_onProjectChanged\ =\ callback;\ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnSceneLoaded(SceneLoadedCallback\ callback)\ \{\ m\_onSceneLoaded\ =\ callback;\ \}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnSceneSaved(SceneSavedCallback\ callback)\ \{\ m\_onSceneSaved\ =\ callback;\ \}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnNewScene(SceneCreatedCallback\ callback)\ \{\ m\_onNewScene\ =\ callback;\ \}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnProjectClosed(ProjectClosedCallback\ callback)\ \{\ m\_onProjectClosed\ =\ callback;\ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnSceneClosed(SceneClosedCallback\ callback)\ \{\ m\_onSceneClosed\ =\ callback;\ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnNewEntity(NewEntityCallback\ callback)\ \{\ m\_onNewEntity\ =\ callback;\ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnAddComponent(AddComponentCallback\ callback)\ \{\ m\_onAddComponent\ =\ callback;\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnPreview(PreviewCallback\ callback)\ \{\ m\_onPreview\ =\ callback;\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnBuild(BuildCallback\ callback)\ \{\ m\_onBuild\ =\ callback;\ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnValidateSceneRequired(ValidationCallback\ callback)\ \{\ m\_onSceneValidation\ =\ callback;\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnValidateProjectRequired(ValidationCallback\ callback)\ \{\ m\_onProjectValidation\ =\ callback;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ setOnValidateBuildAvailable(ValidationCallback\ callback)\ \{\ m\_onBuildAvailable\ =\ callback;\ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ generateMenuBar(\textcolor{keyword}{const}\ std::string\&\ title)\ =\ 0;}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<MenuBar>\ create();}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00051\ \ \ \ \ ProjectChangedCallback\ m\_onProjectChanged;}
+\DoxyCodeLine{00052\ \ \ \ \ SceneLoadedCallback\ \ \ \ m\_onSceneLoaded;}
+\DoxyCodeLine{00053\ \ \ \ \ SceneSavedCallback\ \ \ \ \ m\_onSceneSaved;}
+\DoxyCodeLine{00054\ \ \ \ \ SceneCreatedCallback\ \ \ m\_onNewScene;}
+\DoxyCodeLine{00055\ \ \ \ \ ProjectClosedCallback\ \ m\_onProjectClosed;}
+\DoxyCodeLine{00056\ \ \ \ \ SceneClosedCallback\ \ \ \ m\_onSceneClosed;}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ NewEntityCallback\ \ \ \ m\_onNewEntity;}
+\DoxyCodeLine{00059\ \ \ \ \ AddComponentCallback\ m\_onAddComponent;}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ PreviewCallback\ m\_onPreview;}
+\DoxyCodeLine{00062\ \ \ \ \ BuildCallback\ m\_onBuild;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ ValidationCallback\ m\_onSceneValidation;}
+\DoxyCodeLine{00065\ \ \ \ \ ValidationCallback\ m\_onProjectValidation;}
+\DoxyCodeLine{00066\ \ \ \ \ ValidationCallback\ m\_onBuildAvailable;}
+\DoxyCodeLine{00067\ \};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

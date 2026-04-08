@@ -1,0 +1,50 @@
+\doxysection{Atlas::\+Input Class Reference}
+\hypertarget{class_atlas_1_1_input}{}\label{class_atlas_1_1_input}\index{Atlas::Input@{Atlas::Input}}
+Inheritance diagram for Atlas::\+Input:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_input}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_input_ab7bd2176650a3536b853c50e718488ea}\label{class_atlas_1_1_input_ab7bd2176650a3536b853c50e718488ea} 
+static bool {\bfseries is\+Key\+Pressed} (int keycode)
+\item 
+\Hypertarget{class_atlas_1_1_input_aac0642f75806c729cfad4400b71f6899}\label{class_atlas_1_1_input_aac0642f75806c729cfad4400b71f6899} 
+static bool {\bfseries is\+Mouse\+Button\+Pressed} (int button)
+\item 
+\Hypertarget{class_atlas_1_1_input_aa1f2a04f9b68e125cd5389716fece6b1}\label{class_atlas_1_1_input_aa1f2a04f9b68e125cd5389716fece6b1} 
+static std::\+pair$<$ float, float $>$ {\bfseries get\+Mouse\+Position} ()
+\item 
+\Hypertarget{class_atlas_1_1_input_ac9d5299c627ab9b19423b485e9677032}\label{class_atlas_1_1_input_ac9d5299c627ab9b19423b485e9677032} 
+static float {\bfseries get\+MouseX} ()
+\item 
+\Hypertarget{class_atlas_1_1_input_a7694765ee63c977d2f471c10ca800d86}\label{class_atlas_1_1_input_a7694765ee63c977d2f471c10ca800d86} 
+static float {\bfseries get\+MouseY} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_input_a99cb4c14b1809ee3439c56510decab07}\label{class_atlas_1_1_input_a99cb4c14b1809ee3439c56510decab07} 
+virtual bool {\bfseries is\+Key\+Pressed\+Impl} (int keycode)=0
+\item 
+\Hypertarget{class_atlas_1_1_input_aa94217f47f5e3cf12f04606b112b516d}\label{class_atlas_1_1_input_aa94217f47f5e3cf12f04606b112b516d} 
+virtual bool {\bfseries is\+Mouse\+Button\+Pressed\+Impl} (int button)=0
+\item 
+\Hypertarget{class_atlas_1_1_input_afd2d2ecb68ce956d39f2b7d30e569250}\label{class_atlas_1_1_input_afd2d2ecb68ce956d39f2b7d30e569250} 
+virtual std::\+pair$<$ float, float $>$ {\bfseries get\+Mouse\+Position\+Impl} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_input_a0ce588c2b2eaf4bf35f6198c072350f3}\label{class_atlas_1_1_input_a0ce588c2b2eaf4bf35f6198c072350f3} 
+virtual float {\bfseries get\+Mouse\+XImpl} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_input_a7943ae11374797a5378a00b6589d2532}\label{class_atlas_1_1_input_a7943ae11374797a5378a00b6589d2532} 
+virtual float {\bfseries get\+Mouse\+YImpl} ()=0
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Input.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSInput.\+cpp\end{DoxyCompactItemize}

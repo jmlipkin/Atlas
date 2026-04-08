@@ -1,0 +1,28 @@
+\doxysection{Im\+Gui\+System.\+h}
+\hypertarget{_im_gui_system_8h_source}{}\label{_im_gui_system_8h_source}\index{Atlas/src/Atlas/ImGui/ImGuiSystem.h@{Atlas/src/Atlas/ImGui/ImGuiSystem.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <imgui/imgui.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_im_gui_system}{ImGuiSystem}}\ \{}
+\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_atlas_1_1_im_gui_system}{\string~ImGuiSystem}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ initImGuiLayer()\ \ =\ 0;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ cleanImGuiLayer()\ =\ 0;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ rescale(\textcolor{keywordtype}{float}\ newScale)\ =\ 0;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<ImGuiSystem>\ create();}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ setupImGuiStyle(ImGuiStyle\&\ style);}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

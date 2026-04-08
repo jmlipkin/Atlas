@@ -1,0 +1,58 @@
+\doxysection{Mac\+OSWindow.\+h}
+\hypertarget{_mac_o_s_window_8h_source}{}\label{_mac_o_s_window_8h_source}\index{Atlas/src/Atlas/Platform/MacOS/MacOSWindow.h@{Atlas/src/Atlas/Platform/MacOS/MacOSWindow.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Window.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/GraphicsContext.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <GLFW/glfw3.h>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }MacOSWindow\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_window}{Window}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ MacOSWindow(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_atlas_1_1_window_properties}{WindowProperties}}\&\ props);}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~MacOSWindow();}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ onUpdate()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00017\ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ onMinimize()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ onRestore()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ getWidth()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_data.width;\ \}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ getHeight()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_data.height;\ \}}
+\DoxyCodeLine{00023\ \ \ \ \ glm::uvec2\ getResolution()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}*\ getNativeWindow()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_window;\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{inline}\ std::shared\_ptr<GraphicsContext>\ getGraphicsContext()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_data.context;\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Window\ attributes}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ setEventCallback(\textcolor{keyword}{const}\ EventCallbackFn\&\ callback)\textcolor{keyword}{\ override\ }\{\ m\_data.eventCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ setVSync(\textcolor{keywordtype}{bool}\ enabled)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVSync()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ init(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_atlas_1_1_window_properties}{WindowProperties}}\&\ props);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ shutdown();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00038\ \ \ \ \ GLFWwindow*\ m\_window;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{struct\ }WindowData\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ std::string\ title;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ width,\ height;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ std::shared\_ptr<GraphicsContext>\ context;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ VSync;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ EventCallbackFn\ eventCallback;}
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ WindowData\ m\_data;}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

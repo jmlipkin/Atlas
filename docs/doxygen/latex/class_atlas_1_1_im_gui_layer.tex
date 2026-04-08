@@ -1,0 +1,132 @@
+\doxysection{Atlas::\+Im\+Gui\+Layer Class Reference}
+\hypertarget{class_atlas_1_1_im_gui_layer}{}\label{class_atlas_1_1_im_gui_layer}\index{Atlas::ImGuiLayer@{Atlas::ImGuiLayer}}
+Inheritance diagram for Atlas::\+Im\+Gui\+Layer:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_im_gui_layer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_im_gui_layer_a06b226f73803b12913214e5a1a26d2b6}{on\+Update}} (\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Delta\+Time}} dt) override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_im_gui_layer_a53829b325435b877c54eabc52920c4a6}{on\+Attach}} () final
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_im_gui_layer_a785ac19d074ca7c96af248362b1a489a}{on\+Detach}} () final
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_im_gui_layer_a46368a61dc5006cc71d4a656eefc7f0e}{on\+Event}} (\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}} \&event) override
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_a34b707ae954d69e42137a01771aea729}\label{class_atlas_1_1_im_gui_layer_a34b707ae954d69e42137a01771aea729} 
+virtual void {\bfseries begin} ()
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_a2c0dd2d936d005e458593571e465968a}\label{class_atlas_1_1_im_gui_layer_a2c0dd2d936d005e458593571e465968a} 
+virtual void {\bfseries end} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Layer} (const std::\+string \&name)
+\item 
+virtual void {\bfseries on\+Im\+Gui\+Render} ()
+\item 
+const std::\+string \& {\bfseries get\+Name} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_a5cf231c283c8dfe90b0e196aa721bc7d}\label{class_atlas_1_1_im_gui_layer_a5cf231c283c8dfe90b0e196aa721bc7d} 
+bool {\bfseries on\+Mouse\+Button\+Pressed\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_mouse_button_pressed_event}{Mouse\+Button\+Pressed\+Event}} \&e)
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_a71276668a4d1d0a1c72a37e7f4b4b760}\label{class_atlas_1_1_im_gui_layer_a71276668a4d1d0a1c72a37e7f4b4b760} 
+bool {\bfseries on\+Mouse\+Button\+Released\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_mouse_button_released_event}{Mouse\+Button\+Released\+Event}} \&e)
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_a298adfb03446ae944b75e5e5d7c3e79d}\label{class_atlas_1_1_im_gui_layer_a298adfb03446ae944b75e5e5d7c3e79d} 
+bool {\bfseries on\+Mouse\+Moved\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_mouse_moved_event}{Mouse\+Moved\+Event}} \&e)
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_af45dcb9077edd195814c4dedc518f488}\label{class_atlas_1_1_im_gui_layer_af45dcb9077edd195814c4dedc518f488} 
+bool {\bfseries on\+Mouse\+Scrolled\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_mouse_scrolled_event}{Mouse\+Scrolled\+Event}} \&e)
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_a78638a473eb9cac2550432543697bff9}\label{class_atlas_1_1_im_gui_layer_a78638a473eb9cac2550432543697bff9} 
+bool {\bfseries on\+Key\+Pressed\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_key_pressed_event}{Key\+Pressed\+Event}} \&e)
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_aa38b8f79da71b9ad6e5ddc97f4b82e3c}\label{class_atlas_1_1_im_gui_layer_aa38b8f79da71b9ad6e5ddc97f4b82e3c} 
+bool {\bfseries on\+Key\+Released\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_key_released_event}{Key\+Released\+Event}} \&e)
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_aad481d9b12b6a8050d8bcfca280736bc}\label{class_atlas_1_1_im_gui_layer_aad481d9b12b6a8050d8bcfca280736bc} 
+bool {\bfseries on\+Key\+Typed\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_key_typed_event}{Key\+Typed\+Event}} \&e)
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_af1d1d14cde29af3bcd67edbb149e1bb6}\label{class_atlas_1_1_im_gui_layer_af1d1d14cde29af3bcd67edbb149e1bb6} 
+bool {\bfseries on\+Window\+Resize\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_window_resize_event}{Window\+Resize\+Event}} \&e)
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_acce6670a2f94f3db8cec6752148c81ac}\label{class_atlas_1_1_im_gui_layer_acce6670a2f94f3db8cec6752148c81ac} 
+bool {\bfseries on\+Display\+Changed\+Event} (\doxymbox{\hyperlink{class_atlas_1_1_display_changed_event}{Display\+Changed\+Event}} \&e)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_a1093b2f3abdc2f2832f565485940f1d8}\label{class_atlas_1_1_im_gui_layer_a1093b2f3abdc2f2832f565485940f1d8} 
+float {\bfseries m\+\_\+time} = 0.\+0f
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string {\bfseries m\+\_\+name}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_im_gui_layer_a649302e39db02d07f689ae300053e086}\label{class_atlas_1_1_im_gui_layer_a649302e39db02d07f689ae300053e086} 
+static \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{Graphics\+Context}} \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+context}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_im_gui_layer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_im_gui_layer_a53829b325435b877c54eabc52920c4a6}\index{Atlas::ImGuiLayer@{Atlas::ImGuiLayer}!onAttach@{onAttach}}
+\index{onAttach@{onAttach}!Atlas::ImGuiLayer@{Atlas::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{onAttach()}{onAttach()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_im_gui_layer_a53829b325435b877c54eabc52920c4a6} 
+void Atlas::\+\+Im\+Gui\+Layer::\+on\+Attach (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}.
+
+\Hypertarget{class_atlas_1_1_im_gui_layer_a785ac19d074ca7c96af248362b1a489a}\index{Atlas::ImGuiLayer@{Atlas::ImGuiLayer}!onDetach@{onDetach}}
+\index{onDetach@{onDetach}!Atlas::ImGuiLayer@{Atlas::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{onDetach()}{onDetach()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_im_gui_layer_a785ac19d074ca7c96af248362b1a489a} 
+void Atlas::\+\+Im\+Gui\+Layer::\+on\+Detach (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}.
+
+\Hypertarget{class_atlas_1_1_im_gui_layer_a46368a61dc5006cc71d4a656eefc7f0e}\index{Atlas::ImGuiLayer@{Atlas::ImGuiLayer}!onEvent@{onEvent}}
+\index{onEvent@{onEvent}!Atlas::ImGuiLayer@{Atlas::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{onEvent()}{onEvent()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_im_gui_layer_a46368a61dc5006cc71d4a656eefc7f0e} 
+void Atlas::\+\+Im\+Gui\+Layer::\+on\+Event (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}.
+
+\Hypertarget{class_atlas_1_1_im_gui_layer_a06b226f73803b12913214e5a1a26d2b6}\index{Atlas::ImGuiLayer@{Atlas::ImGuiLayer}!onUpdate@{onUpdate}}
+\index{onUpdate@{onUpdate}!Atlas::ImGuiLayer@{Atlas::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{onUpdate()}{onUpdate()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_im_gui_layer_a06b226f73803b12913214e5a1a26d2b6} 
+void Atlas::\+\+Im\+Gui\+Layer::\+on\+Update (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{Delta\+Time}}}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_layer}{Atlas::\+\+Layer}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Im\+Gui/\+Im\+Gui\+Layer.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Im\+Gui/\+Im\+Gui\+Layer.\+cpp\end{DoxyCompactItemize}

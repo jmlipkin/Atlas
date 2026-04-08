@@ -1,0 +1,42 @@
+\doxysection{Time.\+h}
+\hypertarget{_time_8h_source}{}\label{_time_8h_source}\index{Atlas/src/Atlas/Core/Time.h@{Atlas/src/Atlas/Core/Time.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{typedef}\ std::chrono::steady\_clock\ Clock;}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ TimePoint\ is\ defined\ in\ seconds}}
+\DoxyCodeLine{00009\ \textcolor{keyword}{typedef}\ std::chrono::time\_point<std::chrono::steady\_clock,\ std::chrono::duration<double>>\ TimePoint;}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Duration\ is\ defined\ in\ seconds}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{typedef}\ std::chrono::duration<double>\ Duration;}
+\DoxyCodeLine{00012\ \textcolor{keyword}{typedef}\ std::chrono::duration<double,\ std::micro>\ DurationMicro;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }DeltaTime\ \{}
+\DoxyCodeLine{00015\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ DeltaTime()\ :\ m\_lastTimePoint(Clock::now())\ \{\}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ updateDelta()\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ TimePoint\ time\ =\ Clock::now();}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ m\_time\ =\ Duration(time\ -\/\ m\_lastTimePoint).count();}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ m\_lastTimePoint\ =\ time;}
+\DoxyCodeLine{00022\ \ \ \ \ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{operator}\ double()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_time;\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{double}\ getSeconds()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_time;\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{double}\ getMilliseconds()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_time\ *\ 1000;\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{double}\ getMicroseconds()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_time\ *\ 1000000;\ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{double}\ m\_time\{0.0f\};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ TimePoint\ m\_lastTimePoint;}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

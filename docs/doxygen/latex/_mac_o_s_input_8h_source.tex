@@ -1,0 +1,21 @@
+\doxysection{Mac\+OSInput.\+h}
+\hypertarget{_mac_o_s_input_8h_source}{}\label{_mac_o_s_input_8h_source}\index{Atlas/src/Atlas/Platform/MacOS/MacOSInput.h@{Atlas/src/Atlas/Platform/MacOS/MacOSInput.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <Atlas/Core/Input.h>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_input}{MacOSInput}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_input}{Input}}\ \{}
+\DoxyCodeLine{00007\ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isKeyPressedImpl(\textcolor{keywordtype}{int}\ keycode)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isMouseButtonPressedImpl(\textcolor{keywordtype}{int}\ button)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{virtual}\ std::pair<float,\ float>\ getMousePositionImpl()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{float}\ getMouseXImpl()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{float}\ getMouseYImpl()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

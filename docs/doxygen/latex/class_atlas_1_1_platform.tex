@@ -1,0 +1,83 @@
+\doxysection{Atlas::\+Platform Class Reference}
+\hypertarget{class_atlas_1_1_platform}{}\label{class_atlas_1_1_platform}\index{Atlas::Platform@{Atlas::Platform}}
+Inheritance diagram for Atlas::\+Platform:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_platform}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_platform_ae89288e27500f519665a94e27024aed9}\label{class_atlas_1_1_platform_ae89288e27500f519665a94e27024aed9} 
+using {\bfseries Build\+Output\+Callback} = std::\+function$<$void(const std::\+string\&)$>$
+\item 
+\Hypertarget{class_atlas_1_1_platform_acda7be2c83728c416746f1f0241765a3}\label{class_atlas_1_1_platform_acda7be2c83728c416746f1f0241765a3} 
+using {\bfseries Build\+Complete\+Callback} = std::\+function$<$void(bool)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_platform_aa3dd304b5e0b3f85c97f2249e089796e}\label{class_atlas_1_1_platform_aa3dd304b5e0b3f85c97f2249e089796e} 
+static std::\+string {\bfseries get\+Resources\+Path} ()
+\item 
+\Hypertarget{class_atlas_1_1_platform_a031d459a7e357680934a975c6f01ef7c}\label{class_atlas_1_1_platform_a031d459a7e357680934a975c6f01ef7c} 
+static std::\+string {\bfseries get\+Executable\+Path} ()
+\item 
+\Hypertarget{class_atlas_1_1_platform_ae3db4ec9d95012e1d1096bb2302f0592}\label{class_atlas_1_1_platform_ae3db4ec9d95012e1d1096bb2302f0592} 
+static std::\+string {\bfseries get\+App\+Support\+Path} ()
+\item 
+\Hypertarget{class_atlas_1_1_platform_abeae18202284c66bbeb853c7da3c7acd}\label{class_atlas_1_1_platform_abeae18202284c66bbeb853c7da3c7acd} 
+static std::\+string {\bfseries open\+File\+Dialog} (const std::\+string \&filter)
+\item 
+\Hypertarget{class_atlas_1_1_platform_adec929d1e0c6c8e37eb581775dcb71d8}\label{class_atlas_1_1_platform_adec929d1e0c6c8e37eb581775dcb71d8} 
+static std::\+string {\bfseries save\+File\+Dialog} (const std::\+string \&filter, const std::\+string \&default\+Dir="{}"{})
+\item 
+\Hypertarget{class_atlas_1_1_platform_a01eb7816b08f0bf0f8b1b589a61e3fb7}\label{class_atlas_1_1_platform_a01eb7816b08f0bf0f8b1b589a61e3fb7} 
+static std::\+vector$<$ std::\+string $>$ {\bfseries get\+File\+List} (const std::\+string \&directory, const std::\+string \&filter)
+\item 
+\Hypertarget{class_atlas_1_1_platform_a05176f3ac60cc7f6f703018f83fdd8cc}\label{class_atlas_1_1_platform_a05176f3ac60cc7f6f703018f83fdd8cc} 
+static int {\bfseries show\+Confirm\+Dialog} (const std::\+string \&message, const std::\+string \&confirm, const std::\+string \&deny, const std::\+string \&cancel)
+\item 
+\Hypertarget{class_atlas_1_1_platform_ac0d2efcd70a9f49bfc3a5e1f698ee23b}\label{class_atlas_1_1_platform_ac0d2efcd70a9f49bfc3a5e1f698ee23b} 
+static void {\bfseries build\+Script\+Library} (const std::\+string \&build\+Dir, const std::\+string \&target, Build\+Output\+Callback on\+Output, Build\+Complete\+Callback on\+Complete)
+\item 
+\Hypertarget{class_atlas_1_1_platform_ac2e0fe4864ed5e4ba178021a1007f765}\label{class_atlas_1_1_platform_ac2e0fe4864ed5e4ba178021a1007f765} 
+static void {\bfseries open\+File} (const std::\+string \&filepath)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_platform_abd03f79068b1a9a889c5815cd717c25b}\label{class_atlas_1_1_platform_abd03f79068b1a9a889c5815cd717c25b} 
+virtual std::\+string {\bfseries get\+Resources\+Path\+Impl} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_platform_a046438bda1c1105f1b538bec9d7619a5}\label{class_atlas_1_1_platform_a046438bda1c1105f1b538bec9d7619a5} 
+virtual std::\+string {\bfseries get\+Executable\+Path\+Impl} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_platform_a9dfd1db3c981915057c97462899fc771}\label{class_atlas_1_1_platform_a9dfd1db3c981915057c97462899fc771} 
+virtual std::\+string {\bfseries get\+App\+Support\+Path\+Impl} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_platform_a2a7d57e38b88e22458b32f30997dde6c}\label{class_atlas_1_1_platform_a2a7d57e38b88e22458b32f30997dde6c} 
+virtual std::\+string {\bfseries open\+File\+Dialog\+Impl} (const std::\+string \&filter)=0
+\item 
+\Hypertarget{class_atlas_1_1_platform_aa94c6dbe0507914a4c76f3b2fe7616de}\label{class_atlas_1_1_platform_aa94c6dbe0507914a4c76f3b2fe7616de} 
+virtual std::\+string {\bfseries save\+File\+Dialog\+Impl} (const std::\+string \&filter, const std::\+string \&default\+Dir)=0
+\item 
+\Hypertarget{class_atlas_1_1_platform_adb9b7fa2ad15f3545291d497f033f76b}\label{class_atlas_1_1_platform_adb9b7fa2ad15f3545291d497f033f76b} 
+virtual std::\+vector$<$ std::\+string $>$ {\bfseries get\+File\+List\+Impl} (const std::\+string \&directory, const std::\+string \&filter)=0
+\item 
+\Hypertarget{class_atlas_1_1_platform_af23bfa04fd8b6845f8fc3f85bbc73db1}\label{class_atlas_1_1_platform_af23bfa04fd8b6845f8fc3f85bbc73db1} 
+virtual int {\bfseries show\+Confirm\+Dialog\+Impl} (const std::\+string \&message, const std::\+string \&confirm, const std::\+string \&deny, const std::\+string \&cancel)=0
+\item 
+\Hypertarget{class_atlas_1_1_platform_a0b2a4e9fc63006fe9f6aa17cd4ec66d9}\label{class_atlas_1_1_platform_a0b2a4e9fc63006fe9f6aa17cd4ec66d9} 
+virtual void {\bfseries build\+Script\+Library\+Impl} (const std::\+string \&build\+Dir, const std::\+string \&target, Build\+Output\+Callback on\+Output, Build\+Complete\+Callback on\+Complete)=0
+\item 
+\Hypertarget{class_atlas_1_1_platform_a7fea7f9e5d55171c9580a859691b0474}\label{class_atlas_1_1_platform_a7fea7f9e5d55171c9580a859691b0474} 
+virtual void {\bfseries open\+File\+Impl} (const std::\+string \&filepath)=0
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Platform.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSPlatform.\+mm\end{DoxyCompactItemize}

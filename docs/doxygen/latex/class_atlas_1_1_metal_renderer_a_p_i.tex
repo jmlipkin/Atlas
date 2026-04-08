@@ -1,0 +1,196 @@
+\doxysection{Atlas::\+Metal\+Renderer\+API Class Reference}
+\hypertarget{class_atlas_1_1_metal_renderer_a_p_i}{}\label{class_atlas_1_1_metal_renderer_a_p_i}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+Inheritance diagram for Atlas::\+Metal\+Renderer\+API:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_metal_renderer_a_p_i}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_af2d114b247e17418e1e75f637c29ef8a}\label{class_atlas_1_1_metal_renderer_a_p_i_af2d114b247e17418e1e75f637c29ef8a} 
+{\bfseries Metal\+Renderer\+API} (\doxymbox{\hyperlink{interface_metal_context}{Metal\+Context}} \&context)
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a29bf18fb76c18590bf5b6a42cf032960}{set\+Clear\+Color}} (const glm::\+vec4 \&color) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_af96120fbc4e2ee0526de36b72564e9b0}{clear}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a9ac0a88a01c1ec20cbbc098ede6b7949}{begin\+Frame}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a73ab8d746956a0c958cb4bbaee4bd6c3}{end\+Frame}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a7948510f656fe61c904d63bbcec5aeee}{begin\+Pass}} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$ framebuffer) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a4ae9bcc9483a54b6700b432a73bc6294}{end\+Pass}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_abfba0964edc4ce7cb5b51abd0324d1b3}{begin\+Im\+Gui}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a10a1fb9f0d27c0982737b3b027c3118f}{draw\+Im\+Gui}} () override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_aeea7c73acc46d60b5c155d1d4b4869f7}{bind\+Pipeline}} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$ pipeline, const \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{Uniform\+Buffer}} \&u\+Buffer) override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a3a1367deb07446319825a3b006983c98}{bind\+Texture}} (const \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} \&texture, uint32\+\_\+t index) override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_acdefbbd9342c9b65966a822056bcd065}{bind\+Vertex\+Buffer}} (const \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{Vertex\+Buffer}} \&buffer, uint32\+\_\+t offset, int index) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a0f08d1f092543728f9ec4eb2ea6f2350}{draw\+Indexed}} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&index\+Buffer) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_renderer_a_p_i_a1eff89c94d155e2a1812505b9abd3bea}{draw\+Indexed}} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&index\+Buffer, uint32\+\_\+t count) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a627c3147c01f97b74a9910317503ede0}\label{class_atlas_1_1_renderer_a_p_i_a627c3147c01f97b74a9910317503ede0} 
+enum class {\bfseries API} \{ {\bfseries None} = 0
+, {\bfseries Open\+GL} = 1
+, {\bfseries Metal} = 2
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}}
+\begin{DoxyCompactItemize}
+\item 
+static API {\bfseries get\+API} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a9ac0a88a01c1ec20cbbc098ede6b7949}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!beginFrame@{beginFrame}}
+\index{beginFrame@{beginFrame}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{beginFrame()}{beginFrame()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a9ac0a88a01c1ec20cbbc098ede6b7949} 
+void Atlas::\+\+Metal\+Renderer\+API::\+begin\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_abfba0964edc4ce7cb5b51abd0324d1b3}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!beginImGui@{beginImGui}}
+\index{beginImGui@{beginImGui}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{beginImGui()}{beginImGui()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_abfba0964edc4ce7cb5b51abd0324d1b3} 
+void Atlas::\+\+Metal\+Renderer\+API::\+begin\+Im\+Gui (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a7948510f656fe61c904d63bbcec5aeee}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!beginPass@{beginPass}}
+\index{beginPass@{beginPass}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{beginPass()}{beginPass()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a7948510f656fe61c904d63bbcec5aeee} 
+void Atlas::\+\+Metal\+Renderer\+API::\+begin\+Pass (\begin{DoxyParamCaption}\item[{std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$}]{framebuffer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_aeea7c73acc46d60b5c155d1d4b4869f7}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!bindPipeline@{bindPipeline}}
+\index{bindPipeline@{bindPipeline}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{bindPipeline()}{bindPipeline()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_aeea7c73acc46d60b5c155d1d4b4869f7} 
+void Atlas::\+\+Metal\+Renderer\+API::\+bind\+Pipeline (\begin{DoxyParamCaption}\item[{std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$}]{pipeline}{, }\item[{const \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{Uniform\+Buffer}} \&}]{u\+Buffer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a3a1367deb07446319825a3b006983c98}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!bindTexture@{bindTexture}}
+\index{bindTexture@{bindTexture}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{bindTexture()}{bindTexture()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a3a1367deb07446319825a3b006983c98} 
+void Atlas::\+\+Metal\+Renderer\+API::\+bind\+Texture (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} \&}]{texture}{, }\item[{uint32\+\_\+t}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_acdefbbd9342c9b65966a822056bcd065}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!bindVertexBuffer@{bindVertexBuffer}}
+\index{bindVertexBuffer@{bindVertexBuffer}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{bindVertexBuffer()}{bindVertexBuffer()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_acdefbbd9342c9b65966a822056bcd065} 
+void Atlas::\+\+Metal\+Renderer\+API::\+bind\+Vertex\+Buffer (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{Vertex\+Buffer}} \&}]{buffer}{, }\item[{uint32\+\_\+t}]{offset}{, }\item[{int}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_af96120fbc4e2ee0526de36b72564e9b0}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!clear@{clear}}
+\index{clear@{clear}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_af96120fbc4e2ee0526de36b72564e9b0} 
+void Atlas::\+\+Metal\+Renderer\+API::\+clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a10a1fb9f0d27c0982737b3b027c3118f}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!drawImGui@{drawImGui}}
+\index{drawImGui@{drawImGui}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{drawImGui()}{drawImGui()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a10a1fb9f0d27c0982737b3b027c3118f} 
+void Atlas::\+\+Metal\+Renderer\+API::\+draw\+Im\+Gui (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a0f08d1f092543728f9ec4eb2ea6f2350}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!drawIndexed@{drawIndexed}}
+\index{drawIndexed@{drawIndexed}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{drawIndexed()}{drawIndexed()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a0f08d1f092543728f9ec4eb2ea6f2350} 
+void Atlas::\+\+Metal\+Renderer\+API::\+draw\+Indexed (\begin{DoxyParamCaption}\item[{const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&}]{index\+Buffer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a1eff89c94d155e2a1812505b9abd3bea}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!drawIndexed@{drawIndexed}}
+\index{drawIndexed@{drawIndexed}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{drawIndexed()}{drawIndexed()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a1eff89c94d155e2a1812505b9abd3bea} 
+void Atlas::\+\+Metal\+Renderer\+API::\+draw\+Indexed (\begin{DoxyParamCaption}\item[{const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&}]{index\+Buffer}{, }\item[{uint32\+\_\+t}]{count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a73ab8d746956a0c958cb4bbaee4bd6c3}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!endFrame@{endFrame}}
+\index{endFrame@{endFrame}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{endFrame()}{endFrame()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a73ab8d746956a0c958cb4bbaee4bd6c3} 
+void Atlas::\+\+Metal\+Renderer\+API::\+end\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a4ae9bcc9483a54b6700b432a73bc6294}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!endPass@{endPass}}
+\index{endPass@{endPass}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{endPass()}{endPass()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a4ae9bcc9483a54b6700b432a73bc6294} 
+void Atlas::\+\+Metal\+Renderer\+API::\+end\+Pass (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_metal_renderer_a_p_i_a29bf18fb76c18590bf5b6a42cf032960}\index{Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}!setClearColor@{setClearColor}}
+\index{setClearColor@{setClearColor}!Atlas::MetalRendererAPI@{Atlas::MetalRendererAPI}}
+\doxysubsubsection{\texorpdfstring{setClearColor()}{setClearColor()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_renderer_a_p_i_a29bf18fb76c18590bf5b6a42cf032960} 
+void Atlas::\+\+Metal\+Renderer\+API::\+set\+Clear\+Color (\begin{DoxyParamCaption}\item[{const glm::\+vec4 \&}]{color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Renderer\+API.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Renderer\+API.\+cpp\end{DoxyCompactItemize}

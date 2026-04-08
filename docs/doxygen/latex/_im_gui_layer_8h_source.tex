@@ -1,0 +1,54 @@
+\doxysection{Im\+Gui\+Layer.\+h}
+\hypertarget{_im_gui_layer_8h_source}{}\label{_im_gui_layer_8h_source}\index{Atlas/src/Atlas/ImGui/ImGuiLayer.h@{Atlas/src/Atlas/ImGui/ImGuiLayer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <Atlas/Events/ApplicationEvent.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <Atlas/Events/KeyEvent.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <Atlas/Events/MouseEvent.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <Atlas/Core/Layer.h>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <Atlas/Renderer/GraphicsContext.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Atlas/ImGui/ImGuiSystem.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Renderer.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }ImGuiLayer\ :\ \textcolor{keyword}{public}\ Layer\ \{}
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ ImGuiLayer();}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~ImGuiLayer()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ onUpdate(\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{DeltaTime}}\ dt)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ onAttach()\ \textcolor{keyword}{final}\ \{\ m\_system-\/>initImGuiLayer();\ \}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ onDetach()\ \textcolor{keyword}{final}\ \{\ m\_system-\/>cleanImGuiLayer();\ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onEvent(\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\&\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ begin()\ \{\ Renderer::beginImGui();\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ end()\ \{\ Renderer::submitImGui();\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ onMouseButtonPressedEvent(\doxymbox{\hyperlink{class_atlas_1_1_mouse_button_pressed_event}{MouseButtonPressedEvent}}\&\ e);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ onMouseButtonReleasedEvent(\doxymbox{\hyperlink{class_atlas_1_1_mouse_button_released_event}{MouseButtonReleasedEvent}}\&\ e);}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ onMouseMovedEvent(\doxymbox{\hyperlink{class_atlas_1_1_mouse_moved_event}{MouseMovedEvent}}\&\ e);}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ onMouseScrolledEvent(\doxymbox{\hyperlink{class_atlas_1_1_mouse_scrolled_event}{MouseScrolledEvent}}\&\ e);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ onKeyPressedEvent(\doxymbox{\hyperlink{class_atlas_1_1_key_pressed_event}{KeyPressedEvent}}\&\ e);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ onKeyReleasedEvent(\doxymbox{\hyperlink{class_atlas_1_1_key_released_event}{KeyReleasedEvent}}\&\ e);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ onKeyTypedEvent(\doxymbox{\hyperlink{class_atlas_1_1_key_typed_event}{KeyTypedEvent}}\&\ e);}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ onWindowResizeEvent(\doxymbox{\hyperlink{class_atlas_1_1_window_resize_event}{WindowResizeEvent}}\&\ e);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{bool}\ onDisplayChangedEvent(\doxymbox{\hyperlink{class_atlas_1_1_display_changed_event}{DisplayChangedEvent}}\&\ e);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{GraphicsContext}}*\ m\_context;}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_time\ =\ 0.0f;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00045\ \ \ \ \ std::unique\_ptr<ImGuiSystem>\ m\_system;}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

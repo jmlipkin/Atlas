@@ -1,0 +1,27 @@
+\doxysection{JSONSerializer.\+h}
+\hypertarget{_j_s_o_n_serializer_8h_source}{}\label{_j_s_o_n_serializer_8h_source}\index{Atlas/src/Atlas/Project/JSONSerializer.h@{Atlas/src/Atlas/Project/JSONSerializer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Project/Serializer.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_j_s_o_n_serializer}{JSONSerializer}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_serializer_a_p_i}{SerializerAPI}}\ \{}
+\DoxyCodeLine{00008\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ serializeProject(\textcolor{keyword}{const}\ std::shared\_ptr<Project>\&\ project)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ deserializeProject(std::shared\_ptr<Project>\ project)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ serializeScene(\textcolor{keyword}{const}\ std::shared\_ptr<Scene>\&\ scene)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ deserializeScene(std::shared\_ptr<Scene>\ scene)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ serializeTileset(\textcolor{keyword}{const}\ std::shared\_ptr<Tileset>\&\ tileset)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ deserializeTileset(std::shared\_ptr<Tileset>\ tileset)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ loadScriptManifest(std::shared\_ptr<Project>\ project)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

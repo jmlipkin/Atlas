@@ -1,0 +1,216 @@
+\doxysection{Atlas::\+Metal\+Framebuffer Class Reference}
+\hypertarget{class_atlas_1_1_metal_framebuffer}{}\label{class_atlas_1_1_metal_framebuffer}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+Inheritance diagram for Atlas::\+Metal\+Framebuffer:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_metal_framebuffer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a45110bcd5f01aca9bacda44dfe806294}\label{class_atlas_1_1_metal_framebuffer_a45110bcd5f01aca9bacda44dfe806294} 
+{\bfseries Metal\+Framebuffer} (const \doxymbox{\hyperlink{struct_atlas_1_1_framebuffer_specifications}{Framebuffer\+Specifications}} \&specs)
+\item 
+virtual void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_a65a305b51f8365a1ab257d2271bff850}{get\+Pass\+Descriptor}} (void \texorpdfstring{$\ast$}{*}drawable) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_a4f9f6ac8b765ffba8844822a84876eb0}{on\+Resize}} (uint32\+\_\+t width, uint32\+\_\+t height) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_af43b0dc551e81c0daa34c15a7eab115f}{invalidate}} () override
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_a50e824107e4cd749adde4616709d35d4}{get\+Width}} () const override
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_ac7fbfb96375c63ff14be1a4ac4ef9ab1}{get\+Height}} () const override
+\item 
+virtual bool \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_aa6e98a8da912e6c4f303f7d5b1fccfb2}{is\+Swap\+Chain\+Target}} () const override
+\item 
+virtual bool \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_a72625b8282a79615c7bfa0b3bab518ed}{is\+Depth\+Enabled}} () const override
+\item 
+virtual Framebuffer\+Pixel\+Format \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_a3da69ae09db22764f5ae65e332c92d40}{get\+Depth\+Attachment\+Pixel\+Format}} () const override
+\item 
+virtual Framebuffer\+Pixel\+Format \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_a3dbc33815a0a860acb919a06df9cacfc}{get\+Color\+Attachment\+Pixel\+Format}} (int index) const override
+\item 
+virtual int \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_a95c26d7de2f176567b0ed52af781608a}{get\+Raster\+Sample\+Count}} () const override
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a1924b7abc1256e8821206413e8385ab8}\label{class_atlas_1_1_metal_framebuffer_a1924b7abc1256e8821206413e8385ab8} 
+std::\+vector$<$ MTL::\+\+Texture \texorpdfstring{$\ast$}{*} $>$ {\bfseries get\+Color\+Textures} ()
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a9c030c41199b1ecdf71a989e560cdb69}\label{class_atlas_1_1_metal_framebuffer_a9c030c41199b1ecdf71a989e560cdb69} 
+std::\+vector$<$ MTL::\+\+Texture \texorpdfstring{$\ast$}{*} $>$ {\bfseries get\+MSAATextures} ()
+\item 
+virtual void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_a36b1e17c2d6606c135e8df43f455c4a5}{get\+Color\+Texture}} (int index) override
+\item 
+virtual void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_adfe5ba6385362328c96aa4bf459375ac}{get\+MSAATexture}} (int index) override
+\item 
+virtual void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_atlas_1_1_metal_framebuffer_af56a3eaa0f8b5a1856b344bf275c6378}{get\+Depth\+Texture}} () override
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a7f590a3ed184dc0e0afb51e0237128ad}\label{class_atlas_1_1_metal_framebuffer_a7f590a3ed184dc0e0afb51e0237128ad} 
+std::\+vector$<$ MTL::\+\+Texture\+Descriptor \texorpdfstring{$\ast$}{*} $>$ {\bfseries get\+Color\+Texture\+Descriptors} ()
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_af23ff27fbe14fad4033ff30290e06f68}\label{class_atlas_1_1_metal_framebuffer_af23ff27fbe14fad4033ff30290e06f68} 
+std::\+vector$<$ MTL::\+\+Texture\+Descriptor \texorpdfstring{$\ast$}{*} $>$ {\bfseries get\+MSAATexture\+Descriptors} ()
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_aa57c8d1232c427db6a3a65d8d9f3dc38}\label{class_atlas_1_1_metal_framebuffer_aa57c8d1232c427db6a3a65d8d9f3dc38} 
+MTL::\+\+Texture\+Descriptor \texorpdfstring{$\ast$}{*} {\bfseries get\+Color\+Texture\+Descriptor} (int index)
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_aba2a4c6c439e4be9180d46f7cc8b2d7f}\label{class_atlas_1_1_metal_framebuffer_aba2a4c6c439e4be9180d46f7cc8b2d7f} 
+MTL::\+\+Texture\+Descriptor \texorpdfstring{$\ast$}{*} {\bfseries get\+MSAATexture\+Descriptor} (int index)
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_ac5e5fd01bcc514504f3b34c34c30de78}\label{class_atlas_1_1_metal_framebuffer_ac5e5fd01bcc514504f3b34c34c30de78} 
+MTL::\+\+Texture\+Descriptor \texorpdfstring{$\ast$}{*} {\bfseries get\+Depth\+Texture\+Descriptor} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a5a154bd2f7d3d188d8c0ebf992935009}\label{class_atlas_1_1_metal_framebuffer_a5a154bd2f7d3d188d8c0ebf992935009} 
+static MTL::\+\+Pixel\+Format {\bfseries to\+MTLPixel\+Format} (Framebuffer\+Pixel\+Format fb\+Format)
+\item 
+\Hypertarget{class_atlas_1_1_metal_framebuffer_aeff831018ab180b44ed6c0fc15ef3f46}\label{class_atlas_1_1_metal_framebuffer_aeff831018ab180b44ed6c0fc15ef3f46} 
+static Framebuffer\+Pixel\+Format {\bfseries to\+Atlas\+Pixel\+Format} (MTL::\+\+Pixel\+Format fb\+Format)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$ {\bfseries create} (const \doxymbox{\hyperlink{struct_atlas_1_1_framebuffer_specifications}{Framebuffer\+Specifications}} \&specs)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_metal_framebuffer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a3dbc33815a0a860acb919a06df9cacfc}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getColorAttachmentPixelFormat@{getColorAttachmentPixelFormat}}
+\index{getColorAttachmentPixelFormat@{getColorAttachmentPixelFormat}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getColorAttachmentPixelFormat()}{getColorAttachmentPixelFormat()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_a3dbc33815a0a860acb919a06df9cacfc} 
+virtual Framebuffer\+Pixel\+Format Atlas::\+\+Metal\+Framebuffer::\+get\+Color\+Attachment\+Pixel\+Format (\begin{DoxyParamCaption}\item[{int}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a36b1e17c2d6606c135e8df43f455c4a5}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getColorTexture@{getColorTexture}}
+\index{getColorTexture@{getColorTexture}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getColorTexture()}{getColorTexture()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_a36b1e17c2d6606c135e8df43f455c4a5} 
+virtual void \texorpdfstring{$\ast$}{*} Atlas::\+\+Metal\+Framebuffer::\+get\+Color\+Texture (\begin{DoxyParamCaption}\item[{int}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a3da69ae09db22764f5ae65e332c92d40}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getDepthAttachmentPixelFormat@{getDepthAttachmentPixelFormat}}
+\index{getDepthAttachmentPixelFormat@{getDepthAttachmentPixelFormat}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getDepthAttachmentPixelFormat()}{getDepthAttachmentPixelFormat()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_a3da69ae09db22764f5ae65e332c92d40} 
+virtual Framebuffer\+Pixel\+Format Atlas::\+\+Metal\+Framebuffer::\+get\+Depth\+Attachment\+Pixel\+Format (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_af56a3eaa0f8b5a1856b344bf275c6378}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getDepthTexture@{getDepthTexture}}
+\index{getDepthTexture@{getDepthTexture}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getDepthTexture()}{getDepthTexture()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_af56a3eaa0f8b5a1856b344bf275c6378} 
+virtual void \texorpdfstring{$\ast$}{*} Atlas::\+\+Metal\+Framebuffer::\+get\+Depth\+Texture (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_ac7fbfb96375c63ff14be1a4ac4ef9ab1}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_ac7fbfb96375c63ff14be1a4ac4ef9ab1} 
+virtual uint32\+\_\+t Atlas::\+\+Metal\+Framebuffer::\+get\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_adfe5ba6385362328c96aa4bf459375ac}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getMSAATexture@{getMSAATexture}}
+\index{getMSAATexture@{getMSAATexture}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getMSAATexture()}{getMSAATexture()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_adfe5ba6385362328c96aa4bf459375ac} 
+virtual void \texorpdfstring{$\ast$}{*} Atlas::\+\+Metal\+Framebuffer::\+get\+MSAATexture (\begin{DoxyParamCaption}\item[{int}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a65a305b51f8365a1ab257d2271bff850}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getPassDescriptor@{getPassDescriptor}}
+\index{getPassDescriptor@{getPassDescriptor}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getPassDescriptor()}{getPassDescriptor()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_a65a305b51f8365a1ab257d2271bff850} 
+void \texorpdfstring{$\ast$}{*} Atlas::\+\+Metal\+Framebuffer::\+get\+Pass\+Descriptor (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{drawable}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a95c26d7de2f176567b0ed52af781608a}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getRasterSampleCount@{getRasterSampleCount}}
+\index{getRasterSampleCount@{getRasterSampleCount}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getRasterSampleCount()}{getRasterSampleCount()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_a95c26d7de2f176567b0ed52af781608a} 
+virtual int Atlas::\+\+Metal\+Framebuffer::\+get\+Raster\+Sample\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a50e824107e4cd749adde4616709d35d4}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!getWidth@{getWidth}}
+\index{getWidth@{getWidth}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{getWidth()}{getWidth()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_a50e824107e4cd749adde4616709d35d4} 
+virtual uint32\+\_\+t Atlas::\+\+Metal\+Framebuffer::\+get\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_af43b0dc551e81c0daa34c15a7eab115f}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!invalidate@{invalidate}}
+\index{invalidate@{invalidate}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{invalidate()}{invalidate()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_af43b0dc551e81c0daa34c15a7eab115f} 
+void Atlas::\+\+Metal\+Framebuffer::\+invalidate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a72625b8282a79615c7bfa0b3bab518ed}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!isDepthEnabled@{isDepthEnabled}}
+\index{isDepthEnabled@{isDepthEnabled}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{isDepthEnabled()}{isDepthEnabled()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_a72625b8282a79615c7bfa0b3bab518ed} 
+virtual bool Atlas::\+\+Metal\+Framebuffer::\+is\+Depth\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_aa6e98a8da912e6c4f303f7d5b1fccfb2}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!isSwapChainTarget@{isSwapChainTarget}}
+\index{isSwapChainTarget@{isSwapChainTarget}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{isSwapChainTarget()}{isSwapChainTarget()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_aa6e98a8da912e6c4f303f7d5b1fccfb2} 
+virtual bool Atlas::\+\+Metal\+Framebuffer::\+is\+Swap\+Chain\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+\Hypertarget{class_atlas_1_1_metal_framebuffer_a4f9f6ac8b765ffba8844822a84876eb0}\index{Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}!onResize@{onResize}}
+\index{onResize@{onResize}!Atlas::MetalFramebuffer@{Atlas::MetalFramebuffer}}
+\doxysubsubsection{\texorpdfstring{onResize()}{onResize()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_framebuffer_a4f9f6ac8b765ffba8844822a84876eb0} 
+void Atlas::\+\+Metal\+Framebuffer::\+on\+Resize (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Atlas::\+\+Framebuffer}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Framebuffer.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Framebuffer.\+cpp\end{DoxyCompactItemize}

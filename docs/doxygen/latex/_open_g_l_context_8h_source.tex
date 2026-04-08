@@ -1,0 +1,30 @@
+\doxysection{Open\+GLContext.\+h}
+\hypertarget{_open_g_l_context_8h_source}{}\label{_open_g_l_context_8h_source}\index{Atlas/src/Atlas/Platform/OpenGL/OpenGLContext.h@{Atlas/src/Atlas/Platform/OpenGL/OpenGLContext.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/GraphicsContext.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Events/ApplicationEvent.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }OpenGLContext\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{GraphicsContext}}\ \{}
+\DoxyCodeLine{00009\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ OpenGLContext(GLFWwindow*\ window);}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ init()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ swapBuffers()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onResize(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_window_resize_event}{WindowResizeEvent}}\&\ e)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getWidth()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ 0;\ \}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getHeight()\textcolor{keyword}{\ const\ override\ }\{\textcolor{keywordflow}{return}\ 0;\ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00021\ \ \ \ \ GLFWwindow*\ m\_window;}
+\DoxyCodeLine{00022\ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

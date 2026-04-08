@@ -1,0 +1,92 @@
+\doxysection{Components.\+h}
+\hypertarget{_components_8h_source}{}\label{_components_8h_source}\index{Atlas/src/Atlas/ECS/Components/Components.h@{Atlas/src/Atlas/ECS/Components/Components.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/UUID.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Project/Project.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/SubTexture.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }Atlas::Component\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }UUID\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{Atlas::UUID}}\ id;}
+\DoxyCodeLine{00014\ \ \ \ \ UUID()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00015\ \ \ \ \ UUID(\doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{Atlas::UUID}}\ uuid)\ :\ id(uuid)\ \{\}}
+\DoxyCodeLine{00016\ \};}
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }Tag\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ std::string\ tag;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ Tag()\ :\ tag(\textcolor{stringliteral}{"{}Unnamed\ entity"{}})\ \{\}}
+\DoxyCodeLine{00021\ \ \ \ \ Tag(\textcolor{keyword}{const}\ std::string\&\ tag\_name)\ :\ tag(tag\_name)\ \{\}}
+\DoxyCodeLine{00022\ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_tilemap}{Tilemap}}\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ glm::ivec2\ \ size\ =\ \{1,\ 1\};}
+\DoxyCodeLine{00026\ \ \ \ \ std::string\ tileset;}
+\DoxyCodeLine{00027\ \ \ \ \ uint32\_t\ \ \ \ layerMask\ =\ 0xFFFFFFFF;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ showOverlay\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ std::vector<int>\ grid\ =\ \{-\/1,\ -\/1\};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ \ getTile(uint32\_t\ x,\ uint32\_t\ y)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ grid[y\ *\ size.x\ +\ x];\ \}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ setTile(uint32\_t\ x,\ uint32\_t\ y,\ \textcolor{keywordtype}{int}\ index)\ \{\ grid[y\ *\ size.x\ +\ x]\ =\ index;\ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ resize(glm::ivec2\ newSize)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ std::vector<int>\ newGrid(newSize.x\ *\ newSize.y,\ -\/1);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ copyWidth\ \ =\ std::min(size.x,\ newSize.x);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ copyHeight\ =\ std::min(size.y,\ newSize.y);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ y\ =\ 0;\ y\ <\ copyHeight;\ y++)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ x\ =\ 0;\ x\ <\ copyWidth;\ x++)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newGrid[y\ *\ newSize.x\ +\ x]\ =\ grid[y\ *\ size.x\ +\ x];}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ size\ =\ newSize;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ grid\ =\ newGrid;}
+\DoxyCodeLine{00050\ \ \ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ removeTile(\textcolor{keywordtype}{int}\ deletedTile)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ std::replace(grid.begin(),\ grid.end(),\ deletedTile,\ -\/1);}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{struct\ }Transform\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ glm::vec3\ position\{0.0f,\ 0.0f,\ 1.0f\};}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ rotation\{0.0f\};}
+\DoxyCodeLine{00060\ \ \ \ \ glm::vec2\ size\{1.0f\};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ Transform()\ \{\}}
+\DoxyCodeLine{00063\ \ \ \ \ Transform(glm::vec3\ pos,\ \textcolor{keywordtype}{float}\ rotate,\ glm::vec2\ scale)\ :\ position(pos),\ rotation(rotate),\ size(scale)\ \{\}}
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{struct\ }Sprite\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ \ \ \ texturePath;}
+\DoxyCodeLine{00068\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_sub_texture_specification}{SubTextureSpecification}}\ specs;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ Sprite()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00071\ \ \ \ \ Sprite(std::string\ path,\ \doxymbox{\hyperlink{struct_atlas_1_1_sub_texture_specification}{SubTextureSpecification}}\ texSpecs)\ :\ texturePath(path),\ specs(texSpecs)\ \{\}}
+\DoxyCodeLine{00072\ \ \ \ \ Sprite(std::shared\_ptr<SubTexture>\ sprite)\ :\ texturePath(sprite-\/>getTexturePath()),\ specs(sprite-\/>getSpecs())\ \{\}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ recalculateCoordinates()\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (texturePath.empty()\ ||\ !ProjectManager::getActiveProject())\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_sub_texture}{SubTexture}}\ sub(texturePath,\ ProjectManager::getActiveProject()-\/>getData().tileSize,\ specs.index,\ specs.sizeInTiles);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ specs.coordinates\ =\ sub.getSpecs().coordinates;}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ recalculateCoordinates(\textcolor{keywordtype}{int}\ tileSize)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (texturePath.empty())\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_sub_texture}{SubTexture}}\ sub(texturePath,\ tileSize,\ specs.index,\ specs.sizeInTiles);}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ specs.coordinates\ =\ sub.getSpecs().coordinates;}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ \};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas::Component}}
+
+\end{DoxyCode}

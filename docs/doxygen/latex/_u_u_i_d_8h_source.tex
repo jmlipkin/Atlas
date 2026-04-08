@@ -1,0 +1,45 @@
+\doxysection{UUID.\+h}
+\hypertarget{_u_u_i_d_8h_source}{}\label{_u_u_i_d_8h_source}\index{Atlas/src/Atlas/Core/UUID.h@{Atlas/src/Atlas/Core/UUID.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }UUID\ \{}
+\DoxyCodeLine{00008\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ UUID()\ :\ m\_id(generate())\ \{\}}
+\DoxyCodeLine{00010\ \ \ \ \ UUID(uint64\_t\ \textcolor{keywordtype}{id})\ :\ m\_id(\textcolor{keywordtype}{id})\ \{\}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{operator}\ uint64\_t()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_id;\ \}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(UUID\ other)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_id\ ==\ other.m\_id;\ \}}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{operator}\ bool()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_id\ !=\ 0;\ \}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ isNull()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_id\ ==\ 0;\ \}}
+\DoxyCodeLine{00017\ \ \ \ \ std::string\ toString()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ std::to\_string(m\_id);\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ UUID\ null()\ \{\ \textcolor{keywordflow}{return}\ UUID(0);\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ UUID\ generate()\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::random\_device\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rd;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::mt19937\_64\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gen(rd());}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::uniform\_int\_distribution<uint64\_t>\ dis(1);}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ UUID(dis(gen));}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00030\ \ \ \ \ uint64\_t\ m\_id;}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }std::hash<Atlas::UUID>\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_u_u_i_d}{Atlas::UUID}}\&\ uuid)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::hash<uint64\_t>()((uint64\_t)uuid);}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ \};}
+
+\end{DoxyCode}

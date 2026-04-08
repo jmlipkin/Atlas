@@ -1,0 +1,56 @@
+\doxysection{Serializer.\+h}
+\hypertarget{_serializer_8h_source}{}\label{_serializer_8h_source}\index{Atlas/src/Atlas/Project/Serializer.h@{Atlas/src/Atlas/Project/Serializer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Scene/Scene.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Tileset.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_project}{Project}};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_serializer_a_p_i}{SerializerAPI}}\ \{}
+\DoxyCodeLine{00013\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_atlas_1_1_serializer_a_p_i}{\string~SerializerAPI}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ serializeProject(\textcolor{keyword}{const}\ std::shared\_ptr<Project>\&\ project)\ =\ 0;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ deserializeProject(std::shared\_ptr<Project>\ project)\ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ serializeScene(\textcolor{keyword}{const}\ std::shared\_ptr<Scene>\&\ scene)\ =\ 0;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ deserializeScene(std::shared\_ptr<Scene>\ scene)\ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ serializeTileset(\textcolor{keyword}{const}\ std::shared\_ptr<Tileset>\&\ tileset)\ =\ 0;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ deserializeTileset(std::shared\_ptr<Tileset>\ tileset)\ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ loadScriptManifest(std::shared\_ptr<Project>\ project)\ =\ 0;}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_serializer}{Serializer}}\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_atlas_1_1_serializer}{\string~Serializer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ serializeProject(\textcolor{keyword}{const}\ std::shared\_ptr<Project>\&\ project)\ \{\ s\_serializerAPI-\/>serializeProject(project);\ \}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ deserializeProject(std::shared\_ptr<Project>\ project)\ \{\ s\_serializerAPI-\/>deserializeProject(project);\ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ serializeScene(\textcolor{keyword}{const}\ std::shared\_ptr<Scene>\&\ scene)\ \{\ s\_serializerAPI-\/>serializeScene(scene);\ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ deserializeScene(std::shared\_ptr<Scene>\ scene)\ \{\ s\_serializerAPI-\/>deserializeScene(scene);\ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ serializeTileset(\textcolor{keyword}{const}\ std::shared\_ptr<Tileset>\&\ tileset)\ \{\ s\_serializerAPI-\/>serializeTileset(tileset);\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ deserializeTileset(std::shared\_ptr<Tileset>\ tileset)\ \{\ s\_serializerAPI-\/>deserializeTileset(tileset);\ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ loadScriptManifest(std::shared\_ptr<Project>\ project)\ \{\ s\_serializerAPI-\/>loadScriptManifest(project);\ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ init();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ shutdown();}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_atlas_1_1_serializer_a_p_i}{SerializerAPI}}*\ s\_serializerAPI;}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

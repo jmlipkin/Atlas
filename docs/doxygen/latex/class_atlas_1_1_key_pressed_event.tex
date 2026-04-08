@@ -1,0 +1,73 @@
+\doxysection{Atlas::\+Key\+Pressed\+Event Class Reference}
+\hypertarget{class_atlas_1_1_key_pressed_event}{}\label{class_atlas_1_1_key_pressed_event}\index{Atlas::KeyPressedEvent@{Atlas::KeyPressedEvent}}
+Inheritance diagram for Atlas::\+Key\+Pressed\+Event:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_atlas_1_1_key_pressed_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_key_pressed_event_a93d3c9ebbf90f5a7f0921d9759af8279}\label{class_atlas_1_1_key_pressed_event_a93d3c9ebbf90f5a7f0921d9759af8279} 
+{\bfseries Key\+Pressed\+Event} (int keycode, int repeat\+Count)
+\item 
+\Hypertarget{class_atlas_1_1_key_pressed_event_a557a091f4d067d8864b2ca2060d056f7}\label{class_atlas_1_1_key_pressed_event_a557a091f4d067d8864b2ca2060d056f7} 
+int {\bfseries get\+Repeat\+Count} () const
+\item 
+std::\+string \doxymbox{\hyperlink{class_atlas_1_1_key_pressed_event_aa1ad168c298f5d03b15002cf7a13a2c1}{to\+String}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_key_event}{Atlas::\+\+Key\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries get\+Key\+Code} () const
+\item 
+{\bfseries EVENT\+\_\+\+CLASS\+\_\+\+CATEGORY} (EVENT\+\_\+\+CATEGORY\+\_\+\+INPUT\texorpdfstring{$\vert$}{|}EVENT\+\_\+\+CATEGORY\+\_\+\+KEYBOARD)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_event}{Atlas::\+\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual Event\+Type {\bfseries get\+Event\+Type} () const =0
+\item 
+virtual const char \texorpdfstring{$\ast$}{*} {\bfseries get\+Name} () const =0
+\item 
+virtual int {\bfseries get\+Category\+Flags} () const =0
+\item 
+bool {\bfseries is\+In\+Category} (Event\+Category category)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_atlas_1_1_event}{Atlas::\+\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries is\+Handled} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_key_event}{Atlas::\+\+Key\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Key\+Event} (int keycode)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_atlas_1_1_key_event}{Atlas::\+\+Key\+Event}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries m\+\_\+key\+Code}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_key_pressed_event_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_key_pressed_event_aa1ad168c298f5d03b15002cf7a13a2c1}\index{Atlas::KeyPressedEvent@{Atlas::KeyPressedEvent}!toString@{toString}}
+\index{toString@{toString}!Atlas::KeyPressedEvent@{Atlas::KeyPressedEvent}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_key_pressed_event_aa1ad168c298f5d03b15002cf7a13a2c1} 
+std::\+string Atlas::\+\+Key\+Pressed\+Event::\+to\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_atlas_1_1_event}{Atlas::\+\+Event}}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Events/\+Key\+Event.\+h\end{DoxyCompactItemize}

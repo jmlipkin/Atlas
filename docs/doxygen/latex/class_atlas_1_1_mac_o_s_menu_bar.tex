@@ -1,0 +1,123 @@
+\doxysection{Atlas::\+Mac\+OSMenu\+Bar Class Reference}
+\hypertarget{class_atlas_1_1_mac_o_s_menu_bar}{}\label{class_atlas_1_1_mac_o_s_menu_bar}\index{Atlas::MacOSMenuBar@{Atlas::MacOSMenuBar}}
+Inheritance diagram for Atlas::\+Mac\+OSMenu\+Bar:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_mac_o_s_menu_bar}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_mac_o_s_menu_bar_aa5418f6266b4fb1ff6be6e2ad852de78}{generate\+Menu\+Bar}} (const std::\+string \&title) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{Atlas::\+\+Menu\+Bar}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries set\+On\+Project\+Changed} (Project\+Changed\+Callback callback)
+\item 
+void {\bfseries set\+On\+Scene\+Loaded} (Scene\+Loaded\+Callback callback)
+\item 
+void {\bfseries set\+On\+Scene\+Saved} (Scene\+Saved\+Callback callback)
+\item 
+void {\bfseries set\+On\+New\+Scene} (Scene\+Created\+Callback callback)
+\item 
+void {\bfseries set\+On\+Project\+Closed} (Project\+Closed\+Callback callback)
+\item 
+void {\bfseries set\+On\+Scene\+Closed} (Scene\+Closed\+Callback callback)
+\item 
+void {\bfseries set\+On\+New\+Entity} (New\+Entity\+Callback callback)
+\item 
+void {\bfseries set\+On\+Add\+Component} (Add\+Component\+Callback callback)
+\item 
+void {\bfseries set\+On\+Preview} (Preview\+Callback callback)
+\item 
+void {\bfseries set\+On\+Build} (Build\+Callback callback)
+\item 
+void {\bfseries set\+On\+Validate\+Scene\+Required} (Validation\+Callback callback)
+\item 
+void {\bfseries set\+On\+Validate\+Project\+Required} (Validation\+Callback callback)
+\item 
+void {\bfseries set\+On\+Validate\+Build\+Available} (Validation\+Callback callback)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{Atlas::\+\+Menu\+Bar}}}
+\begin{DoxyCompactItemize}
+\item 
+using {\bfseries Project\+Changed\+Callback} = std::\+function$<$void(std::\+string)$>$
+\item 
+using {\bfseries Scene\+Loaded\+Callback} = std::\+function$<$void(std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}$>$)$>$
+\item 
+using {\bfseries Scene\+Saved\+Callback} = std::\+function$<$void()$>$
+\item 
+using {\bfseries Scene\+Created\+Callback} = std::\+function$<$void(std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}$>$)$>$
+\item 
+using {\bfseries Project\+Closed\+Callback} = std::\+function$<$void()$>$
+\item 
+using {\bfseries Scene\+Closed\+Callback} = std::\+function$<$void()$>$
+\item 
+using {\bfseries New\+Entity\+Callback} = std::\+function$<$void()$>$
+\item 
+using {\bfseries Add\+Component\+Callback} = std::\+function$<$void()$>$
+\item 
+using {\bfseries Preview\+Callback} = std::\+function$<$void()$>$
+\item 
+using {\bfseries Build\+Callback} = std::\+function$<$bool()$>$
+\item 
+using {\bfseries Validation\+Callback} = std::\+function$<$bool()$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{Atlas::\+\+Menu\+Bar}}}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{Menu\+Bar}} $>$ {\bfseries create} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{Atlas::\+\+Menu\+Bar}}}
+\begin{DoxyCompactItemize}
+\item 
+Project\+Changed\+Callback {\bfseries m\+\_\+on\+Project\+Changed}
+\item 
+Scene\+Loaded\+Callback {\bfseries m\+\_\+on\+Scene\+Loaded}
+\item 
+Scene\+Saved\+Callback {\bfseries m\+\_\+on\+Scene\+Saved}
+\item 
+Scene\+Created\+Callback {\bfseries m\+\_\+on\+New\+Scene}
+\item 
+Project\+Closed\+Callback {\bfseries m\+\_\+on\+Project\+Closed}
+\item 
+Scene\+Closed\+Callback {\bfseries m\+\_\+on\+Scene\+Closed}
+\item 
+New\+Entity\+Callback {\bfseries m\+\_\+on\+New\+Entity}
+\item 
+Add\+Component\+Callback {\bfseries m\+\_\+on\+Add\+Component}
+\item 
+Preview\+Callback {\bfseries m\+\_\+on\+Preview}
+\item 
+Build\+Callback {\bfseries m\+\_\+on\+Build}
+\item 
+Validation\+Callback {\bfseries m\+\_\+on\+Scene\+Validation}
+\item 
+Validation\+Callback {\bfseries m\+\_\+on\+Project\+Validation}
+\item 
+Validation\+Callback {\bfseries m\+\_\+on\+Build\+Available}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_mac_o_s_menu_bar_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_mac_o_s_menu_bar_aa5418f6266b4fb1ff6be6e2ad852de78}\index{Atlas::MacOSMenuBar@{Atlas::MacOSMenuBar}!generateMenuBar@{generateMenuBar}}
+\index{generateMenuBar@{generateMenuBar}!Atlas::MacOSMenuBar@{Atlas::MacOSMenuBar}}
+\doxysubsubsection{\texorpdfstring{generateMenuBar()}{generateMenuBar()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_mac_o_s_menu_bar_aa5418f6266b4fb1ff6be6e2ad852de78} 
+void Atlas::\+\+Mac\+OSMenu\+Bar::\+generate\+Menu\+Bar (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{title}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_menu_bar}{Atlas::\+\+Menu\+Bar}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSMenu\+Bar.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Mac\+OS/\+Mac\+OSMenu\+Bar.\+mm\end{DoxyCompactItemize}

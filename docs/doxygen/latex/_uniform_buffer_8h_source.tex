@@ -1,0 +1,138 @@
+\doxysection{Uniform\+Buffer.\+h}
+\hypertarget{_uniform_buffer_8h_source}{}\label{_uniform_buffer_8h_source}\index{Atlas/src/Atlas/Renderer/UniformBuffer.h@{Atlas/src/Atlas/Renderer/UniformBuffer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Pipeline.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ }UniformValue\ =\ std::variant<float,\ glm::vec2,\ glm::vec3,\ glm::vec4,\ glm::mat3,\ glm::mat4,\ int,\ glm::ivec2,\ glm::ivec3,\ glm::ivec4,\ bool>;}
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }UniformElement\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00012\ \ \ \ \ uint32\_t\ id;}
+\DoxyCodeLine{00013\ \ \ \ \ UniformValue\ value;}
+\DoxyCodeLine{00014\ \ \ \ \ ShaderDataType\ type;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ offset;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00019\ \ \ \ \ UniformElement(\textcolor{keyword}{const}\ std::string\&\ u\_name,\ uint32\_t\ u\_id,\ \textcolor{keyword}{const}\ T\&\ u\_value)\ :\ name(u\_name),\ id(u\_id),\ value(u\_value)\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ float>)\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Float;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(float);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ glm::vec2>)\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Float2;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(glm::vec2);}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ glm::vec3>)\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Float3;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(glm::vec3);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ glm::vec4>)\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Float4;}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(glm::vec4);}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ glm::mat3>)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Mat3;}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(glm::mat3);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ glm::mat4>)\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Mat4;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(glm::mat4);}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ uint32\_t>)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Uint;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(uint32\_t);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ int>)\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Int;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(int);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ glm::ivec2>)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Int2;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(glm::ivec2);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ glm::ivec3>)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Int3;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(glm::ivec3);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ glm::ivec4>)\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Int4;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(glm::ivec4);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (std::is\_same\_v<T,\ bool>)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::Bool;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ \textcolor{keyword}{sizeof}(bool);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ ShaderDataType::None;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ size\ =\ 0;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ AT\_CORE\_ERROR(\textcolor{stringliteral}{"{}Shader\ data\ type\ is\ not\ supported!"{}});}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ offset\ =\ 0;}
+\DoxyCodeLine{00062\ \ \ \ \ \}}
+\DoxyCodeLine{00063\ \};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{class\ }UniformBufferLayout\ \{}
+\DoxyCodeLine{00066\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00067\ \ \ \ \ UniformBufferLayout()\ \{\}}
+\DoxyCodeLine{00068\ \ \ \ \ UniformBufferLayout(\textcolor{keyword}{const}\ std::initializer\_list<UniformElement>\&\ elements)\ :\ m\_elements(elements)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ addToMap();}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ calculateOffsetsAndStride();}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_uniform_element}{UniformElement}}\&\ getElement(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00074\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_uniform_element}{UniformElement}}\&\ getElement(\textcolor{keyword}{const}\ uint32\_t\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ setStride(uint32\_t\ stride)\ \{\ m\_stride\ =\ stride;\ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ getStride()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_stride;\ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ std::vector<UniformElement>\&\ getElements()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_elements;\ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_uniform_element}{UniformElement}}\&\ operator[](\textcolor{keywordtype}{size\_t}\ index)\ \{\ \textcolor{keywordflow}{return}\ m\_elements[index];\ \}}
+\DoxyCodeLine{00081\ \ \ \ \ std::vector<UniformElement>::iterator\ begin()\ \{\ \textcolor{keywordflow}{return}\ m\_elements.begin();\ \}}
+\DoxyCodeLine{00082\ \ \ \ \ std::vector<UniformElement>::iterator\ end()\ \{\ \textcolor{keywordflow}{return}\ m\_elements.end();\ \}}
+\DoxyCodeLine{00083\ \ \ \ \ std::vector<UniformElement>::const\_iterator\ begin()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_elements.begin();\ \}}
+\DoxyCodeLine{00084\ \ \ \ \ std::vector<UniformElement>::const\_iterator\ end()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_elements.end();\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ addToMap()\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ element\ :\ m\_elements)\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ m\_map[element.name]\ =\ element.id;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ calculateOffsetsAndStride()\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ uint32\_t\ offset\ =\ 0;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ m\_stride\ =\ 0;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ element\ :\ m\_elements)\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ element.offset\ =\ offset;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ offset\ +=\ element.size;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ m\_stride\ +=\ element.size;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00104\ \ \ \ \ std::vector<UniformElement>\ m\_elements;}
+\DoxyCodeLine{00105\ \ \ \ \ std::unordered\_map<std::string,\ uint32\_t>\ m\_map;}
+\DoxyCodeLine{00106\ \ \ \ \ uint32\_t\ m\_stride\ =\ 0;}
+\DoxyCodeLine{00107\ \};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{UniformBuffer}}\ \{}
+\DoxyCodeLine{00110\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{\string~UniformBuffer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getIndex()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}*\ getNativeBuffer()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setBool(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value)\ =\ 0;}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setUint(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ value)\ =\ 0;}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setInt(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ value)\ =\ 0;}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setInt2(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::ivec2\&\ value)\ =\ 0;}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setInt3(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::ivec3\&\ value)\ =\ 0;}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setInt4(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::ivec4\&\ value)\ =\ 0;}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setFloat(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ value)\ =\ 0;}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setFloat2(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::vec2\&\ value)\ =\ 0;}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setFloat3(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::vec3\&\ value)\ =\ 0;}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setFloat4(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::vec4\&\ value)\ =\ 0;}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setMat3(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::mat3\&\ value)\ =\ 0;}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setMat4(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::mat4\&\ value)\ =\ 0;}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<UniformBuffer>\ create(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_atlas_1_1_pipeline_specification}{PipelineSpecification}}\&\ specs,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer_layout}{UniformBufferLayout}}\&\ layout,\ uint32\_t\ index);}
+\DoxyCodeLine{00130\ \};}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

@@ -1,0 +1,90 @@
+\doxysection{Event.\+h}
+\hypertarget{_event_8h_source}{}\label{_event_8h_source}\index{Atlas/src/Atlas/Events/Event.h@{Atlas/src/Atlas/Events/Event.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Base.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <spdlog/fmt/ostr.h>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{enum\ class}\ EventType\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ NONE\ =\ 0,}
+\DoxyCodeLine{00011\ \ \ \ \ DISPLAY\_CHANGED,}
+\DoxyCodeLine{00012\ \ \ \ \ WINDOW\_CLOSE,\ WINDOW\_RESIZE,\ WINDOW\_FOCUS,\ WINDOW\_LOST\_FOCUS,\ WINDOW\_MOVED,}
+\DoxyCodeLine{00013\ \ \ \ \ APP\_TICK,\ APP\_UPDATE,\ APP\_RENDER,}
+\DoxyCodeLine{00014\ \ \ \ \ KEY\_PRESSED,\ KEY\_TYPED,\ KEY\_RELEASED,}
+\DoxyCodeLine{00015\ \ \ \ \ MOUSE\_BUTTON\_PRESSED,\ MOUSE\_BUTTON\_RELEASED,}
+\DoxyCodeLine{00016\ \ \ \ \ MOUSE\_MOVED,\ MOUSE\_SCROLLED,}
+\DoxyCodeLine{00017\ \ \ \ \ USER,\ COLLISION}
+\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{enum}\ EventCategory\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ NONE\ =\ 0,}
+\DoxyCodeLine{00022\ \ \ \ \ EVENT\_CATEGORY\_APPLICATION\ =\ BIT(0),}
+\DoxyCodeLine{00023\ \ \ \ \ EVENT\_CATEGORY\_INPUT\ =\ BIT(1),}
+\DoxyCodeLine{00024\ \ \ \ \ EVENT\_CATEGORY\_KEYBOARD\ =\ BIT(2),}
+\DoxyCodeLine{00025\ \ \ \ \ EVENT\_CATEGORY\_MOUSE\ =\ BIT(3),}
+\DoxyCodeLine{00026\ \ \ \ \ EVENT\_CATEGORY\_MOUSE\_BUTTON\ =\ BIT(4),}
+\DoxyCodeLine{00027\ \ \ \ \ EVENT\_CATEGORY\_USER\ =\ BIT(5)}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ EVENT\_CLASS\_TYPE(type)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\ \ \ \ static\ EventType\ getStaticType()\ \{\ return\ EventType::type;\ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\ \ \ \ virtual\ EventType\ getEventType()\ const\ override\ \{\ return\ getStaticType();\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\ \ \ \ virtual\ const\ char*\ getName()\ const\ override\ \{\ return\ \#type;\ \}}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ EVENT\_CLASS\_CATEGORY(category)\ \(\backslash\)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\ \ \ \ virtual\ int\ getCategoryFlags()\ const\ override\ \{\ return\ category;\ \}}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\ \{}
+\DoxyCodeLine{00039\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ isHandled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{virtual}\ EventType\ getEventType()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ getName()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ getCategoryFlags()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ toString()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getName();\ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isInCategory(EventCategory\ category)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getCategoryFlags()\ \&\ category;}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{class\ }EventDispatcher\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{using\ }EventFn\ =\ std::function<bool(T\&)>;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00057\ \ \ \ \ EventDispatcher(\doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\&\ event)}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ :\ m\_event(event)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ dispatch(EventFn<T>\ func)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_event.getEventType()\ ==\ T::getStaticType())\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ m\_event.isHandled\ =\ func(*(T*)\&m\_event);}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00068\ \ \ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00071\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\&\ m\_event;}
+\DoxyCodeLine{00072\ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{inline}\ std::ostream\&\ operator<<(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_event}{Event}}\&\ e)\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{return}\ os\ <<\ e.toString();}
+\DoxyCodeLine{00076\ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{namespace\ }fmt\ \{}
+\DoxyCodeLine{00081\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ Char>}
+\DoxyCodeLine{00082\ \textcolor{keyword}{struct\ }formatter<T,\ Char,\ std::enable\_if\_t<std::is\_base\_of\_v<Atlas::Event,\ T>>>\ }
+\DoxyCodeLine{00083\ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00084\ \}\ \ \textcolor{comment}{//\ namespace\ fmt}}
+
+\end{DoxyCode}

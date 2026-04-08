@@ -1,0 +1,48 @@
+\doxysection{Metal\+Context.\+h}
+\hypertarget{_metal_context_8h_source}{}\label{_metal_context_8h_source}\index{Atlas/src/Atlas/Platform/Metal/MetalContext.h@{Atlas/src/Atlas/Platform/Metal/MetalContext.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Events/ApplicationEvent.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/GraphicsContext.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <metal-\/cpp/Metal.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }MetalContext\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_graphics_context}{GraphicsContext}}\ \{}
+\DoxyCodeLine{00010\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ MetalContext(GLFWwindow*\ window);}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ init()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ swapBuffers()\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ CA::MetalDrawable*\ getNextDrawable()\ \{\ \textcolor{keywordflow}{return}\ m\_layer-\/>nextDrawable();\ \}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ CA::MetalLayer*\ getMTLLayer()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_layer;\ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ MTL::Library*\ setNewMTLLibrary(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ MTL::Device*\ getMTLDevice()\ \{\ \textcolor{keywordflow}{return}\ s\_device;\ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ MTL::Library*\ getMTLLibrary()\ \{\ \textcolor{keywordflow}{return}\ s\_library;\ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ GLFWwindow*\ getGLFWwindow()\ \{\ \textcolor{keywordflow}{return}\ m\_window;\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onResize(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_window_resize_event}{WindowResizeEvent}}\&\ e)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getWidth()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_layer-\/>drawableSize().width;\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getHeight()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_layer-\/>drawableSize().height;\ \}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ initDevice();}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ initWindow();}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ MTL::Device*\ s\_device;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ MTL::Library*\ s\_library;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ CA::MetalLayer*\ m\_layer;}
+\DoxyCodeLine{00040\ \ \ \ \ GLFWwindow*\ m\_window;}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

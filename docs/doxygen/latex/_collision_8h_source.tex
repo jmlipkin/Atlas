@@ -1,0 +1,67 @@
+\doxysection{Collision.\+h}
+\hypertarget{_collision_8h_source}{}\label{_collision_8h_source}\index{Atlas/src/Atlas/ECS/Systems/Collision.h@{Atlas/src/Atlas/ECS/Systems/Collision.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Time.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Events/Event.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Atlas/Events/UserEvent.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Entities/Entity.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Components/Components.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Atlas/ECS/Components/Collider.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }CollisionEvent\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_user_event}{UserEvent}}\ \{}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ EVENT\_CLASS\_CATEGORY(EVENT\_CATEGORY\_USER);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ CollisionEvent(\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\ entityA,\ \doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\ entityB,\ glm::vec2\ collisionNormal,\ \textcolor{keywordtype}{float}\ depth,\ \textcolor{keywordtype}{bool}\ isTrigger);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\&\ getEntityA()\ \{\ \textcolor{keywordflow}{return}\ m\_entityA;\ \}}
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\&\ getEntityB()\ \{\ \textcolor{keywordflow}{return}\ m\_entityB;\ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ glm::vec2\ getNormal()\ \{\ \textcolor{keywordflow}{return}\ m\_normal;\ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ getDepth()\ \{\ \textcolor{keywordflow}{return}\ m\_depth;\ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ isTrigger()\ \{\ \textcolor{keywordflow}{return}\ m\_isTrigger;\ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ EVENT\_CLASS\_TYPE(COLLISION);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00030\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\ \ \ \ m\_entityA;}
+\DoxyCodeLine{00031\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\ \ \ \ m\_entityB;}
+\DoxyCodeLine{00032\ \ \ \ \ glm::vec2\ m\_normal;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ m\_depth;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ m\_isTrigger;}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{namespace\ }System\ \{}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_system_1_1_collision_manifold}{CollisionManifold}}\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ glm::vec2\ normal;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ depth;}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_system_1_1_collision}{Collision}}\ \{}
+\DoxyCodeLine{00045\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::set<entt::entity>\ currentlyColliding;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ update(\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{DeltaTime}}\ dt,\ \doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}\&\ scene);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ checkTilemapCollisions(\doxymbox{\hyperlink{class_atlas_1_1_delta_time}{DeltaTime}}\ dt,\ \doxymbox{\hyperlink{class_atlas_1_1_scene}{Scene}}\&\ scene);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resolveCollision(\doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\&\ entityA,\ \doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}}\&\ entityB,\ \doxymbox{\hyperlink{struct_atlas_1_1_system_1_1_collision_manifold}{CollisionManifold}}\ manifold);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{static}\ std::optional<CollisionManifold>\ compareAABBtoAABB(\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_collider}{Component::Collider}}\&\ cA,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_collider}{Component::Collider}}\&\ cB,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\&\ tA,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\&\ tB);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ std::optional<CollisionManifold>\ compareAABBtoCircle(\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_collider}{Component::Collider}}\&\ cAABB,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\&\ tAABB,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_collider}{Component::Collider}}\&\ cCircle,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\&\ tCircle);}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{static}\ std::optional<CollisionManifold>\ compareCircletoCircle(\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_collider}{Component::Collider}}\&\ cA,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_collider}{Component::Collider}}\&\ cB,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\&\ tA,\ \doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_transform}{Component::Transform}}\&\ tB);}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \}\ \ \textcolor{comment}{//\ namespace\ System}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

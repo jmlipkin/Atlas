@@ -1,8 +1,7 @@
 #pragma once
 
 #include <Atlas.h>
-#include <cstdlib>
-#include "Atlas/Core/Base.h"
+
 #include "Atlas/ECS/Components/Animation.h"
 #include "Atlas/ECS/Systems/Collision.h"
 #include "Atlas/Events/Event.h"
@@ -77,6 +76,12 @@ class Player : public Atlas::Behavior {
   private:
 	bool onCollision(CollisionEvent& event) {
 		if ((m_entity == event.getEntityA() || m_entity == event.getEntityB())) {
+			if(event.getEntityA().name() == "Left Tunnel" || event.getEntityB().name() == "Left Tunnel") {
+				getComponent<Component::Transform>().position.x = 13.5;
+			}
+			if(event.getEntityA().name() == "Right Tunnel" || event.getEntityB().name() == "Right Tunnel") {
+				getComponent<Component::Transform>().position.x = -15.5;
+			}
 		}
 		return false;
 	}

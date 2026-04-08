@@ -1,0 +1,41 @@
+\doxysection{Atlas::\+Script\+Registry Class Reference}
+\hypertarget{class_atlas_1_1_script_registry}{}\label{class_atlas_1_1_script_registry}\index{Atlas::ScriptRegistry@{Atlas::ScriptRegistry}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_a2f215b1b5670259a9d35c3914463332e}\label{class_atlas_1_1_script_registry_a2f215b1b5670259a9d35c3914463332e} 
+using {\bfseries Script\+Factory} = std::\+function$<$std::\+unique\+\_\+ptr$<$\doxymbox{\hyperlink{class_atlas_1_1_behavior}{Behavior}}$>$()$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_a9497846b8d5be279a367223ce6274f5c}\label{class_atlas_1_1_script_registry_a9497846b8d5be279a367223ce6274f5c} 
+static void {\bfseries register\+Script} (const std::\+string \&name, Script\+Factory factory, Script\+Priority priority=Script\+Priority::\+\+Normal)
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_ae957a9ad1216775d1bdc377b2e97a89b}\label{class_atlas_1_1_script_registry_ae957a9ad1216775d1bdc377b2e97a89b} 
+static bool {\bfseries reinstantiate\+Script} (\doxymbox{\hyperlink{struct_atlas_1_1_component_1_1_script}{Component::\+\+Script}} \&script, \doxymbox{\hyperlink{class_atlas_1_1_entity}{Entity}} entity)
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_a70ae4abde04accd0c1db7b80c97a7d51}\label{class_atlas_1_1_script_registry_a70ae4abde04accd0c1db7b80c97a7d51} 
+static void {\bfseries clear} ()
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_a5a7c99808e04c6c4068a33a6b079b600}\label{class_atlas_1_1_script_registry_a5a7c99808e04c6c4068a33a6b079b600} 
+static std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_behavior}{Behavior}} $>$ {\bfseries create} (const std::\+string \&name)
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_a44929d70805218089d58a63e642ac861}\label{class_atlas_1_1_script_registry_a44929d70805218089d58a63e642ac861} 
+static bool {\bfseries is\+Registered} (const std::\+string \&name)
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_a97750466dfd9f4b547d32b5eb67b186b}\label{class_atlas_1_1_script_registry_a97750466dfd9f4b547d32b5eb67b186b} 
+static Script\+Priority {\bfseries get\+Priority} (const std::\+string \&name)
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_a8d896699ac7aec4a08b269bf38be6363}\label{class_atlas_1_1_script_registry_a8d896699ac7aec4a08b269bf38be6363} 
+static int {\bfseries get\+Priority\+Index} (const std::\+string \&name)
+\item 
+\Hypertarget{class_atlas_1_1_script_registry_a832f5507de4267302532b426c95a436c}\label{class_atlas_1_1_script_registry_a832f5507de4267302532b426c95a436c} 
+static std::\+vector$<$ std::\+string $>$ {\bfseries get\+Registered\+Names} ()
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Script\+Registry.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Core/\+Script\+Registry.\+cpp\end{DoxyCompactItemize}

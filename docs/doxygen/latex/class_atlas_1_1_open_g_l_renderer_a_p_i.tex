@@ -1,0 +1,193 @@
+\doxysection{Atlas::\+Open\+GLRenderer\+API Class Reference}
+\hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i}{}\label{class_atlas_1_1_open_g_l_renderer_a_p_i}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+Inheritance diagram for Atlas::\+Open\+GLRenderer\+API:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_open_g_l_renderer_a_p_i}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_a5fc4199f57922cba8e6973efe7020334}{set\+Clear\+Color}} (const glm::\+vec4 \&color) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_a39686403c7626062639c16bfd9bf80f4}{clear}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_a10dda985afee8edc5d08ac50bad3a73f}{draw\+Indexed}} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&index\+Buffer) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_aa47d3f704a85de1f94e57b0d76e6f3f5}{draw\+Indexed}} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&index\+Buffer, uint32\+\_\+t count) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_ac69f28c5aec9385aad0cb495878b7d5d}{begin\+Im\+Gui}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_ad3067876341840de8cd6ab900bbdcbf2}{draw\+Im\+Gui}} () override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_a700c7e0406829ad80b63ce2478816219}{bind\+Pipeline}} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$ pipeline, const \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{Uniform\+Buffer}} \&u\+Buffer) override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_ae1c3ffaeec7f7d2783c9a71390789ca1}{bind\+Texture}} (const \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} \&texture, uint32\+\_\+t index) override
+\item 
+void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_a3c42e8f4dbc92411f666b43041fa4ee9}{bind\+Vertex\+Buffer}} (const \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{Vertex\+Buffer}} \&buffer, uint32\+\_\+t offset, int index) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_a16105bf45b59b107ac90bc25032ab2b0}{begin\+Frame}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_aa87369d0c69136270c4f1e62ad7afb9d}{end\+Frame}} () override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_a5f4d2ec776b615ccdff836be2bace346}{begin\+Pass}} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$ framebuffer) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_open_g_l_renderer_a_p_i_a72c5a975a0928daf388ef8be4ba07b5e}{end\+Pass}} () override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a627c3147c01f97b74a9910317503ede0}\label{class_atlas_1_1_renderer_a_p_i_a627c3147c01f97b74a9910317503ede0} 
+enum class {\bfseries API} \{ {\bfseries None} = 0
+, {\bfseries Open\+GL} = 1
+, {\bfseries Metal} = 2
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}}
+\begin{DoxyCompactItemize}
+\item 
+static API {\bfseries get\+API} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_a16105bf45b59b107ac90bc25032ab2b0}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!beginFrame@{beginFrame}}
+\index{beginFrame@{beginFrame}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{beginFrame()}{beginFrame()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_a16105bf45b59b107ac90bc25032ab2b0} 
+void Atlas::\+\+Open\+GLRenderer\+API::\+begin\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_ac69f28c5aec9385aad0cb495878b7d5d}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!beginImGui@{beginImGui}}
+\index{beginImGui@{beginImGui}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{beginImGui()}{beginImGui()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_ac69f28c5aec9385aad0cb495878b7d5d} 
+virtual void Atlas::\+\+Open\+GLRenderer\+API::\+begin\+Im\+Gui (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_a5f4d2ec776b615ccdff836be2bace346}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!beginPass@{beginPass}}
+\index{beginPass@{beginPass}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{beginPass()}{beginPass()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_a5f4d2ec776b615ccdff836be2bace346} 
+virtual void Atlas::\+\+Open\+GLRenderer\+API::\+begin\+Pass (\begin{DoxyParamCaption}\item[{std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$}]{framebuffer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_a700c7e0406829ad80b63ce2478816219}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!bindPipeline@{bindPipeline}}
+\index{bindPipeline@{bindPipeline}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{bindPipeline()}{bindPipeline()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_a700c7e0406829ad80b63ce2478816219} 
+void Atlas::\+\+Open\+GLRenderer\+API::\+bind\+Pipeline (\begin{DoxyParamCaption}\item[{std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$}]{pipeline}{, }\item[{const \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{Uniform\+Buffer}} \&}]{u\+Buffer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_ae1c3ffaeec7f7d2783c9a71390789ca1}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!bindTexture@{bindTexture}}
+\index{bindTexture@{bindTexture}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{bindTexture()}{bindTexture()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_ae1c3ffaeec7f7d2783c9a71390789ca1} 
+void Atlas::\+\+Open\+GLRenderer\+API::\+bind\+Texture (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} \&}]{texture}{, }\item[{uint32\+\_\+t}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_a3c42e8f4dbc92411f666b43041fa4ee9}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!bindVertexBuffer@{bindVertexBuffer}}
+\index{bindVertexBuffer@{bindVertexBuffer}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{bindVertexBuffer()}{bindVertexBuffer()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_a3c42e8f4dbc92411f666b43041fa4ee9} 
+void Atlas::\+\+Open\+GLRenderer\+API::\+bind\+Vertex\+Buffer (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{Vertex\+Buffer}} \&}]{buffer}{, }\item[{uint32\+\_\+t}]{offset}{, }\item[{int}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_a39686403c7626062639c16bfd9bf80f4}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!clear@{clear}}
+\index{clear@{clear}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_a39686403c7626062639c16bfd9bf80f4} 
+void Atlas::\+\+Open\+GLRenderer\+API::\+clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_ad3067876341840de8cd6ab900bbdcbf2}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!drawImGui@{drawImGui}}
+\index{drawImGui@{drawImGui}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{drawImGui()}{drawImGui()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_ad3067876341840de8cd6ab900bbdcbf2} 
+virtual void Atlas::\+\+Open\+GLRenderer\+API::\+draw\+Im\+Gui (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_a10dda985afee8edc5d08ac50bad3a73f}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!drawIndexed@{drawIndexed}}
+\index{drawIndexed@{drawIndexed}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{drawIndexed()}{drawIndexed()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_a10dda985afee8edc5d08ac50bad3a73f} 
+virtual void Atlas::\+\+Open\+GLRenderer\+API::\+draw\+Indexed (\begin{DoxyParamCaption}\item[{const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&}]{index\+Buffer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_aa47d3f704a85de1f94e57b0d76e6f3f5}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!drawIndexed@{drawIndexed}}
+\index{drawIndexed@{drawIndexed}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{drawIndexed()}{drawIndexed()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_aa47d3f704a85de1f94e57b0d76e6f3f5} 
+virtual void Atlas::\+\+Open\+GLRenderer\+API::\+draw\+Indexed (\begin{DoxyParamCaption}\item[{const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&}]{index\+Buffer}{, }\item[{uint32\+\_\+t}]{count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_aa87369d0c69136270c4f1e62ad7afb9d}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!endFrame@{endFrame}}
+\index{endFrame@{endFrame}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{endFrame()}{endFrame()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_aa87369d0c69136270c4f1e62ad7afb9d} 
+virtual void Atlas::\+\+Open\+GLRenderer\+API::\+end\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_a72c5a975a0928daf388ef8be4ba07b5e}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!endPass@{endPass}}
+\index{endPass@{endPass}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{endPass()}{endPass()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_a72c5a975a0928daf388ef8be4ba07b5e} 
+virtual void Atlas::\+\+Open\+GLRenderer\+API::\+end\+Pass (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+\Hypertarget{class_atlas_1_1_open_g_l_renderer_a_p_i_a5fc4199f57922cba8e6973efe7020334}\index{Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}!setClearColor@{setClearColor}}
+\index{setClearColor@{setClearColor}!Atlas::OpenGLRendererAPI@{Atlas::OpenGLRendererAPI}}
+\doxysubsubsection{\texorpdfstring{setClearColor()}{setClearColor()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_open_g_l_renderer_a_p_i_a5fc4199f57922cba8e6973efe7020334} 
+void Atlas::\+\+Open\+GLRenderer\+API::\+set\+Clear\+Color (\begin{DoxyParamCaption}\item[{const glm::\+vec4 \&}]{color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{Atlas::\+\+Renderer\+API}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Open\+GL/\+Open\+GLRenderer\+API.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Open\+GL/\+Open\+GLRenderer\+API.\+cpp\end{DoxyCompactItemize}

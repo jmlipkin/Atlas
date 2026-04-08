@@ -1,0 +1,58 @@
+\doxysection{Metal\+Renderer\+API.\+h}
+\hypertarget{_metal_renderer_a_p_i_8h_source}{}\label{_metal_renderer_a_p_i_8h_source}\index{Atlas/src/Atlas/Platform/Metal/MetalRendererAPI.h@{Atlas/src/Atlas/Platform/Metal/MetalRendererAPI.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <CoreGraphics/CGEventTypes.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/RendererAPI.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Atlas/Platform/Metal/MetalContext.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Atlas/Platform/Metal/MetalFramebuffer.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <metal-\/cpp/Metal.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }MetalRendererAPI\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_renderer_a_p_i}{RendererAPI}}\ \{}
+\DoxyCodeLine{00013\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ MetalRendererAPI(\doxymbox{\hyperlink{class_atlas_1_1_metal_context}{MetalContext}}\&\ context);}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~MetalRendererAPI();}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setClearColor(\textcolor{keyword}{const}\ glm::vec4\&\ color)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ clear()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginFrame()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ endFrame()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginPass(std::shared\_ptr<Framebuffer>\ framebuffer)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ endPass()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ ImGui\ functions\ implemented\ in\ MetalRendererAPI.mm}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ beginImGui()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawImGui()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ bindPipeline(std::shared\_ptr<Pipeline>\ pipeline,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{UniformBuffer}}\&\ uBuffer)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ bindTexture(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}}\&\ texture,\ uint32\_t\ index)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ bindVertexBuffer(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{VertexBuffer}}\&\ buffer,\ uint32\_t\ offset,\ \textcolor{keywordtype}{int}\ index)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawIndexed(\textcolor{keyword}{const}\ std::shared\_ptr<IndexBuffer>\&\ indexBuffer)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ drawIndexed(\textcolor{keyword}{const}\ std::shared\_ptr<IndexBuffer>\&\ indexBuffer,\ uint32\_t\ count)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ virtual\ void\ drawPoint(const\ std::shared\_ptr<VertexArray>\&\ vertexArray)\ override;}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{class_atlas_1_1_metal_context}{MetalContext}}\&\ m\_context;}
+\DoxyCodeLine{00039\ \ \ \ \ MTL::ClearColor\ m\_color\ =\ MTL::ClearColor::Make(0,\ 0,\ 0,\ 1);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ NS::AutoreleasePool*\ m\_pool;}
+\DoxyCodeLine{00042\ \ \ \ \ CA::MetalDrawable*\ m\_drawable;}
+\DoxyCodeLine{00043\ \ \ \ \ MTL::RenderPassDescriptor*\ m\_passDesc;}
+\DoxyCodeLine{00044\ \ \ \ \ MTL::CommandBuffer*\ m\_buffer;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ MTL::CommandQueue*\ m\_commandQueue;}
+\DoxyCodeLine{00047\ \ \ \ \ MTL::RenderCommandEncoder*\ m\_encoder;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ std::shared\_ptr<MetalFramebuffer>\ m\_framebuffer;}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

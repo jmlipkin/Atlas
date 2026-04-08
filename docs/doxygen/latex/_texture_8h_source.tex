@@ -1,0 +1,51 @@
+\doxysection{Texture.\+h}
+\hypertarget{_texture_8h_source}{}\label{_texture_8h_source}\index{Atlas/src/Atlas/Renderer/Texture.h@{Atlas/src/Atlas/Renderer/Texture.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{enum\ class}\ ImageFormat\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ None\ =\ 0,}
+\DoxyCodeLine{00011\ \ \ \ \ R8,}
+\DoxyCodeLine{00012\ \ \ \ \ RGB8,}
+\DoxyCodeLine{00013\ \ \ \ \ RGBA8,}
+\DoxyCodeLine{00014\ \ \ \ \ RGBA32F}
+\DoxyCodeLine{00015\ \};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_texture_specification}{TextureSpecification}}\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ uint32\_t\ width\ =\ 1;}
+\DoxyCodeLine{00019\ \ \ \ \ uint32\_t\ height\ =\ 1;}
+\DoxyCodeLine{00020\ \ \ \ \ ImageFormat\ format\ =\ ImageFormat::RGBA8;}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_atlas_1_1_texture}{\string~Texture}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getWidth()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ uint32\_t\ getHeight()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}}\&\ other)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\&\ getFilepath()\ =\ 0;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getFilepath()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}*\ getData()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setData(\textcolor{keywordtype}{void}*\ data,\ uint32\_t\ size)\ =\ 0;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Texture>\ create(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Texture>\ create(uint32\_t\ width,\ uint32\_t\ height);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Texture>\ create(\doxymbox{\hyperlink{struct_atlas_1_1_texture_specification}{TextureSpecification}}\ specs,\ \textcolor{keywordtype}{void}*\ data\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{static}\ uint32\_t\ formatSize(ImageFormat);}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

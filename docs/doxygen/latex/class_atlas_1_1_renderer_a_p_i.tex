@@ -1,0 +1,71 @@
+\doxysection{Atlas::\+Renderer\+API Class Reference}
+\hypertarget{class_atlas_1_1_renderer_a_p_i}{}\label{class_atlas_1_1_renderer_a_p_i}\index{Atlas::RendererAPI@{Atlas::RendererAPI}}
+Inheritance diagram for Atlas::\+Renderer\+API:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_renderer_a_p_i}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a627c3147c01f97b74a9910317503ede0}\label{class_atlas_1_1_renderer_a_p_i_a627c3147c01f97b74a9910317503ede0} 
+enum class {\bfseries API} \{ {\bfseries None} = 0
+, {\bfseries Open\+GL} = 1
+, {\bfseries Metal} = 2
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_abd63b48802e63b1e60281b1673db5b46}\label{class_atlas_1_1_renderer_a_p_i_abd63b48802e63b1e60281b1673db5b46} 
+virtual void {\bfseries set\+Clear\+Color} (const glm::\+vec4 \&color)=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a9dae3b210cae0cc0cf15b8841a683f3e}\label{class_atlas_1_1_renderer_a_p_i_a9dae3b210cae0cc0cf15b8841a683f3e} 
+virtual void {\bfseries clear} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a67b99e77853ccb785a463cc5a3e67438}\label{class_atlas_1_1_renderer_a_p_i_a67b99e77853ccb785a463cc5a3e67438} 
+virtual void {\bfseries draw\+Indexed} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&index\+Buffer)=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_af6a217821d32148a4f2333978e781990}\label{class_atlas_1_1_renderer_a_p_i_af6a217821d32148a4f2333978e781990} 
+virtual void {\bfseries draw\+Indexed} (const std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ \&index\+Buffer, uint32\+\_\+t count)=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_ad763f9657cd94132fc6c73426dbc3d2a}\label{class_atlas_1_1_renderer_a_p_i_ad763f9657cd94132fc6c73426dbc3d2a} 
+virtual void {\bfseries begin\+Frame} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a53731a47e7a5b6a5d3c000aa53da7ff2}\label{class_atlas_1_1_renderer_a_p_i_a53731a47e7a5b6a5d3c000aa53da7ff2} 
+virtual void {\bfseries end\+Frame} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a4b5564260656d0bcbd482cd7e310abd7}\label{class_atlas_1_1_renderer_a_p_i_a4b5564260656d0bcbd482cd7e310abd7} 
+virtual void {\bfseries begin\+Pass} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$ framebuffer)=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a34d6c809d6130d9792c6bd144cbc38dd}\label{class_atlas_1_1_renderer_a_p_i_a34d6c809d6130d9792c6bd144cbc38dd} 
+virtual void {\bfseries end\+Pass} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a27ecf58a784504f075f6e7f9af572403}\label{class_atlas_1_1_renderer_a_p_i_a27ecf58a784504f075f6e7f9af572403} 
+virtual void {\bfseries begin\+Im\+Gui} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a6b7991ad78c961621bf7fba44fdf8387}\label{class_atlas_1_1_renderer_a_p_i_a6b7991ad78c961621bf7fba44fdf8387} 
+virtual void {\bfseries draw\+Im\+Gui} ()=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a32fb0f0c495181aaa166498afc938d15}\label{class_atlas_1_1_renderer_a_p_i_a32fb0f0c495181aaa166498afc938d15} 
+virtual void {\bfseries bind\+Pipeline} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$ pipeline, const \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{Uniform\+Buffer}} \&u\+Buffer)=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_af47ea3ce3ca985f0d208fb345f1f6b7b}\label{class_atlas_1_1_renderer_a_p_i_af47ea3ce3ca985f0d208fb345f1f6b7b} 
+virtual void {\bfseries bind\+Texture} (const \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} \&texture, uint32\+\_\+t index)=0
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_afdd008c5df74ccf579eff075011e8c95}\label{class_atlas_1_1_renderer_a_p_i_afdd008c5df74ccf579eff075011e8c95} 
+virtual void {\bfseries bind\+Vertex\+Buffer} (const \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{Vertex\+Buffer}} \&v\+Buffer, uint32\+\_\+t offset, int index)=0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_renderer_a_p_i_a50f78a08fea581cd5645c45e02c1b4e0}\label{class_atlas_1_1_renderer_a_p_i_a50f78a08fea581cd5645c45e02c1b4e0} 
+static API {\bfseries get\+API} ()
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Renderer\+API.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Renderer\+API.\+cpp\end{DoxyCompactItemize}

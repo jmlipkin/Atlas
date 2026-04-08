@@ -1,0 +1,57 @@
+\doxysection{Sub\+Texture.\+h}
+\hypertarget{_sub_texture_8h_source}{}\label{_sub_texture_8h_source}\index{Atlas/src/Atlas/Renderer/SubTexture.h@{Atlas/src/Atlas/Renderer/SubTexture.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Texture.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_texture_coordinates}{TextureCoordinates}}\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ glm::vec2\ top\_left\ \{0,\ 1\};}
+\DoxyCodeLine{00011\ \ \ \ \ glm::vec2\ top\_right\ \{1,\ 1\};}
+\DoxyCodeLine{00012\ \ \ \ \ glm::vec2\ bottom\_left\ \{0,\ 0\};}
+\DoxyCodeLine{00013\ \ \ \ \ glm::vec2\ bottom\_right\ \{1,\ 0\};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_atlas_1_1_texture_coordinates}{TextureCoordinates}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ equal\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ equal\ \&=\ top\_left\ ==\ other.top\_left;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ equal\ \&=\ top\_right\ ==\ other.top\_right;}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ equal\ \&=\ bottom\_left\ ==\ other.bottom\_left;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ equal\ \&=\ bottom\_right\ ==\ other.bottom\_right;}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ equal;}
+\DoxyCodeLine{00022\ \ \ \ \ \}}
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_sub_texture_specification}{SubTextureSpecification}}\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_texture_coordinates}{TextureCoordinates}}\ coordinates;}
+\DoxyCodeLine{00027\ \ \ \ \ glm::vec2\ \ \ \ \ \ \ \ \ \ sizeInTiles;}
+\DoxyCodeLine{00028\ \ \ \ \ glm::ivec2\ \ \ \ \ \ \ \ \ index;}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }SubTexture\ \{}
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ SubTexture(std::string\ texturePath,\ \doxymbox{\hyperlink{struct_atlas_1_1_sub_texture_specification}{SubTextureSpecification}}\ specs);}
+\DoxyCodeLine{00034\ \ \ \ \ SubTexture(std::string\ texturePath,\ \textcolor{keywordtype}{int}\ tileSize,\ glm::ivec2\ index,\ glm::vec2\ size\_in\_tiles\ =\ glm::vec2(1.0f));}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~SubTexture()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \ \ \ \ \ \ \ \ getTexturePath()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_texturePath;\ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_atlas_1_1_texture_coordinates}{TextureCoordinates}}\&\ getTexCoords()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_specs.coordinates;\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{float}\ getNumTilesHorizontal()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_specs.sizeInTiles.x;\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{float}\ getNumTilesVertical()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_specs.sizeInTiles.y;\ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ glm::vec2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ getSizeInTiles()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_specs.sizeInTiles;\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_sub_texture_specification}{SubTextureSpecification}}\&\ getSpecs()\ \{\ \textcolor{keywordflow}{return}\ m\_specs;\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047\ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ \ \ \ m\_texturePath;}
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_sub_texture_specification}{SubTextureSpecification}}\ m\_specs;}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

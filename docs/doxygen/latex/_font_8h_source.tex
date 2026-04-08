@@ -1,0 +1,53 @@
+\doxysection{Font.\+h}
+\hypertarget{_font_8h_source}{}\label{_font_8h_source}\index{Atlas/src/Atlas/Core/Font.h@{Atlas/src/Atlas/Core/Font.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Texture.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/SubTexture.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <freetype/freetype.h>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }Font\ \{}
+\DoxyCodeLine{00013\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_font_1_1_character}{Character}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ std::vector<unsigned\ char>\ data;}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ glm::ivec2\ size;}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ glm::ivec2\ bearing;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ advance;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ glm::ivec2\ texOffset;}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_texture_coordinates}{TextureCoordinates}}\ texCoords;}
+\DoxyCodeLine{00022\ \ \ \ \ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ Font(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ filepath,\ uint32\_t\ fontSizePx\ =\ 128);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{const}\ std::shared\_ptr<Texture>\&\ getTexture()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_texture;\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{const}\ Character\&\ getCharacter(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ charcode)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_characters.at(charcode);\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ getName()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ uint32\_t\ getFontSizePx()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_fontSizePx;\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ to\_utf8(uint32\_t\ charcode);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ loadGlyphs(FT\_Face\ face);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ createFontTextureAtlas();}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00039\ \ \ \ \ std::unordered\_map<unsigned\ long,\ Character>\ m\_characters;}
+\DoxyCodeLine{00040\ \ \ \ \ std::vector<unsigned\ long>\ m\_orderedGlyphs;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ std::shared\_ptr<Texture>\ m\_texture;}
+\DoxyCodeLine{00043\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00044\ \ \ \ \ uint32\_t\ m\_fontSizePx;}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

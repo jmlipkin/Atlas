@@ -1,0 +1,32 @@
+\doxysection{Input.\+h}
+\hypertarget{_input_8h_source}{}\label{_input_8h_source}\index{Atlas/src/Atlas/Core/Input.h@{Atlas/src/Atlas/Core/Input.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_atlas_1_1_input}{Input}}\ \{}
+\DoxyCodeLine{00008\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isKeyPressed(\textcolor{keywordtype}{int}\ keycode)\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>isKeyPressedImpl(keycode);\ \}}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isMouseButtonPressed(\textcolor{keywordtype}{int}\ button)\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>isMouseButtonPressedImpl(button);\ \}}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::pair<float,\ float>\ getMousePosition()\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>getMousePositionImpl();\ \}}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ getMouseX()\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>getMouseXImpl();\ \}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ getMouseY()\ \{\ \textcolor{keywordflow}{return}\ s\_instance-\/>getMouseYImpl();\ \}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isKeyPressedImpl(\textcolor{keywordtype}{int}\ keycode)\ =\ 0;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isMouseButtonPressedImpl(\textcolor{keywordtype}{int}\ button)\ =\ 0;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ std::pair<float,\ float>\ getMousePositionImpl()\ =\ 0;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{float}\ getMouseXImpl()\ =\ 0;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{float}\ getMouseYImpl()\ =\ 0;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_atlas_1_1_input}{Input}}*\ s\_instance;}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

@@ -1,0 +1,32 @@
+\doxysection{Layer\+Stack.\+h}
+\hypertarget{_layer_stack_8h_source}{}\label{_layer_stack_8h_source}\index{Atlas/src/Atlas/Core/LayerStack.h@{Atlas/src/Atlas/Core/LayerStack.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Layer.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{class\ }LayerStack\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ \ LayerStack();}
+\DoxyCodeLine{00012\ \ \ \ \ \ \string~LayerStack();}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \ \textcolor{keywordtype}{void}\ pushLayer(\doxymbox{\hyperlink{class_atlas_1_1_layer}{Layer}}*\ layer);}
+\DoxyCodeLine{00015\ \ \ \ \ \ \textcolor{keywordtype}{void}\ pushOverlay(\doxymbox{\hyperlink{class_atlas_1_1_layer}{Layer}}*\ overlay);}
+\DoxyCodeLine{00016\ \ \ \ \ \ \textcolor{keywordtype}{void}\ popLayer(\doxymbox{\hyperlink{class_atlas_1_1_layer}{Layer}}*\ layer);}
+\DoxyCodeLine{00017\ \ \ \ \ \ \textcolor{keywordtype}{void}\ popOverlay(\doxymbox{\hyperlink{class_atlas_1_1_layer}{Layer}}*\ overlay);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ std::vector<Layer*>::iterator\ begin()\ \{\ \textcolor{keywordflow}{return}\ m\_layers.begin();\ \}}
+\DoxyCodeLine{00020\ \ \ \ \ \ std::vector<Layer*>::iterator\ end()\ \{\ \textcolor{keywordflow}{return}\ m\_layers.end();\ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \ std::vector<Layer*>\ m\_layers;}
+\DoxyCodeLine{00024\ \ \ \ \ \ uint32\_t\ m\_layerInsertIndex\ =\ 0;}
+\DoxyCodeLine{00025\ \ \ \ \ \};}
+\DoxyCodeLine{00026\ \}}
+
+\end{DoxyCode}

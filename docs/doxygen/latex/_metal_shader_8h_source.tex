@@ -1,0 +1,32 @@
+\doxysection{Metal\+Shader.\+h}
+\hypertarget{_metal_shader_8h_source}{}\label{_metal_shader_8h_source}\index{Atlas/src/Atlas/Platform/Metal/MetalShader.h@{Atlas/src/Atlas/Platform/Metal/MetalShader.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Renderer/Shader.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <metal-\/cpp/Metal.hpp>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }MetalShader\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_atlas_1_1_shader}{Shader}}\ \{}
+\DoxyCodeLine{00010\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ MetalShader(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ vertexFunction,\ \textcolor{keyword}{const}\ std::string\&\ fragmentFunction);}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~MetalShader()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}*\ getVertexShader()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_vertexShader;\ \}}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}*\ getFragmentShader()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_fragmentShader;\ \}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ std::string\&\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ MTL::Function*\ m\_vertexShader;}
+\DoxyCodeLine{00023\ \ \ \ \ MTL::Function*\ m\_fragmentShader;}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+
+\end{DoxyCode}

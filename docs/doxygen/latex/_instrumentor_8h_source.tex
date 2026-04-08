@@ -1,0 +1,141 @@
+\doxysection{Instrumentor.\+h}
+\hypertarget{_instrumentor_8h_source}{}\label{_instrumentor_8h_source}\index{Atlas/src/Atlas/Debug/Instrumentor.h@{Atlas/src/Atlas/Debug/Instrumentor.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Atlas/Core/Time.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }Atlas\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_profile_result}{ProfileResult}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00013\ \ \ \ \ DurationMicro\ start;}
+\DoxyCodeLine{00014\ \ \ \ \ std::chrono::microseconds\ elapsedTime;}
+\DoxyCodeLine{00015\ \ \ \ \ uint32\_t\ threadID;}
+\DoxyCodeLine{00016\ \};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_atlas_1_1_instrumentation_session}{InstrumentationSession}}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }Instrumentor\ \{}
+\DoxyCodeLine{00023\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{struct_atlas_1_1_instrumentation_session}{InstrumentationSession}}*\ m\_currentSession;}
+\DoxyCodeLine{00025\ \ \ \ \ std::ofstream\ m\_outputStream;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_profileCount;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ Instrumentor()}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ :\ m\_currentSession(\textcolor{keyword}{nullptr}),\ m\_profileCount(0)\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ beginSession(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ filepath\ =\ \textcolor{stringliteral}{"{}results.json"{}})\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ m\_outputStream.open(filepath);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ writeHeader();}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ m\_currentSession\ =\ \textcolor{keyword}{new}\ \doxymbox{\hyperlink{struct_atlas_1_1_instrumentation_session}{InstrumentationSession}}\{name\};}
+\DoxyCodeLine{00037\ \ \ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ endSession()\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ writeFooter();}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ m\_outputStream.close();}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ m\_currentSession;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ m\_currentSession\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ m\_profileCount\ =\ 0;}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ writeProfile(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_atlas_1_1_profile_result}{ProfileResult}}\&\ result)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_profileCount++\ >\ 0)}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ std::string\ name\ =\ result.name;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ std::replace(name.begin(),\ name.end(),\ \textcolor{charliteral}{'"{}'},\ \textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ std::setprecision(3)\ <<\ std::fixed;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\{"{}};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)"{}cat\(\backslash\)"{}:\(\backslash\)"{}function\(\backslash\)"{},"{}};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)"{}dur\(\backslash\)"{}:"{}}\ <<\ (result.elapsedTime.count())\ <<\ \textcolor{charliteral}{','};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)"{}name\(\backslash\)"{}:\(\backslash\)"{}"{}}\ <<\ name\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)"{},"{}};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)"{}ph\(\backslash\)"{}:\(\backslash\)"{}X\(\backslash\)"{},"{}};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)"{}pid\(\backslash\)"{}:0,"{}};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)"{}tid\(\backslash\)"{}:"{}}\ <<\ result.threadID\ <<\ \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)"{}ts\(\backslash\)"{}:"{}}\ <<\ result.start.count();}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\}"{}};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ m\_outputStream.flush();}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ writeHeader()\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}\{\(\backslash\)"{}otherData\(\backslash\)"{}:\ \{\},\(\backslash\)"{}traceEvents\(\backslash\)"{}:["{}};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ m\_outputStream.flush();}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ writeFooter()\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ m\_outputStream\ <<\ \textcolor{stringliteral}{"{}]\}"{}};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ m\_outputStream.flush();}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ Instrumentor\&\ get()\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Instrumentor\ instance;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ instance;}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00082\ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{class\ }InstrumentationTimer\ \{}
+\DoxyCodeLine{00085\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00086\ \ \ \ \ InstrumentationTimer(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name)}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ :\ m\_name(name),\ m\_stopped(\textcolor{keyword}{false})\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ m\_startTimePoint\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00089\ \ \ \ \ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \string~InstrumentationTimer()\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_stopped)}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ stop();}
+\DoxyCodeLine{00094\ \ \ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ stop()\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ endTimepoint\ =\ Clock::now();}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ highResStart\ =\ DurationMicro\{\ m\_startTimePoint.time\_since\_epoch()\ \};}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ elapsedTime\ =\ std::chrono::time\_point\_cast<std::chrono::microseconds>(endTimepoint).time\_since\_epoch()\ -\/\ std::chrono::time\_point\_cast<std::chrono::microseconds>(m\_startTimePoint).time\_since\_epoch();}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ uint32\_t\ threadID\ =\ std::hash<std::thread::id>\{\}(std::this\_thread::get\_id());}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ Instrumentor::get().writeProfile(\{m\_name,\ highResStart,\ elapsedTime,\ threadID\});}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ m\_stopped\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ m\_name;}
+\DoxyCodeLine{00109\ \ \ \ \ TimePoint\ m\_startTimePoint;}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_stopped;}
+\DoxyCodeLine{00111\ \};}
+\DoxyCodeLine{00112\ \}\ \ \textcolor{comment}{//\ namespace\ Atlas}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\ 1}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#if\ AT\_PROFILE}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_FUNC\_SIG\ \_\_FUNCSIG\_\_}}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#elif\ defined(\_\_clang\_\_)\ ||\ defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_FUNC\_SIG\ \_\_PRETTY\_FUNCTION\_\_}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\ \ \ \ \#define\ AT\_FUNC\_SIG\ \_\_func\_\_}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\_BEGIN\_SESSION(name,\ filepath)\ ::Atlas::Instrumentor::get().beginSession(name,\ filepath)}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\_END\_SESSION()\ ::Atlas::Instrumentor::get().endSession()}}
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\_SCOPE(name)\ ::Atlas::InstrumentationTimer\ timer\#\#\_\_LINE\_\_(name);}}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\_FUNCTION()\ AT\_PROFILE\_SCOPE(AT\_FUNC\_SIG)}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\_BEGIN\_SESSION(name,\ filepath)}}
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\_END\_SESSION()}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\_SCOPE(name)}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#define\ AT\_PROFILE\_FUNCTION()}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

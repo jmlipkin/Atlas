@@ -2,12 +2,308 @@
   "Name": "Scene1",
   "Entities": [
     {
+      "UUID": 830292891831135007,
+      "Tag": "Pinky",
+      "Transform": {
+        "Position": [
+          -1.0,
+          -2.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          40,
+          10
+        ]
+      }
+    },
+    {
+      "UUID": 14165074233587128032,
+      "Tag": "Clyde",
+      "Transform": {
+        "Position": [
+          1.0,
+          -2.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          36,
+          14
+        ]
+      }
+    },
+    {
+      "UUID": 13207567665180346271,
+      "Tag": "Inky",
+      "Transform": {
+        "Position": [
+          -3.0,
+          -2.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          36,
+          12
+        ]
+      }
+    },
+    {
+      "UUID": 16200288362155719310,
+      "Tag": "Blinky",
+      "Transform": {
+        "Position": [
+          -1.0,
+          -5.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          32,
+          8
+        ]
+      }
+    },
+    {
+      "UUID": 4059586391605717815,
+      "Tag": "Tunnel Bounds BR",
+      "Transform": {
+        "Position": [
+          14.0,
+          -0.5,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          1.0,
+          2.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 12563556406157324122,
+      "Tag": "Tunnel Bounds BL",
+      "Transform": {
+        "Position": [
+          -15.0,
+          -0.5,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          1.0,
+          2.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 5541842870970869699,
+      "Tag": "Tunnel BoundsTR",
+      "Transform": {
+        "Position": [
+          14.0,
+          -3.5,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          1.0,
+          2.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 13705282099284842672,
+      "Tag": "Tunnel BoundsTL",
+      "Transform": {
+        "Position": [
+          -15.0,
+          -3.5,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          1.0,
+          1.0
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          0.0,
+          0.0
+        ],
+        "Size": [
+          1.0,
+          2.0
+        ],
+        "Trigger": false,
+        "Layer Mask": 4294967295
+      },
+      "RigidBody": {
+        "Velocity": [
+          0.0,
+          0.0
+        ],
+        "Static": true,
+        "Response Type": 0
+      }
+    },
+    {
+      "UUID": 1565237332089355683,
+      "Tag": "Right Tunnel",
+      "Transform": {
+        "Position": [
+          14.0,
+          -2.0,
+          99.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          4.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          4.0,
+          2.0
+        ],
+        "Index": [
+          52,
+          2
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          1.0,
+          -1.0
+        ],
+        "Size": [
+          2.0,
+          4.0
+        ],
+        "Trigger": true,
+        "Layer Mask": 4294967295
+      }
+    },
+    {
       "UUID": 14970872023506877474,
       "Tag": "Player",
       "Transform": {
         "Position": [
-          7.681230545043945,
-          -7.949999809265137,
+          -0.9667727947235107,
+          7.050000190734863,
           2.0
         ],
         "Rotation": 0.0,
@@ -1122,6 +1418,46 @@
           1681,
           1707
         ]
+      }
+    },
+    {
+      "UUID": 4766613023250562423,
+      "Tag": "Left Tunnel",
+      "Transform": {
+        "Position": [
+          -18.0,
+          -2.0,
+          99.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          4.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          4.0,
+          2.0
+        ],
+        "Index": [
+          52,
+          2
+        ]
+      },
+      "Collider": {
+        "Shape": 0,
+        "Offset": [
+          1.0,
+          -1.0
+        ],
+        "Size": [
+          2.0,
+          4.0
+        ],
+        "Trigger": true,
+        "Layer Mask": 4294967295
       }
     }
   ]

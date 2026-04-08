@@ -1,0 +1,76 @@
+\doxysection{Atlas::\+Renderer\+Data Struct Reference}
+\hypertarget{struct_atlas_1_1_renderer_data}{}\label{struct_atlas_1_1_renderer_data}\index{Atlas::RendererData@{Atlas::RendererData}}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a5f8bee743d558857d3dd8216ca07b3e1}\label{struct_atlas_1_1_renderer_data_a5f8bee743d558857d3dd8216ca07b3e1} 
+const uint32\+\_\+t {\bfseries max\+Vertex\+Count} = 50000
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a9ffb368056846a8758ccc37339e265d3}\label{struct_atlas_1_1_renderer_data_a9ffb368056846a8758ccc37339e265d3} 
+const uint32\+\_\+t {\bfseries max\+Index\+Count} = 100000
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_aa26eb5b10f141e955f77881324ad3db8}\label{struct_atlas_1_1_renderer_data_aa26eb5b10f141e955f77881324ad3db8} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_vertex_buffer}{Vertex\+Buffer}} $>$ {\bfseries vertex\+Buffer}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a1cd9d797a75427f892dda5e5a80bd08c}\label{struct_atlas_1_1_renderer_data_a1cd9d797a75427f892dda5e5a80bd08c} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_index_buffer}{Index\+Buffer}} $>$ {\bfseries index\+Buffer}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_ad8726d5a5a42b530afee9059f1664613}\label{struct_atlas_1_1_renderer_data_ad8726d5a5a42b530afee9059f1664613} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$ {\bfseries polygon\+Pipeline}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a32bf5fa6c4f9625d05a5a2e58b164436}\label{struct_atlas_1_1_renderer_data_a32bf5fa6c4f9625d05a5a2e58b164436} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{Uniform\+Buffer}} $>$ {\bfseries polygon\+Uniforms}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a6626eae48c16bff2291feef357b8e287}\label{struct_atlas_1_1_renderer_data_a6626eae48c16bff2291feef357b8e287} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$ {\bfseries text\+Pipeline}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a72f51020fdcfc1af5b7f28875c4a6e63}\label{struct_atlas_1_1_renderer_data_a72f51020fdcfc1af5b7f28875c4a6e63} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{Uniform\+Buffer}} $>$ {\bfseries text\+Uniforms}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a7dd7a33354b99b2a51d393034bf3d46f}\label{struct_atlas_1_1_renderer_data_a7dd7a33354b99b2a51d393034bf3d46f} 
+std::\+array$<$ std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$, max\+Texture\+Slots $>$ {\bfseries texture\+Slots}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a23edadc40e88d9ba612c13ade0e153a1}\label{struct_atlas_1_1_renderer_data_a23edadc40e88d9ba612c13ade0e153a1} 
+uint32\+\_\+t {\bfseries texture\+Slot\+Index} = 1
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_aa43d300de01326614ab01ee4e819cd1c}\label{struct_atlas_1_1_renderer_data_aa43d300de01326614ab01ee4e819cd1c} 
+uint32\+\_\+t {\bfseries index\+Count} = 0
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_ab85a521cf05a2dd5166494bf2be6a66b}\label{struct_atlas_1_1_renderer_data_ab85a521cf05a2dd5166494bf2be6a66b} 
+uint32\+\_\+t {\bfseries vertex\+Count} = 0
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_abf34d248c2ff19f7d1cc244900cfc1b7}\label{struct_atlas_1_1_renderer_data_abf34d248c2ff19f7d1cc244900cfc1b7} 
+\doxymbox{\hyperlink{struct_atlas_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries vertex\+Buffer\+Base} = nullptr
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a10f89079a26bb5d9c14826ab8a664a0e}\label{struct_atlas_1_1_renderer_data_a10f89079a26bb5d9c14826ab8a664a0e} 
+\doxymbox{\hyperlink{struct_atlas_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries vertex\+Ptr} = nullptr
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a35a7f5ab6c4465ade3590a3e99814858}\label{struct_atlas_1_1_renderer_data_a35a7f5ab6c4465ade3590a3e99814858} 
+\doxymbox{\hyperlink{struct_atlas_1_1_vertex}{Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries batch\+Start\+Ptr} = nullptr
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_acd90b49cc36fbb8922aa780d3f4d7d85}\label{struct_atlas_1_1_renderer_data_acd90b49cc36fbb8922aa780d3f4d7d85} 
+uint32\+\_\+t \texorpdfstring{$\ast$}{*} {\bfseries index\+Buffer\+Base} = nullptr
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_aa72dceddca8f537c0c00314e1b2fe34c}\label{struct_atlas_1_1_renderer_data_aa72dceddca8f537c0c00314e1b2fe34c} 
+uint32\+\_\+t \texorpdfstring{$\ast$}{*} {\bfseries index\+Ptr}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a6d3e25be1b0eb21d1ddedbb3462bded7}\label{struct_atlas_1_1_renderer_data_a6d3e25be1b0eb21d1ddedbb3462bded7} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$ {\bfseries current\+Pipeline} = nullptr
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a307edeccd310c05a8a3b179b846aa5c4}\label{struct_atlas_1_1_renderer_data_a307edeccd310c05a8a3b179b846aa5c4} 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_uniform_buffer}{Uniform\+Buffer}} $>$ {\bfseries current\+Uniform\+Buffer} = nullptr
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a9c44a4bea23c54750348e57fbd024a7a}\label{struct_atlas_1_1_renderer_data_a9c44a4bea23c54750348e57fbd024a7a} 
+glm::\+vec4 {\bfseries vertex\+Positions} \+[4]\+
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_atlas_1_1_renderer_data_a0ab316ce1a8c01eed2e2e736d9ab8469}\label{struct_atlas_1_1_renderer_data_a0ab316ce1a8c01eed2e2e736d9ab8469} 
+static const uint32\+\_\+t {\bfseries max\+Texture\+Slots} = 32
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Renderer/\+Renderer.\+cpp\end{DoxyCompactItemize}

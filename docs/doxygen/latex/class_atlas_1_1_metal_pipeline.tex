@@ -1,0 +1,76 @@
+\doxysection{Atlas::\+Metal\+Pipeline Class Reference}
+\hypertarget{class_atlas_1_1_metal_pipeline}{}\label{class_atlas_1_1_metal_pipeline}\index{Atlas::MetalPipeline@{Atlas::MetalPipeline}}
+Inheritance diagram for Atlas::\+Metal\+Pipeline:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_metal_pipeline}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_metal_pipeline_a687e49682d92a3331eadda94e3311e0f}\label{class_atlas_1_1_metal_pipeline_a687e49682d92a3331eadda94e3311e0f} 
+{\bfseries Metal\+Pipeline} (const \doxymbox{\hyperlink{struct_atlas_1_1_pipeline_specification}{Pipeline\+Specification}} \&specs)
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_pipeline_afcc37695654c5289c63f1dc3d19caf74}{attach\+Framebuffer}} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$ framebuffer) override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_pipeline_a44ba8462f0300d5e60f10caf08a0ad0c}{set\+Layout}} (const \doxymbox{\hyperlink{class_atlas_1_1_buffer_layout}{Buffer\+Layout}} \&layout) override
+\item 
+virtual const std::\+string \& \doxymbox{\hyperlink{class_atlas_1_1_metal_pipeline_aafaef4ea74748ed9405fce844ed83548}{get\+Name}} () const override
+\item 
+\Hypertarget{class_atlas_1_1_metal_pipeline_a7df84460e38c6bb188705b0084c3c61a}\label{class_atlas_1_1_metal_pipeline_a7df84460e38c6bb188705b0084c3c61a} 
+MTL::\+\+Render\+Pipeline\+State \texorpdfstring{$\ast$}{*} {\bfseries get\+MTLPSO} () const
+\item 
+\Hypertarget{class_atlas_1_1_metal_pipeline_a986b41ab8ef3bb5596e7ef6212e2bf5e}\label{class_atlas_1_1_metal_pipeline_a986b41ab8ef3bb5596e7ef6212e2bf5e} 
+MTL::\+\+Depth\+Stencil\+State \texorpdfstring{$\ast$}{*} {\bfseries get\+Depth\+Stencil\+State} () const
+\item 
+\Hypertarget{class_atlas_1_1_metal_pipeline_a7dedc5ef5f4cc9dcb0a00dd3d56dd6a0}\label{class_atlas_1_1_metal_pipeline_a7dedc5ef5f4cc9dcb0a00dd3d56dd6a0} 
+MTL::\+\+Render\+Pipeline\+Descriptor \texorpdfstring{$\ast$}{*} {\bfseries get\+MTLPipe\+Desc} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Atlas::\+\+Pipeline}}}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Pipeline}} $>$ {\bfseries create} (const \doxymbox{\hyperlink{struct_atlas_1_1_pipeline_specification}{Pipeline\+Specification}} \&specs)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_metal_pipeline_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_metal_pipeline_afcc37695654c5289c63f1dc3d19caf74}\index{Atlas::MetalPipeline@{Atlas::MetalPipeline}!attachFramebuffer@{attachFramebuffer}}
+\index{attachFramebuffer@{attachFramebuffer}!Atlas::MetalPipeline@{Atlas::MetalPipeline}}
+\doxysubsubsection{\texorpdfstring{attachFramebuffer()}{attachFramebuffer()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_pipeline_afcc37695654c5289c63f1dc3d19caf74} 
+void Atlas::\+\+Metal\+Pipeline::\+attach\+Framebuffer (\begin{DoxyParamCaption}\item[{std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_framebuffer}{Framebuffer}} $>$}]{framebuffer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Atlas::\+\+Pipeline}}.
+
+\Hypertarget{class_atlas_1_1_metal_pipeline_aafaef4ea74748ed9405fce844ed83548}\index{Atlas::MetalPipeline@{Atlas::MetalPipeline}!getName@{getName}}
+\index{getName@{getName}!Atlas::MetalPipeline@{Atlas::MetalPipeline}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_pipeline_aafaef4ea74748ed9405fce844ed83548} 
+virtual const std::\+string \& Atlas::\+\+Metal\+Pipeline::\+get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Atlas::\+\+Pipeline}}.
+
+\Hypertarget{class_atlas_1_1_metal_pipeline_a44ba8462f0300d5e60f10caf08a0ad0c}\index{Atlas::MetalPipeline@{Atlas::MetalPipeline}!setLayout@{setLayout}}
+\index{setLayout@{setLayout}!Atlas::MetalPipeline@{Atlas::MetalPipeline}}
+\doxysubsubsection{\texorpdfstring{setLayout()}{setLayout()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_pipeline_a44ba8462f0300d5e60f10caf08a0ad0c} 
+void Atlas::\+\+Metal\+Pipeline::\+set\+Layout (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_atlas_1_1_buffer_layout}{Buffer\+Layout}} \&}]{layout}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_pipeline}{Atlas::\+\+Pipeline}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Pipeline.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Pipeline.\+cpp\end{DoxyCompactItemize}

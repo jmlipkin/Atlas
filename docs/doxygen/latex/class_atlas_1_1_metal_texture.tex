@@ -1,0 +1,135 @@
+\doxysection{Atlas::\+Metal\+Texture Class Reference}
+\hypertarget{class_atlas_1_1_metal_texture}{}\label{class_atlas_1_1_metal_texture}\index{Atlas::MetalTexture@{Atlas::MetalTexture}}
+Inheritance diagram for Atlas::\+Metal\+Texture:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_atlas_1_1_metal_texture}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_metal_texture_a173b89dc11e1e13b0fa02540093add80}\label{class_atlas_1_1_metal_texture_a173b89dc11e1e13b0fa02540093add80} 
+{\bfseries Metal\+Texture} (const std::\+string \&filepath)
+\item 
+\Hypertarget{class_atlas_1_1_metal_texture_ade84a471674915da8fb3aa0f9a02b956}\label{class_atlas_1_1_metal_texture_ade84a471674915da8fb3aa0f9a02b956} 
+{\bfseries Metal\+Texture} (uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+\Hypertarget{class_atlas_1_1_metal_texture_a0d71e28e5219a2a39ca5972877e00afc}\label{class_atlas_1_1_metal_texture_a0d71e28e5219a2a39ca5972877e00afc} 
+{\bfseries Metal\+Texture} (\doxymbox{\hyperlink{struct_atlas_1_1_texture_specification}{Texture\+Specification}} specs, void \texorpdfstring{$\ast$}{*}data=nullptr)
+\item 
+virtual void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_atlas_1_1_metal_texture_aac7a662a17aa5717fd8c3e20ccbd8051}{get\+Data}} () const override
+\item 
+\Hypertarget{class_atlas_1_1_metal_texture_a5d29eb02ca7ee9eb0dd04e8f6ae14b63}\label{class_atlas_1_1_metal_texture_a5d29eb02ca7ee9eb0dd04e8f6ae14b63} 
+MTL::\+\+Texture \texorpdfstring{$\ast$}{*} {\bfseries get\+MTLTexture} () const
+\item 
+virtual std::\+string \& \doxymbox{\hyperlink{class_atlas_1_1_metal_texture_a582e659239c9a2759544b045f7d24c6b}{get\+Filepath}} () override
+\item 
+virtual std::\+string \doxymbox{\hyperlink{class_atlas_1_1_metal_texture_afa539433a96ff0bf65377dc530581731}{get\+Filepath}} () const override
+\item 
+virtual void \doxymbox{\hyperlink{class_atlas_1_1_metal_texture_a431e36b14e6c6c9da7d956c308532998}{set\+Data}} (void \texorpdfstring{$\ast$}{*}data, uint32\+\_\+t size) override
+\item 
+virtual bool \doxymbox{\hyperlink{class_atlas_1_1_metal_texture_a55bb8cf93ba5061987f68a4883785597}{operator==}} (const \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} \&other) const override
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{class_atlas_1_1_metal_texture_aff41580de1d6494ecf89118b9277a205}{get\+Width}} () const override
+\item 
+virtual uint32\+\_\+t \doxymbox{\hyperlink{class_atlas_1_1_metal_texture_a09e4c1392ab32d14b5f4639402f240d4}{get\+Height}} () const override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_atlas_1_1_metal_texture_a07768c51a9e2b97694859d0baaf8e059}\label{class_atlas_1_1_metal_texture_a07768c51a9e2b97694859d0baaf8e059} 
+static MTL::\+\+Pixel\+Format {\bfseries to\+MTLPixel\+Format} (Image\+Format format)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_atlas_1_1_texture}{Atlas::\+\+Texture}}}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ {\bfseries create} (const std::\+string \&filepath)
+\item 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ {\bfseries create} (uint32\+\_\+t width, uint32\+\_\+t height)
+\item 
+static std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} $>$ {\bfseries create} (\doxymbox{\hyperlink{struct_atlas_1_1_texture_specification}{Texture\+Specification}} specs, void \texorpdfstring{$\ast$}{*}data=nullptr)
+\item 
+static uint32\+\_\+t {\bfseries format\+Size} (Image\+Format)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_atlas_1_1_metal_texture_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_atlas_1_1_metal_texture_aac7a662a17aa5717fd8c3e20ccbd8051}\index{Atlas::MetalTexture@{Atlas::MetalTexture}!getData@{getData}}
+\index{getData@{getData}!Atlas::MetalTexture@{Atlas::MetalTexture}}
+\doxysubsubsection{\texorpdfstring{getData()}{getData()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_texture_aac7a662a17aa5717fd8c3e20ccbd8051} 
+virtual void \texorpdfstring{$\ast$}{*} Atlas::\+\+Metal\+Texture::\+get\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_texture}{Atlas::\+\+Texture}}.
+
+\Hypertarget{class_atlas_1_1_metal_texture_afa539433a96ff0bf65377dc530581731}\index{Atlas::MetalTexture@{Atlas::MetalTexture}!getFilepath@{getFilepath}}
+\index{getFilepath@{getFilepath}!Atlas::MetalTexture@{Atlas::MetalTexture}}
+\doxysubsubsection{\texorpdfstring{getFilepath()}{getFilepath()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_texture_afa539433a96ff0bf65377dc530581731} 
+virtual std::\+string Atlas::\+\+Metal\+Texture::\+get\+Filepath (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_texture}{Atlas::\+\+Texture}}.
+
+\Hypertarget{class_atlas_1_1_metal_texture_a582e659239c9a2759544b045f7d24c6b}\index{Atlas::MetalTexture@{Atlas::MetalTexture}!getFilepath@{getFilepath}}
+\index{getFilepath@{getFilepath}!Atlas::MetalTexture@{Atlas::MetalTexture}}
+\doxysubsubsection{\texorpdfstring{getFilepath()}{getFilepath()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_texture_a582e659239c9a2759544b045f7d24c6b} 
+virtual std::\+string \& Atlas::\+\+Metal\+Texture::\+get\+Filepath (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_texture}{Atlas::\+\+Texture}}.
+
+\Hypertarget{class_atlas_1_1_metal_texture_a09e4c1392ab32d14b5f4639402f240d4}\index{Atlas::MetalTexture@{Atlas::MetalTexture}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!Atlas::MetalTexture@{Atlas::MetalTexture}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_texture_a09e4c1392ab32d14b5f4639402f240d4} 
+virtual uint32\+\_\+t Atlas::\+\+Metal\+Texture::\+get\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_texture}{Atlas::\+\+Texture}}.
+
+\Hypertarget{class_atlas_1_1_metal_texture_aff41580de1d6494ecf89118b9277a205}\index{Atlas::MetalTexture@{Atlas::MetalTexture}!getWidth@{getWidth}}
+\index{getWidth@{getWidth}!Atlas::MetalTexture@{Atlas::MetalTexture}}
+\doxysubsubsection{\texorpdfstring{getWidth()}{getWidth()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_texture_aff41580de1d6494ecf89118b9277a205} 
+virtual uint32\+\_\+t Atlas::\+\+Metal\+Texture::\+get\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_texture}{Atlas::\+\+Texture}}.
+
+\Hypertarget{class_atlas_1_1_metal_texture_a55bb8cf93ba5061987f68a4883785597}\index{Atlas::MetalTexture@{Atlas::MetalTexture}!operator==@{operator==}}
+\index{operator==@{operator==}!Atlas::MetalTexture@{Atlas::MetalTexture}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_texture_a55bb8cf93ba5061987f68a4883785597} 
+virtual bool Atlas::\+\+Metal\+Texture::\+operator== (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_atlas_1_1_texture}{Texture}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_texture}{Atlas::\+\+Texture}}.
+
+\Hypertarget{class_atlas_1_1_metal_texture_a431e36b14e6c6c9da7d956c308532998}\index{Atlas::MetalTexture@{Atlas::MetalTexture}!setData@{setData}}
+\index{setData@{setData}!Atlas::MetalTexture@{Atlas::MetalTexture}}
+\doxysubsubsection{\texorpdfstring{setData()}{setData()}}
+{\footnotesize\ttfamily \label{class_atlas_1_1_metal_texture_a431e36b14e6c6c9da7d956c308532998} 
+void Metal\+Texture::\+set\+Data (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{uint32\+\_\+t}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_atlas_1_1_texture}{Atlas::\+\+Texture}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Texture.\+h\item 
+Atlas/\+src/\+\+Atlas/\+\+Platform/\+\+Metal/\+Metal\+Texture.\+cpp\end{DoxyCompactItemize}
