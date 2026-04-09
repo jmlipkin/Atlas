@@ -4,6 +4,8 @@ Atlas is a cross-platform* 2D game engine, built to support my personal game dev
 
 *It will be.
 
+Documentation: [](jmlipkin.github.io/Atlas/)
+
 ___
 
 ### Dependencies
