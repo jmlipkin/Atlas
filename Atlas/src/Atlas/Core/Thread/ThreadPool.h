@@ -36,6 +36,10 @@ class ThreadPool {
 	 */
 	void start(size_t workerCount);
 
+	/**
+	 * @brief Shuts down the ThreadPool. Waits for all threads to close.
+	 *
+	 */
 	void shutdown();
 
 	/**
