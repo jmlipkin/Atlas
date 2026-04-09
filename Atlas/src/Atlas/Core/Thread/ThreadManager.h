@@ -13,21 +13,17 @@ namespace Atlas {
  * @struct DedicatedThread
  * @brief Represents a dedicated thread with associated metadata and lifecycle callbacks.
  *
- * @details This structure encapsulates the essential information needed to manage
- * a dedicated thread, including its identification and shutdown behavior.
- *
  */
 struct DedicatedThread {
-	/** @brief The name identifier for the dedicated thread.
-	 * @details Used for logging, debugging, and thread identification purposes.
+	/**
+	 * @brief The name identifier for the dedicated thread.
+	 *
 	 */
 	std::string name;
 
-	/** @var DedicatedThread::onShutdown
+	/**
 	 * @brief Callback function invoked when the thread is shutting down.
-	 * @details This function will be called during the thread's shutdown sequence,
-	 * allowing for proper cleanup and resource deallocation. The function takes
-	 * no parameters and returns void.
+	 *
 	 */
 	std::function<void()> onShutdown;
 };

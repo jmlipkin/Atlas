@@ -4,12 +4,15 @@
 #include "Atlas/Core/Log.h"
 #include "Atlas/Core/RunMode.h"
 #include "Atlas/Core/RuntimeLayer.h"
+#include "Atlas/Core/Thread/ThreadManager.h"
 #include "Atlas/Events/ApplicationEvent.h"
-#include "Atlas/ImGui/ImGuiLayer.h"
+
 #include "Atlas/Renderer/Framebuffer.h"
 #include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Renderer/Renderer.h"
+
 #include "Atlas/Project/Serializer.h"
+#include "Atlas/ImGui/ImGuiLayer.h"
 
 namespace Atlas {
 
@@ -24,8 +27,10 @@ Application::Application(const WindowProperties& winProps) {
 	m_window = std::shared_ptr<Window>(Window::create(winProps));
 	m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
 	m_context = m_window->getGraphicsContext();
-	Renderer::init(*m_context);
+
+	ThreadManager::get().init();
 	Serializer::init();
+	Renderer::init(*m_context);
 
 	AT_CORE_INFO("Engine initialization complete!");
 }
@@ -33,6 +38,8 @@ Application::Application(const WindowProperties& winProps) {
 Application::~Application() {
 	Renderer::shutdown();
 	Serializer::shutdown();
+	ThreadManager::get().shutdown();
+
 	m_layerStack.popOverlay(m_ImGuiLayer);
 }
 
@@ -68,6 +75,8 @@ void Application::run() {
 	AT_PROFILE_FUNCTION();
 
 	while (m_isRunning) {
+		ThreadManager::get().drainResultQueue();
+
 		m_dt.updateDelta();
 		m_window->onUpdate();
 
