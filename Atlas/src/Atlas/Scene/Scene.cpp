@@ -25,6 +25,10 @@ Entity Scene::createEntity(const std::string& name, UUID id) {
 	return entity;
 }
 
+void Scene::deleteEntity(Entity entity) {
+	m_registry.destroy(entity);
+}
+
 void Scene::onUpdate(DeltaTime dt) {
 	onPreRender(dt);
 

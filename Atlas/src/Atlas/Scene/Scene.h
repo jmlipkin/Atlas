@@ -22,7 +22,9 @@ class Scene {
 	virtual void serializeData(json& data) {}
 	virtual void deserializeData(const json& data) {}
 
-	Entity	  createEntity(const std::string& name, UUID id = UUID{});
+	Entity createEntity(const std::string& name, UUID id = UUID{});
+	void   deleteEntity(Entity entity);
+
 	Registry& getRegistry() { return m_registry; }
 
 	void onEvent(Event& event);
