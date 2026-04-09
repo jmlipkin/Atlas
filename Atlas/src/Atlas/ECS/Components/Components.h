@@ -1,11 +1,9 @@
 #pragma once
 
 #include "Atlas/Core/UUID.h"
-#include "Atlas/Project/Project.h"
 #include "Atlas/Renderer/SubTexture.h"
 
 #include <glm/glm.hpp>
-#include <algorithm>
 
 namespace Atlas::Component {
 
@@ -30,28 +28,11 @@ struct Tilemap {
 
 	std::vector<int> grid = {-1, -1};
 
-	int  getTile(uint32_t x, uint32_t y) const { return grid[y * size.x + x]; }
+	int	 getTile(uint32_t x, uint32_t y) const { return grid[y * size.x + x]; }
 	void setTile(uint32_t x, uint32_t y, int index) { grid[y * size.x + x] = index; }
 
-	void resize(glm::ivec2 newSize) {
-		std::vector<int> newGrid(newSize.x * newSize.y, -1);
-
-		int copyWidth  = std::min(size.x, newSize.x);
-		int copyHeight = std::min(size.y, newSize.y);
-
-		for (int y = 0; y < copyHeight; y++) {
-			for (int x = 0; x < copyWidth; x++) {
-				newGrid[y * newSize.x + x] = grid[y * size.x + x];
-			}
-		}
-
-		size = newSize;
-		grid = newGrid;
-	}
-
-	void removeTile(int deletedTile) {
-		std::replace(grid.begin(), grid.end(), deletedTile, -1);
-	}
+	void resize(glm::ivec2 newSize);
+	void removeTile(int deletedTile);
 };
 
 struct Transform {
@@ -71,16 +52,8 @@ struct Sprite {
 	Sprite(std::string path, SubTextureSpecification texSpecs) : texturePath(path), specs(texSpecs) {}
 	Sprite(std::shared_ptr<SubTexture> sprite) : texturePath(sprite->getTexturePath()), specs(sprite->getSpecs()) {}
 
-	void recalculateCoordinates() {
-		if (texturePath.empty() || !ProjectManager::getActiveProject()) return;
-		SubTexture sub(texturePath, ProjectManager::getActiveProject()->getData().tileSize, specs.index, specs.sizeInTiles);
-		specs.coordinates = sub.getSpecs().coordinates;
-	}
-	void recalculateCoordinates(int tileSize) {
-		if (texturePath.empty()) return;
-		SubTexture sub(texturePath, tileSize, specs.index, specs.sizeInTiles);
-		specs.coordinates = sub.getSpecs().coordinates;
-	}
+	void recalculateCoordinates();
+	void recalculateCoordinates(int tileSize);
 };
 
 }  // namespace Atlas::Component

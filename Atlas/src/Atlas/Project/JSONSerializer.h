@@ -1,8 +1,18 @@
 #pragma once
 
 #include "Atlas/Project/Serializer.h"
+#include "Atlas/ECS/Entities/Entity.h"
+
+#include <nlohmann/json.hpp>
 
 namespace Atlas {
+
+using json = nlohmann::ordered_json;
+
+class JSONEntitySnapshot : public EntitySnapshot {
+  public:
+	json data;
+};
 
 class JSONSerializer : public SerializerAPI {
   public:
@@ -12,10 +22,18 @@ class JSONSerializer : public SerializerAPI {
 	virtual void serializeScene(const std::shared_ptr<Scene>& scene) override;
 	virtual void deserializeScene(std::shared_ptr<Scene> scene) override;
 
+	virtual std::unique_ptr<EntitySnapshot> saveEntitySnapshot(Entity entity) override;
+
+	virtual void recallEntitySnapshot(Entity& dst, const EntitySnapshot& snapshot) override;
+
 	virtual void serializeTileset(const std::shared_ptr<Tileset>& tileset) override;
 	virtual void deserializeTileset(std::shared_ptr<Tileset> tileset) override;
 
 	virtual void loadScriptManifest(std::shared_ptr<Project> project) override;
+
+  private:
+	virtual void serializeEntity(Entity entity, json& dst);
+	virtual void deserializeEntity(Entity& dst, const json& data);
 };
 
 }  // namespace Atlas

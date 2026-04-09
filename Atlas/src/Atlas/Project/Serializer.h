@@ -1,9 +1,12 @@
 #pragma once
 
-#include "Atlas/Scene/Scene.h"
 #include "Atlas/Renderer/Tileset.h"
+#include "Atlas/Scene/Scene.h"
+#include "Atlas/ECS/Entities/Entity.h"
+#include "Atlas/Project/EntitySnapshot.h"
 
 #include <glm/glm.hpp>
+#include <memory>
 
 namespace Atlas {
 
@@ -18,6 +21,9 @@ class SerializerAPI {
 
 	virtual void serializeScene(const std::shared_ptr<Scene>& scene) = 0;
 	virtual void deserializeScene(std::shared_ptr<Scene> scene)		 = 0;
+
+	virtual std::unique_ptr<EntitySnapshot> saveEntitySnapshot(Entity entity) = 0;
+	virtual void recallEntitySnapshot(Entity& dst, const EntitySnapshot& snapshot) = 0;
 
 	virtual void serializeTileset(const std::shared_ptr<Tileset>& tileset) = 0;
 	virtual void deserializeTileset(std::shared_ptr<Tileset> tileset)	   = 0;
@@ -34,6 +40,9 @@ class Serializer {
 
 	static void serializeScene(const std::shared_ptr<Scene>& scene) { s_serializerAPI->serializeScene(scene); }
 	static void deserializeScene(std::shared_ptr<Scene> scene) { s_serializerAPI->deserializeScene(scene); }
+
+	static std::unique_ptr<EntitySnapshot> saveEntitySnapshot(Entity entity) { return s_serializerAPI->saveEntitySnapshot(entity); }
+	static void recallEntitySnapshot(Entity& dst, const EntitySnapshot& snapshot) { s_serializerAPI->recallEntitySnapshot(dst, snapshot); }
 
 	static void serializeTileset(const std::shared_ptr<Tileset>& tileset) { s_serializerAPI->serializeTileset(tileset); }
 	static void deserializeTileset(std::shared_ptr<Tileset> tileset) { s_serializerAPI->deserializeTileset(tileset); }
