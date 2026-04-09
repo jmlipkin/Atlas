@@ -12,7 +12,7 @@ namespace Atlas {
  * @brief Supports compound commands in CommandHistory. Extends EditorCommand.
  *
  */
-class EditorCompoundCommand : EditorCommand {
+class EditorCompoundCommand : public EditorCommand {
   public:
 	EditorCompoundCommand(const std::string& name) : m_name(name) {}
 

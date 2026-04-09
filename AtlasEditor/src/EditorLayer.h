@@ -14,6 +14,8 @@
 #include "LoggingPanel.h"
 #include "RenderStatsPanel.h"
 
+#include "Commands/CommandHistory.h"
+
 namespace Atlas {
 
 struct EditorConfig {
@@ -78,6 +80,8 @@ class EditorLayer : public Layer {
 	bool				 m_settingsActive = false;
 
 	RenderStatsPanel m_renderStatsPanel;
+
+	CommandHistory m_commandHistory;
 };
 
 }  // namespace Atlas

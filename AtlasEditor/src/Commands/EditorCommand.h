@@ -9,8 +9,7 @@ namespace Atlas {
  * undo/redo operations.
  *
  */
-class EditorCommand {
-  public:
+struct EditorCommand {
 	virtual ~EditorCommand() = default;
 
 	virtual void		execute()			= 0;
