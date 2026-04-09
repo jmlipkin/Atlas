@@ -1,6 +1,5 @@
 {
   "Scripts": [
-    "TestScript"
   ],
   "Target": "AtlasEditorScripts"
 }
