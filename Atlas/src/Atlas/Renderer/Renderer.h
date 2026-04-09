@@ -13,10 +13,37 @@
 
 namespace Atlas {
 
+struct RenderStats {
+	uint32_t drawCalls;
+	uint32_t textureCount;
+
+	uint32_t vertexCount;
+	uint32_t indexCount;
+
+	float frameTimeMs;
+	float fps;
+
+	void reset() {
+		drawCalls	 = 0;
+		textureCount = 0;
+
+		vertexCount = 0;
+		indexCount	= 0;
+	}
+};
+
 class Renderer {
   public:
 	static void init(GraphicsContext& context);
 	static void shutdown();
+
+	static const RenderStats& getStats() { return s_stats; }
+
+	/**
+	 * @brief Updates Renderer with frame information for stat display
+	 *
+	 */
+	static void setFrameTime(DeltaTime dt);
 
 	static void beginScene(const OrthographicCamera& camera);
 	static void endScene();
@@ -66,6 +93,9 @@ class Renderer {
 	static void		switchPipeline(std::shared_ptr<Pipeline> pipeline, std::shared_ptr<UniformBuffer> uniforms);
 	static uint32_t getTextureIndex(const std::shared_ptr<Texture>& texture);
 	static void		submitQuad(const glm::mat4& transform, const glm::vec4& color, uint32_t texIndex, const glm::vec2 texCoords[4]);
+
+  private:
+	static RenderStats s_stats;
 };
 
 }  // namespace Atlas

@@ -12,6 +12,7 @@
 #include "ProjectSettingsPanel.h"
 #include "SceneHierarchyPanel.h"
 #include "LoggingPanel.h"
+#include "RenderStatsPanel.h"
 
 namespace Atlas {
 
@@ -75,6 +76,8 @@ class EditorLayer : public Layer {
 
 	ProjectSettingsPanel m_projectSettings;
 	bool				 m_settingsActive = false;
+
+	RenderStatsPanel m_renderStatsPanel;
 };
 
 }  // namespace Atlas

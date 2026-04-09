@@ -4,7 +4,6 @@
 #include <thread>
 
 namespace Atlas {
-ThreadManager ThreadManager::s_instance;
 
 void ThreadManager::init(size_t workerCap) {
 	size_t hardwareCap = std::thread::hardware_concurrency() - 1;

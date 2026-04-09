@@ -78,6 +78,8 @@ void Application::run() {
 		ThreadManager::get().drainResultQueue();
 
 		m_dt.updateDelta();
+		Renderer::setFrameTime(m_dt);
+
 		m_window->onUpdate();
 
 		RenderCommand::beginFrame();

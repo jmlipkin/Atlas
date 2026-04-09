@@ -59,10 +59,15 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 	});
 
 	m_menuBar->setOnPreview([this]() {
-		ProjectManager::saveScene(m_activeScene, Platform::getAppSupportPath() + "/preview.atscene");
-		m_previewLayer = std::make_unique<RuntimeLayer>(true);
-		m_previewLayer->onAttach();
-		m_previewActive = true;
+		if (ProjectManager::getActiveProject()) {
+			ProjectManager::saveScene(m_activeScene, Platform::getAppSupportPath() + "/preview.atscene");
+
+			m_previewLayer = std::make_unique<RuntimeLayer>(true);
+			m_previewLayer->onAttach();
+			m_previewActive = true;
+		} else {
+			AT_CORE_WARN("Open a project in order to preview a scene!");
+		}
 	});
 
 	m_menuBar->setOnBuild([this]() {
@@ -206,6 +211,8 @@ void EditorLayer::onImGuiRender() {
 		float						 aspectRatio = (float)fb->getWidth() / (float)fb->getHeight();
 		EditorWidgets::drawImageWithAspectRatio(texture, aspectRatio);
 
+		m_renderStatsPanel.onOverlay(ImGui::GetItemRectMin());
+
 		ImGui::End();
 
 		ImGui::End();  // Dockspace
@@ -221,6 +228,7 @@ void EditorLayer::onImGuiRender() {
 	m_logger.onImGuiRender();
 	m_projectPanel->onImGuiRender();
 	m_hierarchyPanel->onImGuiRender();
+	m_renderStatsPanel.onImGuiRender();
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Viewport");

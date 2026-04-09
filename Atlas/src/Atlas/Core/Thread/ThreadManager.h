@@ -57,10 +57,13 @@ class ThreadManager {
 	void enqueueResult(std::function<void()> fn) { m_resultQueue.push(std::move(fn)); }
 	void drainResultQueue() { m_resultQueue.drain(); }
 
-	static ThreadManager& get() { return s_instance; }
+	static ThreadManager& get() {
+		static ThreadManager instance;
+		return instance;
+	}
 
   private:
-	ThreadManager();
+	ThreadManager() = default;
 	ThreadManager(const ThreadManager& other) = delete;
 	ThreadManager(ThreadManager&& other)	  = delete;
 
@@ -69,8 +72,6 @@ class ThreadManager {
 	ResultQueue m_resultQueue;
 
 	std::stack<DedicatedThread> m_dedicatedThreads;
-
-	static ThreadManager s_instance;
 };
 
 }  // namespace Atlas

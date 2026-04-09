@@ -62,6 +62,8 @@ struct RendererData {
 static RendererData s_data;
 static float		s_pixelsPerWorldUnit;
 
+RenderStats Renderer::s_stats;
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Helpers
@@ -122,6 +124,9 @@ void Renderer::submitQuad(const glm::mat4& transform,
 	s_data.indexCount += 6;
 	s_data.indexPtr += 6;
 	s_data.vertexCount += 4;
+
+	s_stats.indexCount += 6;
+	s_stats.vertexCount += 4;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -195,6 +200,11 @@ void Renderer::shutdown() {
 	delete[] s_data.indexBufferBase;
 }
 
+void Renderer::setFrameTime(DeltaTime dt) {
+	s_stats.frameTimeMs = dt.getMilliseconds();
+	s_stats.fps			= 1 / dt.getSeconds();
+}
+
 void Renderer::beginScene(const OrthographicCamera& camera) {
 	AT_PROFILE_FUNCTION();
 
@@ -208,11 +218,15 @@ void Renderer::beginScene(const OrthographicCamera& camera) {
 
 	s_pixelsPerWorldUnit = camera.getPixelsPerWorldUnit();
 
+	s_stats.reset();
+
 	startNewBatch();
 }
 
 void Renderer::endScene() {
 	AT_PROFILE_FUNCTION();
+
+	s_stats.textureCount = s_data.textureSlotIndex;
 
 	flush();
 }
@@ -252,6 +266,8 @@ void Renderer::flush() {
 	RenderCommand::bindPipeline(s_data.currentPipeline, *s_data.currentUniformBuffer);
 	RenderCommand::bindVertexBuffer(*s_data.vertexBuffer, batchStart, 0);
 	RenderCommand::drawIndexed(s_data.indexBuffer, s_data.indexCount);
+
+	s_stats.drawCalls += 1;
 
 	startNewBatch();
 }
