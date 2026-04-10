@@ -2,9 +2,9 @@
 
 namespace Atlas {
 
-class EntitySnapshot {
+class Snapshot {
   public:
-	virtual ~EntitySnapshot() = default;
+	virtual ~Snapshot() = default;
 };
 
 }  // namespace Atlas

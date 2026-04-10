@@ -9,10 +9,7 @@ namespace Atlas {
 
 using json = nlohmann::ordered_json;
 
-class JSONEntitySnapshot : public EntitySnapshot {
-  public:
-	json data;
-};
+class Snapshot;
 
 class JSONSerializer : public SerializerAPI {
   public:
@@ -22,9 +19,9 @@ class JSONSerializer : public SerializerAPI {
 	virtual void serializeScene(const std::shared_ptr<Scene>& scene) override;
 	virtual void deserializeScene(std::shared_ptr<Scene> scene) override;
 
-	virtual std::unique_ptr<EntitySnapshot> saveEntitySnapshot(Entity entity) override;
+	virtual std::unique_ptr<Snapshot> saveEntitySnapshot(Entity entity) override;
 
-	virtual void recallEntitySnapshot(Entity& dst, const EntitySnapshot& snapshot) override;
+	virtual void recallEntitySnapshot(Entity& dst, const Snapshot& snapshot) override;
 
 	virtual void serializeTileset(const std::shared_ptr<Tileset>& tileset) override;
 	virtual void deserializeTileset(std::shared_ptr<Tileset> tileset) override;
@@ -33,7 +30,7 @@ class JSONSerializer : public SerializerAPI {
 
   private:
 	virtual void serializeEntity(Entity entity, json& dst);
-	virtual void deserializeEntity(Entity& dst, const json& data);
+	virtual void deserializeEntity(Entity& dst, const json& src);
 };
 
 }  // namespace Atlas
