@@ -11,8 +11,14 @@ class SetPropertyCommand : public EditorCommand {
   public:
 	SetPropertyCommand(const std::string& name, Entity entity, T C::* member, T oldValue, T newValue) : m_name(name), m_entity(entity), m_member(member), m_oldValue(oldValue), m_newValue(newValue) {}
 
-	void execute() override { m_entity.getComponent<C>().*m_member = m_newValue; }
-	void undo() override { m_entity.getComponent<C>().*m_member = m_oldValue; }
+	void execute() override {
+		m_entity.refresh();
+		m_entity.getComponent<C>().*m_member = m_newValue;
+	}
+	void undo() override {
+		m_entity.refresh();
+		m_entity.getComponent<C>().*m_member = m_oldValue;
+	}
 
 	std::string displayName() const override {
 		return m_name;

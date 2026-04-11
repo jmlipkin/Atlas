@@ -1,6 +1,9 @@
 #include "atpch.h"
 #include "SceneHierarchyPanel.h"
 
+#include "Commands/EntityCommands.h"
+#include "Commands/ComponentCommands.h"
+
 #include "Atlas/Core/Platform.h"
 #include "Atlas/Project/Project.h"
 #include "Atlas/ImGui/EditorWidgets.h"
@@ -18,15 +21,19 @@ void SceneHierarchyPanel::setScene(std::shared_ptr<Scene> scene) {
 	m_scene			   = scene;
 	m_selectionContext = {};
 	m_renameTarget	   = {};
+	m_renameBuffer	   = {};
 	m_propertiesPanel.setScene(scene);
 }
 
 void SceneHierarchyPanel::addEmptyEntity() {
-	Entity newEntity = m_scene->createEntity("New Entity");
+	std::unique_ptr<CreateEntityCommand> cmd = std::make_unique<CreateEntityCommand>(m_scene, "New Entity");
+	CreateEntityCommand*				 raw = cmd.get();
+	m_commandHistory.push(std::move(cmd));
 	autoSave();
 
-	m_selectionContext	= newEntity;
-	m_renameTarget		= newEntity;
+	m_selectionContext	= raw->getEntity();
+	m_renameTarget		= raw->getEntity();
+	m_renameBuffer		= raw->getEntity().name();
 	m_focusRenameCursor = 2;
 }
 
@@ -72,6 +79,7 @@ void SceneHierarchyPanel::onImGuiRender() {
 		m_justFinishedRename = false;
 	} else if (ImGui::IsWindowFocused() && m_selectionContext && !m_renameTarget && ImGui::IsKeyPressed(ImGuiKey_Enter)) {
 		m_renameTarget		= m_selectionContext;
+		m_renameBuffer		= m_selectionContext.name();
 		m_focusRenameCursor = 2;
 	}
 
@@ -115,8 +123,10 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 		}
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
-		if (ImGui::InputText("##rename", &tag.tag, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
+		if (ImGui::InputText("##rename", &m_renameBuffer, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue)) {
+			m_commandHistory.push(std::make_unique<RenameEntityCommand>(entity, tag.tag, m_renameBuffer));
 			m_renameTarget = {};
+			m_renameBuffer = {};
 			ImGui::SetKeyboardFocusHere(-1);
 			m_justFinishedRename = true;
 			autoSave();
@@ -129,6 +139,7 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 
 	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
 		m_renameTarget		= entity;
+		m_renameBuffer		= tag.tag;
 		m_focusRenameCursor = 2;
 	}
 
@@ -138,6 +149,7 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 
 	if (entity == m_renameTarget && ImGui::IsItemDeactivated()) {
 		m_renameTarget = {};
+		m_renameBuffer = {};
 		autoSave();
 	}
 
@@ -145,6 +157,7 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 	if (ImGui::BeginPopupContextItem()) {
 		if (ImGui::MenuItem("Rename")) {
 			m_renameTarget		= entity;
+			m_renameBuffer		= tag.tag;
 			m_focusRenameCursor = 2;
 		}
 		if (ImGui::BeginMenu("Add Component")) {
@@ -161,10 +174,10 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 	}
 
 	if (entityDeleted) {
-		m_scene->getRegistry().destroy(entity);
 		if (m_selectionContext == entity) {
 			m_selectionContext = {};
 		}
+		m_commandHistory.push(std::make_unique<DeleteEntityCommand>(m_scene, entity));
 		autoSave();
 	}
 }
@@ -172,7 +185,7 @@ void SceneHierarchyPanel::drawEntityNode(Entity& entity) {
 void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 	if (ImGui::MenuItem("Animation")) {
 		if (!entity.hasComponent<Component::Animations>()) {
-			entity.addComponent<Component::Animations>();
+			m_commandHistory.push(makeAddComponentCommand<Component::Animations>(entity));
 			autoSave();
 		} else {
 			AT_CORE_WARN("Entity \"{}\" already has Animations component!", entity.name());
@@ -181,7 +194,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 
 	if (ImGui::MenuItem("Collider")) {
 		if (!entity.hasComponent<Component::Collider>()) {
-			entity.addComponent<Component::Collider>();
+			m_commandHistory.push(makeAddComponentCommand<Component::Collider>(entity));
 			autoSave();
 		} else {
 			AT_CORE_WARN("Entity \"{}\" already has Collider component!", entity.name());
@@ -191,7 +204,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 	if (ImGui::MenuItem("Sprite")) {
 		if (!entity.hasComponent<Component::Sprite>()) {
 			std::string filepath = Platform::openFileDialog("png");
-			entity.addComponent<Component::Sprite>(filepath, SubTextureSpecification{});
+			m_commandHistory.push(makeAddComponentCommand<Component::Sprite>(entity, filepath, SubTextureSpecification{}));
 			autoSave();
 		} else {
 			AT_CORE_WARN("Entity \"{}\" already has Sprite component!", entity.name());
@@ -200,7 +213,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 
 	if (ImGui::MenuItem("RigidBody")) {
 		if (!entity.hasComponent<Component::RigidBody>()) {
-			entity.addComponent<Component::RigidBody>();
+			m_commandHistory.push(makeAddComponentCommand<Component::RigidBody>(entity));
 			autoSave();
 		} else {
 			AT_CORE_WARN("Entity \"{}\" already has RigidBody component!", entity.name());
@@ -209,7 +222,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 
 	if (ImGui::MenuItem("Script")) {
 		if (!entity.hasComponent<Component::Script>()) {
-			entity.addComponent<Component::Script>();
+			m_commandHistory.push(makeAddComponentCommand<Component::Script>(entity));
 			autoSave();
 		} else {
 			AT_CORE_WARN("Entity \"{}\" already has Script component!", entity.name());
@@ -218,7 +231,7 @@ void SceneHierarchyPanel::drawComponentPicker(Entity& entity) {
 
 	if (ImGui::MenuItem("Tile Map")) {
 		if (!entity.hasComponent<Component::Tilemap>()) {
-			entity.addComponent<Component::Tilemap>();
+			m_commandHistory.push(makeAddComponentCommand<Component::Tilemap>(entity));
 			m_propertiesPanel.setTilemapOpenState(true);
 			autoSave();
 		} else {

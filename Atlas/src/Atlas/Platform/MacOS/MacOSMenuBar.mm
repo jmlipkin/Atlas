@@ -23,11 +23,17 @@
 @property(nonatomic, assign) Atlas::MenuBar::AddComponentCallback onAddComponent;
 
 @property(nonatomic, assign) Atlas::MenuBar::PreviewCallback onPreview;
-@property(nonatomic, assign) Atlas::MenuBar::BuildCallback onBuild;
+@property(nonatomic, assign) Atlas::MenuBar::BuildCallback	 onBuild;
+
+@property(nonatomic, assign) Atlas::MenuBar::UndoCallback onUndo;
+@property(nonatomic, assign) Atlas::MenuBar::RedoCallback onRedo;
 
 @property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onValidateProjectRequired;
 @property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onValidateSceneRequired;
 @property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onValidateBuildAvailable;
+
+@property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onUndoAvailable;
+@property(nonatomic, assign) Atlas::MenuBar::ValidationCallback onRedoAvailable;
 
 - (void)newProject:(id)sender;
 - (void)newScene:(id)sender;
@@ -41,6 +47,9 @@
 - (void)addEntity:(id)sender;
 - (void)addComponent:(id)sender;
 - (void)onPreview:(id)sender;
+
+- (void)undo:(id)sender;
+- (void)redo:(id)sender;
 
 - (void)build:(id)sender;
 
@@ -134,6 +143,14 @@
 	if (self.onBuild) self.onBuild();
 }
 
+- (void)undo:(id)sender {
+	if (self.onUndo) self.onUndo();
+}
+
+- (void)redo:(id)sender {
+	if (self.onRedo) self.onRedo();
+}
+
 - (BOOL)validateMenuItem:(NSMenuItem*)menuItem {
 	SEL action = menuItem.action;
 
@@ -152,6 +169,14 @@
 	if (action == @selector(closeProject:) ||
 		action == @selector(saveProject:)) {
 		return self.onValidateProjectRequired ? self.onValidateProjectRequired() : NO;
+	}
+
+	if (action == @selector(undo:)) {
+		return self.onUndoAvailable ? self.onUndoAvailable() : NO;
+	}
+
+	if (action == @selector(redo:)) {
+		return self.onRedoAvailable ? self.onRedoAvailable() : NO;
 	}
 
 	return YES;
@@ -200,11 +225,16 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	delegate.onAddComponent = m_onAddComponent;
 
 	delegate.onPreview = m_onPreview;
-	delegate.onBuild = m_onBuild;
+	delegate.onBuild   = m_onBuild;
 
 	delegate.onValidateSceneRequired   = m_onSceneValidation;
 	delegate.onValidateProjectRequired = m_onProjectValidation;
-	delegate.onValidateBuildAvailable = m_onBuildAvailable;
+	delegate.onValidateBuildAvailable  = m_onBuildAvailable;
+
+	delegate.onUndo			 = m_onUndo;
+	delegate.onUndoAvailable = m_onUndoAvailable;
+	delegate.onRedo			 = m_onRedo;
+	delegate.onRedoAvailable = m_onRedoAvailable;
 
 	NSMenuItem* newProject = [[NSMenuItem alloc] initWithTitle:@"New Project" action:@selector(newProject:) keyEquivalent:@"N"];
 	[newProject setTarget:delegate];
@@ -267,13 +297,39 @@ void MacOSMenuBar::generateMenuBar(const std::string& title) {
 	[addComponent setTarget:delegate];
 	[editMenu addItem:addComponent];
 
-	[editMenu addItem: [NSMenuItem separatorItem]];
+	[editMenu addItem:[NSMenuItem separatorItem]];
+
+	m_undoMenuItem = [[NSMenuItem alloc] initWithTitle:@"Undo" action:@selector(undo:) keyEquivalent:@"z"];
+	[m_undoMenuItem setTarget:delegate];
+	[editMenu addItem:m_undoMenuItem];
+
+	m_redoMenuItem = [[NSMenuItem alloc] initWithTitle:@"Redo" action:@selector(redo:) keyEquivalent:@"Z"];
+	[m_redoMenuItem setTarget:delegate];
+	[editMenu addItem:m_redoMenuItem];
+
+	[editMenu addItem:[NSMenuItem separatorItem]];
 
 	NSMenuItem* build = [[NSMenuItem alloc] initWithTitle:@"Build" action:@selector(build:) keyEquivalent:@"b"];
 	[build setTarget:delegate];
 	[editMenu addItem:build];
 
 	[editMenuItem setSubmenu:editMenu];
+}
+
+void MacOSMenuBar::updateUndoRedoMenuItems(const std::string& undoName, const std::string& redoName) {
+	if (m_onUndoAvailable()) {
+		NSString* undoStr = [NSString stringWithFormat:@"Undo (%s)", undoName.c_str()];
+		[m_undoMenuItem setTitle:undoStr];
+	} else {
+		[m_undoMenuItem setTitle:@"Undo"];
+	}
+
+	if (m_onRedoAvailable()) {
+		NSString* redoStr = [NSString stringWithFormat:@"Redo (%s)", redoName.c_str()];
+		[m_redoMenuItem setTitle:redoStr];
+	} else {
+		[m_redoMenuItem setTitle:@"Redo"];
+	}
 }
 
 }  // namespace Atlas

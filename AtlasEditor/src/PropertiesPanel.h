@@ -30,6 +30,8 @@ class PropertiesPanel {
 
 	void setTilemapOpenState(bool state) { m_firstOpenedTilemap = state; }
 
+	void clearSelection() { m_selectionType = SelectionType::None, m_selectedClip = {}; }
+
   private:
 	enum class SelectionType { None,
 							   AnimationClip,

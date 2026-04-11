@@ -2,110 +2,18 @@
   "Name": "Scene1",
   "Entities": [
     {
-      "UUID": 830292891831135007,
-      "Tag": "Pinky",
+      "UUID": 10477905149361056775,
+      "Tag": "Testing",
       "Transform": {
         "Position": [
-          -1.0,
-          -2.0,
+          0.0,
+          0.0,
           1.0
         ],
         "Rotation": 0.0,
         "Size": [
-          2.0,
-          2.0
-        ]
-      },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Size": [
-          2.0,
-          2.0
-        ],
-        "Index": [
-          40,
-          10
-        ]
-      }
-    },
-    {
-      "UUID": 14165074233587128032,
-      "Tag": "Clyde",
-      "Transform": {
-        "Position": [
           1.0,
-          -2.0,
           1.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          2.0,
-          2.0
-        ]
-      },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Size": [
-          2.0,
-          2.0
-        ],
-        "Index": [
-          36,
-          14
-        ]
-      }
-    },
-    {
-      "UUID": 13207567665180346271,
-      "Tag": "Inky",
-      "Transform": {
-        "Position": [
-          -3.0,
-          -2.0,
-          1.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          2.0,
-          2.0
-        ]
-      },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Size": [
-          2.0,
-          2.0
-        ],
-        "Index": [
-          36,
-          12
-        ]
-      }
-    },
-    {
-      "UUID": 16200288362155719310,
-      "Tag": "Blinky",
-      "Transform": {
-        "Position": [
-          -1.0,
-          -5.0,
-          1.0
-        ],
-        "Rotation": 0.0,
-        "Size": [
-          2.0,
-          2.0
-        ]
-      },
-      "Sprite": {
-        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
-        "Size": [
-          2.0,
-          2.0
-        ],
-        "Index": [
-          32,
-          8
         ]
       }
     },
@@ -302,7 +210,7 @@
       "Tag": "Player",
       "Transform": {
         "Position": [
-          4.034979820251465,
+          -1.698075532913208,
           7.049999713897705,
           2.0
         ],
@@ -1458,6 +1366,114 @@
         ],
         "Trigger": true,
         "Layer Mask": 4294967295
+      }
+    },
+    {
+      "UUID": 830292891831135007,
+      "Tag": "Pinky",
+      "Transform": {
+        "Position": [
+          -1.0,
+          -2.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          40,
+          10
+        ]
+      }
+    },
+    {
+      "UUID": 14165074233587128032,
+      "Tag": "Clyde",
+      "Transform": {
+        "Position": [
+          1.0,
+          -2.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          36,
+          14
+        ]
+      }
+    },
+    {
+      "UUID": 13207567665180346271,
+      "Tag": "Inky",
+      "Transform": {
+        "Position": [
+          -3.0,
+          -2.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          36,
+          12
+        ]
+      }
+    },
+    {
+      "UUID": 16200288362155719310,
+      "Tag": "Blinky",
+      "Transform": {
+        "Position": [
+          -1.0,
+          -5.0,
+          1.0
+        ],
+        "Rotation": 0.0,
+        "Size": [
+          2.0,
+          2.0
+        ]
+      },
+      "Sprite": {
+        "Texture": "/Users/jared/Documents/GameDev/Atlas/examples/SandboxProject/assets/pacman sprite sheet transparent.png",
+        "Size": [
+          2.0,
+          2.0
+        ],
+        "Index": [
+          32,
+          8
+        ]
       }
     }
   ]

@@ -21,6 +21,7 @@
 namespace Atlas {
 
 EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Application::get().getWindow().getWidth() / (float)Application::get().getWindow().getHeight()) {
+	m_commandHistory.clear();
 	m_menuBar = MenuBar::create();
 
 	m_menuBar->setOnProjectChanged([this](std::string filepath) {
@@ -46,6 +47,7 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 		setScene(std::make_shared<Scene>("New Scene"));
 		m_config.last_open_project = "";
 		m_projectSettings.setProject();
+		m_commandHistory.clear();
 	});
 
 	m_menuBar->setOnNewEntity([this]() {
@@ -75,6 +77,16 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 		return !m_buildFailed;
 	});
 
+	m_menuBar->setOnUndo([this]() {
+		m_commandHistory.undo();
+		clearInvalidSelection();
+	});
+
+	m_menuBar->setOnRedo([this]() {
+		m_commandHistory.redo();
+		clearInvalidSelection();
+	});
+
 	m_menuBar->setOnValidateProjectRequired([this]() {
 		return ProjectManager::getActiveProject() != nullptr;
 	});
@@ -87,15 +99,23 @@ EditorLayer::EditorLayer() : Layer("Editor"), m_cameraController((float)Applicat
 		return ProjectManager::getActiveProject() != nullptr && !m_isBuilding;
 	});
 
+	m_menuBar->setOnUndoAvailable([this]() {
+		return m_commandHistory.canUndo();
+	});
+
+	m_menuBar->setOnRedoAvailable([this]() {
+		return m_commandHistory.canRedo();
+	});
+
 	m_menuBar->generateMenuBar("Atlas Editor");
 	m_cameraController.setZoomLevel(18.0f);
 
-	m_projectPanel = new ProjectPanel();
+	m_projectPanel = std::make_unique<ProjectPanel>(m_commandHistory);
 	m_projectPanel->setOnSceneSelected([this](std::shared_ptr<Scene> scene) {
 		setScene(scene);
 	});
 
-	m_hierarchyPanel = new SceneHierarchyPanel(nullptr);
+	m_hierarchyPanel = std::make_unique<SceneHierarchyPanel>(nullptr, m_commandHistory);
 	m_hierarchyPanel->setOnNewScript([this](Entity entity, const std::string& name) {
 		m_pendingScriptAssignment = true;
 		m_pendingScriptEntity	  = entity;
@@ -156,6 +176,8 @@ void EditorLayer::onEvent(Event& event) {
 }
 
 void EditorLayer::onImGuiRender() {
+	m_menuBar->updateUndoRedoMenuItems(m_commandHistory.getUndoName(), m_commandHistory.getRedoName());
+
 	static bool				  dockspaceOpen	  = true;
 	static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
@@ -436,6 +458,12 @@ void EditorLayer::buildScripts() {
 				AT_CORE_ERROR("Script build failed — check log for details");
 			}
 		});
+}
+
+void EditorLayer::clearInvalidSelection() {
+	auto& sel = m_hierarchyPanel->getSelectionContext();
+	if (sel && !m_activeScene->getRegistry().valid(sel))
+		m_hierarchyPanel->clearSelection();
 }
 
 }  // namespace Atlas

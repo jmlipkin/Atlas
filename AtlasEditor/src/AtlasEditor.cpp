@@ -3,8 +3,6 @@
 #include "Atlas/Core/Application.h"
 #include "EditorLayer.h"
 
-#include "TestScript.h"
-
 namespace Atlas {
 
 class AtlasEditorApp : public Application {

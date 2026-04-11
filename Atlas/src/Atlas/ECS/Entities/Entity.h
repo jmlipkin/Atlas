@@ -34,6 +34,8 @@ class Entity {
 	template <typename T>
 	bool hasComponent();
 
+	bool refresh();
+
 	// Defined in Behavior.h
 	template <typename T>
 	void addScript();
@@ -81,6 +83,18 @@ T& Entity::getComponent() {
 template <typename T>
 bool Entity::hasComponent() {
 	return m_scene->m_registry.any_of<T>(m_entityID);
+}
+
+inline bool Entity::refresh() {
+	if (!m_scene) return false;
+	auto view = m_scene->getRegistry().view<Component::UUID>();
+	for (auto e : view) {
+		if (view.get<Component::UUID>(e).id == m_atlasID) {
+			m_entityID = e;
+			return true;
+		}
+	}
+	return false;
 }
 
 }  // namespace Atlas

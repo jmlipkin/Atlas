@@ -16,6 +16,8 @@
 
 #include "Commands/CommandHistory.h"
 
+#include <memory>
+
 namespace Atlas {
 
 struct EditorConfig {
@@ -47,11 +49,13 @@ class EditorLayer : public Layer {
 		return ImGui::GetFrameHeight() + ImGui::GetStyle().WindowPadding.y;
 	}
 
+	void clearInvalidSelection();
+
   private:
-	std::shared_ptr<MenuBar> m_menuBar;
-	SceneHierarchyPanel*	 m_hierarchyPanel;
-	ProjectPanel*			 m_projectPanel;
-	LoggingPanel			 m_logger;
+	std::shared_ptr<MenuBar>			 m_menuBar;
+	std::unique_ptr<SceneHierarchyPanel> m_hierarchyPanel;
+	std::unique_ptr<ProjectPanel>		 m_projectPanel;
+	LoggingPanel						 m_logger;
 
 	OrthographicCameraController m_cameraController;
 	glm::vec2					 m_viewportSize;

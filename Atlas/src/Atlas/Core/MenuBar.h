@@ -20,9 +20,12 @@ class MenuBar {
 	using AddComponentCallback = std::function<void()>;
 
 	using PreviewCallback = std::function<void()>;
-	using BuildCallback = std::function<bool()>;
+	using BuildCallback	  = std::function<bool()>;
 
 	using ValidationCallback = std::function<bool()>;
+
+	using UndoCallback = std::function<void()>;
+	using RedoCallback = std::function<void()>;
 
 	virtual ~MenuBar() = default;
 
@@ -44,6 +47,13 @@ class MenuBar {
 	void setOnValidateProjectRequired(ValidationCallback callback) { m_onProjectValidation = callback; }
 	void setOnValidateBuildAvailable(ValidationCallback callback) { m_onBuildAvailable = callback; }
 
+	void setOnUndo(UndoCallback callback) { m_onUndo = callback; }
+	void setOnUndoAvailable(ValidationCallback callback) { m_onUndoAvailable = callback; }
+	void setOnRedo(RedoCallback callback) { m_onRedo = callback; }
+	void setOnRedoAvailable(ValidationCallback callback) { m_onRedoAvailable = callback; }
+
+	virtual void updateUndoRedoMenuItems(const std::string& undoName, const std::string& redoName) = 0;
+
 	virtual void					generateMenuBar(const std::string& title) = 0;
 	static std::shared_ptr<MenuBar> create();
 
@@ -59,11 +69,17 @@ class MenuBar {
 	AddComponentCallback m_onAddComponent;
 
 	PreviewCallback m_onPreview;
-	BuildCallback m_onBuild;
+	BuildCallback	m_onBuild;
+
+	UndoCallback m_onUndo;
+	RedoCallback m_onRedo;
 
 	ValidationCallback m_onSceneValidation;
 	ValidationCallback m_onProjectValidation;
 	ValidationCallback m_onBuildAvailable;
+
+	ValidationCallback m_onUndoAvailable;
+	ValidationCallback m_onRedoAvailable;
 };
 
 }  // namespace Atlas
