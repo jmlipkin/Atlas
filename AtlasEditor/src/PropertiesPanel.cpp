@@ -43,8 +43,9 @@ void PropertiesPanel::onImGuiRender(Entity& selection) {
 	m_tilemapEditorPanel.onImGuiRender();
 
 	m_animationEditor.onImGuiRender();
-	if (m_selectionType == SelectionType::AnimationClip && m_animationEditor.isClipNameChanged())
-		m_selectedClip = m_animationEditor.getClipName();
+
+	// if (m_selectionType == SelectionType::AnimationClip)
+	// 	m_animationEditor.syncClipName(m_selectedClip);
 
 	ImGui::End();
 }
@@ -550,7 +551,7 @@ void PropertiesPanel::drawAnimationsComponent(Entity& entity) {
 						clips.insert(std::move(node));
 					}));
 				m_selectedClip = newName;
-				m_animationEditor.setClipName(newName);
+				m_animationEditor.syncClipName(newName);
 				m_renamedClip = {};
 				ProjectManager::saveScene(m_scene);
 				break;
@@ -581,7 +582,7 @@ void PropertiesPanel::drawAnimationsComponent(Entity& entity) {
 
 			if (m_animationEditorShouldOpen) {
 				m_animationEditorShouldOpen = false;
-				m_animationEditor.open(&component, m_selectedClip, m_scene);
+				m_animationEditor.open(entity, m_selectedClip, m_scene);
 			}
 		}
 		ImGui::Dummy(componentSpacer);

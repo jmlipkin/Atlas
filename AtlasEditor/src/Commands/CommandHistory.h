@@ -50,7 +50,7 @@ class CommandHistory {
 	void clampStacktoCapacity(std::deque<std::unique_ptr<EditorCommand>>& stack);
 
   private:
-	size_t m_capacity = 50;
+	size_t m_capacity = 100;
 
 	std::deque<std::unique_ptr<EditorCommand>> m_undoStack;
 	std::deque<std::unique_ptr<EditorCommand>> m_redoStack;
