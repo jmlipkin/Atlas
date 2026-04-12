@@ -9,7 +9,7 @@ namespace Atlas {
 
 class SceneHierarchyPanel {
   public:
-	SceneHierarchyPanel(std::shared_ptr<Scene> scene, CommandHistory& commandHistory) : m_scene(scene), m_commandHistory(commandHistory), m_propertiesPanel(scene) {}
+	SceneHierarchyPanel(std::shared_ptr<Scene> scene, CommandHistory& commandHistory) : m_scene(scene), m_commandHistory(commandHistory), m_propertiesPanel(scene, commandHistory) {}
 	~SceneHierarchyPanel() = default;
 
 	void setScene(std::shared_ptr<Scene> scene);

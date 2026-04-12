@@ -8,6 +8,12 @@
 
 namespace Atlas {
 
+struct WidgetState {
+	bool changed  = false;
+	bool started  = false;	// first frame of interaction
+	bool finished = false;	// frame interaction ended
+};
+
 class EditorWidgets {
   public:
 	constexpr static const ImVec4 bg0 = ImVec4(0.114f, 0.122f, 0.141f, 1.00f);	// #1D1F24  deepest chrome
@@ -75,18 +81,19 @@ class EditorWidgets {
 
 	static void drawImageWithAspectRatio(void* data, float aspectRatio, bool centered = false);
 
-	static bool drawFloatSlider(const char* label, float& value, float columnWidth = 85.0f, float valueWidth = 120.0f, float resetValue = 0.0f, float min = 0.0f, float max = 1.0f, float speed = 0.1f);
+	static WidgetState drawFloatSlider(const char* label, float& value, float columnWidth = 85.0f, float valueWidth = 120.0f, float resetValue = 0.0f, float min = 0.0f, float max = 1.0f, float speed = 0.1f);
 
 	static void drawLabel(const char* label, float columnWidth);
-	static bool drawCheckbox(const char* label, bool& value, float columnWidth = 85.0f);
-	static bool drawIntControl(const char* label, int& value, const char* resetLabel = "R", float columnWidth = 85.0f, float valueWidth = 120.0f, int resetValue = 0);
-	static bool drawFloatControl(const char* label, float& value, const char* resetLabel = "R", float columnWidth = 85.0f, float valueWidth = 100.0f, float resetValue = 0.0f, float speed = 0.1f);
-	static bool drawCombo(const char* label, const char** items, int count, int& value, float columnWidth = 85.0f, float valueWidth = 120.0f);
-	static bool drawVec3Control(const char* label, glm::vec3& values, float columnWidth = 100.0f, float valueWidth = 100.0f, float resetX = 0.f, float resetY = 0.0f, float resetZ = 0.0f, bool vertical = false);
+	static WidgetState drawCheckbox(const char* label, bool& value, float columnWidth = 85.0f);
+	static WidgetState drawIntControl(const char* label, int& value, const char* resetLabel = "R", float columnWidth = 85.0f, float valueWidth = 120.0f, int resetValue = 0);
+	static WidgetState drawFloatControl(const char* label, float& value, const char* resetLabel = "R", float columnWidth = 85.0f, float valueWidth = 100.0f, float resetValue = 0.0f, float speed = 0.1f);
+	static WidgetState drawCombo(const char* label, const char** items, int count, int& value, float columnWidth = 85.0f, float valueWidth = 120.0f);
+	static WidgetState drawVec3Control(const char* label, glm::vec3& values, float columnWidth = 100.0f, float valueWidth = 100.0f, float resetX = 0.f, float resetY = 0.0f, float resetZ = 0.0f, bool vertical = false);
 
 	template <typename T>
-	static bool drawVec2Control(const char* label, T& values, float columnWidth = 100.0f, float valueWidth = 100.0f, typename T::value_type resetX = 0, typename T::value_type resetY = 0, bool vertical = false) {
-		bool  changed	 = false;
+	static WidgetState drawVec2Control(const char* label, T& values, float columnWidth = 100.0f, float valueWidth = 100.0f, typename T::value_type resetX = 0, typename T::value_type resetY = 0, bool vertical = false) {
+		WidgetState state;
+
 		float buttonSize = ImGui::GetFrameHeight();
 		float spacing	 = ImGui::GetStyle().ItemInnerSpacing.x;
 		float pairWidth	 = buttonSize + (valueWidth);
@@ -104,17 +111,20 @@ class EditorWidgets {
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, steelBlueLight);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, steelBlueActive);
 			if (ImGui::Button("X", ImVec2(lineHeight, lineHeight))) {
-				values.x = resetX;
-				changed	 = true;
+				values.x	  = resetX;
+				state.changed = true;
 			}
 			ImGui::PopStyleColor(3);
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(valueWidth - lineHeight);
 			if constexpr (std::is_same_v<T, glm::ivec2>) {
-				changed |= ImGui::DragInt("##X", &values.x, 1, 0, 0, "%d");
+				state.changed |= ImGui::DragInt("##X", &values.x, 1, 0, 0, "%d");
 			} else {
-				changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
+				state.changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
 			}
+
+			state.started |= ImGui::IsItemActivated();
+			state.finished |= ImGui::IsItemDeactivatedAfterEdit();
 
 			if (vertical) {
 				ImGui::Dummy(ImVec2(0.0f, ImGui::GetStyle().ItemSpacing.y));
@@ -126,23 +136,26 @@ class EditorWidgets {
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, greenLight);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, greenActive);
 			if (ImGui::Button("Y", ImVec2(lineHeight, lineHeight))) {
-				values.y = resetY;
-				changed	 = true;
+				values.y	  = resetY;
+				state.changed = true;
 			}
 			ImGui::PopStyleColor(3);
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(valueWidth - lineHeight);
 			if constexpr (std::is_same_v<T, glm::ivec2>) {
-				changed |= ImGui::DragInt("##Y", &values.y, 1, 0, 0, "%d");
+				state.changed |= ImGui::DragInt("##Y", &values.y, 1, 0, 0, "%d");
 			} else {
-				changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
+				state.changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
 			}
+
+			state.started |= ImGui::IsItemActivated();
+			state.finished |= ImGui::IsItemDeactivatedAfterEdit();
 
 			ImGui::PopStyleVar();
 			ImGui::EndTable();
 		}
 		ImGui::PopID();
-		return changed;
+		return state;
 	}
 
   private:

@@ -3,12 +3,15 @@
 #include "AnimationClipPanel.h"
 #include "TilemapEditorPanel.h"
 
+#include "Commands/CommandHistory.h"
+#include "Commands/ComponentCommands.h"
+
+#include "Atlas/Project/Project.h"
 #include "Atlas/ECS/Entities/Entity.h"
 #include "Atlas/ECS/Components/Behavior.h"
 #include "Atlas/ImGui/EditorWidgets.h"
 
 #include <imgui/imgui.h>
-#include <imgui/imgui_internal.h>
 
 namespace Atlas {
 
@@ -16,7 +19,7 @@ class PropertiesPanel {
   public:
 	using NewScriptCallback = std::function<void(Entity, const std::string& scriptName)>;
 
-	PropertiesPanel(std::shared_ptr<Scene> scene) : m_scene(scene) {}
+	PropertiesPanel(std::shared_ptr<Scene> scene, CommandHistory& commandHistory) : m_scene(scene), m_commandHistory(commandHistory) {}
 	~PropertiesPanel() = default;
 
 	void onImGuiRender(Entity& selection);
@@ -45,9 +48,8 @@ class PropertiesPanel {
 		auto&					 component	   = entity.getComponent<T>();
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowOverlap | ImGuiTreeNodeFlags_FramePadding;
 
-		// TODO: Update formatting
 		ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-		float  padding				  = 2.0 * EditorWidgets::displayScale;
+		float  padding				  = 2.0f * EditorWidgets::displayScale;
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{padding, padding});
 		ImGui::Separator();
 		bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, "%s", label);
@@ -57,9 +59,8 @@ class PropertiesPanel {
 		ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
 
 		std::string popupID = std::string("ComponentSettings##") + typeid(T).name();
-		if (ImGui::Button("\u2013", ImVec2{lineHeight, lineHeight})) {
+		if (ImGui::Button("\u2013", ImVec2{lineHeight, lineHeight}))
 			ImGui::OpenPopup(popupID.c_str());
-		}
 
 		bool removeComponent = false;
 		if (ImGui::BeginPopup(popupID.c_str())) {
@@ -74,19 +75,28 @@ class PropertiesPanel {
 		}
 
 		if (removeComponent) {
-			entity.removeComponent<T>();
+			m_commandHistory.push(std::make_unique<RemoveComponentCommand<T>>(entity));
+			ProjectManager::saveScene(m_scene);
 		}
 	}
 
 	void drawComponents(Entity& entity);
 
-	void drawClipLabel(std::string& clip, SelectionType type);
+	void drawTransformComponent(Entity& entity);
+	void drawSpriteComponent(Entity& entity);
+	void drawTilemapComponent(Entity& entity);
+	void drawColliderComponent(Entity& entity);
+	void drawRigidBodyComponent(Entity& entity);
+	void drawAnimationsComponent(Entity& entity);
+	void drawScriptComponent(Entity& entity);
 
+	void drawClipLabel(std::string& clip, SelectionType type);
 	void drawScriptProperties(Behavior& behavior);
 	void drawScriptProperty(const char* label, Behavior::Property& property);
 
   private:
 	std::shared_ptr<Scene> m_scene;
+	CommandHistory&		   m_commandHistory;
 
 	AnimationClipPanel m_animationEditor;
 	bool			   m_animationEditorShouldOpen = false;

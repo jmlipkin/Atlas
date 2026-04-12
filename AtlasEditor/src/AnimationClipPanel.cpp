@@ -94,9 +94,9 @@ void AnimationClipPanel::onImGuiRender() {
 
 	float columnWidth = 130.0f;
 	float valueWidth  = 50.0f;
-	changed |= EditorWidgets::drawCheckbox("Should Loop", clip.shouldLoop, columnWidth);
-	changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Size", clip.sizeInTiles, columnWidth, valueWidth);
-	changed |= EditorWidgets::drawFloatSlider("Frame Rate (fps)", clip.frameRate, columnWidth, valueWidth * 3, 12.0f, 0.1f, 60.0f);
+	changed |= EditorWidgets::drawCheckbox("Should Loop", clip.shouldLoop, columnWidth).changed;
+	changed |= EditorWidgets::drawVec2Control<glm::ivec2>("Size", clip.sizeInTiles, columnWidth, valueWidth).changed;
+	changed |= EditorWidgets::drawFloatSlider("Frame Rate (fps)", clip.frameRate, columnWidth, valueWidth * 3, 12.0f, 0.1f, 60.0f).changed;
 
 	ImGui::Separator();
 	ImGui::Text("Frames");

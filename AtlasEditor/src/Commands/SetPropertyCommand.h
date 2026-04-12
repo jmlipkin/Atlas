@@ -9,7 +9,7 @@ namespace Atlas {
 template <typename C, typename T>
 class SetPropertyCommand : public EditorCommand {
   public:
-	SetPropertyCommand(const std::string& name, Entity entity, T C::* member, T oldValue, T newValue) : m_name(name), m_entity(entity), m_member(member), m_oldValue(oldValue), m_newValue(newValue) {}
+	SetPropertyCommand(const std::string& name, Entity entity, T C::* member, const T& oldValue, const T& newValue) : m_name(name), m_entity(entity), m_member(member), m_oldValue(oldValue), m_newValue(newValue) {}
 
 	void execute() override {
 		m_entity.refresh();

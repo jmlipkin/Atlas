@@ -31,8 +31,9 @@ void EditorWidgets::drawImageWithAspectRatio(void* data, float aspectRatio, bool
 	ImGui::Image(data, finalSize);
 }
 
-bool EditorWidgets::drawFloatSlider(const char* label, float& value, float columnWidth, float valueWidth, float resetValue, float min, float max, float speed) {
-	bool changed = false;
+WidgetState EditorWidgets::drawFloatSlider(const char* label, float& value, float columnWidth, float valueWidth, float resetValue, float min, float max, float speed) {
+	WidgetState state;
+
 	ImGui::PushID(label);
 	bool			hasLabel = label[0] != '\0';
 	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
@@ -73,19 +74,23 @@ bool EditorWidgets::drawFloatSlider(const char* label, float& value, float colum
 		ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 6.0f);
 		ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 0.0f);
 
-		changed |= ImGui::SliderFloat("##v", &value, min, max, "%.f");
+		state.changed |= ImGui::SliderFloat("##v", &value, min, max, "%.f");
+
+		state.started |= ImGui::IsItemActivated();
+		state.finished |= ImGui::IsItemDeactivatedAfterEdit();
 
 		ImGui::PopStyleVar(2);
 		ImGui::PopStyleColor(5);
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
-			changed = true;
-			value	= resetValue;
+			state.changed = true;
+			value		  = resetValue;
 		}
 
 		ImGui::EndTable();
 	}
 	ImGui::PopID();
-	return changed;
+
+	return state;
 }
 
 void EditorWidgets::drawLabel(const char* label, float columnWidth) {
@@ -98,8 +103,9 @@ void EditorWidgets::drawLabel(const char* label, float columnWidth) {
 	ImGui::TableSetColumnIndex(1);
 }
 
-bool EditorWidgets::drawIntControl(const char* label, int& value, const char* resetLabel, float columnWidth, float valueWidth, int resetValue) {
-	bool changed = false;
+WidgetState EditorWidgets::drawIntControl(const char* label, int& value, const char* resetLabel, float columnWidth, float valueWidth, int resetValue) {
+	WidgetState state;
+
 	ImGui::PushID(label);
 	bool			hasLabel = label[0] != '\0';
 	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
@@ -120,22 +126,28 @@ bool EditorWidgets::drawIntControl(const char* label, int& value, const char* re
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, purpleLight);
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, purpleActive);
 		if (ImGui::Button(resetLabel, ImVec2(lineHeight, lineHeight))) {
-			value	= resetValue;
-			changed = true;
+			value		  = resetValue;
+			state.changed = true;
 		}
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(valueWidth /* * displayScale */ - lineHeight);
-		changed |= ImGui::DragInt("##v", &value);
+		state.changed |= ImGui::DragInt("##v", &value);
+
+		state.started |= ImGui::IsItemActivated();
+		state.finished |= ImGui::IsItemDeactivatedAfterEdit();
+
 		ImGui::PopStyleVar();
 		ImGui::EndTable();
 	}
 	ImGui::PopID();
-	return changed;
+
+	return state;
 }
 
-bool EditorWidgets::drawFloatControl(const char* label, float& value, const char* resetLabel, float columnWidth, float valueWidth, float resetValue, float speed) {
-	bool changed = false;
+WidgetState EditorWidgets::drawFloatControl(const char* label, float& value, const char* resetLabel, float columnWidth, float valueWidth, float resetValue, float speed) {
+	WidgetState state;
+
 	ImGui::PushID(label);
 	bool			hasLabel = label[0] != '\0';
 	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
@@ -158,22 +170,28 @@ bool EditorWidgets::drawFloatControl(const char* label, float& value, const char
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, purpleLight);
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, purpleActive);
 		if (ImGui::Button(resetLabel, ImVec2(lineHeight, lineHeight))) {
-			value	= resetValue;
-			changed = true;
+			value		  = resetValue;
+			state.changed = true;
 		}
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(-1);
-		changed |= ImGui::DragFloat("##v", &value, speed, 0.0f, 0.0f, "%.2f");
+		state.changed |= ImGui::DragFloat("##v", &value, speed, 0.0f, 0.0f, "%.2f");
+
+		state.started |= ImGui::IsItemActivated();
+		state.finished |= ImGui::IsItemDeactivatedAfterEdit();
+
 		ImGui::PopStyleVar();
 		ImGui::EndTable();
 	}
 	ImGui::PopID();
-	return changed;
+
+	return state;
 }
 
-bool EditorWidgets::drawCheckbox(const char* label, bool& value, float columnWidth) {
-	bool changed = false;
+WidgetState EditorWidgets::drawCheckbox(const char* label, bool& value, float columnWidth) {
+	WidgetState state;
+
 	ImGui::PushID(label);
 	bool			hasLabel = label[0] != '\0';
 	ImGuiTableFlags flags	 = hasLabel ? ImGuiTableFlags_BordersInnerV : 0;
@@ -189,15 +207,21 @@ bool EditorWidgets::drawCheckbox(const char* label, bool& value, float columnWid
 		ImGui::TableNextRow();
 		if (hasLabel)
 			drawLabel(label, columnWidth);
-		changed = ImGui::Checkbox("##v", &value);
+		state.changed = ImGui::Checkbox("##v", &value);
+
+		state.started |= ImGui::IsItemActivated();
+		state.finished |= ImGui::IsItemDeactivatedAfterEdit();
+
 		ImGui::EndTable();
 	}
 	ImGui::PopID();
-	return changed;
+
+	return state;
 }
 
-bool EditorWidgets::drawCombo(const char* label, const char** items, int count, int& value, float columnWidth, float valueWidth) {
-	bool changed = false;
+WidgetState EditorWidgets::drawCombo(const char* label, const char** items, int count, int& value, float columnWidth, float valueWidth) {
+	WidgetState state;
+
 	ImGui::PushID(label);
 
 	bool			hasLabel = label[0] != '\0';
@@ -215,18 +239,23 @@ bool EditorWidgets::drawCombo(const char* label, const char** items, int count, 
 			drawLabel(label, columnWidth);
 
 		ImGui::SetNextItemWidth(-1);
-		changed = ImGui::Combo("##v", &value, items, count);
+		state.changed = ImGui::Combo("##v", &value, items, count);
+
+		state.started |= ImGui::IsItemActivated();
+		state.finished |= ImGui::IsItemDeactivatedAfterEdit();
+
 		ImGui::EndTable();
 	}
 	ImGui::PopID();
-	return changed;
+
+	return state;
 }
 
-bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float resetX, float resetY, float resetZ, float columnWidth, float valueWidth, bool vertical) {
+WidgetState EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float resetX, float resetY, float resetZ, float columnWidth, float valueWidth, bool vertical) {
 	ImGuiIO io		 = ImGui::GetIO();
 	ImFont* boldFont = io.Fonts->Fonts[0];
 
-	bool changed = false;
+	WidgetState state;
 
 	ImGui::PushID(label);
 
@@ -256,14 +285,18 @@ bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float 
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::steelBlueActive);
 	ImGui::PushFont(boldFont);
 	if (ImGui::Button("X", buttonSize)) {
-		values.x = resetX;
-		changed	 = true;
+		values.x	  = resetX;
+		state.changed = true;
 	}
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 	ImGui::SameLine();
 	ImGui::PushItemWidth(valueWidth);
-	changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
+	state.changed |= ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
+
+	state.started |= ImGui::IsItemActivated();
+	state.finished |= ImGui::IsItemDeactivatedAfterEdit();
+
 	ImGui::PopItemWidth();
 	ImGui::PopItemWidth();
 
@@ -276,14 +309,18 @@ bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float 
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::greenActive);
 	ImGui::PushFont(boldFont);
 	if (ImGui::Button("Y", buttonSize)) {
-		values.y = resetY;
-		changed	 = true;
+		values.y	  = resetY;
+		state.changed = true;
 	}
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 	ImGui::SameLine();
 	ImGui::PushItemWidth(valueWidth);
-	changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
+	state.changed |= ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
+
+	state.started |= ImGui::IsItemActivated();
+	state.finished |= ImGui::IsItemDeactivatedAfterEdit();
+
 	ImGui::PopItemWidth();
 	ImGui::PopItemWidth();
 
@@ -296,14 +333,18 @@ bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float 
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, EditorWidgets::purpleActive);
 	ImGui::PushFont(boldFont);
 	if (ImGui::Button("Z", buttonSize)) {
-		values.z = resetZ;
-		changed	 = true;
+		values.z	  = resetZ;
+		state.changed = true;
 	}
 	ImGui::PopFont();
 	ImGui::PopStyleColor(3);
 	ImGui::SameLine();
 	ImGui::PushItemWidth(valueWidth);
-	changed |= ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
+	state.changed |= ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
+
+	state.started |= ImGui::IsItemActivated();
+	state.finished |= ImGui::IsItemDeactivatedAfterEdit();
+
 	ImGui::PopItemWidth();
 	ImGui::PopItemWidth();
 
@@ -311,7 +352,7 @@ bool EditorWidgets::drawVec3Control(const char* label, glm::vec3& values, float 
 	ImGui::Columns(1);
 	ImGui::PopID();
 
-	return changed;
+	return state;
 }
 
 void EditorWidgets::DrawPanelAccentBar(PanelAccent color, bool onlyWhenFocused) {
