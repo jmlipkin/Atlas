@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TilesetEditorPanel.h"
+#include "Commands/CommandHistory.h"
 
 #include "Atlas/Renderer/Tileset.h"
 #include "Atlas/ECS/Entities/Entity.h"
@@ -38,6 +39,8 @@ class TilemapPalettePanel {
 
 class TilemapEditorPanel {
   public:
+	TilemapEditorPanel(CommandHistory& commandHistory) : m_commandHistory(commandHistory) {}
+
 	void open(Component::Tilemap* tilemap, std::shared_ptr<Scene> scene, Entity* entity);
 
 	void onImGuiRender();
@@ -60,6 +63,7 @@ class TilemapEditorPanel {
 	void drawTiles(ImDrawList* dl, ImVec2 canvasPos, ImVec2 offset, float cellSize, int cols, int rows) const;
 	void drawHoverHighlight(ImDrawList* dl, ImVec2 canvasPos, ImVec2 offset, float cellSize, int col, int row) const;
 
+	void commitStroke();
 	void save();
 
 	std::pair<int, int> hoveredCell(bool isHovered, ImVec2 canvasPos, ImVec2 offset, float cellSize, int cols, int rows) const;
@@ -70,6 +74,8 @@ class TilemapEditorPanel {
 
   private:
 	std::shared_ptr<Scene> m_scene;
+
+	CommandHistory& m_commandHistory;
 
 	Entity*				m_entity  = nullptr;
 	Component::Tilemap* m_tilemap = nullptr;
@@ -88,6 +94,8 @@ class TilemapEditorPanel {
 	bool m_isPainting = false;
 	bool m_isErasing  = false;
 	Tool m_activeTool = Tool::Paint;
+
+	std::vector<int> m_strokeSnapshot;
 
 	bool   m_hasUserPanned = false;
 	float  m_zoom		   = 1.0f;

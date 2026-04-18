@@ -1,7 +1,11 @@
 #include "atpch.h"
 #include "TilemapEditorPanel.h"
 
+#include "Commands/LambdaCommand.h"
+
 #include "Atlas/Core/AssetManager.h"
+#include "Atlas/Project/Project.h"
+
 #include "Atlas/ImGui/EditorWidgets.h"
 
 namespace Atlas {
@@ -103,12 +107,6 @@ void TilemapEditorPanel::open(Component::Tilemap* tilemap, std::shared_ptr<Scene
 	const std::string path = ProjectManager::tilesetPath(tilemap->tileset);
 	m_tileset			   = ProjectManager::loadTileset(path);
 
-	// When a tile is removed from the tileset, clear it from the map too.
-	m_tileset->setTileDeletedCallback([this]() {
-		m_tilemap->removeTile(m_tileset->getDeletedTile());
-		m_tileset->clearTileDeleted();
-	});
-
 	m_texture = (m_tileset && !m_tileset->getTexture().empty())
 					? AssetManager::loadTexture(m_tileset->getTexture())
 					: nullptr;
@@ -143,6 +141,12 @@ void TilemapEditorPanel::onImGuiRender() {
 
 	m_tilesetPanel.onImGuiRender();
 	m_palettePanel.onImGuiRender();
+
+	if (m_tileset && m_tileset->getDeletedTile() != -1) {
+		m_tilemap->removeTile(m_tileset->getDeletedTile());
+		m_tileset->clearTileDeleted();
+		save();
+	}
 }
 
 void TilemapEditorPanel::drawHeader() {
@@ -247,13 +251,16 @@ void TilemapEditorPanel::handleZoom(bool isHovered, ImVec2 canvasPos, ImVec2 can
 
 void TilemapEditorPanel::handlePaint(int col, int row) {
 	if (col == -1) {
-		// Mouse left canvas — commit any pending save
 		if ((m_isPainting || m_isErasing) && m_sceneDirty)
-			save();
+			commitStroke();
 		return;
 	}
 
 	if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+		// Capture snapshot on first frame of stroke
+		if (!m_isPainting && !m_isErasing)
+			m_strokeSnapshot = m_tilemap->grid;
+
 		if (m_activeTool == Tool::Paint) {
 			m_tilemap->setTile(col, row, m_palettePanel.getSelectedTile());
 			m_isPainting = true;
@@ -264,7 +271,7 @@ void TilemapEditorPanel::handlePaint(int col, int row) {
 			m_sceneDirty = true;
 		}
 	} else if ((m_isPainting || m_isErasing) && m_sceneDirty) {
-		save();
+		commitStroke();
 	}
 }
 
@@ -324,6 +331,21 @@ void TilemapEditorPanel::drawHoverHighlight(ImDrawList* dl, ImVec2 canvasPos, Im
 	ImVec2 cellMin = cellToScreen(canvasPos, offset, cellSize, col, row);
 	ImVec2 cellMax = {cellMin.x + cellSize, cellMin.y + cellSize};
 	dl->AddRect(cellMin, cellMax, ImGui::ColorConvertFloat4ToU32(EditorWidgets::steelBlue));
+}
+
+void TilemapEditorPanel::commitStroke() {
+	std::vector<int> beforeGrid = m_strokeSnapshot;
+	std::vector<int> afterGrid	= m_tilemap->grid;
+	std::string		 name		= m_isPainting ? "Paint Tiles" : "Erase Tiles";
+	Entity			 entity		= *m_entity;
+
+	m_commandHistory.push(std::make_unique<LambdaCommand>(name, [entity, afterGrid]() mutable {
+            entity.refresh();
+            entity.getComponent<Component::Tilemap>().grid = afterGrid; }, [entity, beforeGrid]() mutable {
+            entity.refresh();
+            entity.getComponent<Component::Tilemap>().grid = beforeGrid; }));
+
+	save();
 }
 
 void TilemapEditorPanel::save() {

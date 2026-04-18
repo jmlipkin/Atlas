@@ -19,7 +19,7 @@ class PropertiesPanel {
   public:
 	using NewScriptCallback = std::function<void(Entity, const std::string& scriptName)>;
 
-	PropertiesPanel(std::shared_ptr<Scene> scene, CommandHistory& commandHistory) : m_scene(scene), m_commandHistory(commandHistory), m_animationEditor(commandHistory) {}
+	PropertiesPanel(std::shared_ptr<Scene> scene, CommandHistory& commandHistory) : m_scene(scene), m_commandHistory(commandHistory), m_animationEditor(commandHistory), m_tilemapEditorPanel(commandHistory) {}
 	~PropertiesPanel() = default;
 
 	void onImGuiRender(Entity& selection);
