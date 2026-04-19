@@ -29,7 +29,7 @@ Application::Application(const WindowProperties& winProps) {
 	m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
 	m_context = m_window->getGraphicsContext();
 
-	AudioEngine::get().init();
+	AudioEngine::init();
 	ThreadManager::get().init();
 	Serializer::init();
 	Renderer::init(*m_context);
@@ -78,6 +78,7 @@ void Application::run() {
 
 	while (m_isRunning) {
 		ThreadManager::get().drainResultQueue();
+		AudioEngine::update();
 
 		m_dt.updateDelta();
 		Renderer::setFrameTime(m_dt);

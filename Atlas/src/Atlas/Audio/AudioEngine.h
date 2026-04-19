@@ -1,6 +1,10 @@
 #pragma once
 
 #include "Atlas/Audio/AudioDevice.h"
+#include "Atlas/Audio/AudioQueue.h"
+#include "Atlas/Events/AudioEvent.h"
+
+#include "Atlas/Core/Application.h"
 
 namespace Atlas {
 
@@ -31,15 +35,36 @@ class AudioEngine {
 		get().m_device->close();
 	}
 
-	static void update() {}
+	static void update() {
+		AudioEventPayload payload;
+		while (get().m_eventQueue.pop(payload)) {
+			std::visit([](auto&& e) {
+				using T = std::decay_t<decltype(e)>;
+				if constexpr (std::is_same_v<T, AudioVoiceFinishedPayload>) {
+					AudioVoiceFinishedEvent event(e.voiceID);
+					Application::get().onEvent(event);
+				} else if constexpr (std::is_same_v<T, AudioVoiceLoopedPayload>) {
+					AudioVoiceLoopedEvent event(e.voiceID);
+					Application::get().onEvent(event);
+				} else if constexpr (std::is_same_v<T, AudioLoadErrorPayload>) {
+					AudioLoadErrorEvent event(e.path, e.message);
+					Application::get().onEvent(event);
+				}
+			}, payload);
+		}
+	}
 
-	static AudioEngine& get() {
+	static AudioEngine&
+	get() {
 		static AudioEngine instance;
 		return instance;
 	}
 
   private:
 	std::shared_ptr<AudioDevice> m_device;
+
+	AudioCommandQueue m_commandQueue;
+	AudioEventQueue	  m_eventQueue;
 };
 
 }  // namespace Atlas
