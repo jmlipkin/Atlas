@@ -7,6 +7,7 @@
 #include "Atlas/Core/Thread/ThreadManager.h"
 #include "Atlas/Events/ApplicationEvent.h"
 
+#include "Atlas/Audio/AudioEngine.h"
 #include "Atlas/Renderer/Framebuffer.h"
 #include "Atlas/Renderer/RenderCommand.h"
 #include "Atlas/Renderer/Renderer.h"
@@ -28,6 +29,7 @@ Application::Application(const WindowProperties& winProps) {
 	m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
 	m_context = m_window->getGraphicsContext();
 
+	AudioEngine::get().init();
 	ThreadManager::get().init();
 	Serializer::init();
 	Renderer::init(*m_context);

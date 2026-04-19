@@ -236,5 +236,7 @@ if(APPLE)
             "-framework QuartzCore"
             "-framework Metal"
             "-framework UniformTypeIdentifiers"
+            "-framework CoreAudio"
+            "-framework AudioToolbox"
     )
 endif()
