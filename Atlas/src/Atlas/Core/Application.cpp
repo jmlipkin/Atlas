@@ -28,7 +28,7 @@ Application::Application(const WindowProperties& winProps) {
 	m_window->setEventCallback(AT_BIND_EVENT_FN(Application::onEvent));
 	m_context = m_window->getGraphicsContext();
 
-	ThreadManager::get().init();
+	ThreadManager::init();
 	Serializer::init();
 	Renderer::init(*m_context);
 
@@ -38,7 +38,7 @@ Application::Application(const WindowProperties& winProps) {
 Application::~Application() {
 	Renderer::shutdown();
 	Serializer::shutdown();
-	ThreadManager::get().shutdown();
+	ThreadManager::shutdown();
 
 	m_layerStack.popOverlay(m_ImGuiLayer);
 }
@@ -75,7 +75,7 @@ void Application::run() {
 	AT_PROFILE_FUNCTION();
 
 	while (m_isRunning) {
-		ThreadManager::get().drainResultQueue();
+		ThreadManager::drainResultQueue();
 
 		m_dt.updateDelta();
 		Renderer::setFrameTime(m_dt);

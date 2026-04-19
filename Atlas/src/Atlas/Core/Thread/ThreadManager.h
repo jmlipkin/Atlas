@@ -30,9 +30,9 @@ struct DedicatedThread {
 
 class ThreadManager {
   public:
-	void init(size_t workerCap = 0);
+	static void init(size_t workerCap = 0);
 
-	void shutdown();
+	static void shutdown();
 
 	void registerDedicatedThread(DedicatedThread thread) {
 		m_dedicatedThreads.push(std::move(thread));
@@ -54,8 +54,8 @@ class ThreadManager {
 	template <typename F>
 	auto submit(F&& fn) -> std::future<std::invoke_result_t<F>> { return m_pool.submit(std::forward<F>(fn)); }
 
-	void enqueueResult(std::function<void()> fn) { m_resultQueue.push(std::move(fn)); }
-	void drainResultQueue() { m_resultQueue.drain(); }
+	static void enqueueResult(std::function<void()> fn) { get().m_resultQueue.push(std::move(fn)); }
+	static void drainResultQueue() { get().m_resultQueue.drain(); }
 
 	static ThreadManager& get() {
 		static ThreadManager instance;

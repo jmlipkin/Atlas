@@ -11,16 +11,16 @@ void ThreadManager::init(size_t workerCap) {
 
 	size_t workerCount = (workerCap) ? std::min(workerCap, hardwareCap) : hardwareCap;
 
-	m_pool.start(workerCount);
+	get().m_pool.start(workerCount);
 }
 
 void ThreadManager::shutdown() {
-	m_pool.shutdown();
+	get().m_pool.shutdown();
 
-	while (!m_dedicatedThreads.empty()) {
-		DedicatedThread& thread = m_dedicatedThreads.top();
+	while (!get().m_dedicatedThreads.empty()) {
+		DedicatedThread& thread = get().m_dedicatedThreads.top();
 		thread.onShutdown();
-		m_dedicatedThreads.pop();
+		get().m_dedicatedThreads.pop();
 	}
 }
 
