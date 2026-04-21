@@ -4,8 +4,17 @@
 namespace Atlas {
 
 void AssetManager::clearProjectCaches() {
+	getCache<AudioFile>().clear();
 	getCache<Texture>().clear();
 	getCache<Tileset>().clear();
+}
+
+std::shared_ptr<AudioFile> AssetManager::loadAudio(const std::string& filepath, AudioFileType type) {
+	auto& cache = getCache<AudioFile>();
+	if (cache.contains(filepath)) {
+		return cache[filepath];
+	}
+	return cache[filepath] = AudioFile::create(filepath, type);
 }
 
 std::shared_ptr<Font> AssetManager::loadFont(const std::string& name, const std::string& filepath, uint32_t fontSizePx) {

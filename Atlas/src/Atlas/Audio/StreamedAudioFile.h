@@ -1,0 +1,74 @@
+#pragma once
+
+#include "Atlas/Audio/AudioFile.h"
+
+#include "libsndfile/include/sndfile.h"
+
+namespace Atlas {
+
+/**
+ * @brief Audio asset streamed from disk.
+ *
+ */
+class StreamedAudioFile : public AudioFile {
+  public:
+	/**
+	 * @brief Construct a new StreamedAudioFile from a file on disk.
+	 *
+	 * @param filepath - absolute path to audio file.
+	 */
+	StreamedAudioFile(const std::string& filepath);
+
+	/**
+	 * @brief Construct a new StreamedAudioFile from manual parameters.
+	 *
+	 * @param specs - metadata.
+	 * @param data - audio data, as interleaved PCM float32 format.
+	 */
+	StreamedAudioFile(const AudioFileSpecification& specs, float* data);
+
+	~StreamedAudioFile();
+
+	/**
+	 * @brief Reads audio data into destination buffers. User must ensure that buffers is of adequate size.
+	 *
+	 * @param buffers - read destination. Assumes 2D array of size [channelCount][frameCount]. (ChannelCount is stored internally)
+	 * @param offset - frame offset from start of file.
+	 * @param frameCount - number of frames to read.
+	 * @return uint64_t - returns number of frames read successfully.
+	 */
+	virtual uint64_t readFrames(float** buffers, uint32_t offset, uint64_t frameCount) override;
+
+	virtual std::string	  getFilepath() const override { return m_filepath; }
+	virtual AudioFileType getType() const override { return m_specs.type; }
+
+	virtual uint32_t getSampleRate() const override { return m_specs.sampleRate; }
+	virtual uint32_t getChannelCount() const override { return m_specs.channelCount; }
+
+	/**
+	 * @brief Get the frame count of the AudioFile
+	 *
+	 * @return uint64_t - number of frames
+	 */
+	virtual uint64_t getFrameCount() const override { return m_specs.frameCount; }
+
+	/**
+	 * @brief Get the duration of the AudioFile in seconds
+	 *
+	 * @return float - length in seconds
+	 */
+	virtual float getDuration() const override { return m_specs.duration(); }
+
+  private:
+	bool loadFile(const std::string& filepath);
+
+	void deinterleave(std::vector<float>& data, int channelCount, int frameCount);
+
+  private:
+	std::string			   m_filepath;
+	AudioFileSpecification m_specs;
+
+	SNDFILE* m_fp;
+};
+
+}  // namespace Atlas

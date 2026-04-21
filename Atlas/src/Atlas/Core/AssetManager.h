@@ -3,6 +3,7 @@
 #include "Atlas/Core/Base.h"
 #include "Atlas/Core/Font.h"
 
+#include "Atlas/Audio/AudioFile.h"
 #include "Atlas/Renderer/Shader.h"
 #include "Atlas/Renderer/Texture.h"
 #include "Atlas/Renderer/Tileset.h"
@@ -13,10 +14,11 @@ namespace Atlas {
 
 class AssetManager {
   public:
-	static std::shared_ptr<Font>	loadFont(const std::string& name, const std::string& filepath, uint32_t fontSizePx = 128);
-	static std::shared_ptr<Shader>	loadShader(const std::string& name, const std::string& vertexFunction, const std::string& fragmentFunction);
-	static std::shared_ptr<Texture> loadTexture(const std::string& filepath);
-	static std::shared_ptr<Tileset> loadTileset(const std::string& name, const std::string& filepath);
+	static std::shared_ptr<AudioFile> loadAudio(const std::string& filepath, AudioFileType type);
+	static std::shared_ptr<Font>	  loadFont(const std::string& name, const std::string& filepath, uint32_t fontSizePx = 128);
+	static std::shared_ptr<Shader>	  loadShader(const std::string& name, const std::string& vertexFunction, const std::string& fragmentFunction);
+	static std::shared_ptr<Texture>	  loadTexture(const std::string& filepath);
+	static std::shared_ptr<Tileset>	  loadTileset(const std::string& name, const std::string& filepath);
 
 	static void clearProjectCaches();
 
@@ -35,6 +37,13 @@ class AssetManager {
 	template <typename T>
 	static std::unordered_map<std::string, std::shared_ptr<T>>& getCache();
 };
+
+template <>
+inline std::unordered_map<std::string, std::shared_ptr<AudioFile>>&
+AssetManager::getCache<AudioFile>() {
+	static std::unordered_map<std::string, std::shared_ptr<AudioFile>> s;
+	return s;
+}
 
 template <>
 inline std::unordered_map<std::string, std::shared_ptr<Font>>& AssetManager::getCache<Font>() {
