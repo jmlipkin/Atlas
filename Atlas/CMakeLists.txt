@@ -28,12 +28,13 @@ macro(atlas_dependency NAME SUBMODULE_PATH GIT_REPO GIT_TAG)
     endif()
 endmacro()
 
-atlas_dependency(json      "extern/json"            "https://github.com/nlohmann/json.git"                      "v3.12.0")
-atlas_dependency(spdlog    "extern/spdlog"          "https://github.com/gabime/spdlog.git"                      "v1.15.1")
-atlas_dependency(glad      "extern/glad"            "https://github.com/Dav1dde/glad.git"                       "v0.1.36")
-atlas_dependency(glfw      "extern/glfw"            "https://github.com/glfw/glfw.git"                          "3.4")
-atlas_dependency(glm       "extern/glm"             "https://github.com/g-truc/glm.git"                         "1.0.")
-atlas_dependency(freetype  "extern/freetype-2.14.1" "https://gitlab.freedesktop.org/freetype/freetype"          "2.14.1")
+atlas_dependency(json       "extern/json"            "https://github.com/nlohmann/json.git"                      "v3.12.0")
+atlas_dependency(spdlog     "extern/spdlog"          "https://github.com/gabime/spdlog.git"                      "v1.15.1")
+atlas_dependency(glad       "extern/glad"            "https://github.com/Dav1dde/glad.git"                       "v0.1.36")
+atlas_dependency(glfw       "extern/glfw"            "https://github.com/glfw/glfw.git"                          "3.4")
+atlas_dependency(glm        "extern/glm"             "https://github.com/g-truc/glm.git"                         "1.0.")
+atlas_dependency(freetype   "extern/freetype-2.14.1" "https://gitlab.freedesktop.org/freetype/freetype"          "2.14.1")
+atlas_dependency(libsndfile "extern/libsndfile"      "https://github.com/libsndfile/libsndfile.git"              "1.2.2")
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/imgui.h")
     message(STATUS "Atlas: imgui submodule found")
@@ -226,6 +227,7 @@ target_link_libraries(${TARGET_NAME}
         glm
         freetype
         nlohmann_json::nlohmann_json
+        libsndfile
 )
 
 if(APPLE)
