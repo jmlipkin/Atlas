@@ -34,6 +34,15 @@ atlas_dependency(glad       "extern/glad"            "https://github.com/Dav1dde
 atlas_dependency(glfw       "extern/glfw"            "https://github.com/glfw/glfw.git"                          "3.4")
 atlas_dependency(glm        "extern/glm"             "https://github.com/g-truc/glm.git"                         "1.0.")
 atlas_dependency(freetype   "extern/freetype-2.14.1" "https://gitlab.freedesktop.org/freetype/freetype"          "2.14.1")
+
+set(BUILD_TESTING        OFF CACHE BOOL "" FORCE)
+set(BUILD_PROGRAMS       OFF CACHE BOOL "" FORCE)
+set(BUILD_EXAMPLES       OFF CACHE BOOL "" FORCE)
+set(ENABLE_EXTERNAL_LIBS ON CACHE BOOL "" FORCE)
+set(ENABLE_MPEG          ON CACHE BOOL "" FORCE)
+set(BUILD_REGTEST        OFF CACHE BOOL "" FORCE)
+set(ENABLE_CPACK         OFF CACHE BOOL "" FORCE)
+
 atlas_dependency(libsndfile "extern/libsndfile"      "https://github.com/libsndfile/libsndfile.git"              "1.2.2")
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/extern/imgui/imgui.h")
@@ -227,7 +236,7 @@ target_link_libraries(${TARGET_NAME}
         glm
         freetype
         nlohmann_json::nlohmann_json
-        libsndfile
+        SndFile::sndfile
 )
 
 if(APPLE)
